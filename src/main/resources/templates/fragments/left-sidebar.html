@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+
+<body>
+<div th:fragment="left-sidebar">
+            <aside id="sidebar" class="js-sidebar fixed-top vh-100">
+                <!-- Content For Sidebar -->
+                <div class="h-100">
+                    <div class="sidebar-logo">
+                        <a href="#">
+                            <img th:src="@{/images/logo white.png}" class="avatar img-fluid rounded mr-3" alt="">
+                        </a>
+                        <hr style="background: white;height: 1px; opacity: 1">
+                    </div>
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="fa-solid fa-list pe-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>
+                                Pages
+                            </a>
+                            <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link sub-item">Page 1</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Page 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-bs-target="#posts" data-bs-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-sliders pe-2"></i>
+                                Posts
+                            </a>
+                            <ul id="posts" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Post 1</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Post 2</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Post 3</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-bs-target="#auth" data-bs-toggle="collapse"
+                               aria-expanded="false"><i class="fa-regular fa-user pe-2"></i>
+                                Auth
+                            </a>
+                            <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Login</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Register</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Forgot Password</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item pb-3">
+                            <a href="#" class="sidebar-link collapsed" data-bs-target="#multi" data-bs-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-share-nodes pe-2"></i>
+                                Multi Dropdown
+                            </a>
+                            <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link collapsed" data-bs-target="#level-1"
+                                       data-bs-toggle="collapse" aria-expanded="false">Level 1</a>
+                                    <ul id="level-1" class="sidebar-dropdown list-unstyled collapse">
+                                        <li class="sidebar-item">
+                                            <a href="#" class="sidebar-link">Level 1.1</a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="#" class="sidebar-link">Level 1.2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <nav class="navbar navbar-dark nav-bar-bottom">
+                        <ul class="nav justify-content-center">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-bs-toggle="tooltip" title="Contact Us">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-bs-toggle="tooltip" title="Flow Us">
+                                    <i class="fa-brands fa-github"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-bs-toggle="tooltip" title="More Info">
+                                    <i class="fa-regular fa-circle-question"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="sidebar-toggle1" data-bs-toggle="tooltip" title="Toggle Sidebar">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+
+
+                </div>
+            </aside>
+            <aside id="sidebar1" class="js-sidebar">
+            </aside>
+        </div>
+</body>
+
+</html>
