@@ -6,12 +6,12 @@
 <div class="wrapper">
 <div th:replace="~{fragments/header :: header}"></div>
 <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
-<div class="dashboard-main-wrapper">
+<div class="dashboard-main-wrapper pt-0">
     <div class="dashboard-wrapper">
         <div class="dashboard-ecommerce">
             <div class="container-fluid dashboard-content">
                 <div class="ecommerce-widget">
-                    <header class="panel-heading text-center pb-5"></header>
+                    <header class="panel-heading text-center pb-2"></header>
 
 
                         <div class="row justify-content-center align-items-center">
@@ -109,9 +109,9 @@
                 </div>
             </div>
         </div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
     </div>
 </div>
-<div th:replace="~{fragments/footer :: footer}"></div>
 <div th:replace="~{fragments/javascript :: js}"></div>
 </div>
 </body>
