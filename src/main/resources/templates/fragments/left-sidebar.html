@@ -53,19 +53,16 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-bs-target="#auth" data-bs-toggle="collapse"
-                               aria-expanded="false"><i class="fa-regular fa-user pe-2"></i>
-                                Auth
+                            <a href="#" class="sidebar-link collapsed" data-bs-target="#users" data-bs-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-user-group pe-2"></i>
+                                Users
                             </a>
-                            <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Login</a>
+                                    <a th:href="@{/user/create}" class="sidebar-link">User Create</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Register</a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Forgot Password</a>
+                                    <a th:href="@{/user/list}" class="sidebar-link">User List</a>
                                 </li>
                             </ul>
                         </li>
