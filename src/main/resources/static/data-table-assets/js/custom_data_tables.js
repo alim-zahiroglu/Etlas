@@ -1,21 +1,108 @@
+// $(document).ready(function () {
+//     // Initialize DataTable with Buttons
+//     const table = $('#example').DataTable({
+//         buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+//     });
+//
+//     // Move DataTable buttons container to a specific location
+//     table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+//
+//     // Enable tooltip for elements with data-toggle="tooltip"
+//     $('[data-toggle="tooltip"]').tooltip();
+//
+//     // Filter table rows based on input value
+//     $("#myInput").on("keyup", function () {
+//         let value = $(this).val().toLowerCase();
+//         $("#example tr").filter(function () {
+//             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+//         });
+//     });
+// });
+
+
+// $(document).ready(function () {
+//     // Initialize DataTable with Buttons
+//     const table = $('#example').DataTable({
+//         buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+//     });
+//
+//     // Move DataTable buttons container to a specific location
+//     table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+//
+//     // Manually handle Copy and Print buttons
+//     $('#copy').on('click', function () {
+//         table.button(0).trigger();
+//     });
+//
+//     $('#print').on('click', function () {
+//         table.button(4).trigger();
+//     });
+//
+//     // Manually handle CSV, Excel, and PDF buttons
+//     $('#export_pdf').on('click', function () {
+//         table.button(3).trigger();
+//     });
+//
+//     $('#export_Excel').on('click', function () {
+//         table.button(2).trigger();
+//     });
+//
+//     $('#export_CVS').on('click', function () {
+//         table.button(1).trigger();
+//     });
+//
+//     // Enable tooltip for elements with data-toggle="tooltip"
+//     $('[data-toggle="tooltip"]').tooltip();
+//
+//     // Filter table rows based on input value
+//     $("#myInput").on("keyup", function () {
+//         let value = $(this).val().toLowerCase();
+//         $("#example tr").filter(function () {
+//             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+//         });
+//     });
+// });
+
+
 $(document).ready(function () {
-    // Filter table rows based on input value
-    $("#my_table_search").on("keyup", function () {
-        let value = $(this).val().toLowerCase();
-        $("#my_data_table tr").toggle(function () {
-            return $(this).text().toLowerCase().indexOf(value) > -1;
-        });
+    // Initialize DataTable with Buttons
+    const table = $('#example').DataTable({
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
     });
 
-    // Initialize DataTable
-    const myDataTable = $('#my_data_table').DataTable();
+    // Move DataTable buttons container to a specific location
+    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)').addClass('d-none');
 
-    // Initialize tooltips
+    // Manually handle Copy and Print buttons
+    $('#copy').on('click', function () {
+        table.button(0).trigger();
+    });
+
+    $('#print').on('click', function () {
+        table.button(4).trigger();
+    });
+
+    // Manually handle CSV, Excel, and PDF buttons
+    $('#export_pdf').on('click', function () {
+        table.button(3).trigger();
+    });
+
+    $('#export_Excel').on('click', function () {
+        table.button(2).trigger();
+    });
+
+    $('#export_CVS').on('click', function () {
+        table.button(1).trigger();
+    });
+
+    // Enable tooltip for elements with data-toggle="tooltip"
     $('[data-toggle="tooltip"]').tooltip();
 
-    // Initialize DataTable with buttons
-    const table = myDataTable.buttons(['copy', 'csv', 'excel', 'pdf', 'print']);
-
-    // Move DataTable buttons to a specific container
-    table.container().appendTo('#export_buttons_wrapper .col-md-6:eq(0)');
+    // Filter table rows based on input value
+    $("#myInput").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#example tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
 });
