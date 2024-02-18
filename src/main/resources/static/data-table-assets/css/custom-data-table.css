@@ -1,3 +1,4 @@
+
 .dataTables_wrapper{
     padding-top: 10px !important;
 }
@@ -25,8 +26,79 @@
 }
 
 .list-page-drop-downs{
+    color: #fff!important;
+    font-weight: bold !important;
     background: #117dc0 !important;
-    color: white !important;
+
 }
 
+.list-page-drop-downs:hover {
+    color: #fff!important;
+    font-weight: bold !important;
+    background: #0f6fab !important;
+}
+.list-page-drop-downs:active {
+    background: #117dc0 !important;
+    font-weight: bold !important;
+}
 
+.list-page-drop-downs-export{
+    color: #fff!important;
+    font-weight: bold !important;
+    background: #22c55f !important;
+
+}
+
+.list-page-drop-downs-export:hover {
+    color: #fff!important;
+    font-weight: bold !important;
+    background: #1ca24e !important;
+}
+.list-page-drop-downs-export:active {
+    background: #22c55f !important;
+    font-weight: bold !important;
+}
+.dropdown-menu-custom-css img{
+    width: 30px !important;
+    height: auto !important;
+
+}
+.dropdown-menu-custom-css span{
+
+}
+
+/* Style the dropdown items */
+.dropdown-menu-custom-css {
+    background: white !important;
+    padding: 0 !important;
+
+}
+/* Style each dropdown item */
+.dropdown-menu-item-custom-css {
+    font-weight: bold !important;
+    vertical-align: center !important;
+    padding: 10px 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden !important;
+}
+
+.dropdown-menu-item-custom-css:hover {
+    background-color: red !important;
+
+
+}
+
+/* Add some space between the dropdown button and the items */
+.dropdown-menu {
+    top: 6px !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
+}
+.export_header{
+    background: #f8a526;
+    color: white;
+    padding: 10px 15px;
+    text-align: left;
+    font-weight: bold;
+}

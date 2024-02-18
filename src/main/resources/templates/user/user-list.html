@@ -39,16 +39,32 @@
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-4 text-right">
                                                 <div class="col-12 dropdown" style="display: inline;">
-                                                    <button class="btn list-page-drop-downs dropdown-toggle" type="button"
+                                                    <button class="btn list-page-drop-downs-export dropdown-toggle" type="button"
                                                             id="export_buttons" data-toggle="dropdown"
                                                             aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa-solid fa-file-export"></i> Export
                                                     </button>
-                                                    <div class="dropdown-menu dropdown-menu-right"
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css"
                                                          aria-labelledby="export_buttons">
-                                                        <a class="dropdown-item" id="export_pdf">PDF</a>
-                                                        <a class="dropdown-item" id="export_Excel">Excel</a>
-                                                        <a class="dropdown-item" id="export_CVS">CSV</a>
+
+                                                            <div class="export_header" style="cursor: pointer"><span class="pr-4">Export As</span>  <i class="fa-solid fa-download"></i></div>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="export_pdf" style="display: flex; align-items: center;">
+                                                            <span>PDF</span>
+                                                            <span style="margin-left: auto;"><img th:src="@{/images/pdf.png}"></span>
+                                                        </a>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="export_Excel" style="display: flex; align-items: center;">
+                                                            <span>Excel</span>
+                                                            <span style="margin-left: auto;"><img th:src="@{/images/excel.png}"></span>
+                                                        </a>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="export_CSV"
+                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                            <span>CSV</span>
+                                                            <span style="margin-left: auto;"><img th:src="@{/images/csv.png}"></span>
+                                                        </a>
+
                                                     </div>
                                                 </div>
                                                 <button class="btn list-page-drop-downs" id="userCreate">
