@@ -18,13 +18,13 @@
                                 <div class="card border-0 shadow-none bg-light justify-content-center align-items-center">
                                     <div class="col-12 col-md-12 col-lg-10">
 
-                                        <div class="row bg-white pt-2" style="border-radius: 5px">
+                                        <div class="row bg-white mt-2 mb-2" style="border-radius: 5px">
                                             <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2">
                                                 <div class="col-12 dropdown m-0 p-0">
-                                                    <button class="btn btn-info dropdown-toggle" type="button"
+                                                    <button class="btn list-page-drop-downs dropdown-toggle" type="button"
                                                             id="more_actions" data-toggle="dropdown"
                                                             aria-haspopup="true" aria-expanded="false">
-                                                        More Actions
+                                                        <i class="fa-solid fa-list"></i> More Actions
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="more_actions">
                                                         <a class="dropdown-item" id="copy">Copy</a>
@@ -34,26 +34,27 @@
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2">
                                                 <input type="search" class="form-control mb-2 mb-md-0 mb-sm-2"
-                                                       id="myInput" placeholder="search...">
+                                                       id="myInput" placeholder="Search ...">
+
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-4 text-right">
                                                 <div class="col-12 dropdown" style="display: inline;">
-                                                    <button class="btn btn-info dropdown-toggle" type="button"
+                                                    <button class="btn list-page-drop-downs dropdown-toggle" type="button"
                                                             id="export_buttons" data-toggle="dropdown"
                                                             aria-haspopup="true" aria-expanded="false">
-                                                        Export
+                                                        <i class="fa-solid fa-file-export"></i> Export
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-right"
                                                          aria-labelledby="export_buttons">
-                                                        <a class="dropdown-item" id="export_pdf">To PDF</a>
-                                                        <a class="dropdown-item" id="export_Excel">To Excel</a>
-                                                        <a class="dropdown-item" id="export_CVS">To CSV</a>
+                                                        <a class="dropdown-item" id="export_pdf">PDF</a>
+                                                        <a class="dropdown-item" id="export_Excel">Excel</a>
+                                                        <a class="dropdown-item" id="export_CVS">CSV</a>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-info" id="userCreate">New User</button>
+                                                <button class="btn list-page-drop-downs" id="userCreate">
+                                                    <i class="fa-solid fa-user-plus"></i> New User</button>
                                             </div>
                                         </div>
-
 
                                         <table id="example" class="table table-hover table-bordered bg-white">
                                             <thead id="custom_table_header">
@@ -205,23 +206,6 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <div id="bottom_controls"></div>
-
-
-                                        <!--                                        <div class="custom_dataTables_length" id="example_length">-->
-<!--                                            <label>Show-->
-<!--                                                <select name="example_length" aria-controls="example"-->
-<!--                                                        class="form-select form-select-sm">-->
-<!--                                                    <option value="10">10</option>-->
-<!--                                                    <option value="25">25</option>-->
-<!--                                                    <option value="50">50</option>-->
-<!--                                                    <option value="75">75</option>-->
-<!--                                                    <option value="100">100</option>-->
-<!--                                                </select>-->
-<!--                                                entries-->
-<!--                                            </label>-->
-<!--                                        </div>-->
-
 
                                     </div>
                                 </div>
