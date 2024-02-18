@@ -59,35 +59,12 @@
     font-weight: bold !important;
 }
 .dropdown-menu-custom-css img{
-    width: 30px !important;
+    max-height: 30px !important;
     height: auto !important;
+    transition: all 0.3s ease; /* Add smooth transition for the image */
 
 }
-.dropdown-menu-custom-css span{
 
-}
-
-/* Style the dropdown items */
-.dropdown-menu-custom-css {
-    background: white !important;
-    padding: 0 !important;
-
-}
-/* Style each dropdown item */
-.dropdown-menu-item-custom-css {
-    font-weight: bold !important;
-    vertical-align: center !important;
-    padding: 10px 18px !important;
-    display: flex !important;
-    align-items: center !important;
-    overflow: hidden !important;
-}
-
-.dropdown-menu-item-custom-css:hover {
-    background-color: red !important;
-
-
-}
 
 /* Add some space between the dropdown button and the items */
 .dropdown-menu {
@@ -102,3 +79,37 @@
     text-align: left;
     font-weight: bold;
 }
+
+/* Style the dropdown items */
+.dropdown-menu-custom-css {
+    background: whitesmoke !important;
+    padding: 0 !important;
+
+}
+/* Style each dropdown item */
+.dropdown-menu-item-custom-css {
+    font-weight: bold !important;
+    vertical-align: center !important;
+    padding: 10px 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: all 0.3s ease; /* Add smooth transition */
+
+}
+
+
+.dropdown-menu-item-custom-css:hover {
+    background-color: white !important; /* Change to the desired hover background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important; /* Add box shadow on hover */
+    font-size: 18px; /* Adjust font size on hover */
+}
+
+
+.dropdown-menu-item-custom-css:hover img {
+    max-height: 33px !important; /* Adjust the max height of the image on hover */
+    width: auto !important;
+}
+
+
+
+

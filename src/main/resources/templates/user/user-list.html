@@ -26,9 +26,18 @@
                                                             aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa-solid fa-list"></i> More Actions
                                                     </button>
-                                                    <div class="dropdown-menu" aria-labelledby="more_actions">
-                                                        <a class="dropdown-item" id="copy">Copy</a>
-                                                        <a class="dropdown-item" id="print">Print</a>
+                                                    <div class="dropdown-menu dropdown-menu-custom-css" aria-labelledby="more_actions">
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="copy" style="display: flex; align-items: center;">
+                                                            <span>Copy</span>
+                                                            <span style="margin-left: auto;"><img th:src="@{/images/copy.png}"></span>
+                                                        </a>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="print"
+                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                            <span>Print</span>
+                                                            <span style="margin-left: auto;"><img th:src="@{/images/print.png}"></span>
+                                                        </a>
+
                                                     </div>
                                                 </div>
                                             </div>
