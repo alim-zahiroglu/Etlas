@@ -1,19 +1,23 @@
 .dataTables_wrapper{
     padding-top: 10px !important;
 }
-.dataTables_filter {
+
+.dataTables_filter{
+    display: none !important;
+}
+.dataTables_info{
     display: none;
 }
+.dataTables_length{
+    padding-top: -60px !important;
+}
+.dt-buttons{
+    display: none !important;
+}
 
-
-
-
-
-
-
-
-
-
+#example_length{
+    display: none;
+}
 
 
 
