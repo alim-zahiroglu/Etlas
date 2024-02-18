@@ -128,3 +128,24 @@
     font-size: 18px;
 }
 
+/* Apply border-radius for the first column's left top */
+.custom_table_header th:first-child {
+    border-top-left-radius: 7px !important;
+}
+
+/* Apply border-radius for the last column's right top */
+.custom_table_header th:last-child {
+    border-top-right-radius: 7px !important;
+}
+
+/* Apply common styles for all header cells */
+.custom_table_header th {
+    color: white !important;
+    background-color: #117dc0 !important;
+}
+
+/* Add any other styles you need for the table */
+#example {
+    background: white !important;
+    border: white !important;
+}

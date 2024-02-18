@@ -49,6 +49,7 @@ $(document).ready(function () {
     // Initialize DataTable with Buttons and disable searching
     const table = $('#example').DataTable({
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'Show All']],
         dom: '<"row"<"col-4"l><"col-4 text-center"B><"col-4"f>>rt<"row"<"col-4"l><"col-4 text-center"i><"col-4 text-right"p>>',
     });
 
