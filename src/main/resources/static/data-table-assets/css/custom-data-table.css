@@ -34,8 +34,11 @@
 
 .list-page-drop-downs:hover {
     color: #fff!important;
-    font-weight: bold !important;
+    font-weight: bolder !important;
     background: #0f6fab !important;
+}
+.bold_font{
+    font-weight: bold !important;
 }
 .list-page-drop-downs:active {
     background: #117dc0 !important;
@@ -66,12 +69,6 @@
 }
 
 
-/* Add some space between the dropdown button and the items */
-.dropdown-menu {
-    top: 6px !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
-    border-radius: 8px !important;
-}
 .export_header{
     background: #f8a526;
     color: white;
@@ -82,9 +79,11 @@
 
 /* Style the dropdown items */
 .dropdown-menu-custom-css {
+    top: 6px !important;
     background: whitesmoke !important;
     padding: 0 !important;
-
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
 }
 /* Style each dropdown item */
 .dropdown-menu-item-custom-css {
@@ -110,6 +109,22 @@
     width: auto !important;
 }
 
-
-
+.profile-menu-custom-css {
+    top: 44px !important;
+    background: whitesmoke !important;
+    padding: 0 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
+}
+.profile-menu-item-custom-css{
+    vertical-align: center;
+    padding: 10px 18px;
+    align-items: center;
+    transition: all 0.3s ease; /* Add smooth transition */
+}
+.profile-menu-item-custom-css:hover{
+    background-color: white !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+}
 
