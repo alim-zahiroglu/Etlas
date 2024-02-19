@@ -18,9 +18,9 @@
                                 <div class="card border-0 shadow-none bg-light justify-content-center align-items-center">
                                     <div class="col-12 col-md-12 col-lg-10">
 
-                                        <div class="row bg-white mt-2 mb-2" style="border-radius: 5px">
-                                            <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2">
-                                                <div class="col-12 dropdown m-0 p-0">
+                                        <div class="row bg-white mr-0 ml-0 table_top_search_bar_column" style="border-radius: 5px">
+                                            <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2 pl-1">
+                                                <div class="col-12 dropdown pl-0">
                                                     <button class="btn list-page-drop-downs dropdown-toggle" type="button"
                                                             id="more_actions" data-toggle="dropdown"
                                                             aria-haspopup="true" aria-expanded="false">
@@ -37,7 +37,6 @@
                                                             <span>Print</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/print.png}"></span>
                                                         </a>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -46,11 +45,14 @@
                                                        id="myInput" placeholder="Search...">
 
                                             </div>
-                                            <div class="col-12 col-md-12 col-lg-4 text-right">
-                                                <a th:href="@{/user/create}"> <button class="btn list-page-drop-downs" id="userCreate">
-                                                    <i class="fa-solid fa-user-plus"></i> New User
-                                                </button></a>
-                                                <div class="col-12 dropdown" style="display: inline;">
+                                            <div class="col-12 col-md-12 col-lg-4 text-right pr-1">
+
+                                                <a th:href="@{/user/create}">
+                                                    <button class="btn list-page-drop-downs mr-0" id="userCreate">
+                                                        <i class="fa-solid fa-user-plus"></i> New User
+                                                    </button>
+                                                </a>
+                                                <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
                                                     <button class="btn list-page-drop-downs-export dropdown-toggle" type="button"
                                                             id="export_buttons" data-toggle="dropdown"
                                                             aria-haspopup="true" aria-expanded="false">
@@ -58,14 +60,11 @@
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css"
                                                          aria-labelledby="export_buttons">
-
-                                                            <div class="export_header" style="cursor: pointer"><span class="pr-4">Export As</span>  <i class="fa-solid fa-download"></i></div>
-
+                                                        <div class="export_header" style="cursor: pointer"><span class="pr-4">Export As</span>  <i class="fa-solid fa-download"></i></div>
                                                         <a class="dropdown-item dropdown-menu-item-custom-css" id="export_pdf" style="display: flex; align-items: center;">
                                                             <span>PDF</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/pdf.png}"></span>
                                                         </a>
-
                                                         <a class="dropdown-item dropdown-menu-item-custom-css" id="export_excel" style="display: flex; align-items: center;">
                                                             <span>Excel</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/excel.png}"></span>
@@ -76,165 +75,563 @@
                                                             <span>CSV</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/csv.png}"></span>
                                                         </a>
-
                                                     </div>
                                                 </div>
-<!--                                                <a th:href="@{/user/create}"> <button class="btn list-page-drop-downs" id="userCreate">-->
-<!--                                                    <i class="fa-solid fa-user-plus"></i> New User-->
-<!--                                                </button></a>-->
+
                                             </div>
                                         </div>
 
-                                        <table id="example" class="table table-hover table-bordered bg-white">
+
+                                        <div class="table-responsive">
+                                        <table id="example" class="table table-hover table-bordered bg-white users_table">
                                             <thead class="custom_table_header">
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email(username)</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">Phone</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                <td>Abdulhabir</td>
+                                                <td>abdulhabir@admin.com</td>
+                                                <td>Male</td>
+                                                <td>0553 888 66 76</td>
+                                                <td>Admin</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
+
                                             <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
+                                                <td>Yusuf</td>
+                                                <td>yusuf@manager.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Manager</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
+
                                             <tr>
-                                                <td>Jennifer Acosta</td>
-                                                <td>Junior Javascript Developer</td>
-                                                <td>Edinburgh</td>
-                                                <td>43</td>
-                                                <td>2013/02/01</td>
-                                                <td>$75,650</td>
+                                                <td>Abdusemet</td>
+                                                <td>abdusemet@employee.com</td>
+                                                <td>Male</td>
+                                                <td>0553 942 49 66</td>
+                                                <td>Employee</td>
+                                                <td class="actions">
+                                                    <a href="#">
+                                                        <button type="button" class="btn custom_update_button p-1">
+                                                            <i class="fa-solid fa-pen-to-square rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#" class="delete-row">
+                                                        <button type="button" class="btn custom_delete_button p-1">
+                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td>Cara Stevens</td>
-                                                <td>Sales Assistant</td>
-                                                <td>New York</td>
-                                                <td>46</td>
-                                                <td>2011/12/06</td>
-                                                <td>$145,600</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Hermione Butler</td>
-                                                <td>Regional Director</td>
-                                                <td>London</td>
-                                                <td>47</td>
-                                                <td>2011/03/21</td>
-                                                <td>$356,250</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Lael Greer</td>
-                                                <td>Systems Administrator</td>
-                                                <td>London</td>
-                                                <td>21</td>
-                                                <td>2009/02/27</td>
-                                                <td>$103,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jonas Alexander</td>
-                                                <td>Developer</td>
-                                                <td>San Francisco</td>
-                                                <td>30</td>
-                                                <td>2010/07/14</td>
-                                                <td>$86,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shad Decker</td>
-                                                <td>Regional Director</td>
-                                                <td>Edinburgh</td>
-                                                <td>51</td>
-                                                <td>2008/11/13</td>
-                                                <td>$183,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Michael Bruce</td>
-                                                <td>Javascript Developer</td>
-                                                <td>Singapore</td>
-                                                <td>29</td>
-                                                <td>2011/06/27</td>
-                                                <td>$183,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Donna Snider</td>
-                                                <td>Customer Support</td>
-                                                <td>New York</td>
-                                                <td>27</td>
-                                                <td>2011/01/25</td>
-                                                <td>$112,000</td>
-                                            </tr>
+
                                             </tbody>
                                         </table>
+                                        </div>
 
                                     </div>
                                 </div>

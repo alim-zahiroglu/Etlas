@@ -19,6 +19,11 @@
 #example_length{
     display: none !important;
 }
+.table-responsive .users_table td {
+    white-space: nowrap;
+}
+
+
 
 
 .page-link{
@@ -148,4 +153,49 @@
 #example {
     background: white !important;
     border: white !important;
+}
+
+.custom_update_button{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #f8a526 !important;
+    font-size: 16px !important;
+}
+
+.custom_update_button:hover{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-weight: bold !important;
+    color: #f89a08 !important;
+    font-size: 16px !important;
+}
+
+.custom_delete_button{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color:#ef4863 !important;
+    font-size: 16px !important;
+}
+
+.custom_delete_button:hover{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #f12446 !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+
+}
+/* CSS for the rotation effect */
+.rotate-on-hover:hover {
+    transition: transform 0.1s ease-in-out;
+    transform: rotate(15deg);
+}
+
+.users_table td a {
+    /*display: inline-block !important;*/
+    text-decoration: none !important;
+}
+.table_top_search_bar_column a{
+    /*display: inline-block !important;*/
+    text-decoration: none !important;
 }

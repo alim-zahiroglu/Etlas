@@ -32,6 +32,8 @@ $(document).ready(function () {
         table.button(4).trigger();
     });
 
+    // $('#example td').css('white-space', 'nowrap');
+
     // Enable tooltip for elements with data-toggle="tooltip"
     $('[data-toggle="tooltip"]').tooltip();
 
