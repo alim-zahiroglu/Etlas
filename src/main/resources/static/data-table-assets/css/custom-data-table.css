@@ -17,7 +17,7 @@
 }
 
 #example_length{
-    display: none;
+    display: none !important;
 }
 
 

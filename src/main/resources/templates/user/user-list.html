@@ -27,12 +27,12 @@
                                                         <i class="fa-solid fa-list"></i> More Actions
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-custom-css" aria-labelledby="more_actions">
-                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="copy" style="display: flex; align-items: center;">
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="more_actions_copy" style="display: flex; align-items: center;">
                                                             <span>Copy</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/copy.png}"></span>
                                                         </a>
 
-                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="print"
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="more_actions_print"
                                                            style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
                                                             <span>Print</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/print.png}"></span>
@@ -47,6 +47,9 @@
 
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-4 text-right">
+                                                <a th:href="@{/user/create}"> <button class="btn list-page-drop-downs" id="userCreate">
+                                                    <i class="fa-solid fa-user-plus"></i> New User
+                                                </button></a>
                                                 <div class="col-12 dropdown" style="display: inline;">
                                                     <button class="btn list-page-drop-downs-export dropdown-toggle" type="button"
                                                             id="export_buttons" data-toggle="dropdown"
@@ -63,12 +66,12 @@
                                                             <span style="margin-left: auto;"><img th:src="@{/images/pdf.png}"></span>
                                                         </a>
 
-                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="export_Excel" style="display: flex; align-items: center;">
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="export_excel" style="display: flex; align-items: center;">
                                                             <span>Excel</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/excel.png}"></span>
                                                         </a>
 
-                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="export_CSV"
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css" id="export_csv"
                                                            style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
                                                             <span>CSV</span>
                                                             <span style="margin-left: auto;"><img th:src="@{/images/csv.png}"></span>
@@ -76,9 +79,9 @@
 
                                                     </div>
                                                 </div>
-                                                <a th:href="@{/user/create}"> <button class="btn list-page-drop-downs" id="userCreate">
-                                                    <i class="fa-solid fa-user-plus"></i> New User
-                                                </button></a>
+<!--                                                <a th:href="@{/user/create}"> <button class="btn list-page-drop-downs" id="userCreate">-->
+<!--                                                    <i class="fa-solid fa-user-plus"></i> New User-->
+<!--                                                </button></a>-->
                                             </div>
                                         </div>
 
