@@ -186,10 +186,38 @@
 
 }
 /* CSS for the rotation effect */
-.rotate-on-hover:hover {
+.update-rotate-on-hover:hover {
     transition: transform 0.1s ease-in-out;
     transform: rotate(15deg);
 }
+
+.rotate-on-hover {
+    transition: transform 0.1s ease-in-out;
+}
+
+.rotate-on-hover:hover {
+    animation: rotateAnimation 0.5s ease-in-out;
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(15deg);
+    }
+    50% {
+        transform: rotate(-15deg);
+    }
+    75% {
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+
 
 .users_table td a {
     /*display: inline-block !important;*/
