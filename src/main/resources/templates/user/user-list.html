@@ -558,6 +558,19 @@
                                         </div>
 
 
+                                        <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3">
+                                            <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                <div class="toast-header">
+                                                    <strong class="me-auto">Success</strong>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                </div>
+                                                <div class="toast-body">User successfully deleted!</div>
+                                            </div>
+                                        </div>
+
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -571,10 +584,11 @@
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
 
+
 <script>
     const deleteButtons = document.querySelectorAll('.delete-row');
     deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             showConfirmationModal("ziya");
         });
     });
@@ -588,9 +602,12 @@
         // Add an event listener for the OK button in the modal
         document.getElementById('confirmDelete').addEventListener('click', function () {
             // Perform the deletion action (you can replace this with your actual deletion logic)
-            window.location.href = `/user/create?username=${username}`;
+            // Simulate deletion with a setTimeout
+            setTimeout(function () {
+                showSuccessToast(); // Display the success toast
+            }, 1000); // Adjust the timeout based on your actual deletion time
 
-            // Close the confirmation modal
+            // Close the confirmation modal after showing the toast
             closeConfirmationModal();
         });
 
@@ -606,6 +623,19 @@
         $('body').css('overflow', 'auto');
         $('#confirmationModal').modal('hide');
     }
+
+    function showSuccessToast() {
+        // Select the toast container
+        const toastContainer = document.getElementById('toastContainer');
+
+        // Create a new toast element
+        const toast = new bootstrap.Toast(document.getElementById('successToast'));
+
+        // Show the toast
+        toast.show();
+    }
+
+
 </script>
 </body>
 </html>
