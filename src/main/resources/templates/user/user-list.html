@@ -112,7 +112,8 @@
                                                         </button>
                                                     </a>
                                                     <a href="#" class="delete-row">
-                                                        <button type="button" class="btn custom_delete_button p-1 delete-row" data-username="${user.userName}">
+                                                        <button type="button" class="btn custom_delete_button p-1 delete-row"
+                                                                data-user="${user.firstName}" data-username="${user.userName}">
                                                             <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                         </button>
                                                     </a>
@@ -537,11 +538,15 @@
                                         </div>
 
 
-                                        <div class="modal fade delete_confirmation_popup_layer" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
-                                                <div class="modal-content delete_confirmation_popup">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="confirmationModalLabel">Confirm Deletion</h5>
+                                                <div class="modal-content p-2">
+                                                    <div class=" delete_confirmation_popup justify-content-center">
+
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <img th:src="@{/images/delete_worning.png}" class="mt-4" />
+                                                            <h5 class="modal-title mt-3 pb-2" id="confirmationModalLabel">Confirm Deletion</h5>
+                                                        </div>
                                                         <!-- No close button here -->
                                                     </div>
                                                     <div class="modal-body">
@@ -551,24 +556,24 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" onclick="closeConfirmationModal()">Cancel</button>
 
-                                                        <button type="button" class="btn btn-danger" id="confirmDelete">OK</button>
+                                                        <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
+                                        <div id="delete_toast_up_layer" th:if="${deleted_user}">
+                                            <div id="delete_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true" data-bs-delay="300">
+                                                <div id="successToast" class="toast alert-success" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header delete_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body" th:text="'User ' + ${deleted_user} + ' successfully deleted!'"></div>
 
-                                        <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3">
-                                            <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                                                <div class="toast-header">
-                                                    <strong class="me-auto">Success</strong>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                 </div>
-                                                <div class="toast-body">User successfully deleted!</div>
                                             </div>
                                         </div>
-
-
 
 
                                     </div>
@@ -583,59 +588,6 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-
-
-<script>
-    const deleteButtons = document.querySelectorAll('.delete-row');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            showConfirmationModal("ziya");
-        });
-    });
-
-    function showConfirmationModal(username) {
-        $('body').css('overflow', 'hidden');
-
-        document.getElementById('confirmationUsername').innerText = `Are you sure you want to delete user '${username}'?`;
-        $('#confirmationModal').modal('show');
-
-        // Add an event listener for the OK button in the modal
-        document.getElementById('confirmDelete').addEventListener('click', function () {
-            // Perform the deletion action (you can replace this with your actual deletion logic)
-            // Simulate deletion with a setTimeout
-            setTimeout(function () {
-                showSuccessToast(); // Display the success toast
-            }, 1000); // Adjust the timeout based on your actual deletion time
-
-            // Close the confirmation modal after showing the toast
-            closeConfirmationModal();
-        });
-
-        // Add an event listener for modal close events (when Cancel or close button is clicked)
-        $('#confirmationModal').on('hidden.bs.modal', function () {
-            // Manually remove the modal-open class and modal-backdrop
-            $('body').css('overflow', 'auto');
-            document.getElementById('confirmDelete').removeEventListener('click', confirmDeleteAction);
-        });
-    }
-
-    function closeConfirmationModal() {
-        $('body').css('overflow', 'auto');
-        $('#confirmationModal').modal('hide');
-    }
-
-    function showSuccessToast() {
-        // Select the toast container
-        const toastContainer = document.getElementById('toastContainer');
-
-        // Create a new toast element
-        const toast = new bootstrap.Toast(document.getElementById('successToast'));
-
-        // Show the toast
-        toast.show();
-    }
-
-
-</script>
+<script th:src="@{/assets/libs/js/delet_update_confirmation.js}"></script>
 </body>
 </html>
