@@ -1,6 +1,6 @@
 package com.etlas.entity;
 
-import com.etlas.entity.common.UserPrincipal;
+import com.etlas.entity.common.CustomUserDetails;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import org.springframework.security.core.Authentication;
@@ -17,8 +17,8 @@ public class BaseEntityListener {
 
         if (authentication != null && !authentication.getName().equals("anonymousUser")){
             Object principal = authentication.getPrincipal();
-            baseEntity.setInsertUserId(((UserPrincipal) principal).getId());
-            baseEntity.setLastUpdateUserId(((UserPrincipal) principal).getId());
+            baseEntity.setInsertUserId(((CustomUserDetails) principal).getId());
+            baseEntity.setLastUpdateUserId(((CustomUserDetails) principal).getId());
         }
     }
     @PreUpdate
@@ -29,7 +29,7 @@ public class BaseEntityListener {
 
         if (authentication != null && !authentication.getName().equals("anonymousUser")){
             Object principal = authentication.getPrincipal();
-            baseEntity.setLastUpdateUserId(((UserPrincipal) principal).getId());
+            baseEntity.setLastUpdateUserId(((CustomUserDetails) principal).getId());
         }
     }
 
