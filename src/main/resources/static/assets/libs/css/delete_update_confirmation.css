@@ -1,0 +1,17 @@
+#delete_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
+.delete_toast_header{
+    background: #f9d7db !important;
+    color: #58151c !important;
+}
+
+.delete_confirmation_popup img{
+    width: 70px;
+    height: auto;
+}
+.delete_confirmation_popup h5{
+    text-align: center !important;
+}

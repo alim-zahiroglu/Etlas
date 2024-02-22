@@ -7,9 +7,10 @@
         <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
         <script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
         <script th:src="@{/assets/libs/js/main-js.js}"></script>
-        <script th:src="@{/assets/libs/js/piechart.js}"></script>
         <script th:src="@{/assets/libs/js/newnavbar.js}"></script>
         <script th:src="@{/assets/libs/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/assets/libs/js/login-pass.js}"></script>
+        <script th:src="@{/assets/libs/js/reset-pass.js}"></script>
 
         <script th:src="@{/assets/vendor/charts/chartist-bundle/chartist.min.js}"></script>
         <script th:src="@{/assets/vendor/charts/sparkline/jquery.sparkline.js}"></script>
@@ -26,26 +27,18 @@
         <script th:href="@{https://code.jquery.com/jquery-3.5.1.js}"></script>
         <script type="text/javascript" th:src="@{https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js}"></script>
         <script type="text/javascript" th:src="@{https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js}"></script>
-        <script>
-            $(document).ready(function () {
-                $("#myInput").on("keyup", function () {
-                    let value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
-        <script type="text/javascript" class="init">
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
-        </script>
-        <script>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
+
+
+        <script th:src="@{/data-table-assets/js/jquery-3.6.0.min.js}"></script>
+        <script th:src="@{/data-table-assets/js/datatables.min.js}"></script>
+        <script th:src="@{/data-table-assets/js/pdfmake.min.js}"></script>
+        <script th:src="@{/data-table-assets/js/vfs_fonts.js}"></script>
+        <script th:src="@{/data-table-assets/js/custom_data_tables.js}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
     </div>
 </body>
 

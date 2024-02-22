@@ -86,7 +86,7 @@
   transition: 0.3s;
 }
 
-input:focus{
+.input-container input:focus,.custom-input-field input:focus{
   border: 1px solid #635dff;
   background: #ffffff;
   outline: none;
@@ -95,8 +95,8 @@ input:focus{
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset; /* Override background color */
 }
-input:focus ~ label,
-input:valid ~ label{
+.input-container input:focus ~ label, .custom-input-field input:focus ~ label,
+.input-container input:valid ~ label,.custom-input-field input:valid ~ label {
   top: 10%;
   left: 8px;
   font-size: 14px;
@@ -114,6 +114,16 @@ input:valid ~ label{
   transform: translateY(-50%); /* Vertically center the icon */
   cursor: pointer;
   font-size: 18px;
+}
+.user-create-password-toggle{
+  background: white;
+  padding: 5px 10px 5px 15px;
+  position: absolute;
+  top: 73%; /* Adjust vertical positioning */
+  right: 15px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .reset-password a {
