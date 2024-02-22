@@ -1,0 +1,47 @@
+package com.etlas.config;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@Log4j2
+public class SecurityConfig {
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public SecurityFilterChain filterChainForUI(HttpSecurity http) throws Exception {
+        http
+                .csrf(Customizer.withDefaults())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login","/user/reset-password", "/assets/**",
+                                "/data-table-assets/**", "/images/**").permitAll()
+                        .anyRequest().authenticated())
+
+                .formLogin(form -> form
+                        .loginPage("/login") // Specifies the URL of your custom login page
+//                            .loginProcessingUrl("/authentication") // The URL to which the login form should be submitted for authentication
+//                            .usernameParameter("username") // The parameter name in the login form for the username field
+//                            .passwordParameter("password") // The parameter name in the login form for the password field
+                        .defaultSuccessUrl("/user/create", true)); // Redirects the user to "/home" after successful login
+
+        return http.build();
+    }
+    @Bean
+    ApplicationListener<AuthenticationSuccessEvent> successEvent(){
+        return event ->
+                log.info("success: {}", event.getAuthentication());
+    }
+
+}
