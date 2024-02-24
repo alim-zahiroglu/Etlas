@@ -8,4 +8,7 @@ public interface UserService {
     List<UserDto> getUsers();
 
     UserDto findByUsername(String username);
+    UserDto deleteUser(String username);
+
+    List<UserDto> findAllUsers();
 }

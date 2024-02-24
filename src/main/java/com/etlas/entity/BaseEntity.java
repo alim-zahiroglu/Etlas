@@ -13,7 +13,7 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Boolean isDeleted = false;
+    private boolean isDeleted = false;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime insertDateTime;

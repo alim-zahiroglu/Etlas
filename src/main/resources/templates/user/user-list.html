@@ -83,8 +83,7 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="table-responsive">
+                                    <div class="table-responsive">
                                         <table id="example" class="table table-hover table-bordered bg-white users_table">
                                             <thead class="custom_table_header">
                                             <tr>
@@ -99,12 +98,12 @@
                                             </thead>
                                             <tbody>
 
-                                            <tr>
-                                                <td>Abdulhabir</td>
-                                                <td>abdulhabir@admin.com</td>
-                                                <td>Male</td>
-                                                <td>0553 888 66 76</td>
-                                                <td>Admin</td>
+                                            <tr th:each="user :${userList}">
+                                                <td th:text="${user.firstName}+ ' ' + ${user.lastName} "></td>
+                                                <td th:text="${user.userName}"></td>
+                                                <td th:text="${user.gender}"></td>
+                                                <td th:text="${user.phone}"></td>
+                                                <td th:text="${user.role.description}"></td>
                                                 <td class="actions">
                                                     <a href="#">
                                                         <button type="button" class="btn custom_update_button p-1">
@@ -112,430 +111,17 @@
                                                         </button>
                                                     </a>
                                                     <a href="#" class="delete-row">
-                                                        <button type="button" class="btn custom_delete_button p-1 delete-row"
-                                                                data-user="${user.firstName}" data-username="${user.userName}">
+                                                        <button type="button" id="delete-row" class="btn custom_delete_button p-1 delete-row"
+                                                                th:data-user="${user.firstName} + ' ' + ${user.lastName}" th:data-username="${user.userName}">
                                                             <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                         </button>
                                                     </a>
                                                 </td>
                                             </tr>
 
-<!--                                            <tr>-->
-<!--                                                <td>Yusuf</td>-->
-<!--                                                <td>yusuf@manager.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Manager</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Abdusemet</td>-->
-<!--                                                <td>abdusemet@employee.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Employee</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Yusuf</td>-->
-<!--                                                <td>yusuf@manager.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Manager</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Abdusemet</td>-->
-<!--                                                <td>abdusemet@employee.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Employee</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Yusuf</td>-->
-<!--                                                <td>yusuf@manager.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Manager</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Abdusemet</td>-->
-<!--                                                <td>abdusemet@employee.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Employee</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Yusuf</td>-->
-<!--                                                <td>yusuf@manager.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Manager</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Abdusemet</td>-->
-<!--                                                <td>abdusemet@employee.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Employee</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Yusuf</td>-->
-<!--                                                <td>yusuf@manager.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Manager</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Abdusemet</td>-->
-<!--                                                <td>abdusemet@employee.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Employee</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Yusuf</td>-->
-<!--                                                <td>yusuf@manager.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Manager</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-<!--                                            <tr>-->
-<!--                                                <td>Abdusemet</td>-->
-<!--                                                <td>abdusemet@employee.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 942 49 66</td>-->
-<!--                                                <td>Employee</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>Abdulhabir</td>-->
-<!--                                                <td>abdulhabir@admin.com</td>-->
-<!--                                                <td>Male</td>-->
-<!--                                                <td>0553 888 66 76</td>-->
-<!--                                                <td>Admin</td>-->
-<!--                                                <td class="actions">-->
-<!--                                                    <a href="#">-->
-<!--                                                        <button type="button" class="btn custom_update_button p-1">-->
-<!--                                                            <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                    <a href="#" class="delete-row">-->
-<!--                                                        <button type="button" class="btn custom_delete_button p-1">-->
-<!--                                                            <i class="fa-solid fa-trash-can rotate-on-hover"></i>-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
-
-
-
                                             </tbody>
                                         </table>
-                                        </div>
+                                    </div>
 
 
                                         <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
@@ -562,18 +148,48 @@
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer" th:if="${deleted_user}">
+                                        <div id="delete_toast_up_layer" th:if="${userIsDeleted} == true">
                                             <div id="delete_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true" data-bs-delay="300">
-                                                <div id="successToast" class="toast alert-success" role="alert" aria-live="assertive" aria-atomic="true">
+                                                <div id="deleteSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                                                     <div class="toast-header delete_toast_header">
                                                         <strong class="me-auto">Success</strong>
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="toast-body" th:text="'User ' + ${deleted_user} + ' successfully deleted!'"></div>
+                                                    <div class="toast-body delete_toast_body" th:text="'User ' + ${deletedUser.firstName} + ' ' + ${deletedUser.lastName} + ' successfully deleted!'"></div>
 
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div id="create_toast_up_layer" th:if="${userIsCreated} == true">
+                                            <div id="create_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true">
+                                                <div id="createSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body create_toast_body" th:text="'User ' + ${createdUser.firstName} + ' ' + ${createdUser.lastName} + ' successfully created!'"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="update_toast_up_layer" th:if="${userIsCreated} == true">
+                                            <div id="update_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true">
+                                                <div id="updateSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header ">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body update_toast_body" th:text="'User ' + ${createdUser.firstName} + ' ' + ${createdUser.lastName} + ' successfully updated!'"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
 
 
                                     </div>
@@ -588,6 +204,9 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
+<!-- Add this in the head of your HTML file -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+
 <script th:src="@{/assets/libs/js/delet_update_confirmation.js}"></script>
 </body>
 </html>

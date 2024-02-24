@@ -32,54 +32,58 @@
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form class="row g-3 text-left">
+                                                <form th:object="${newUser}" th:action="@{/user/create}" method="post" class="row g-3 text-left">
                                                     <div class="col-md-6">
                                                         <label for="inputFirstName" class="form-label">First
                                                             Name</label>
-                                                        <input type="text" class="form-control" id="inputFirstName">
+                                                        <input type="text" th:field="*{firstName}" class="form-control" id="inputFirstName">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="inputLastName" class="form-label">Last Name</label>
-                                                        <input type="text" class="form-control" id="inputLastName">
+                                                        <input type="text" th:field="*{lastName}" class="form-control" id="inputLastName">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="inputEmail" class="form-label">Email</label>
-                                                        <input type="email" class="form-control" id="inputEmail"
+                                                        <input type="email" th:field="*{userName}" class="form-control" id="inputEmail"
                                                                required spellcheck="false">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="inputPhone" class="form-label">Phone</label>
-                                                        <input type="number" class="form-control" id="inputPhone">
+                                                        <input type="number" th:field="*{phone}"class="form-control" id="inputPhone">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="inputRole" class="form-label">Choose Role</label>
-                                                        <select id="inputRole" class="form-select">
-                                                            <option selected>Choose a Role</option>
-                                                            <option>Admin</option>
-                                                            <option>Manager</option>
-                                                            <option>Employee</option>
+                                                        <select id="inputRole" name="role" class="form-select">
+<!--                                                            <option selected>Choose a Role</option>-->
+                                                            <option th:each="role:${roles}" th:value="${role}" th:text="${role.description}"></option>
+<!--                                                            <option>Admin</option>-->
+<!--                                                            <option>Manager</option>-->
+<!--                                                            <option>Employee</option>-->
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="inputGender" class="form-label">Choose
                                                             Gender</label>
-                                                        <select id="inputGender" class="form-select">
-                                                            <option selected>Select Gender</option>
-                                                            <option>Male</option>
-                                                            <option>FeMale</option>
+                                                        <select id="inputGender" name="gender" class="form-select">
+<!--                                                            <option selected>Select Gender</option>-->
+                                                            <option th:each="gender:${genders}" th:value="${gender}" th:text="${gender.value}"></option>
+<!--                                                            <option>Male</option>-->
+<!--                                                            <option>FeMale</option>-->
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="inputUserStatus"
                                                                class="form-label">UserStatus</label>
-                                                        <select id="inputUserStatus" class="form-select">
-                                                            <option selected>Disabled</option>
-                                                            <option>Enabled</option>
+                                                        <select id="inputUserStatus" name="userStatus" class="form-select">
+                                                            <option th:each="status:${userStatuses}" th:value="${status.value}" th:text="${status.description}"></option>
+
+<!--                                                            <option selected>Disabled</option>-->
+<!--                                                            <option>Enabled</option>-->
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="password" class="form-label">Password</label>
-                                                        <input type="password" id="password" class="form-control"
+                                                        <input type="password" th:field="*{passWord}" id="password" class="form-control"
                                                                name="password">
 
                                                         <div class="user-create-password-toggle">
@@ -89,15 +93,15 @@
 
                                                     <div class="col-12">
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   id="userDefaultPassword">
-                                                            <label class="form-check-label" for="userDefaultPassword">Use
+                                                            <input class="form-check-input" th:field="*{useDefaultPassword}" type="checkbox"
+                                                                   id="useDefaultPassword">
+                                                            <label class="form-check-label" for="useDefaultPassword">Use
                                                                 Default Password(Etlas1234!)</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-md-6 col-lg-6">
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
+                                                            <input class="form-check-input" th:field="*{verifyUser}" type="checkbox"
                                                                    id="verifyUserEmail">
                                                             <label class="form-check-label" for="verifyUserEmail">Verify
                                                                 User By Email</label>
