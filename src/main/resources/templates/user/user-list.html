@@ -150,12 +150,12 @@
 
                                         <div id="delete_toast_up_layer" th:if="${userIsDeleted} == true">
                                             <div id="delete_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true" data-bs-delay="300">
-                                                <div id="deleteSuccessToast" class="toast alert-success" role="alert" aria-live="assertive" aria-atomic="true">
+                                                <div id="deleteSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                                                     <div class="toast-header delete_toast_header">
                                                         <strong class="me-auto">Success</strong>
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="toast-body" th:text="'User ' + ${deletedUser.firstName} + ' ' + ${deletedUser.lastName} + ' successfully deleted!'"></div>
+                                                    <div class="toast-body delete_toast_body" th:text="'User ' + ${deletedUser.firstName} + ' ' + ${deletedUser.lastName} + ' successfully deleted!'"></div>
 
                                                 </div>
                                             </div>
@@ -163,12 +163,26 @@
 
                                         <div id="create_toast_up_layer" th:if="${userIsCreated} == true">
                                             <div id="create_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true">
-                                                <div id="createSuccessToast" class="toast alert-success" role="alert" aria-live="assertive" aria-atomic="true">
-                                                    <div class="toast-header delete_toast_header">
+                                                <div id="createSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
                                                         <strong class="me-auto">Success</strong>
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="toast-body" th:text="'User ' + ${createdUser.firstName} + ' ' + ${createdUser.lastName} + ' successfully created!'"></div>
+                                                    <div class="toast-body create_toast_body" th:text="'User ' + ${createdUser.firstName} + ' ' + ${createdUser.lastName} + ' successfully created!'"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="update_toast_up_layer" th:if="${userIsCreated} == true">
+                                            <div id="update_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true">
+                                                <div id="updateSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header ">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body update_toast_body" th:text="'User ' + ${createdUser.firstName} + ' ' + ${createdUser.lastName} + ' successfully updated!'"></div>
 
                                                 </div>
                                             </div>

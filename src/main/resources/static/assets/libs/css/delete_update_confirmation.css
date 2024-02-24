@@ -1,17 +1,56 @@
-#create_toast_container{
-    z-index: 9999;
-    border: none;
-    background: transparent;
-}
-.delete_toast_header{
-    background: #f9d7db !important;
-    color: #58151c !important;
-}
-
 .delete_confirmation_popup img{
     width: 70px;
     height: auto;
 }
 .delete_confirmation_popup h5{
     text-align: center !important;
+}
+
+/* delete alert */
+
+#delete_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
+.delete_toast_header{
+    background: #f9d7da !important;
+    color: #58151c !important;
+}
+
+.delete_toast_body{
+    background: #faf1f2 !important;
+}
+
+/* create alert */
+
+#create_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
+.create_toast_header{
+    background: #d1e7de !important;
+    color: #664d03 !important;
+}
+
+
+.create_toast_body{
+    background: #eaf1ee !important;
+}
+
+/* update alert */
+
+#update_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
+.update_toast_header{
+    background: #fff3cd !important;
+    color: #664d03 !important;
+}
+
+.update_toast_body{
+    background: #faf7ee !important;
 }
