@@ -2,6 +2,7 @@ package com.etlas.dto;
 
 import com.etlas.enums.Gender;
 import com.etlas.enums.Role;
+import com.etlas.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

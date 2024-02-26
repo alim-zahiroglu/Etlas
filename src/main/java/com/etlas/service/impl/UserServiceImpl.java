@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,11 +71,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto saveUpdatedUser(UserDto userToUpdate) {
         UserDto oldUser = findByUsername(userToUpdate.getUserName());
-        System.out.println(userToUpdate.getPassWord());
-        if (userToUpdate.getPassWord() == null){
-            userToUpdate.setPassWord(passwordEncoder.encode(oldUser.getPassWord()));
-        }
-        else {
+        if (userToUpdate.getPassWord().isEmpty()) {
+            userToUpdate.setPassWord(oldUser.getPassWord());
+        }else {
             userToUpdate.setPassWord(passwordEncoder.encode(userToUpdate.getPassWord()));
         }
         userToUpdate.setId(oldUser.getId());

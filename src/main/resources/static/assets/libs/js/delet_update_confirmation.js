@@ -72,14 +72,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 300);  // 300 milliseconds = 0.3 second (delay before showing the toast)
 });
 
+// showing successfully update message
 document.addEventListener('DOMContentLoaded', function () {
-    const createSuccessToast = document.getElementById('createSuccessToast');
+    const updateSuccessToast = document.getElementById('updateSuccessToast');
     setTimeout(function () {
-        createSuccessToast.classList.add('show');
+        updateSuccessToast.classList.add('show');
 
         // Set timeout to hide the toast after 2 seconds
         setTimeout(function () {
-            createSuccessToast.classList.remove('show');
+            updateSuccessToast.classList.remove('show');
 
         }, 2500);  // 2500 milliseconds = 2.5 seconds (time the toast is visible)
     }, 300);  // 300 milliseconds = 0.3 second (delay before showing the toast)

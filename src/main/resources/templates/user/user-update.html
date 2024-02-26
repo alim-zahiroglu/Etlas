@@ -74,7 +74,7 @@
                                                     <div class="col-md-6">
                                                         <label for="inputUserStatus"
                                                                class="form-label">UserStatus</label>
-                                                        <select id="inputUserStatus" name="userStatus" class="form-select">
+                                                        <select id="inputUserStatus" th:field="*{enabled}" name="userStatus" class="form-select">
                                                             <option th:each="status:${userStatuses}" th:value="${status.value}" th:text="${status.description}"></option>
 
 <!--                                                            <option selected>Disabled</option>-->
