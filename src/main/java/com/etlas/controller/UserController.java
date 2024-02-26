@@ -34,6 +34,7 @@ public class UserController {
     @PostMapping("/create")
     public String saveUser(@ModelAttribute("userDto") UserDto userDto,
                            RedirectAttributes redirectAttributes){
+        System.out.println(userDto);
         UserDto createdUser = userService.createUser(userDto);
         redirectAttributes.addFlashAttribute("userIsCreated", true);
         redirectAttributes.addFlashAttribute("createdUser", createdUser);
@@ -57,5 +58,15 @@ public class UserController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("userStatuses", UserStatus.values());
         return "user/user-update";
+    }
+
+    @PostMapping("/update")
+    public String saveUpdatedUser(@ModelAttribute("updatedUser") UserDto updatedUser,
+                           RedirectAttributes redirectAttributes){
+        System.out.println(updatedUser);
+        UserDto createdUser = userService.saveUpdatedUser(updatedUser);
+        redirectAttributes.addFlashAttribute("userIsUpdated", true);
+        redirectAttributes.addFlashAttribute("updatedUser", createdUser);
+        return "redirect:/user/list";
     }
 }

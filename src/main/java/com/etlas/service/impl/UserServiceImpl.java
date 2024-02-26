@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
         userDto.setPassWord(passwordEncoder.encode(userDto.getPassWord()));
         User savedUser = repository.save(mapper.convert(userDto,new User()));
         return mapper.convert(savedUser, new UserDto());
+//        todo send verification email if user verify is ture
 
     }
 
@@ -62,7 +63,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByUserName(String userName) {
         User user = repository.findByUserName(userName);
-        if (user ==null) throw new NoSuchElementException();
+        if (user == null) throw new NoSuchElementException();
         return mapper.convert(user, new UserDto());
+    }
+
+    @Override
+    public UserDto saveUpdatedUser(UserDto userToUpdate) {
+        UserDto oldUser = findByUsername(userToUpdate.getUserName());
+        System.out.println(userToUpdate.getPassWord());
+        if (userToUpdate.getPassWord() == null){
+            userToUpdate.setPassWord(passwordEncoder.encode(oldUser.getPassWord()));
+        }
+        else {
+            userToUpdate.setPassWord(passwordEncoder.encode(userToUpdate.getPassWord()));
+        }
+        userToUpdate.setId(oldUser.getId());
+        User updatedUser = repository.save(mapper.convert(userToUpdate, new User()));
+        return mapper.convert(updatedUser, new UserDto());
+//        todo send verification email if user verify is ture
     }
 }

@@ -13,4 +13,6 @@ public interface UserService {
     List<UserDto> findAllUsers();
 
     UserDto getUserByUserName(String userName);
+
+    UserDto saveUpdatedUser(UserDto updatedUser);
 }

@@ -1,22 +1,35 @@
+
 $(document).ready(function () {
     // Get the elements
-    var passwordInput = $('#password');
-    var defaultPasswordCheckbox = $('#useDefaultPassword');
+    const passwordInput = $('#password');
+    const currentPasswordCheckbox = $('#useCurrentPassword');
+    const defaultPasswordCheckbox = $('#useDefaultPassword');
 
     // Set the initial state
-    if (defaultPasswordCheckbox.is(':checked')) {
-        passwordInput.val('Etlas1234!').prop('readonly', true);
+    if (currentPasswordCheckbox.is(':checked')) {
+        passwordInput.val(null).prop('readonly', true);
+        defaultPasswordCheckbox.prop('checked', false);
     } else {
         passwordInput.val('').prop('readonly', false);
     }
 
-    // Handle checkbox change
+    // Handle checkbox change for currentPasswordCheckbox
+    currentPasswordCheckbox.change(function () {
+        if ($(this).is(':checked')) {
+            passwordInput.val(null).prop('readonly', true);
+            defaultPasswordCheckbox.prop('checked', false);
+        } else {
+            passwordInput.val('').prop('readonly', false);
+        }
+    });
+
+    // Handle checkbox change for defaultPasswordCheckbox
     defaultPasswordCheckbox.change(function () {
         if ($(this).is(':checked')) {
             passwordInput.val('Etlas1234!').prop('readonly', true);
+            currentPasswordCheckbox.prop('checked', false);
         } else {
             passwordInput.val('').prop('readonly', false);
         }
     });
 });
-

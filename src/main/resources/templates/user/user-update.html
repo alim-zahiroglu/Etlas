@@ -93,10 +93,18 @@
 
                                                     <div class="col-12">
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" th:field="*{useDefaultPassword}" type="checkbox"
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   id="useCurrentPassword">
+                                                            <label class="form-check-label" for="useCurrentPassword">
+                                                                User Current Password</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
                                                                    id="useDefaultPassword">
-                                                            <label class="form-check-label" for="useDefaultPassword">Use
-                                                                Default Password(Etlas1234!)</label>
+                                                            <label class="form-check-label" for="useDefaultPassword">
+                                                                Use Default Password(Etlas1234!)</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-md-6 col-lg-6">
