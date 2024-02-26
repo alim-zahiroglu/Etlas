@@ -66,6 +66,24 @@
     background: #22c55f !important;
     font-weight: bold !important;
 }
+
+.update-page-update_button{
+    color: #fff!important;
+    font-weight: bold !important;
+    background: #f8a526 !important;
+
+}
+
+.update-page-update_button:hover {
+    color: #fff!important;
+    font-weight: bold !important;
+    background: #d98404 !important;
+}
+.update-page-update_button:active {
+    background: #f8a526 !important;
+    font-weight: bold !important;
+}
+
 .dropdown-menu-custom-css img{
     max-height: 30px !important;
     height: auto !important;

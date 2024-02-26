@@ -48,4 +48,23 @@ public class UserController {
         redirectAttributes.addFlashAttribute("deletedUser", deletedUser);
         return "redirect:/user/list";
     }
+
+    @GetMapping("/update/{userName}")
+    public String updateUser(@PathVariable("userName") String userName, Model model){
+        UserDto userToBeUpdate = userService.getUserByUserName(userName);
+        model.addAttribute("userToBeUpdate",userToBeUpdate);
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("genders", Gender.values());
+        model.addAttribute("userStatuses", UserStatus.values());
+        return "user/user-update";
+    }
+
+    @PostMapping("/update")
+    public String saveUpdatedUser(@ModelAttribute("updatedUser") UserDto updatedUser,
+                           RedirectAttributes redirectAttributes){
+        UserDto createdUser = userService.saveUpdatedUser(updatedUser);
+        redirectAttributes.addFlashAttribute("userIsUpdated", true);
+        redirectAttributes.addFlashAttribute("updatedUser", createdUser);
+        return "redirect:/user/list";
+    }
 }

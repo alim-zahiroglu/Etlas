@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
         userDto.setPassWord(passwordEncoder.encode(userDto.getPassWord()));
         User savedUser = repository.save(mapper.convert(userDto,new User()));
         return mapper.convert(savedUser, new UserDto());
+//        todo send verification email if user verify is ture
 
     }
 
@@ -56,5 +59,26 @@ public class UserServiceImpl implements UserService {
         return repository.findAllByIsDeleted(false).stream()
                 .map(user -> mapper.convert(user,new UserDto()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto getUserByUserName(String userName) {
+        User user = repository.findByUserName(userName);
+        if (user == null) throw new NoSuchElementException();
+        return mapper.convert(user, new UserDto());
+    }
+
+    @Override
+    public UserDto saveUpdatedUser(UserDto userToUpdate) {
+        UserDto oldUser = findByUsername(userToUpdate.getUserName());
+        if (userToUpdate.getPassWord().isEmpty()) {
+            userToUpdate.setPassWord(oldUser.getPassWord());
+        }else {
+            userToUpdate.setPassWord(passwordEncoder.encode(userToUpdate.getPassWord()));
+        }
+        userToUpdate.setId(oldUser.getId());
+        User updatedUser = repository.save(mapper.convert(userToUpdate, new User()));
+        return mapper.convert(updatedUser, new UserDto());
+//        todo send verification email if user verify is ture
     }
 }

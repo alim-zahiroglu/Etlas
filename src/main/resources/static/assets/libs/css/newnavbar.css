@@ -137,7 +137,7 @@ a.sidebar-link:hover{
     padding-bottom: 1px;
 }
 
-.sidebar-link[data-bs-toggle="collapse"]::after {
+.sidebar-link[data-toggle="collapse"]::after {
     border: solid;
     border-width: 0 .075rem .075rem 0;
     content: "";
@@ -150,7 +150,7 @@ a.sidebar-link:hover{
     transition: all .2s ease-out;
 }
 
-.sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+.sidebar-link[data-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
     transition: all .2s ease-out;
 }

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <body>
 <div th:fragment="left-sidebar">
@@ -16,48 +14,61 @@
                     </div>
                     <ul class="sidebar-nav text-left">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-list pe-2"></i>
-                                Dashboard
+                            <a href="#" class="sidebar-link collapsed" data-target="#tickets" data-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-plane"></i>
+                                Tickets
                             </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
-                               aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>
-                                Pages
-                            </a>
-                            <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <ul id="tickets" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link sub-item">Page 1</a>
+                                    <a href="#" class="sidebar-link sub-item">Tickets 1</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Page 2</a>
+                                    <a href="#" class="sidebar-link">Tickets 2</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-target="#visa" data-toggle="collapse"
+                               aria-expanded="false"><i class="fa-brands fa-cc-visa"></i>
+                                Visa
+                            </a>
+                            <ul id="visa" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Visa 1</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Visa 2</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Visa 3</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-bs-target="#posts" data-bs-toggle="collapse"
-                               aria-expanded="false"><i class="fa-solid fa-sliders pe-2"></i>
-                                Posts
+                            <a href="#" class="sidebar-link collapsed" data-target="#Transactions" data-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-money-check-dollar"></i>
+                                Transactions
                             </a>
-                            <ul id="posts" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <ul id="Transactions" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Post 1</a>
+                                    <a href="#" class="sidebar-link">Transactions 1</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Post 2</a>
+                                    <a href="#" class="sidebar-link">Transactions 2</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Post 3</a>
+                                    <a href="#" class="sidebar-link">Transactions 3</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-bs-target="#users" data-bs-toggle="collapse"
+                            <a href="#" class="sidebar-link collapsed" data-target="#users" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-user-group pe-2"></i>
                                 Users
                             </a>
-                            <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
                                     <a th:href="@{/user/create}" class="sidebar-link">User Create</a>
                                 </li>
@@ -66,26 +77,33 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item pb-3">
-                            <a href="#" class="sidebar-link collapsed" data-bs-target="#multi" data-bs-toggle="collapse"
-                               aria-expanded="false"><i class="fa-solid fa-share-nodes pe-2"></i>
-                                Multi Dropdown
-                            </a>
-                            <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link collapsed" data-bs-target="#level-1"
-                                       data-bs-toggle="collapse" aria-expanded="false">Level 1</a>
-                                    <ul id="level-1" class="sidebar-dropdown list-unstyled collapse">
-                                        <li class="sidebar-item">
-                                            <a href="#" class="sidebar-link">Level 1.1</a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a href="#" class="sidebar-link">Level 1.2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+
+
+<!--                        <li class="sidebar-item pb-3">-->
+<!--                            <a href="#" class="sidebar-link collapsed" data-bs-target="#multi" data-bs-toggle="collapse"-->
+<!--                               aria-expanded="false"><i class="fa-solid fa-share-nodes pe-2"></i>-->
+<!--                                Multi Dropdown-->
+<!--                            </a>-->
+<!--                            <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">-->
+<!--                                <li class="sidebar-item">-->
+<!--                                    <a href="#" class="sidebar-link collapsed" data-bs-target="#level-1"-->
+<!--                                       data-bs-toggle="collapse" aria-expanded="false">Level 1</a>-->
+<!--                                    <ul id="level-1" class="sidebar-dropdown list-unstyled collapse">-->
+<!--                                        <li class="sidebar-item">-->
+<!--                                            <a href="#" class="sidebar-link">Level 1.1</a>-->
+<!--                                        </li>-->
+<!--                                        <li class="sidebar-item">-->
+<!--                                            <a href="#" class="sidebar-link">Level 1.2</a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+
+
+
+
                     </ul>
 
                     <nav class="navbar navbar-dark nav-bar-bottom">
