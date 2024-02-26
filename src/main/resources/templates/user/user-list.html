@@ -155,8 +155,9 @@
                                                         <strong class="me-auto">Success</strong>
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="toast-body delete_toast_body" th:text="'User ' + ${deletedUser.firstName} + ' ' + ${deletedUser.lastName} + ' successfully deleted!'"></div>
-
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                        User <strong style="color: red" th:text="${deletedUser.firstName + ' ' + deletedUser.lastName}"></strong> successfully deleted!
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,29 +169,28 @@
                                                         <strong class="me-auto">Success</strong>
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="toast-body create_toast_body" th:text="'User ' + ${createdUser.firstName} + ' ' + ${createdUser.lastName} + ' successfully created!'"></div>
-
+                                                    <div class="toast-body create_toast_body" th:inline="text">
+                                                        User <strong style="color: green" th:text="${createdUser.firstName + ' ' + createdUser.lastName}"></strong> successfully created!
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
 
-                                        <div id="update_toast_up_layer" th:if="${userIsCreated} == true">
+                                        <div id="update_toast_up_layer" th:if="${userIsUpdated} == true">
                                             <div id="update_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-bs-autohide="true">
                                                 <div id="updateSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                                                     <div class="toast-header ">
                                                         <strong class="me-auto">Success</strong>
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="toast-body update_toast_body" th:text="'User ' + ${createdUser.firstName} + ' ' + ${createdUser.lastName} + ' successfully updated!'"></div>
+                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                        User <strong style="color: #fa9803" th:text="${updatedUser.firstName + ' ' + updatedUser.lastName}"></strong> successfully updated!
+                                                    </div>
 
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
 
                                     </div>
                                 </div>
@@ -204,9 +204,6 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<!-- Add this in the head of your HTML file -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-
 <script th:src="@{/assets/libs/js/delet_update_confirmation.js}"></script>
 </body>
 </html>

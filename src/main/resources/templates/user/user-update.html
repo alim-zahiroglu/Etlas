@@ -86,7 +86,7 @@
                                                         <input type="password" th:field="*{passWord}" id="password" class="form-control"
                                                                name="password">
 
-                                                        <div class="user-create-password-toggle">
+                                                        <div class="user-create-password-toggle" style="background: transparent">
                                                             <i id="password-toggle-icon" class="far fa-eye-slash"></i>
                                                         </div>
                                                     </div>
@@ -127,5 +127,7 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
+<script th:src="@{/assets/libs/js/use_default_password.js}"></script>
+<link rel="stylesheet" th:href="@{/assets/libs/css/for-phone-input.css}"/>
 </body>
 </html>

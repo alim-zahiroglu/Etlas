@@ -9,23 +9,32 @@ deleteButtons.forEach(button => {
 });
 
 function showConfirmationModal(user, username) {
+    // Disable body scroll when modal is open
     $('body').css('overflow', 'hidden');
 
-    document.getElementById('confirmationUsername').innerText = `Are you sure you want to delete user '${user}'?`;
+    // Set the confirmation message with styled user
+    const confirmationUsernameElement = document.getElementById('confirmationUsername');
+    confirmationUsernameElement.innerHTML = `Are you sure you want to delete user <strong style="color: red;">'${user}'</strong>?`;
+
+    // Show the confirmation modal
     const confirmationModal = $('#confirmationModal').modal('show');
 
     // Add an event listener for the OK button in the modal
     document.getElementById('confirmDelete').addEventListener('click', function () {
+        // Redirect to the delete URL
         window.location.href = `/user/delete?username=${username}`;
     });
 
     // Add an event listener for modal close events (when Cancel or close button is clicked)
     confirmationModal.on('hidden.bs.modal', function () {
-        // Manually remove the modal-open class and modal-backdrop
+        // Enable body scroll
         $('body').css('overflow', 'auto');
+
+        // Remove the event listener to prevent memory leaks
         document.getElementById('confirmDelete').removeEventListener('click', confirmDeleteAction);
     });
 }
+
 
 function closeConfirmationModal() {
     $('body').css('overflow', 'auto');
@@ -44,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
             deleteSuccessToast.classList.remove('show');
 
-        }, 2000);  // 2000 milliseconds = 2 seconds (time the toast is visible)
-    }, 300);  // 1000 milliseconds = 1 second (delay before showing the toast)
+        }, 2500);  // 2000 milliseconds = 2.5 seconds (time the toast is visible)
+    }, 300);  // 1000 milliseconds = 0.3 second (delay before showing the toast)
 });
 
 // showing successfully create message
@@ -59,6 +68,19 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
             createSuccessToast.classList.remove('show');
 
-        }, 2000);  // 2000 milliseconds = 2 seconds (time the toast is visible)
-    }, 300);  // 1000 milliseconds = 1 second (delay before showing the toast)
+        }, 2500);  // 2500 milliseconds = 2.5 seconds (time the toast is visible)
+    }, 300);  // 300 milliseconds = 0.3 second (delay before showing the toast)
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const createSuccessToast = document.getElementById('createSuccessToast');
+    setTimeout(function () {
+        createSuccessToast.classList.add('show');
+
+        // Set timeout to hide the toast after 2 seconds
+        setTimeout(function () {
+            createSuccessToast.classList.remove('show');
+
+        }, 2500);  // 2500 milliseconds = 2.5 seconds (time the toast is visible)
+    }, 300);  // 300 milliseconds = 0.3 second (delay before showing the toast)
 });

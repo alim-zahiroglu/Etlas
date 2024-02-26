@@ -6,7 +6,7 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.UserRepository;
 import com.etlas.service.UserService;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final MapperUtil mapper;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto createUser(UserDto userDto) {
-//        userDto.setPassWord(passwordEncoder.encode(userDto.getPassWord()));
+        userDto.setPassWord(passwordEncoder.encode(userDto.getPassWord()));
         User savedUser = repository.save(mapper.convert(userDto,new User()));
         return mapper.convert(savedUser, new UserDto());
 
