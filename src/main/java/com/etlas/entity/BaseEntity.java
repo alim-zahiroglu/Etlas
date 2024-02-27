@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private boolean isDeleted = false;
 
     @Column(nullable = false, updatable = false)

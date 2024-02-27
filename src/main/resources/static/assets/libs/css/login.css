@@ -116,7 +116,7 @@ input:-webkit-autofill {
   font-size: 18px;
 }
 .user-create-password-toggle{
-  background: white;
+  background: transparent;
   padding: 5px 10px 5px 15px;
   position: absolute;
   top: 73%; /* Adjust vertical positioning */
@@ -124,6 +124,9 @@ input:-webkit-autofill {
   transform: translateY(-50%); /* Vertically center the icon */
   cursor: pointer;
   font-size: 16px;
+}
+.password-toggle-up{
+  top: 50px;
 }
 
 .reset-password a {
