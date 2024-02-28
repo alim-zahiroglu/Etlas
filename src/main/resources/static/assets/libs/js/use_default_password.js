@@ -16,6 +16,8 @@ $(document).ready(function () {
         if ($(this).is(':checked')) {
             passwordInput.val("").prop('readonly', true);
             defaultPasswordCheckbox.prop('checked', false);
+        } else {
+            passwordInput.val("").prop('readonly', false);
         }
     });
 

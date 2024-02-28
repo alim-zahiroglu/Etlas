@@ -32,43 +32,84 @@
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form th:object="${userToBeUpdate}" th:action="@{/user/update}" method="post" class="row g-3 text-left">
-                                                    <div class="col-md-6">
-                                                        <label for="inputFirstName" class="form-label">First
-                                                            Name</label>
-                                                        <input type="text" th:field="*{firstName}" class="form-control" id="inputFirstName">
+                                                <form th:object="${userToBeUpdate}" th:action="@{/user/update/{userId}(userId = ${userToBeUpdate.id})}" method="post" class="row g-3 text-left">
+
+
+                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputFirstName" class="form-label">First Name</label>
+                                                            <input type="text" th:field="*{firstName}" class="form-control" id="inputFirstName">
+                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('firstName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('firstName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label for="inputLastName" class="form-label">Last Name</label>
-                                                        <input type="text" th:field="*{lastName}" class="form-control" id="inputLastName">
+
+
+                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputFirstName" class="form-label">Last Name</label>
+                                                            <input type="text" th:field="*{lastName}" class="form-control" id="inputLastName">
+                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('lastName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('lastName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label for="inputEmail" class="form-label">Email</label>
-                                                        <input type="email" th:field="*{userName}" readonly class="form-control" id="inputEmail"
-                                                               required spellcheck="false">
+
+                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputEmail" class="form-label">Email</label>
+                                                            <input type="email" th:field="*{userName}" class="form-control" id="inputEmail"
+                                                                   required spellcheck="false" placeholder="ex: example@sever.com">
+
+                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('userName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('userName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label for="inputPhone" class="form-label">Phone</label>
-                                                        <input type="number" th:field="*{phone}"class="form-control" id="inputPhone">
+
+
+                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputPhone" class="form-label">Phone</label>
+                                                            <input type="number" th:field="*{phone}"class="form-control"
+                                                                   placeholder="ex: 05552223344" id="inputPhone">
+                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('phone')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('phone')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
                                                     <div class="col-md-6">
                                                         <label for="inputRole" class="form-label">Choose Role</label>
                                                         <select id="inputRole" name="role" class="form-select">
-<!--                                                            <option selected>Choose a Role</option>-->
+                                                            <!--                                                            <option selected>Choose a Role</option>-->
                                                             <option th:each="role:${roles}" th:value="${role}" th:text="${role.description}"></option>
-<!--                                                            <option>Admin</option>-->
-<!--                                                            <option>Manager</option>-->
-<!--                                                            <option>Employee</option>-->
+                                                            <!--                                                            <option>Admin</option>-->
+                                                            <!--                                                            <option>Manager</option>-->
+                                                            <!--                                                            <option>Employee</option>-->
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="inputGender" class="form-label">Choose
                                                             Gender</label>
                                                         <select id="inputGender" name="gender" class="form-select">
-<!--                                                            <option selected>Select Gender</option>-->
+                                                            <!--                                                            <option selected>Select Gender</option>-->
                                                             <option th:each="gender:${genders}" th:value="${gender}" th:text="${gender.value}"></option>
-<!--                                                            <option>Male</option>-->
-<!--                                                            <option>FeMale</option>-->
+                                                            <!--                                                            <option>Male</option>-->
+                                                            <!--                                                            <option>FeMale</option>-->
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
@@ -77,23 +118,34 @@
                                                         <select id="inputUserStatus" th:field="*{enabled}" name="userStatus" class="form-select">
                                                             <option th:each="status:${userStatuses}" th:value="${status.value}" th:text="${status.description}"></option>
 
-<!--                                                            <option selected>Disabled</option>-->
-<!--                                                            <option>Enabled</option>-->
+                                                            <!--                                                            <option selected>Disabled</option>-->
+                                                            <!--                                                            <option>Enabled</option>-->
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label for="password" class="form-label">Password</label>
-                                                        <input type="password" th:field="*{passWord}" id="password" class="form-control"
-                                                               name="password">
 
-                                                        <div class="user-create-password-toggle" style="background: transparent">
-                                                            <i id="password-toggle-icon" class="far fa-eye-slash"></i>
+                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('passWord')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="password" class="form-label">Password</label>
+                                                            <input type="password" th:field="*{passWord}" id="password" class="form-control" name="password" style="padding-right: 45px">
+
+                                                            <div class="user-create-password-toggle text-right"
+                                                                 th:classappend="${#fields.hasErrors('passWord')} ? 'password-toggle-up' : ''">
+                                                                <i id="password-toggle-icon" class="far fa-eye-slash"></i>
+                                                            </div>
+
+                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('passWord')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('passWord')}" th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
 
+
+
                                                     <div class="col-12">
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
+                                                            <input class="form-check-input" th:field="*{useCurrentPassword}" type="checkbox"
                                                                    id="useCurrentPassword">
                                                             <label class="form-check-label" for="useCurrentPassword">
                                                                 User Current Password</label>
@@ -101,7 +153,7 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
+                                                            <input class="form-check-input" th:field="*{useDefaultPassword}" type="checkbox"
                                                                    id="useDefaultPassword">
                                                             <label class="form-check-label" for="useDefaultPassword">
                                                                 Use Default Password(Etlas1234!)</label>

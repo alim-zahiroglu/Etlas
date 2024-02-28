@@ -5,9 +5,11 @@ import com.etlas.enums.Gender;
 import com.etlas.enums.Role;
 import com.etlas.enums.UserStatus;
 import com.etlas.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,8 +34,15 @@ public class UserController {
         return "/user/user-create";
     }
     @PostMapping("/create")
-    public String saveUser(@ModelAttribute("userDto") UserDto userDto,
-                           RedirectAttributes redirectAttributes){
+    public String saveUser(@Valid @ModelAttribute("newUser") UserDto userDto, BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes, Model model){
+        bindingResult = userService.validateNewUser(userDto,bindingResult);
+        if (bindingResult.hasErrors()){
+            model.addAttribute("roles", Role.values());
+            model.addAttribute("genders", Gender.values());
+            model.addAttribute("userStatuses", UserStatus.values());
+            return "user/user-create";
+        }
         UserDto createdUser = userService.createUser(userDto);
         redirectAttributes.addFlashAttribute("userIsCreated", true);
         redirectAttributes.addFlashAttribute("createdUser", createdUser);
@@ -59,10 +68,17 @@ public class UserController {
         return "user/user-update";
     }
 
-    @PostMapping("/update")
-    public String saveUpdatedUser(@ModelAttribute("updatedUser") UserDto updatedUser,
-                           RedirectAttributes redirectAttributes){
-        UserDto createdUser = userService.saveUpdatedUser(updatedUser);
+    @PostMapping("/update/{id}")
+    public String saveUpdatedUser(@Valid @ModelAttribute("userToBeUpdate") UserDto userToBeUpdate, BindingResult bindingResult,
+                                  Model model, RedirectAttributes redirectAttributes){
+        bindingResult = userService.validateUpdatedUser(userToBeUpdate,bindingResult);
+        if (bindingResult.hasErrors()){
+            model.addAttribute("roles", Role.values());
+            model.addAttribute("genders", Gender.values());
+            model.addAttribute("userStatuses", UserStatus.values());
+            return "user/user-update";
+        }
+        UserDto createdUser = userService.saveUpdatedUser(userToBeUpdate);
         redirectAttributes.addFlashAttribute("userIsUpdated", true);
         redirectAttributes.addFlashAttribute("updatedUser", createdUser);
         return "redirect:/user/list";

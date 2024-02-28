@@ -8,11 +8,13 @@ import com.etlas.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,8 +29,14 @@ public class UserServiceImpl implements UserService {
         userDto.setPassWord(passwordEncoder.encode(userDto.getPassWord()));
         User savedUser = repository.save(mapper.convert(userDto,new User()));
         return mapper.convert(savedUser, new UserDto());
-//        todo send verification email if user verify is ture
+//        TODO send verification email if user verify is ture
 
+    }
+
+    @Override
+    public UserDto findById(long id) {
+        User user =  repository.findById(id).orElseThrow(NoSuchElementException::new);
+        return mapper.convert(user,new UserDto());
     }
 
     @Override
@@ -70,15 +78,48 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto saveUpdatedUser(UserDto userToUpdate) {
-        UserDto oldUser = findByUsername(userToUpdate.getUserName());
+        UserDto oldUser = findById(userToUpdate.getId());
         if (userToUpdate.getPassWord().isEmpty()) {
             userToUpdate.setPassWord(oldUser.getPassWord());
         }else {
             userToUpdate.setPassWord(passwordEncoder.encode(userToUpdate.getPassWord()));
         }
-        userToUpdate.setId(oldUser.getId());
         User updatedUser = repository.save(mapper.convert(userToUpdate, new User()));
         return mapper.convert(updatedUser, new UserDto());
-//        todo send verification email if user verify is ture
+//        TODO send verification email if user verify is ture
+    }
+
+    @Override
+    public BindingResult validateNewUser(UserDto userDto, BindingResult bindingResult) {
+        boolean isUserNameExist = repository.existsByUserName(userDto.getUserName());
+        if (isUserNameExist){
+            bindingResult.addError(new FieldError("userDto", "userName", "this user already exist"));
+        }
+        return bindingResult;
+    }
+
+    @Override
+    public BindingResult validateUpdatedUser(UserDto userToBeUpdate, BindingResult bindingResult) {
+        User oldUser = repository.findById(userToBeUpdate.getId()).orElseThrow(NoSuchElementException::new);
+
+        if (!oldUser.getUserName().equals(userToBeUpdate.getUserName())) {
+            boolean isUserExist = repository.existsByUserName(userToBeUpdate.getUserName());
+            if (isUserExist) {
+                bindingResult.addError(new FieldError("userToBeUpdate", "userName", "this user already exist"));
+            }
+        }
+        if (userToBeUpdate.isUseCurrentPassword()){
+            List<FieldError> errorsToKeep = bindingResult.getFieldErrors().stream()
+                    .filter(fer -> !fer.getField().equals("passWord"))
+                    .toList();
+            UserDto userDto = new UserDto();
+            BindingResult newBindingResult = new BeanPropertyBindingResult(userDto,"userDto");
+
+            for (FieldError fieldError : errorsToKeep) {
+                newBindingResult.addError(fieldError);
+            }
+            return newBindingResult;
+        }
+        return bindingResult;
     }
 }

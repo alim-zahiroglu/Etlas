@@ -1,5 +1,7 @@
 package com.etlas.service;
 import com.etlas.dto.UserDto;
+import org.springframework.validation.BindingResult;
+
 import java.util.List;
 
 public interface UserService {
@@ -15,4 +17,10 @@ public interface UserService {
     UserDto getUserByUserName(String userName);
 
     UserDto saveUpdatedUser(UserDto updatedUser);
+
+    BindingResult validateUpdatedUser(UserDto userToBeUpdate, BindingResult bindingResult);
+
+    UserDto findById(long id);
+
+    BindingResult validateNewUser(UserDto userDto, BindingResult bindingResult);
 }
