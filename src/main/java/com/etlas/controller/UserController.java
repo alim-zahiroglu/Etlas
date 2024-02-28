@@ -38,6 +38,7 @@ public class UserController {
                            RedirectAttributes redirectAttributes, Model model){
         bindingResult = userService.validateNewUser(userDto,bindingResult);
         if (bindingResult.hasErrors()){
+            userDto.setUseDefaultPassword(false);
             model.addAttribute("roles", Role.values());
             model.addAttribute("genders", Gender.values());
             model.addAttribute("userStatuses", UserStatus.values());
@@ -73,6 +74,8 @@ public class UserController {
                                   Model model, RedirectAttributes redirectAttributes){
         bindingResult = userService.validateUpdatedUser(userToBeUpdate,bindingResult);
         if (bindingResult.hasErrors()){
+            userToBeUpdate.setUseDefaultPassword(false);
+            userToBeUpdate.setUseCurrentPassword(false);
             model.addAttribute("roles", Role.values());
             model.addAttribute("genders", Gender.values());
             model.addAttribute("userStatuses", UserStatus.values());
