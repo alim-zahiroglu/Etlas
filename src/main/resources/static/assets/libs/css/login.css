@@ -125,6 +125,18 @@ input:-webkit-autofill {
   cursor: pointer;
   font-size: 16px;
 }
+.customer-create-country-select{
+  background: transparent;
+  padding: 0 7px 0 0;
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 15px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 12px;
+}
+
+
 .password-toggle-up{
   top: 50px;
 }
