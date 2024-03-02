@@ -2,7 +2,6 @@ package com.etlas.dto;
 
 import com.etlas.enums.Gender;
 import com.etlas.enums.Role;
-import com.etlas.enums.UserStatus;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,13 +13,13 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private long id;
 
+    @NotBlank(message = "first name shouldn't be blank")
     @Size(min = 2, max = 50, message = "first name must be 2~50 character long")
     private String firstName;
 
-
+    @NotBlank(message = "last name shouldn't be blank")
     @Size(min = 2, max = 50, message = "last name must be 2~50 character long")
     private String lastName;
-
 
     @Email(message = "please enter a valid email")
     private String userName;

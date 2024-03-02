@@ -20,10 +20,16 @@
                             </a>
                             <ul id="tickets" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link sub-item">Tickets 1</a>
+                                    <a th:href="@{/ticket/list}" class="sidebar-link sub-item">Ticket List</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Tickets 2</a>
+                                    <a th:href="@{/ticket/create}" class="sidebar-link">Ticket Create</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a th:href="@{/customer/list}" class="sidebar-link">Customer List</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a th:href="@{/customer/create}" class="sidebar-link">Customer Create</a>
                                 </li>
                             </ul>
                         </li>
