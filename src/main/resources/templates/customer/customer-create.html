@@ -105,27 +105,27 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('OfficePhone')} ? 'error' : ''" id="officePhoneSection">
+                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('officeNumber')} ? 'error' : ''" id="officePhoneSection">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputOfficePhone" class="form-label">Office Phone</label>
-                                                            <input type="number" th:field="*{phone}" class="form-control" id="inputOfficePhone">
-                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('OfficePhone')}">
+                                                            <input type="number" th:field="*{officeNumber}" class="form-control" id="inputOfficePhone">
+                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('officeNumber')}">
                                                                 <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('OfficePhone')}"
+                                                                    <li th:each="err : ${#fields.errors('officeNumber')}"
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('phone')} ? 'error' : ''">
+                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'error' : ''">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputPhone" class="form-label">Phone</label>
-                                                            <input type="number" th:field="*{phone}" class="form-control"
+                                                            <input type="number" th:field="*{phoneNumber}" class="form-control"
                                                                    placeholder="ex: 05552223344" id="inputPhone">
-                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('phone')}">
+                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('phoneNumber')}">
                                                                 <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('phone')}"
+                                                                    <li th:each="err : ${#fields.errors('phoneNumber')}"
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
@@ -136,9 +136,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group mb-0">
                                                             <label for="mySelectForCountry" class="form-label d-block">Country</label>
-                                                            <select id="mySelectForCountry" class="form-control" style="width: 100%">
+                                                            <select id="mySelectForCountry" th:field="*{country}" class="form-control" style="width: 100%">
                                                                 <option th:each="country:${countriesTr}" th:value="${country}"
-                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}" th:text="${country.getName()}"></option>
+                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}" th:text="${country.name()}"></option>
 <!--                                                                <option value="option1">Option1</option>-->
 <!--                                                                <option value="option2">Option 2</option>-->
 <!--                                                                <option value="option3">Option 3</option>-->

@@ -54,3 +54,12 @@
 .update_toast_body{
     background: #faf7ee !important;
 }
+
+/* Add these styles to your CSS file */
+.company-row {
+    background-color: #f0faf0;
+}
+
+.individual-row {
+    /* Add any other styles for individual rows if needed */
+}

@@ -1,5 +1,6 @@
 package com.etlas.dto;
 
+import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.enums.Gender;
 import jakarta.persistence.Transient;
@@ -34,9 +35,10 @@ public class CustomerDto {
     private String email;
 
     @NotBlank(message = "Please enter the phone number\n ex: 05552223344")
-    private String phone;
-    private String OfficePhone;
+    private String phoneNumber;
+    private String officeNumber;
 
+    private CountriesTr country;
     private Gender gender;
 
     private CustomerType customerType;

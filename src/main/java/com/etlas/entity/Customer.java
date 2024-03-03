@@ -1,18 +1,14 @@
 package com.etlas.entity;
 
+import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.enums.Gender;
-import com.etlas.enums.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
+
 
 import java.math.BigDecimal;
 
@@ -34,10 +30,13 @@ public class Customer extends BaseEntity{
     private String email;
 
 //    @Column(unique = true)
-    private String phone;
+    private String phoneNumber;
 
 //    @Column(unique = true)
-    private String OfficePhone;
+    private String officeNumber;
+
+    @Enumerated(EnumType.STRING)
+    private CountriesTr country;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

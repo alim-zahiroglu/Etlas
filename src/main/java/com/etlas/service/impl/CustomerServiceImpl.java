@@ -48,6 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDto adjustNewCustomerIndividual(CustomerDto newCompany){
         newCompany.setCustomerType(CustomerType.INDIVIDUAL);
         newCompany.setCompanyName(null);
+        newCompany.setOfficeNumber(null);
         return newCompany;
     }
 }
