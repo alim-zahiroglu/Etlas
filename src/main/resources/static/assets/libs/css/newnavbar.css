@@ -83,7 +83,7 @@ li {
 /* Sidebar Elements Style */
 
 .sidebar-logo {
-    padding: 1.4rem 0;
+    padding: 1.4rem 0 1rem 0;
     align-content: center;
     text-align: center;
 }
@@ -112,12 +112,12 @@ li {
     flex-grow: 1;
     list-style: none;
     margin-bottom: 0;
-    padding-left: 0;
+    padding-left: 4px;
     margin-left: 0;
 }
 
 a.sidebar-link {
-    padding: .625rem 1.625rem;
+    padding: .625rem 1.225rem;
     color: #e9ecef;
     position: relative;
     display: block;

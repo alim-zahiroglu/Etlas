@@ -165,6 +165,8 @@
 .custom_table_header th {
     color: white !important;
     background-color: #117dc0 !important;
+    /* prevent the header text into two lines when the window is resized */
+    white-space: nowrap !important;
 }
 
 /* Add any other styles you need for the table */
