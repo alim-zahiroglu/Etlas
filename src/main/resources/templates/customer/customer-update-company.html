@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>customer create</title>
+<title>customer update</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body>
 <div class="wrapper">
@@ -26,33 +26,14 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header text-center text-white bold_font"
-                                         style="font-size: x-large;background: #117dc0 !important;">Create New Customer
+                                         style="font-size: x-large;background: #117dc0 !important;">Update Customer
                                     </div>
                                     <div class="card-body pt-5 pb-5">
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form th:object="${newCustomer}" th:action="@{/customer/create}" method="post" class="row g-3">
-
-                                                    <div class="row">
-                                                        <label>Choose Customer Type</label>
-                                                        <div class="col-12 col-md-6 col-lg-6">
-                                                            <div class="form-check form-switch">
-                                                                <input class="form-check-input" th:field="*{individual}" type="checkbox" id="type-individual">
-                                                                <label class="form-check-label" for="type-individual">
-                                                                    <i class="fa-solid fa-address-card"></i> individual
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 col-lg-6">
-                                                            <div class="form-check form-switch">
-                                                                <input class="form-check-input" th:field="*{company}" type="checkbox" id="type-company">
-                                                                <label class="form-check-label" for="type-company">
-                                                                    <i class="fa-solid fa-building"></i> Company
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <form th:object="${customerToBeUpdate}"
+                                                      th:action="@{/customer/update/{id}/{customerType}(id = ${customerToBeUpdate.id}, customerType = ${customerToBeUpdate.customerType})}" method="post" class="row g-3">
 
                                                     <div class="col-md-6" th:classappend="${#fields.hasErrors('companyName')} ? 'error' : ''" id="companySection">
                                                         <div class="form-group p-0 m-0">
@@ -66,29 +47,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''" id="individualSection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputFirstName" class="form-label">first Name</label>
-                                                            <input type="text" th:field="*{firstName}" class="form-control" id="inputFirstName">
-                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('firstName')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6" th:classappend="${#fields.hasErrors('lastName')} ? 'error' : ''" id="lastNameSection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputLastName" class="form-label">Last Name</label>
-                                                            <input type="text" th:field="*{lastName}" class="form-control" id="inputLastName">
-                                                            <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('lastName')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
                                                     <div class="col-md-6" th:classappend="${#fields.hasErrors('email')} ? 'error' : ''">
                                                         <div class="form-group p-0 m-0">
@@ -137,17 +95,9 @@
                                                         <div class="form-group mb-0">
                                                             <label for="mySelectForCountry" class="form-label d-block">Country</label>
                                                             <select id="mySelectForCountry" th:field="*{country}" class="form-control" style="width: 100%">
-                                                                <option th:each="country:${countriesTr}" th:value="${country}"
-                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}" th:text="${country.name()}"></option>
-<!--                                                                <option value="option1">Option1</option>-->
-<!--                                                                <option value="option2">Option 2</option>-->
-<!--                                                                <option value="option3">Option 3</option>-->
-<!--                                                                <option value="option1">Option1</option>-->
-<!--                                                                <option value="option2">Option 2</option>-->
-<!--                                                                <option value="option3">Option 3</option>-->
-<!--                                                                <option value="option1">Option1</option>-->
-<!--                                                                <option value="option2">Option 2</option>-->
-<!--                                                                <option value="option3">Option 3</option>-->
+                                                                <option th:each="country:${countries}" th:value="${country}"
+                                                                        th:text="${country.getName()}"></option>
+
                                                             </select>
                                                             <div class="customer-create-country-select text-right">
                                                                 <i id="customer-country-selector" class="fa-solid fa-chevron-down rotate-down"></i>
@@ -155,18 +105,6 @@
                                                         </div>
                                                     </div>
 
-
-
-                                                    <div class="col-md-6" id="genderSelection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputGender" class="form-label">Choose Gender</label>
-                                                            <select id="inputGender" th:field="*{gender}" name="gender" class="form-select">
-                                                                <option th:each="gender:${genders}" th:value="${gender}" th:text="${gender.value}"></option>
-    <!--                                                            <option>Male</option>-->
-    <!--                                                            <option>FeMale</option>-->
-                                                            </select>
-                                                        </div>
-                                                    </div>
 
                                                     <div class="col-md-6" th:classappend="${#fields.hasErrors('customerTRYBalance')} ? 'error' : ''">
                                                         <div class="form-group p-0 m-0">
@@ -222,13 +160,11 @@
 
                                                     <div class="row justify-content-end pt-3 pr-0 pl-0">
                                                         <div class="col-12 col-md-6 col-lg-6 text-right p-0">
-                                                            <button type="submit" class="btn list-page-drop-downs-export pr-5 pl-5">Create
-                                                            </button>
+                                                            <button type="submit" class="btn update-page-update_button pr-5 pl-5">Update</button>
                                                         </div>
                                                     </div>
 
                                                 </form>
-
                                             </div>
                                         </div>
                                     </div>
@@ -265,63 +201,6 @@
         });
     });
 </script>
-
-<script>
-    $(document).ready(function () {
-        // Handle individual checkbox click
-        $('#type-individual').on('change', function () {
-            if ($(this).prop('checked')) {
-                // If individual is checked, uncheck the company
-                $('#type-company').prop('checked', false);
-                showIndividualSections();
-            } else {
-                $('#type-company').prop('checked', true);
-                showCompanySections();
-            }
-        });
-
-        // Handle company checkbox click
-        $('#type-company').on('change', function () {
-            if ($(this).prop('checked')) {
-                // If company is checked, uncheck the individual
-                $('#type-individual').prop('checked', false);
-                showCompanySections();
-            } else {
-                $('#type-individual').prop('checked', true);
-                showIndividualSections();
-            }
-        });
-
-        // Initial state
-        if ($('#type-individual').prop('checked')) {
-            showIndividualSections();
-        } else if ($('#type-company').prop('checked')) {
-            showCompanySections();
-        }
-    });
-
-    function showIndividualSections() {
-        $('#companySection').hide();
-        $('#officePhoneSection').hide();
-        $('#individualSection').show();
-        $('#lastNameSection').show();
-        $('#genderSelection').show();
-    }
-
-    function showCompanySections() {
-        $('#companySection').show();
-        $('#officePhoneSection').show();
-        $('#individualSection').hide();
-        $('#lastNameSection').hide();
-        $('#genderSelection').hide();
-    }
-
-
-</script>
-
-
-
-
 
 </body>
 </html>

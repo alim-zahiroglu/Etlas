@@ -7,9 +7,9 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
 import com.etlas.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -42,6 +42,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
     private CustomerDto adjustNewCustomerCompany(CustomerDto newCompany){
         newCompany.setCustomerType(CustomerType.COMPANY);
+        if (newCompany.getCustomerTRYBalance() == null) newCompany.setCustomerTRYBalance(BigDecimal.ZERO);
+        if (newCompany.getCustomerUSDBalance() == null) newCompany.setCustomerUSDBalance(BigDecimal.ZERO);
+        if (newCompany.getCustomerEURBalance() == null) newCompany.setCustomerEURBalance(BigDecimal.ZERO);
         newCompany.setFirstName(null);
         newCompany.setLastName(null);
         newCompany.setGender(null);
@@ -49,6 +52,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
     private CustomerDto adjustNewCustomerIndividual(CustomerDto newCompany){
         newCompany.setCustomerType(CustomerType.INDIVIDUAL);
+        if (newCompany.getCustomerTRYBalance() == null) newCompany.setCustomerTRYBalance(BigDecimal.ZERO);
+        if (newCompany.getCustomerUSDBalance() == null) newCompany.setCustomerUSDBalance(BigDecimal.ZERO);
+        if (newCompany.getCustomerEURBalance() == null) newCompany.setCustomerEURBalance(BigDecimal.ZERO);
         newCompany.setCompanyName(null);
         newCompany.setOfficeNumber(null);
         return newCompany;
@@ -64,5 +70,27 @@ public class CustomerServiceImpl implements CustomerService {
             return mapper.convert(customerToBeDelete, new CustomerDto());
         }
         return null;
+    }
+
+    @Override
+    public CustomerDto getCustomerById(long customerId) {
+        Customer foundCustomer = repository.findById(customerId)
+                .orElseThrow(NoSuchElementException::new);
+        return mapper.convert(foundCustomer, new CustomerDto());
+    }
+
+    @Override
+    public CustomerDto saveUpdatedCustomer(CustomerDto customerToBeUpdate) {
+        CustomerDto customerToUpdate = adjustBalances(customerToBeUpdate);
+        Customer savedCustomer = repository.save(mapper.convert(customerToUpdate, new Customer()));
+        return mapper.convert(savedCustomer, new CustomerDto());
+    }
+
+    private CustomerDto adjustBalances(CustomerDto customerDto){
+        if (customerDto.getCustomerTRYBalance() == null) customerDto.setCustomerTRYBalance(BigDecimal.ZERO);
+        if (customerDto.getCustomerUSDBalance() == null) customerDto.setCustomerUSDBalance(BigDecimal.ZERO);
+        if (customerDto.getCustomerEURBalance() == null) customerDto.setCustomerEURBalance(BigDecimal.ZERO);
+
+        return customerDto;
     }
 }

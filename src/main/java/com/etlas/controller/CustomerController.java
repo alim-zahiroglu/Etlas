@@ -56,7 +56,34 @@ public class CustomerController {
         CustomerDto deletedCustomer = customerService.deleteCustomer(customerId);
         redirectAttributes.addFlashAttribute("customerIsDeleted",true);
         redirectAttributes.addFlashAttribute("deletedCustomer", deletedCustomer);
-        System.out.println(deletedCustomer);
         return "redirect:/customer/list";
     }
+
+    @GetMapping("/update/{customerId}")
+    public String customerUpdate(@PathVariable("customerId") long customerId, Model model){
+
+        CustomerDto customerToBeUpdate = customerService.getCustomerById(customerId);
+
+        model.addAttribute("customerToBeUpdate",customerToBeUpdate);
+        model.addAttribute("countries",CountriesTr.values());
+        model.addAttribute("genders",Gender.values());
+
+        if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
+            return "/customer/customer-update-company";
+        } else {
+            return "/customer/customer-update-individual";
+        }
+    }
+
+    @PostMapping("/update/{id}/{customerType}")
+    public String saveUpdatedCustomer(@ModelAttribute("customerToBeUpdate") CustomerDto customerToBeUpdate,
+                                      RedirectAttributes redirectAttributes, Model model){
+
+        CustomerDto updatedCustomer = customerService.saveUpdatedCustomer(customerToBeUpdate);
+        redirectAttributes.addFlashAttribute("customerIsUpdated",true);
+        redirectAttributes.addFlashAttribute("updatedCustomer",updatedCustomer);
+        return "redirect:/customer/list";
+    }
+
+
 }

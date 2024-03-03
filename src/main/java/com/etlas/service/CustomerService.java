@@ -11,4 +11,8 @@ public interface CustomerService {
     CustomerDto saveNewCustomer(CustomerDto newCustomer);
 
     CustomerDto deleteCustomer(long customerId);
+
+    CustomerDto getCustomerById(long customerId);
+
+    CustomerDto saveUpdatedCustomer(CustomerDto customerToBeUpdate);
 }
