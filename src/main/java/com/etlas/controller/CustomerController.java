@@ -1,16 +1,15 @@
 package com.etlas.controller;
 
 import com.etlas.dto.CustomerDto;
+import com.etlas.dto.UserDto;
 import com.etlas.enums.*;
 import com.etlas.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -36,14 +35,28 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public String saveNewCustomer(@ModelAttribute("newCustomer") CustomerDto newCustomer, Model model){
+    public String saveNewCustomer(@ModelAttribute("newCustomer") CustomerDto newCustomer,
+                                  RedirectAttributes redirectAttributes, Model model){
 
-        System.out.println(newCustomer);
 //        model.addAttribute("newCustomer",new CustomerDto());
 //        model.addAttribute("countriesTr", CountriesTr.values());
 //        model.addAttribute("genders", Gender.values());
 //        model.addAttribute("customerType", CustomerType.values());
-        customerService.saveNewCustomer(newCustomer);
+
+        CustomerDto createdCustomer = customerService.saveNewCustomer(newCustomer);
+        redirectAttributes.addFlashAttribute("customerIsCreated",true);
+        redirectAttributes.addFlashAttribute("createdCustomer",createdCustomer);
+
+        return "redirect:/customer/list";
+    }
+
+    @GetMapping("/delete")
+    public String deleteCustomer(@RequestParam("customerId") long customerId,
+                                 RedirectAttributes redirectAttributes){
+        CustomerDto deletedCustomer = customerService.deleteCustomer(customerId);
+        redirectAttributes.addFlashAttribute("customerIsDeleted",true);
+        redirectAttributes.addFlashAttribute("deletedCustomer", deletedCustomer);
+        System.out.println(deletedCustomer);
         return "redirect:/customer/list";
     }
 }

@@ -7,9 +7,11 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
 import com.etlas.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +52,17 @@ public class CustomerServiceImpl implements CustomerService {
         newCompany.setCompanyName(null);
         newCompany.setOfficeNumber(null);
         return newCompany;
+    }
+
+    @Override
+    public CustomerDto deleteCustomer(long customerId) {
+        Customer customerToBeDelete = repository.findById(customerId)
+                .orElseThrow(NoSuchElementException::new);
+        if (customerToBeDelete !=null){
+            customerToBeDelete.setDeleted(true);
+            repository.save(customerToBeDelete);
+            return mapper.convert(customerToBeDelete, new CustomerDto());
+        }
+        return null;
     }
 }
