@@ -28,7 +28,7 @@ public class SecurityConfig {
         http
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login","/user/reset-password", "/customer/create", "/assets/**",
+                        .requestMatchers("/login","/user/reset-password", "/customer/create","/customer/list", "/assets/**",
                                 "/data-table-assets/**", "/images/**").permitAll()
                         .anyRequest().authenticated())
 

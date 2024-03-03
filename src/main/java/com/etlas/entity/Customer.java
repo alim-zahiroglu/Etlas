@@ -1,48 +1,49 @@
-package com.etlas.dto;
+package com.etlas.entity;
 
 import com.etlas.enums.CustomerType;
 import com.etlas.enums.Gender;
+import com.etlas.enums.Role;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class CustomerDto {
-    private long id;
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "customers")
+//@Where(clause = "is_deleted = false")
+public class Customer extends BaseEntity{
 
-    @NotBlank(message = "first name shouldn't be blank")
-    @Size(min = 2, max = 50, message = "first name must be 2~50 character long")
     private String firstName;
 
-    @NotBlank(message = "last name shouldn't be blank")
-    @Size(min = 2, max = 50, message = "last name must be 2~50 character long")
     private String lastName;
 
-    @NotBlank(message = "Company name shouldn't be blank")
-    @Size(min = 2, max = 50, message = "Company name must be 2~50 character long")
     private String companyName;
 
-    @Email(message = "please enter a valid email")
     private String email;
 
-    @NotBlank(message = "Please enter the phone number\n ex: 05552223344")
+//    @Column(unique = true)
     private String phone;
+
+//    @Column(unique = true)
     private String OfficePhone;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Enumerated(EnumType.STRING)
     private CustomerType customerType;
-    private boolean company;
-    private boolean individual = true;
 
     private BigDecimal customerTRYBalance;
     private BigDecimal customerEURBalance;
