@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private long id;
 
-    @NotBlank(message = "first name shouldn't be blank")
+    @NotBlank(message = "first name should not be blank")
     @Size(min = 2, max = 50, message = "first name must be 2~50 character long")
     private String firstName;
 
-    @NotBlank(message = "last name shouldn't be blank")
+    @NotBlank(message = "last name should not be blank")
     @Size(min = 2, max = 50, message = "last name must be 2~50 character long")
     private String lastName;
 
