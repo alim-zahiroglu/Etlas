@@ -45,6 +45,11 @@ public class Customer extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 
+    @Transient // ignore to save
+    private boolean Company;
+    @Transient // // ignore to save
+    private boolean Individual = true;
+
     private BigDecimal customerTRYBalance;
     private BigDecimal customerEURBalance;
     private BigDecimal customerUSDBalance;
