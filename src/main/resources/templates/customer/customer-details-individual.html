@@ -50,9 +50,23 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Company Name:</div>
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">First Name:</div>
                                                         <div class="col-md-6 pt-1 pb-2">
-                                                            <input type="text" th:field="*{companyName}" class="form-control customer-details-input" id="companyName" readonly>
+                                                            <input type="text" th:field="*{firstName}" class="form-control customer-details-input" id="firstName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Last Name:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{lastName}" class="form-control customer-details-input" id="lastName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Gender:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:value="${customer.gender.value}" class="form-control customer-details-input" id="gender" readonly>
                                                         </div>
                                                     </div>
 
@@ -63,12 +77,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="row">
-                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Office Number:</div>
-                                                        <div class="col-md-6 pt-1 pb-2">
-                                                            <input type="text" th:field="*{officeNumber}" class="form-control customer-details-input" id="officeNumber" readonly>
-                                                        </div>
-                                                    </div>
 
                                                     <div class="row">
                                                         <div class="col-md-6 pt-2 pb-1 pl-3">Email:</div>

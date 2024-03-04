@@ -104,14 +104,12 @@ public class CustomerController {
 
     @GetMapping("/details/{customerId}")
     public String showCustomerDetails(@PathVariable("customerId") long customerId, Model model){
-//        CustomerDto customer = customerService.getCustomerById(customerId);
-        CustomerDto customer = new CustomerDto();
-        customer.setFirstName("ziya Kasgari");
+        CustomerDto customer = customerService.getCustomerById(customerId);
         model.addAttribute("customer",customer);
-//        if (customer.getCustomerType().getDescription().equals("Company")){
-//            return "/customer/customer-details-company";
-//        }
-        return "/customer/customer-details-company";
+        if (customer.getCustomerType().getDescription().equals("Company")){
+            return "/customer/customer-details-company";
+        }
+        return "/customer/customer-details-individual";
     }
 
 
