@@ -23,15 +23,15 @@ public class CustomerDto {
     @Size(min = 2, max = 50, message = "first name must be 2~50 character long")
     private String firstName;
 
-    @NotBlank(message = "last name should not be blank")
-    @Size(min = 2, max = 50, message = "last name must be 2~50 character long")
+//    @NotBlank(message = "last name should not be blank")
+//    @Size(min = 2, max = 50, message = "last name must be 2~50 character long")
     private String lastName;
 
     @NotBlank(message = "Company name should not be blank")
     @Size(min = 2, max = 50, message = "Company name must be 2~50 character long")
     private String companyName;
 
-    @Email(message = "please enter a valid email")
+//    @Email(message = "please enter a valid email")
     private String email;
 
     @NotBlank(message = "Please enter the phone number\n ex: 05552223344")

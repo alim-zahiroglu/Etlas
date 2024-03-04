@@ -2,6 +2,7 @@ package com.etlas.service;
 
 import com.etlas.dto.CustomerDto;
 import com.etlas.dto.UserDto;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface CustomerService {
     CustomerDto getCustomerById(long customerId);
 
     CustomerDto saveUpdatedCustomer(CustomerDto customerToBeUpdate);
+
+    BindingResult checkNewCustomerValidation(CustomerDto newCustomer, BindingResult bindingResult);
 }

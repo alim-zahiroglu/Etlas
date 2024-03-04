@@ -1,6 +1,7 @@
 package com.etlas.service.impl;
 
 import com.etlas.dto.CustomerDto;
+import com.etlas.dto.UserDto;
 import com.etlas.entity.Customer;
 import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
@@ -8,10 +9,14 @@ import com.etlas.repository.CustomerRepository;
 import com.etlas.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,17 +35,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto saveNewCustomer(CustomerDto newCustomer) {
         CustomerDto customerToBeSave;
-        if (newCustomer.isCompany()){
+        if (newCustomer.isCompany()) {
             customerToBeSave = adjustNewCustomerCompany(newCustomer);
 
         } else {
             customerToBeSave = adjustNewCustomerIndividual(newCustomer);
         }
 
-        Customer savedCustomer = repository.save(mapper.convert(customerToBeSave,new Customer()));
+        Customer savedCustomer = repository.save(mapper.convert(customerToBeSave, new Customer()));
         return mapper.convert(savedCustomer, new CustomerDto());
     }
-    private CustomerDto adjustNewCustomerCompany(CustomerDto newCompany){
+
+    private CustomerDto adjustNewCustomerCompany(CustomerDto newCompany) {
         newCompany.setCustomerType(CustomerType.COMPANY);
         if (newCompany.getCustomerTRYBalance() == null) newCompany.setCustomerTRYBalance(BigDecimal.ZERO);
         if (newCompany.getCustomerUSDBalance() == null) newCompany.setCustomerUSDBalance(BigDecimal.ZERO);
@@ -50,7 +56,8 @@ public class CustomerServiceImpl implements CustomerService {
         newCompany.setGender(null);
         return newCompany;
     }
-    private CustomerDto adjustNewCustomerIndividual(CustomerDto newCompany){
+
+    private CustomerDto adjustNewCustomerIndividual(CustomerDto newCompany) {
         newCompany.setCustomerType(CustomerType.INDIVIDUAL);
         if (newCompany.getCustomerTRYBalance() == null) newCompany.setCustomerTRYBalance(BigDecimal.ZERO);
         if (newCompany.getCustomerUSDBalance() == null) newCompany.setCustomerUSDBalance(BigDecimal.ZERO);
@@ -64,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto deleteCustomer(long customerId) {
         Customer customerToBeDelete = repository.findById(customerId)
                 .orElseThrow(NoSuchElementException::new);
-        if (customerToBeDelete !=null){
+        if (customerToBeDelete != null) {
             customerToBeDelete.setDeleted(true);
             repository.save(customerToBeDelete);
             return mapper.convert(customerToBeDelete, new CustomerDto());
@@ -86,11 +93,45 @@ public class CustomerServiceImpl implements CustomerService {
         return mapper.convert(savedCustomer, new CustomerDto());
     }
 
-    private CustomerDto adjustBalances(CustomerDto customerDto){
+    private CustomerDto adjustBalances(CustomerDto customerDto) {
         if (customerDto.getCustomerTRYBalance() == null) customerDto.setCustomerTRYBalance(BigDecimal.ZERO);
         if (customerDto.getCustomerUSDBalance() == null) customerDto.setCustomerUSDBalance(BigDecimal.ZERO);
         if (customerDto.getCustomerEURBalance() == null) customerDto.setCustomerEURBalance(BigDecimal.ZERO);
-
         return customerDto;
+    }
+
+    @Override
+    public BindingResult checkNewCustomerValidation(CustomerDto newCustomer, BindingResult bindingResult) {
+        CustomerDto customerDto = new CustomerDto();
+        BindingResult newBindingResult = new BeanPropertyBindingResult(customerDto, "customerDto");
+        if (newCustomer.isCompany()) {
+
+            if (repository.existsByCompanyName(newCustomer.getCompanyName())) {
+                bindingResult.addError(new FieldError("newCustomer", "companyName", "this Customer already exist"));
+            }
+            List<String> fieldsToExclude = List.of("firstName");
+
+            removeFieldErrors(bindingResult, newBindingResult, fieldsToExclude);
+
+            return newBindingResult;
+
+        } else if (newCustomer.isIndividual()) {
+
+            List<String> fieldsToExclude = List.of("companyName");
+
+            removeFieldErrors(bindingResult, newBindingResult, fieldsToExclude);
+            return newBindingResult;
+            }
+        return bindingResult;
+    }
+
+    private void removeFieldErrors(BindingResult sourceResult, BindingResult targetResult, List<String> fieldsToExclude) {
+        List<FieldError> errorsToKeep = sourceResult.getFieldErrors().stream()
+                .filter(fer -> !fieldsToExclude.contains(fer.getField()))
+                .toList();
+
+        for (FieldError fieldError : errorsToKeep) {
+            targetResult.addError(fieldError);
+        }
     }
 }

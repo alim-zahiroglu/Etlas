@@ -4,10 +4,12 @@ import com.etlas.dto.CustomerDto;
 import com.etlas.dto.UserDto;
 import com.etlas.enums.*;
 import com.etlas.service.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,13 +37,16 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public String saveNewCustomer(@ModelAttribute("newCustomer") CustomerDto newCustomer,
-                                  RedirectAttributes redirectAttributes, Model model){
+    public String saveNewCustomer(@Valid @ModelAttribute("newCustomer") CustomerDto newCustomer,
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+        bindingResult = customerService.checkNewCustomerValidation(newCustomer,bindingResult);
+        if (bindingResult.hasErrors()){
 
-//        model.addAttribute("newCustomer",new CustomerDto());
-//        model.addAttribute("countriesTr", CountriesTr.values());
-//        model.addAttribute("genders", Gender.values());
-//        model.addAttribute("customerType", CustomerType.values());
+            model.addAttribute("countriesTr", CountriesTr.values());
+            model.addAttribute("genders", Gender.values());
+            model.addAttribute("customerType", CustomerType.values());
+            return "/customer/customer-create";
+        }
 
         CustomerDto createdCustomer = customerService.saveNewCustomer(newCustomer);
         redirectAttributes.addFlashAttribute("customerIsCreated",true);
