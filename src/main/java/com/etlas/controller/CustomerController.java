@@ -71,18 +71,30 @@ public class CustomerController {
 
         model.addAttribute("customerToBeUpdate",customerToBeUpdate);
         model.addAttribute("countries",CountriesTr.values());
-        model.addAttribute("genders",Gender.values());
 
         if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
             return "/customer/customer-update-company";
         } else {
+            model.addAttribute("genders",Gender.values());
             return "/customer/customer-update-individual";
         }
     }
 
     @PostMapping("/update/{id}/{customerType}")
-    public String saveUpdatedCustomer(@ModelAttribute("customerToBeUpdate") CustomerDto customerToBeUpdate,
-                                      RedirectAttributes redirectAttributes, Model model){
+    public String saveUpdatedCustomer(@Valid @ModelAttribute("customerToBeUpdate") CustomerDto customerToBeUpdate,
+                                      BindingResult bindingResult,RedirectAttributes redirectAttributes, Model model){
+        bindingResult = customerService.validateUpdateCustomer(customerToBeUpdate,bindingResult);
+        if (bindingResult.hasErrors()){
+            if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
+                model.addAttribute("countries",CountriesTr.values());
+                return "/customer/customer-update-company";
+            }else {
+                model.addAttribute("countries",CountriesTr.values());
+                model.addAttribute("genders",Gender.values());
+                return "/customer/customer-update-individual";
+            }
+
+        }
 
         CustomerDto updatedCustomer = customerService.saveUpdatedCustomer(customerToBeUpdate);
         redirectAttributes.addFlashAttribute("customerIsUpdated",true);

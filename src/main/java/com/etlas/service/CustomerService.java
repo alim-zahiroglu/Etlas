@@ -18,4 +18,6 @@ public interface CustomerService {
     CustomerDto saveUpdatedCustomer(CustomerDto customerToBeUpdate);
 
     BindingResult checkNewCustomerValidation(CustomerDto newCustomer, BindingResult bindingResult);
+
+    BindingResult validateUpdateCustomer(CustomerDto customerToBeUpdate, BindingResult bindingResult);
 }

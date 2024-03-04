@@ -134,4 +134,18 @@ public class CustomerServiceImpl implements CustomerService {
             targetResult.addError(fieldError);
         }
     }
+
+    @Override
+    public BindingResult validateUpdateCustomer(CustomerDto customerToBeUpdate, BindingResult bindingResult) {
+        CustomerDto customerDto = new CustomerDto();
+        BindingResult newBindingResult = new BeanPropertyBindingResult(customerDto, "customerDto");
+        if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
+            removeFieldErrors(bindingResult, newBindingResult, List.of("firstName"));
+            return newBindingResult;
+        }else if (customerToBeUpdate.getCustomerType().getDescription().equals("Individual")){
+            removeFieldErrors(bindingResult, newBindingResult, List.of("companyName"));
+            return newBindingResult;
+        }
+        return bindingResult;
+    }
 }
