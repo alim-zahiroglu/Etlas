@@ -102,5 +102,17 @@ public class CustomerController {
         return "redirect:/customer/list";
     }
 
+    @GetMapping("/details/{customerId}")
+    public String showCustomerDetails(@PathVariable("customerId") long customerId, Model model){
+//        CustomerDto customer = customerService.getCustomerById(customerId);
+        CustomerDto customer = new CustomerDto();
+        customer.setFirstName("ziya Kasgari");
+        model.addAttribute("customer",customer);
+//        if (customer.getCustomerType().getDescription().equals("Company")){
+//            return "/customer/customer-details-company";
+//        }
+        return "/customer/customer-details-company";
+    }
+
 
 }

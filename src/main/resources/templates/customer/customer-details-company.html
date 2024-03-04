@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>customer details</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Customer details</li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center"></header>
+
+                        <div class="row justify-content-center align-items-center pt-4">
+
+                            <div class="col-12 col-md-12 col-lg-8">
+                                <div class="input-group justify-content-end">
+                                    <div class="col-auto pr-0">
+                                        <div class="col-12 col-sm-6 col-lg-3 pr-1 d-flex align-items-right">
+                                            <a id="staffListLink" class="btn text-light list-page-drop-downs pr-4 pl-4 mb-2"
+                                               th:href="@{/customer/list}"><i class="fa fa-list mr-1"></i>Customer List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header text-center text-white bold_font"
+                                         style="font-size: x-large;background: #117dc0 !important;">Customer Details
+                                    </div>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12 col-md-12 col-lg-10">
+
+                                                <form th:object="${customer}" class="row g-3">
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Customer Type:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{firstName}" class="form-control customer-details-input" id="companyName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Company Name:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{firstName}" class="form-control customer-details-input" id="companyName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Phone Number:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{firstName}" class="form-control customer-details-input" id="companyName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Office Number:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{firstName}" class="form-control customer-details-input" id="companyName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Email:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{firstName}" class="form-control customer-details-input" id="companyName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Country:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{firstName}" class="form-control customer-details-input" id="companyName" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Balance TRY:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control customer-details-input" th:field="*{customerTRYBalance}" id="customerTRYBalance"
+                                                                       name="customerBalance" readonly>
+                                                                <span class="input-group-text" id="currencyTRYSymbol">₺</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Balance USD:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control customer-details-input" th:field="*{customerUSDBalance}" id="customerUSDBalance"
+                                                                       name="customerBalance" readonly>
+                                                                <span class="input-group-text" id="currencyUSDSymbol">$</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Balance EUR:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control customer-details-input" th:field="*{customerEURBalance}" id="customerEURBalance"
+                                                                       name="customerBalance" readonly>
+                                                                <span class="input-group-text" id="currencyEURSymbol">€</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
+</body>
+</html>
