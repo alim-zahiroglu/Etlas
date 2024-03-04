@@ -201,3 +201,24 @@ a.sidebar-link:hover{
         margin-left: 0;
     }
 }
+
+.custom-breadcrumb-item a {
+    text-decoration: none;
+    position: relative;
+    color: #006efd; /* Set your desired text color */
+}
+
+.custom-breadcrumb-item a::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px; /* Set your desired underline thickness */
+    bottom: 0;
+    left: 0;
+    background-color: #0259c5; /* Set your desired underline color */
+    transition: width 0.3s ease;
+}
+
+.custom-breadcrumb-item a:hover::before {
+    width: 100%;
+}

@@ -10,8 +10,16 @@
         <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
                 <div class="container-fluid dashboard-content">
-                    <div class="ecommerce-widget pb-5">
-                        <header class="panel-heading text-center pb-5"></header>
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Customer update</li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center"></header>
 
                         <div class="row justify-content-center align-items-center pt-4">
 
@@ -64,7 +72,7 @@
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputEmail" class="form-label">Email</label>
                                                             <input type="email" th:field="*{email}" class="form-control" id="inputEmail"
-                                                                   required spellcheck="false" placeholder="ex: example@sever.com">
+                                                                    spellcheck="false" placeholder="ex: example@sever.com">
 
                                                             <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('email')}">
                                                                 <ul class="p-0 m-0">
