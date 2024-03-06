@@ -24,14 +24,31 @@
                         <div class="row justify-content-center align-items-center pt-4">
 
                             <div class="col-12 col-md-12 col-lg-8">
-                                <div class="input-group justify-content-end">
-                                    <div class="col-auto pr-0">
-                                        <div class="col-12 col-sm-6 col-lg-3 pr-1 d-flex align-items-right">
-                                            <a id="staffListLink" class="btn text-light list-page-drop-downs pr-4 pl-4 mb-2"
-                                               th:href="@{/customer/list}"><i class="fa fa-list mr-1"></i>Customer List</a>
+
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6 col-lg-6">
+
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-danger" id="delete-row"
+                                               th:data-customer="${customer.customerType.description eq 'Company' ? customer.companyName : (customer.firstName + ' ' + customer.lastName)}"
+                                               th:data-customerId="${customer.id}">
+                                                <i class="fa-solid fa-trash-can"></i> Delete
+                                            </a>
+                                            <a th:href="@{/customer/update/{customerId}(customerId=${customer.id})}" class="btn btn-warning">
+                                                <i class="fa-solid fa-pen-to-square"></i> Update
+                                            </a>
+                                            <a th:href="@{/customer/create}" class="btn btn-success">
+                                                <i class="fa-solid fa-plus"></i> Create
+                                            </a>
                                         </div>
+
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-end">
+                                        <a id="staffListLink" class="btn text-light list-page-drop-downs pr-3 pl-3 mb-2"
+                                           th:href="@{/customer/list}"><i class="fa fa-list mr-1"></i>Customer List</a>
                                     </div>
                                 </div>
+
                                 <div class="card">
                                     <div class="card-header text-center text-white bold_font"
                                          style="font-size: x-large;background: #117dc0 !important;">Customer Details
@@ -135,6 +152,38 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content p-2">
+                                        <div class=" delete_confirmation_popup justify-content-center">
+
+                                            <div class="d-flex flex-column align-items-center">
+                                                <img th:src="@{/images/delete_worning.png}" class="mt-4"/>
+                                                <h5 class="modal-title mt-3 pb-2"
+                                                    id="confirmationModalLabel">Confirm Deletion</h5>
+                                            </div>
+                                            <!-- No close button here -->
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Dynamic content to display username -->
+                                            <p id="confirmationCustomerName"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    onclick="closeConfirmationModal()">Cancel
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger" id="confirmDelete">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -145,5 +194,6 @@
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
 <link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
+<script th:src="@{/assets/libs/js/customer_delet_update_confirmation.js}"></script>
 </body>
 </html>
