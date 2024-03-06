@@ -15,8 +15,7 @@
                     <ul class="sidebar-nav text-left">
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-target="#tickets" data-toggle="collapse"
-                               aria-expanded="false"><i class="fa-solid fa-plane"></i>
-                                Tickets
+                               aria-expanded="false"><i class="fa-solid fa-plane"></i> Tickets
                             </a>
                             <ul id="tickets" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
@@ -25,12 +24,20 @@
                                 <li class="sidebar-item">
                                     <a th:href="@{/ticket/create}" class="sidebar-link">Ticket Create</a>
                                 </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-target="#customers" data-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-address-book"></i> Customers
+                            </a>
+                            <ul id="customers" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a th:href="@{/customer/list}" class="sidebar-link">Customer List</a>
+                                    <a th:href="@{/customer/list}" class="sidebar-link sub-item">Customer List</a>
                                 </li>
-<!--                                <li class="sidebar-item">-->
-<!--                                    <a th:href="@{/customer/create}" class="sidebar-link">Customer Create</a>-->
-<!--                                </li>-->
+                                <li class="sidebar-item">
+                                    <a th:href="@{/customer/create}" class="sidebar-link">Customer Create</a>
+                                </li>
                             </ul>
                         </li>
 
