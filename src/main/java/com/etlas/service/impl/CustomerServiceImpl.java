@@ -140,6 +140,10 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerDto customerDto = new CustomerDto();
         BindingResult newBindingResult = new BeanPropertyBindingResult(customerDto, "customerDto");
         if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
+            if (repository.existsByCompanyNameAndIdNot(customerToBeUpdate.getCompanyName(),customerToBeUpdate.getId())) {
+                bindingResult.addError(new FieldError("newCustomer", "companyName", "this Customer already exist"));
+            }
+
             removeFieldErrors(bindingResult, newBindingResult, List.of("firstName"));
             return newBindingResult;
         }else if (customerToBeUpdate.getCustomerType().getDescription().equals("Individual")){

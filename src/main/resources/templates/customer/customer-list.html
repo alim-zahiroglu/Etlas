@@ -130,11 +130,13 @@
                                                 <tbody>
                                                 <tr th:each="customer :${customerList}" th:class="${customer.customerType.description eq 'Company'} ? 'company-row' : 'individual-row'">
                                                     <td>
+                                                        <a th:href="@{/customer/details/{customerId}(customerId=${customer.id})}">
                                                         <!-- Check customer type and display appropriate name -->
                                                         <span th:if="${customer.customerType.description eq 'Company'}"
                                                               th:utext="${customer.companyName}"></span>
                                                         <span th:if="${customer.customerType.description eq 'Individual'}"
                                                               th:text="${customer.firstName} + ' ' + ${customer.lastName}"></span>
+                                                        </a>
                                                     </td>
 
                                                     <td>

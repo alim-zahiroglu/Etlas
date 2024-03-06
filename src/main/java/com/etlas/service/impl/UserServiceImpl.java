@@ -49,13 +49,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findByUsername(String username) {
-        User foundUser  = repository.findByUserName(username);
+        User foundUser  = repository.findByUserNameAndIsDeleted(username,false);
         return mapper.convert(foundUser,new UserDto());
     }
 
     @Override
     public UserDto deleteUser(String username) {
-        User user = repository.findByUserName(username);
+        User user = repository.findByUserNameAndIsDeleted(username,false);
         user.setDeleted(true);
         user.setUserName(user.getUserName() + "_"+ LocalDateTime.now());
         repository.save(user);
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByUserName(String userName) {
-        User user = repository.findByUserName(userName);
+        User user = repository.findByUserNameAndIsDeleted(userName,false);
         if (user == null) throw new NoSuchElementException();
         return mapper.convert(user, new UserDto());
     }

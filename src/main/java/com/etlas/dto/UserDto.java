@@ -21,6 +21,7 @@ public class UserDto {
     @Size(min = 2, max = 50, message = "last name must be 2~50 character long")
     private String lastName;
 
+    @NotBlank(message = "email should not be blank")
     @Email(message = "please enter a valid email")
     private String userName;
 

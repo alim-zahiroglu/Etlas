@@ -11,4 +11,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     List<Customer> findAllByIsDeleted(boolean deleted);
 
     boolean existsByCompanyName(String companyName);
+    boolean existsByCompanyNameAndIdNot(String companyName, long id);
 }
