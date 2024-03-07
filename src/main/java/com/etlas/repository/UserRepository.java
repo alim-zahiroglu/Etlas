@@ -1,6 +1,7 @@
 package com.etlas.repository;
 
 import com.etlas.entity.User;
+import com.etlas.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByIsDeleted(boolean isDeleted);
 
     boolean existsByUserName(String userName);
+
+    List<User> findAllByRoleAndIsDeleted(Role role, boolean isDeleted);
 }

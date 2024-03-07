@@ -84,8 +84,8 @@ public class UserServiceImpl implements UserService {
         }else {
             userToUpdate.setPassWord(passwordEncoder.encode(userToUpdate.getPassWord()));
         }
-        User updatedUser = repository.save(mapper.convert(userToUpdate, new User()));
-        return mapper.convert(updatedUser, new UserDto());
+        repository.save(mapper.convert(userToUpdate, new User()));
+        return mapper.convert(oldUser, new UserDto());
 //        TODO send verification email if user verify is ture
     }
 
@@ -121,5 +121,15 @@ public class UserServiceImpl implements UserService {
             return newBindingResult;
         }
         return bindingResult;
+    }
+
+    @Override
+    public boolean isUserDeletable(String username) {
+        User userToBeDelete = repository.findByUserNameAndIsDeleted(username,false);
+        if (userToBeDelete.getRole().getDescription().equals("Admin")){
+            List<User> users = repository.findAllByRoleAndIsDeleted(userToBeDelete.getRole(),false);
+            return users.size() > 1;
+        }
+        return true;
     }
 }
