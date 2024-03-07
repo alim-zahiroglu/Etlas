@@ -13,6 +13,12 @@
     border: none;
     background: transparent;
 }
+#delete_toast_container_false{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
+
 .delete_toast_header{
     background: #f9d7da !important;
     color: #58151c !important;

@@ -53,9 +53,14 @@ public class UserController {
     @GetMapping("/delete")
     public String deleteUser(@RequestParam("username") String username,
                              RedirectAttributes redirectAttributes){
-        UserDto deletedUser = userService.deleteUser(username);
-        redirectAttributes.addFlashAttribute("userIsDeleted",true);
-        redirectAttributes.addFlashAttribute("deletedUser", deletedUser);
+        if (userService.isUserDeletable(username)) {
+            UserDto deletedUser = userService.deleteUser(username);
+            redirectAttributes.addFlashAttribute("userIsDeleted", true);
+            redirectAttributes.addFlashAttribute("deletedUser", deletedUser);
+            return "redirect:/user/list";
+        }
+        redirectAttributes.addFlashAttribute("userIsDeleted", false);
+        redirectAttributes.addFlashAttribute("deleteMessage", "This is the only admin user, you can't delete it!");
         return "redirect:/user/list";
     }
 
@@ -81,9 +86,9 @@ public class UserController {
             model.addAttribute("userStatuses", UserStatus.values());
             return "user/user-update";
         }
-        UserDto createdUser = userService.saveUpdatedUser(userToBeUpdate);
+        UserDto updatedUser = userService.saveUpdatedUser(userToBeUpdate);
         redirectAttributes.addFlashAttribute("userIsUpdated", true);
-        redirectAttributes.addFlashAttribute("updatedUser", createdUser);
+        redirectAttributes.addFlashAttribute("updatedUser", updatedUser);
         return "redirect:/user/list";
     }
 }

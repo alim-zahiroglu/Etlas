@@ -173,6 +173,22 @@
                                             </div>
                                         </div>
 
+
+                                        <div id="delete_toast_up_layer_false" th:if="${userIsDeleted} == false">
+                                            <div id="delete_toast_container_false" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-autohide="true">
+                                                <div id="deleteUnSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header delete_toast_header">
+                                                        <strong class="me-auto">Not Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                        User <strong style="color: red" th:text="${deleteMessage}"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                         <div id="create_toast_up_layer" th:if="${userIsCreated} == true">
                                             <div id="create_toast_container" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-autohide="true">
                                                 <div id="createSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

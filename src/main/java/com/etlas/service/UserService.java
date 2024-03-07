@@ -23,4 +23,6 @@ public interface UserService {
     UserDto findById(long id);
 
     BindingResult validateNewUser(UserDto userDto, BindingResult bindingResult);
+
+    boolean isUserDeletable(String username);
 }
