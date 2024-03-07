@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: header}"></head>
+<body>
+
+<input type="text" name="datetimes" />
+
+<script>
+  $(function() {
+    $('input[name="datetimes"]').daterangepicker({
+      timePicker: true,
+      singleDatePicker:true,
+      locale: {
+        format: 'MM/DD hh:mm A'
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>

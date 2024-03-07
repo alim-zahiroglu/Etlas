@@ -28,7 +28,7 @@ public class SecurityConfig {
         http
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login","/user/reset-password", "/customer/create","/customer/list", "/assets/**",
+                        .requestMatchers("/login","/user/reset-password", "/assets/**",
                                 "/data-table-assets/**", "/images/**").permitAll()
                         .anyRequest().authenticated())
 
@@ -37,7 +37,7 @@ public class SecurityConfig {
 //                            .loginProcessingUrl("/authentication") // The URL to which the login form should be submitted for authentication
 //                            .usernameParameter("username") // The parameter name in the login form for the username field
 //                            .passwordParameter("password") // The parameter name in the login form for the password field
-                        .defaultSuccessUrl("/user/create", true))
+                        .defaultSuccessUrl("/ticket/create", true))
                 .logout(logoutConfigurer -> logoutConfigurer
                         .logoutUrl("/logout")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

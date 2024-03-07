@@ -136,6 +136,17 @@ input:-webkit-autofill {
   font-size: 12px;
 }
 
+.ticket-create-from-select{
+  background: transparent;
+  padding: 0 5px 0 0;
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 12px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 12px;
+}
+
 
 .password-toggle-up{
   top: 50px;
