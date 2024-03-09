@@ -22,7 +22,7 @@
                         </nav>
                         <header class="panel-heading text-center"></header>
                         <div class="row justify-content-center align-items-center pt-4">
-                            <div class="col-12 col-md-12 col-lg-9">
+                            <div class="col-12 col-md-12 col-lg-11">
                                 <div class="input-group justify-content-end">
                                     <div class="col-auto pr-0">
                                         <div class="col-12 col-sm-6 col-lg-3 pr-1 d-flex align-items-right">
@@ -91,11 +91,12 @@
                                                         <div class="col-12 col-md-12 col-lg-8"
                                                              style="padding: 0 8px; margin-top: 16px">
                                                             <div class="row p-0 m-0">
-                                                                <div class="form-group col-6 mb-0 pl-0 pr-0">
-                                                                    <label for="mySelectForCountry"
+
+                                                                <div class="form-group col-6 mb-0 pl-0">
+                                                                    <label for="mySelectForFrom"
                                                                            class="form-label pl-1 d-block">
                                                                         <i class="fa-solid fa-plane-departure"></i> From</label>
-                                                                    <select id="mySelectForCountry"
+                                                                    <select id="mySelectForFrom"
                                                                             th:field="*{country}"
                                                                             class="form-control" style="width: 100%">
                                                                         <option th:each="country:${countriesTr}"
@@ -104,17 +105,27 @@
                                                                                 th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
                                                                     </select>
                                                                     <div class="ticket-create-from-select text-right">
-                                                                        <i id="customer-country-selector"
+                                                                        <i id="from-where-selector-arrow"
                                                                            class="fa-solid fa-chevron-down rotate-down"></i>
                                                                     </div>
                                                                 </div>
 
-
                                                                 <div class="form-group col-6 mb-0 pr-0">
-                                                                    <label for="companyName"
-                                                                           class="form-label pl-1"> <i class="fa-solid fa-plane-arrival"></i> To</label>
-                                                                    <input type="text" th:field="*{companyName}"
-                                                                           class="form-control" id="companyName">
+                                                                    <label for="mySelectForArrival"
+                                                                           class="form-label pl-1 ml-0 d-block">
+                                                                        <i class="fa-solid fa-plane-arrival"></i> To</label>
+                                                                    <select id="mySelectForArrival"
+                                                                            th:field="*{country}"
+                                                                            class="form-control" style="width: 100%">
+                                                                        <option th:each="country:${countriesTr}"
+                                                                                th:value="${country}"
+                                                                                th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                                th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                                    </select>
+                                                                    <div class="ticket-create-to-select text-right">
+                                                                        <i id="to-where-selector-arrow"
+                                                                           class="fa-solid fa-chevron-down rotate-down"></i>
+                                                                    </div>
                                                                 </div>
 
 
@@ -133,17 +144,18 @@
                                                     <script>
                                                         $(function() {
                                                             $('#companyName25').daterangepicker({
-                                                                singleDatePicker: true,
                                                                 showDropdowns: true,
                                                                 timePicker: true,
-                                                                timePickerIncrement: 15, // Adjust the increment as needed
+                                                                timePicker24Hour: true,
+                                                                timePickerIncrement: 5,
                                                                 locale: {
-                                                                    format: 'MM/DD/YYYY h:mm A' // Adjust the format as needed
+                                                                    format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
                                                                 },
-                                                                startDate: moment() // Set default value to current date and time
+                                                                startDate: moment()
                                                             });
                                                         });
                                                     </script>
+
 
 
 
@@ -389,40 +401,40 @@
 
 <script>
     $(document).ready(function () {
-        const $mySelectForCountry = $('#mySelectForFrom');
-        const $customerCountrySelector = $('#from-where-selector');
+        const $mySelectForFrom = $('#mySelectForFrom');
+        const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
 
-        $mySelectForCountry.select2({
+        $mySelectForFrom.select2({
             allowClear: false,
             closeOnSelect: true,
         });
 
-        $mySelectForCountry.on('select2:open', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-down').addClass('country-rotate-up');
+        $mySelectForFrom.on('select2:open', function (e) {
+            $fromWhereSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
         });
 
-        $mySelectForCountry.on('select2:close', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-up').addClass('country-rotate-down');
+        $mySelectForFrom.on('select2:close', function (e) {
+            $fromWhereSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
         });
     });
 </script>
 
 <script>
     $(document).ready(function () {
-        const $mySelectForCountry = $('#mySelectForTo');
-        const $customerCountrySelector = $('#to-where-selector');
+        const $mySelectForTo = $('#mySelectForArrival');
+        const $toWhereSelectorArrow = $('#to-where-selector-arrow');
 
-        $mySelectForCountry.select2({
+        $mySelectForTo.select2({
             allowClear: false,
             closeOnSelect: true,
         });
 
-        $mySelectForCountry.on('select2:open', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-down').addClass('country-rotate-up');
+        $mySelectForTo.on('select2:open', function (e) {
+            $toWhereSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
         });
 
-        $mySelectForCountry.on('select2:close', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-up').addClass('country-rotate-down');
+        $mySelectForTo.on('select2:close', function (e) {
+            $toWhereSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
         });
     });
 </script>
@@ -430,7 +442,7 @@
 
 <script>
     $(document).ready(function () {
-        const $mySelectForCountry = $('#mySelectForCountry');
+        const $mySelectForCountry = $('#mySelectForArrival');
         const $customerCountrySelector = $('#customer-country-selector');
 
         $mySelectForCountry.select2({
