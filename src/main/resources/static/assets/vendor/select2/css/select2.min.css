@@ -4,25 +4,6 @@
     display: none;
 }
 
-/* Add a Font Awesome arrow using a pseudo-element */
-/*.select2-container--default .select2-selection--single .select2-selection__rendered {*/
-/*    !*width: 100% !important;*!*/
-/*    position: relative;*/
-/*}*/
-
-/*.select2-container--default .select2-selection--single .select2-selection__rendered::after {*/
-/*    content: '\f107'; !* Unicode for the right arrow in Font Awesome *!*/
-/*    font-family: 'Font Awesome 5 Free'; !* Font Awesome font family *!*/
-/*    font-weight: 600; !* Font weight to ensure the icon is displayed *!*/
-/*    position: absolute;*/
-/*    display: block !important;*/
-/*    top: 50%;*/
-/*    right: 12px;*/
-/*    transform: translateY(-50%);*/
-/*    font-size: 14px; !* Adjust the font size as needed *!*/
-/*}*/
-
-
 .select2-container {
     box-sizing: border-box;
     display: inline-block;
@@ -35,14 +16,12 @@
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    height: 37px;
+    height: 38px;
     user-select: none;
     -webkit-user-select: none;
     border: solid 1px #ced4db !important;
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
-    /*width: 100% !important;*/
-    /*max-width: 100% auto;*/
     min-width: fit-content auto;
     display: block;
     padding-left: 12px;

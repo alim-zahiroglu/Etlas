@@ -87,9 +87,60 @@
 
                                                     <hr class="mb-1 mt-3 row pl-0 pr-0 mr-0 ml-0">
 
+                                                    <div class="col-md-6 col-lg-4 mb-0"
+                                                         th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
+                                                         id="TkNo">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputTkNo" class="form-label pl-1">TK No</label>
+                                                            <input type="text" th:field="*{firstName}"
+                                                                   class="form-control" id="inputTkNo">
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('firstName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('firstName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 col-lg-4 mb-0" style="margin-top: 17px">
+                                                        <label for="mySelectForAirline"
+                                                               class="form-label pl-1 ml-0 d-block">Airline</label>
+                                                        <select id="mySelectForAirline"
+                                                                th:field="*{country}"
+                                                                class="form-control mb-0" style="width: 100%">
+                                                            <option th:each="country:${countriesTr}"
+                                                                    th:value="${country}"
+                                                                    th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                    th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                        </select>
+                                                        <div class="ticket-create-to-select text-right">
+                                                            <i id="airline-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-4"
+                                                         th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
+                                                         id="ticketAmount">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputTicketAmount" class="form-label pl-1">Ticket Amount</label>
+                                                            <input type="number" th:field="*{firstName}"
+                                                                   class="form-control" id="inputTicketAmount">
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('firstName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('firstName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="row p-0 m-0">
-                                                        <div class="col-12 col-md-12 col-lg-8"
-                                                             style="padding: 0 8px; margin-top: 16px">
+                                                        <div class="col-12 col-md-12 col-lg-8 pb-0"
+                                                             style="padding: 0 8px; margin-top: 17px">
                                                             <div class="row p-0 m-0">
 
                                                                 <div class="form-group col-6 mb-0 pl-0">
@@ -107,6 +158,11 @@
                                                                     <div class="ticket-create-from-select text-right">
                                                                         <i id="from-where-selector-arrow"
                                                                            class="fa-solid fa-chevron-down rotate-down"></i>
+                                                                    </div>
+
+                                                                    <div class="ticket-create-from-to-switch btn text-right">
+                                                                        <i id="from-where-selector-arrow"
+                                                                           class="fa-solid fa-arrow-right-arrow-left"></i>
                                                                     </div>
                                                                 </div>
 
@@ -127,8 +183,6 @@
                                                                            class="fa-solid fa-chevron-down rotate-down"></i>
                                                                     </div>
                                                                 </div>
-
-
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
@@ -399,66 +453,78 @@
 <link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
 
 
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        const $mySelectForFrom = $('#mySelectForFrom');-->
+<!--        const $fromWhereSelectorArrow = $('#from-where-selector-arrow');-->
+
+<!--        $mySelectForFrom.select2({-->
+<!--            allowClear: false,-->
+<!--            closeOnSelect: true,-->
+<!--        });-->
+
+<!--        $mySelectForFrom.on('select2:open', function (e) {-->
+<!--            $fromWhereSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');-->
+<!--        });-->
+
+<!--        $mySelectForFrom.on('select2:close', function (e) {-->
+<!--            $fromWhereSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        const $mySelectForTo = $('#mySelectForArrival');-->
+<!--        const $toWhereSelectorArrow = $('#to-where-selector-arrow');-->
+
+<!--        $mySelectForTo.select2({-->
+<!--            allowClear: false,-->
+<!--            closeOnSelect: true,-->
+<!--        });-->
+
+<!--        $mySelectForTo.on('select2:open', function (e) {-->
+<!--            $toWhereSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');-->
+<!--        });-->
+
+<!--        $mySelectForTo.on('select2:close', function (e) {-->
+<!--            $toWhereSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+
 <script>
     $(document).ready(function () {
+        function setupSelect2($select, $selectorArrow) {
+            $select.select2({
+                allowClear: false,
+                closeOnSelect: true,
+            });
+
+            $select.on('select2:open', () => {
+                $selectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
+            });
+
+            $select.on('select2:close', () => {
+                $selectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
+            });
+        }
+
+        const $mySelectForAirLine = $('#mySelectForAirline');
+        const $airlineSelectorArrow = $('#airline-selector-arrow');
+        setupSelect2($mySelectForAirLine, $airlineSelectorArrow);
+
         const $mySelectForFrom = $('#mySelectForFrom');
         const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
+        setupSelect2($mySelectForFrom, $fromWhereSelectorArrow);
 
-        $mySelectForFrom.select2({
-            allowClear: false,
-            closeOnSelect: true,
-        });
-
-        $mySelectForFrom.on('select2:open', function (e) {
-            $fromWhereSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
-        });
-
-        $mySelectForFrom.on('select2:close', function (e) {
-            $fromWhereSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
         const $mySelectForTo = $('#mySelectForArrival');
         const $toWhereSelectorArrow = $('#to-where-selector-arrow');
-
-        $mySelectForTo.select2({
-            allowClear: false,
-            closeOnSelect: true,
-        });
-
-        $mySelectForTo.on('select2:open', function (e) {
-            $toWhereSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
-        });
-
-        $mySelectForTo.on('select2:close', function (e) {
-            $toWhereSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
-        });
+        setupSelect2($mySelectForTo, $toWhereSelectorArrow);
     });
 </script>
 
-
-<script>
-    $(document).ready(function () {
-        const $mySelectForCountry = $('#mySelectForArrival');
-        const $customerCountrySelector = $('#customer-country-selector');
-
-        $mySelectForCountry.select2({
-            allowClear: false,
-            closeOnSelect: true,
-        });
-
-        $mySelectForCountry.on('select2:open', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-down').addClass('country-rotate-up');
-        });
-
-        $mySelectForCountry.on('select2:close', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-up').addClass('country-rotate-down');
-        });
-    });
-</script>
 
 
 <script>
