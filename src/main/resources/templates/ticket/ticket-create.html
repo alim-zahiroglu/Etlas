@@ -11,7 +11,7 @@
             <div class="dashboard-ecommerce">
                 <div class="container-fluid dashboard-content">
                     <div class="ecommerce-widget pt-4">
-                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                        <nav style="--bs-breadcrumb-divider:5 " aria-label="breadcrumb" class="pb-0">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/ticket/list}"><i
                                         class="fa-solid fa-house"></i> Tickets </a></li>
@@ -21,7 +21,7 @@
                             </ol>
                         </nav>
                         <header class="panel-heading text-center"></header>
-                        <div class="row justify-content-center align-items-center pt-4">
+                        <div class="row justify-content-center align-items-center pt-0">
                             <div class="col-12 col-md-12 col-lg-11">
                                 <div class="input-group justify-content-end">
                                     <div class="col-auto pr-0">
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header text-center text-white bold_font"
-                                         style="font-size: x-large;background: #117dc0 !important;">Create New Ticket
+                                         style="font-size: x-large;background: #117dc0 !important;">Save New Ticket
                                     </div>
                                     <div class="card-body pt-5 pb-5">
                                         <div class="row justify-content-center align-items-center">
@@ -93,7 +93,7 @@
                                                          th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
                                                          id="TkNo">
                                                         <div class="form-group p-0 m-0">
-                                                            <label for="inputPNR" class="form-label pl-1">PNR</label>
+                                                            <label for="inputPNR" class="form-label mb-1 pl-1">PNR</label>
                                                             <input type="text" th:field="*{firstName}"
                                                                    class="form-control" id="inputPNR">
                                                             <div class="custom-invalid-feedback"
@@ -109,7 +109,7 @@
                                                     <div class="form-group col-md-6 col-lg-4 mb-0"
                                                          style="margin-top: 17px">
                                                         <label for="mySelectForAirline"
-                                                               class="form-label pl-1 ml-0 d-block">Airline</label>
+                                                               class="form-label pl-1 ml-0 mb-1 d-block">Airline</label>
                                                         <select id="mySelectForAirline"
                                                                 th:field="*{country}"
                                                                 class="form-control mb-0" style="width: 100%">
@@ -128,7 +128,7 @@
                                                          th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
                                                          id="ticketAmount">
                                                         <div class="form-group p-0 m-0">
-                                                            <label for="inputTicketAmount" class="form-label pl-1">Ticket
+                                                            <label for="inputTicketAmount" class="form-label mb-1 pl-1">Ticket
                                                                 Amount</label>
                                                             <input type="number" th:field="*{firstName}"
                                                                    class="form-control" id="inputTicketAmount">
@@ -149,7 +149,7 @@
 
                                                                 <div class="form-group col-6 mb-0 pl-0">
                                                                     <label for="mySelectForFrom"
-                                                                           class="form-label pl-1 d-block">
+                                                                           class="form-label pl-1 mb-1 d-block">
                                                                         <i class="fa-solid fa-plane-departure"></i> From</label>
                                                                     <select id="mySelectForFrom"
                                                                             th:field="*{country}"
@@ -172,7 +172,7 @@
 
                                                                 <div class="form-group col-6 mb-0 pr-0">
                                                                     <label for="mySelectForArrival"
-                                                                           class="form-label pl-1 ml-0 d-block">
+                                                                           class="form-label pl-1 mb-1 ml-0 d-block">
                                                                         <i class="fa-solid fa-plane-arrival"></i>
                                                                         To</label>
                                                                     <select id="mySelectForArrival"
@@ -192,18 +192,20 @@
                                                         </div>
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
                                                              style="padding: 0 8px 0 4px;margin-top: 16px">
-                                                            <label for="companyName" class="form-label pl-1"> <i
+                                                            <label for="companyName" class="form-label mb-1 pl-1"> <i
                                                                     class="fa-regular fa-calendar-days"></i> Departure
                                                                 time</label>
                                                             <input type="text" th:field="*{companyName}"
-                                                                   class="form-control" id="companyName25">
+                                                                   class="form-control" id="departure-time">
                                                         </div>
                                                     </div>
 
                                                     <div class="row p-0 m-0">
-                                                        <div class="form-group col-12 mb-0"  style="padding: 0 161px 0 8px; margin-top: 17px">
+                                                        <div class="form-group col-12 mb-0"
+                                                             style="padding: 0 161px 0 8px; margin-top: 17px">
                                                             <label for="mySelectForPassenger"
-                                                                   class="form-label pl-1 ml-0 d-block">Select Passenger</label>
+                                                                   class="form-label pl-1 mb-1 ml-0 d-block">Select
+                                                                Passenger</label>
                                                             <select id="mySelectForPassenger"
                                                                     th:field="*{country}"
                                                                     class="form-control" style="width: 100%;" multiple>
@@ -218,21 +220,177 @@
                                                             </div>
                                                             <div class="text-right">
                                                                 <button class="btn new-passenger-button" type="button">
-                                                                    <strong><i class="fa-solid fa-plus"></i> New Passenger</strong>
+                                                                    <strong><i class="fa-solid fa-plus"></i> New
+                                                                        Passenger</strong>
                                                                 </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
+<!--                                                    <hr class="mb-1 mt-5 row pl-0 pr-0 mr-0 ml-0">-->
 
-                                                    <div class="col-md-6"
+                                                    <div class="row p-0 m-0">
+                                                        <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1">Bought
+                                                                User</label>
+                                                            <select id="inputGender" name="gender" class="form-select">
+                                                                <option th:each="gender:${genders}" th:value="${gender}"
+                                                                        th:text="${gender.value}"></option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                             style="padding: 0 8px 0 4px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1"> <i
+                                                                    class="fa-regular fa-calendar-days"></i> Date of
+                                                                perches</label>
+                                                            <input type="text" th:field="*{companyName}"
+                                                                   class="form-control" id="date-of-perches">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row p-0 m-0">
+                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
+                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1">Perches
+                                                                price</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">₺</span>
+                                                                <input type="text" class="form-control"
+                                                                       aria-label="Text input with segmented dropdown button">
+                                                                <span class="input-group-text">0.00</span>
+                                                                <button type="button"
+                                                                        class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                                                        data-toggle="dropdown" aria-expanded="false">
+                                                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                                                </button>
+                                                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css">
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                                           style="display: flex; align-items: center;border-radius: 8px 8px 0 0">₺
+                                                                            TRY</a></li>
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css">$
+                                                                            USD</a></li>
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">€
+                                                                            EUR</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
+                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1">Sales
+                                                                price</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">₺</span>
+                                                                <input type="text" class="form-control"
+                                                                       aria-label="Text input with segmented dropdown button">
+                                                                <span class="input-group-text">0.00</span>
+                                                                <button type="button"
+                                                                        class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                                                        data-toggle="dropdown" aria-expanded="false">
+                                                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                                                </button>
+                                                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css">
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                                           style="display: flex; align-items: center;border-radius: 8px 8px 0 0">₺
+                                                                            TRY</a></li>
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css">$
+                                                                            USD</a></li>
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">€
+                                                                            EUR</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
+                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1">Payed
+                                                                amount</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">₺</span>
+                                                                <input type="text" class="form-control"
+                                                                       aria-label="Text input with segmented dropdown button">
+                                                                <span class="input-group-text">0.00</span>
+                                                                <button type="button"
+                                                                        class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                                                        data-toggle="dropdown" aria-expanded="false">
+                                                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                                                </button>
+                                                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css">
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                                           style="display: flex; align-items: center;border-radius: 8px 8px 0 0">₺
+                                                                            TRY</a></li>
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css">$
+                                                                            USD</a></li>
+                                                                    <li>
+                                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">€
+                                                                            EUR</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="row p-0 m-0">
+                                                        <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                             style="padding: 0 8px 0 8px;margin-top: 17px">
+                                                            <label for="mySelectForPayer"
+                                                                   class="form-label pl-1 mb-1 d-block">Receiver</label>
+                                                            <select id="mySelectForReceiver"
+                                                                    th:field="*{country}"
+                                                                    class="form-control mb-0" style="width: 100%">
+                                                                <option th:each="country:${countriesTr}"
+                                                                        th:value="${country}"
+                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                        th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                            </select>
+                                                            <div class="ticket-create-airline-select text-right">
+                                                                <i id="receiver-selector-arrow"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                             style="padding: 0 8px 0 4px;margin-top: 17px">
+                                                            <label for="mySelectForPayer"
+                                                                   class="form-label pl-1 mb-1 d-block">Payer</label>
+                                                            <select id="mySelectForPayer"
+                                                                    th:field="*{country}"
+                                                                    class="form-control mb-0" style="width: 100%">
+                                                                <option th:each="country:${countriesTr}"
+                                                                        th:value="${country}"
+                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                        th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                            </select>
+                                                            <div class="ticket-create-airline-select text-right">
+                                                                <i id="payer-selector-arrow"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-12"
                                                          th:classappend="${#fields.hasErrors('companyName')} ? 'error' : ''"
                                                          id="companySection">
                                                         <div class="form-group p-0 m-0">
-                                                            <label for="companyName" class="form-label">Company
-                                                                Name</label>
-                                                            <input type="text" th:field="*{companyName}"
+                                                            <label for="companyName" class="form-label pl-1 mb-1 d-block">Notes</label>
+                                                            <textarea type="text" th:field="*{companyName}"
                                                                    class="form-control" id="companyName">
+
+                                                            </textarea>
                                                             <div class="custom-invalid-feedback"
                                                                  th:if="${#fields.hasErrors('companyName')}">
                                                                 <ul class="p-0 m-0">
@@ -243,175 +401,12 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
-                                                         id="individualSection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputFirstName" class="form-label">first
-                                                                Name</label>
-                                                            <input type="text" th:field="*{firstName}"
-                                                                   class="form-control" id="inputFirstName">
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('firstName')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('firstName')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('lastName')} ? 'error' : ''"
-                                                         id="lastNameSection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputLastName" class="form-label">Last
-                                                                Name</label>
-                                                            <input type="text" th:field="*{lastName}"
-                                                                   class="form-control" id="inputLastName">
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('lastName')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('lastName')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('email')} ? 'error' : ''">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputEmail" class="form-label">Email</label>
-                                                            <input type="email" th:field="*{email}" class="form-control"
-                                                                   id="inputEmail"
-                                                                   spellcheck="false"
-                                                                   placeholder="ex: example@sever.com">
-
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('email')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('email')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('officeNumber')} ? 'error' : ''"
-                                                         id="officePhoneSection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputOfficePhone" class="form-label">Office
-                                                                Phone</label>
-                                                            <input type="number" th:field="*{officeNumber}"
-                                                                   class="form-control" id="inputOfficePhone">
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('officeNumber')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('officeNumber')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('phoneNumber')} ? 'error' : ''">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputPhone" class="form-label">Phone</label>
-                                                            <input type="number" th:field="*{phoneNumber}"
-                                                                   class="form-control"
-                                                                   placeholder="ex: 05552223344" id="inputPhone">
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('phoneNumber')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('phoneNumber')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('customerTRYBalance')} ? 'error' : ''">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="customerTRYBalance" class="form-label">Customer
-                                                                Balance</label>
-                                                            <div class="input-group">
-                                                                <input type="number" class="form-control"
-                                                                       th:field="*{customerTRYBalance}"
-                                                                       id="customerTRYBalance"
-                                                                       name="customerBalance">
-                                                                <span class="input-group-text"
-                                                                      id="currencyTRYSymbol">₺</span>
-                                                                <span class="input-group-text">0.00</span>
-                                                                <div class="custom-invalid-feedback"
-                                                                     th:if="${#fields.hasErrors('customerTRYBalance')}">
-                                                                    <ul class="p-0 m-0">
-                                                                        <li th:each="err : ${#fields.errors('customerTRYBalance')}"
-                                                                            th:text="${err}"></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('customerUSDBalance')} ? 'error' : ''">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="customerTRYBalance" class="form-label">Customer
-                                                                Balance</label>
-                                                            <div class="input-group">
-                                                                <input type="number" class="form-control"
-                                                                       th:field="*{customerUSDBalance}"
-                                                                       id="customerUSDBalance"
-                                                                       name="customerBalance">
-                                                                <span class="input-group-text"
-                                                                      id="currencyUSDSymbol">$</span>
-                                                                <span class="input-group-text">0.00</span>
-                                                                <div class="custom-invalid-feedback"
-                                                                     th:if="${#fields.hasErrors('customerUSDBalance')}">
-                                                                    <ul class="p-0 m-0">
-                                                                        <li th:each="err : ${#fields.errors('customerUSDBalance')}"
-                                                                            th:text="${err}"></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('customerEURBalance')} ? 'error' : ''">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="customerEURBalance" class="form-label">Customer
-                                                                Balance</label>
-                                                            <div class="input-group">
-                                                                <input type="number" class="form-control"
-                                                                       th:field="*{customerEURBalance}"
-                                                                       id="customerEURBalance"
-                                                                       name="customerBalance">
-                                                                <span class="input-group-text"
-                                                                      id="currencyEURSymbol">€</span>
-                                                                <span class="input-group-text">0.00</span>
-                                                                <div class="custom-invalid-feedback"
-                                                                     th:if="${#fields.hasErrors('customerEURBalance')}">
-                                                                    <ul class="p-0 m-0">
-                                                                        <li th:each="err : ${#fields.errors('customerEURBalance')}"
-                                                                            th:text="${err}"></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
 
                                                     <div class="row justify-content-end pt-3 pr-0 pl-0">
                                                         <div class="col-12 col-md-6 col-lg-6 text-right p-0">
                                                             <button type="submit"
                                                                     class="btn list-page-drop-downs-export pr-5 pl-5">
-                                                                Create
+                                                                Save
                                                             </button>
                                                         </div>
                                                     </div>
@@ -508,6 +503,14 @@
         const $mySelectForPassenger = $('#mySelectForPassenger');
         const $passengerSelectorArrow = $('#passenger-selector-arrow');
         setupSelect2($mySelectForPassenger, $passengerSelectorArrow);
+
+        const $mySelectForPayer = $('#mySelectForPayer');
+        const $payerSelectorArrow = $('#payer-selector-arrow');
+        setupSelect2($mySelectForPayer, $payerSelectorArrow);
+
+        const $mySelectForReceiver = $('#mySelectForReceiver');
+        const $receiverSelectorArrow = $('#receiver-selector-arrow');
+        setupSelect2($mySelectForReceiver, $receiverSelectorArrow);
     });
 </script>
 
@@ -568,8 +571,24 @@
 
 <script>
     $(function () {
-        $('#companyName25').daterangepicker({
+        $('#departure-time').daterangepicker({
             showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
+            },
+            startDate: moment()
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('#date-of-perches').daterangepicker({
+            showDropdowns: true,
+            singleDatePicker: true,
             timePicker: true,
             timePicker24Hour: true,
             timePickerIncrement: 5,

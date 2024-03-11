@@ -189,7 +189,7 @@ input:-webkit-autofill {
   padding: 0 5px 0 0;
   position: absolute;
   top: 70%; /* Adjust vertical positioning */
-  right: 167px; /* Adjust horizontal positioning */
+  right: 175px; /* Adjust horizontal positioning */
   transform: translateY(-50%); /* Vertically center the icon */
   cursor: pointer;
   font-size: 12px;
@@ -197,7 +197,7 @@ input:-webkit-autofill {
 
 .new-passenger-button{
   position: absolute;
-  top: 72%; /* Adjust vertical positioning */
+  top: 70%; /* Adjust vertical positioning */
   right: 8px; /* Adjust horizontal positioning */
   transform: translateY(-50%); /* Vertically center the icon */
   background: #117dc0 !important;
