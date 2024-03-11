@@ -136,12 +136,23 @@ input:-webkit-autofill {
   font-size: 12px;
 }
 
+.ticket-create-airline-select{
+  background: transparent;
+  padding: 0 5px 0 0;
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 15px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 12px;
+}
+
 .ticket-create-from-select{
   background: transparent;
   padding: 0 10px 0 0;
   position: absolute;
   top: 70%; /* Adjust vertical positioning */
-  right: 17px; /* Adjust horizontal positioning */
+  right: 13px; /* Adjust horizontal positioning */
   transform: translateY(-50%); /* Vertically center the icon */
   cursor: pointer;
   font-size: 12px;
@@ -167,10 +178,38 @@ input:-webkit-autofill {
   padding: 0 5px 0 0;
   position: absolute;
   top: 70%; /* Adjust vertical positioning */
-  right: 10px; /* Adjust horizontal positioning */
+  right: 7px; /* Adjust horizontal positioning */
   transform: translateY(-50%); /* Vertically center the icon */
   cursor: pointer;
   font-size: 12px;
+}
+
+.ticket-create-passenger-select{
+  background: transparent;
+  padding: 0 5px 0 0;
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 167px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.new-passenger-button{
+  position: absolute;
+  top: 72%; /* Adjust vertical positioning */
+  right: 8px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  background: #117dc0 !important;
+  color: white !important;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0 !important;
+}
+.new-passenger-button:hover{
+  background: #1288d2 !important;
+}
+.new-passenger-button:active{
+  background: #117dc0 !important;
 }
 
 

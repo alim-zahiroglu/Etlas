@@ -47,8 +47,8 @@
                                                         <div class="col-6 col-md-3 col-lg-3 pb-2">
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input" th:field="*{individual}"
-                                                                       type="checkbox" id="type-individual">
-                                                                <label class="form-check-label" for="type-individual">
+                                                                       type="checkbox" id="type-one-way">
+                                                                <label class="form-check-label" for="type-one-way">
                                                                     <i class="fa-solid fa-arrow-right"></i> One
                                                                     way</label>
                                                             </div>
@@ -57,8 +57,8 @@
                                                         <div class="col-6 col-md-3 col-lg-3">
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input" th:field="*{company}"
-                                                                       type="checkbox" id="type-company">
-                                                                <label class="form-check-label" for="type-company">
+                                                                       type="checkbox" id="type-round-trip">
+                                                                <label class="form-check-label" for="type-round-trip">
                                                                     <i class="fa-solid fa-arrow-right-arrow-left"></i>
                                                                     Round trip</label>
                                                             </div>
@@ -67,8 +67,9 @@
                                                         <div class="col-6 col-md-3 col-lg-3 pb-2">
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input" th:field="*{individual}"
-                                                                       type="checkbox" id="type-individual">
-                                                                <label class="form-check-label" for="type-individual">
+                                                                       type="checkbox" id="ticket-type-single">
+                                                                <label class="form-check-label"
+                                                                       for="ticket-type-single">
                                                                     <i class="fa-solid fa-user"></i> single</label>
                                                             </div>
                                                         </div>
@@ -76,8 +77,9 @@
                                                         <div class="col-6 col-md-3 col-lg-3">
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input" th:field="*{company}"
-                                                                       type="checkbox" id="type-company">
-                                                                <label class="form-check-label" for="type-company">
+                                                                       type="checkbox" id="ticket-type-multiple">
+                                                                <label class="form-check-label"
+                                                                       for="ticket-type-multiple">
                                                                     <i class="fa-solid fa-users"></i>
                                                                     multiple</label>
                                                             </div>
@@ -91,9 +93,9 @@
                                                          th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
                                                          id="TkNo">
                                                         <div class="form-group p-0 m-0">
-                                                            <label for="inputTkNo" class="form-label pl-1">TK No</label>
+                                                            <label for="inputPNR" class="form-label pl-1">PNR</label>
                                                             <input type="text" th:field="*{firstName}"
-                                                                   class="form-control" id="inputTkNo">
+                                                                   class="form-control" id="inputPNR">
                                                             <div class="custom-invalid-feedback"
                                                                  th:if="${#fields.hasErrors('firstName')}">
                                                                 <ul class="p-0 m-0">
@@ -104,7 +106,8 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group col-md-6 col-lg-4 mb-0" style="margin-top: 17px">
+                                                    <div class="form-group col-md-6 col-lg-4 mb-0"
+                                                         style="margin-top: 17px">
                                                         <label for="mySelectForAirline"
                                                                class="form-label pl-1 ml-0 d-block">Airline</label>
                                                         <select id="mySelectForAirline"
@@ -115,7 +118,7 @@
                                                                     th:selected="${country.getAlpha3Code() == 'EAT'}"
                                                                     th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
                                                         </select>
-                                                        <div class="ticket-create-to-select text-right">
+                                                        <div class="ticket-create-airline-select text-right">
                                                             <i id="airline-selector-arrow"
                                                                class="fa-solid fa-chevron-down rotate-down"></i>
                                                         </div>
@@ -125,7 +128,8 @@
                                                          th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
                                                          id="ticketAmount">
                                                         <div class="form-group p-0 m-0">
-                                                            <label for="inputTicketAmount" class="form-label pl-1">Ticket Amount</label>
+                                                            <label for="inputTicketAmount" class="form-label pl-1">Ticket
+                                                                Amount</label>
                                                             <input type="number" th:field="*{firstName}"
                                                                    class="form-control" id="inputTicketAmount">
                                                             <div class="custom-invalid-feedback"
@@ -161,7 +165,7 @@
                                                                     </div>
 
                                                                     <div class="ticket-create-from-to-switch btn text-right">
-                                                                        <i id="from-where-selector-arrow"
+                                                                        <i id="from-to-switch-button"
                                                                            class="fa-solid fa-arrow-right-arrow-left"></i>
                                                                     </div>
                                                                 </div>
@@ -169,7 +173,8 @@
                                                                 <div class="form-group col-6 mb-0 pr-0">
                                                                     <label for="mySelectForArrival"
                                                                            class="form-label pl-1 ml-0 d-block">
-                                                                        <i class="fa-solid fa-plane-arrival"></i> To</label>
+                                                                        <i class="fa-solid fa-plane-arrival"></i>
+                                                                        To</label>
                                                                     <select id="mySelectForArrival"
                                                                             th:field="*{country}"
                                                                             class="form-control" style="width: 100%">
@@ -187,30 +192,37 @@
                                                         </div>
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
                                                              style="padding: 0 8px 0 4px;margin-top: 16px">
-                                                            <label for="companyName" class="form-label pl-1"> <i class="fa-regular fa-calendar-days"></i> Departure time</label>
+                                                            <label for="companyName" class="form-label pl-1"> <i
+                                                                    class="fa-regular fa-calendar-days"></i> Departure
+                                                                time</label>
                                                             <input type="text" th:field="*{companyName}"
                                                                    class="form-control" id="companyName25">
                                                         </div>
                                                     </div>
 
-
-
-                                                    <script>
-                                                        $(function() {
-                                                            $('#companyName25').daterangepicker({
-                                                                showDropdowns: true,
-                                                                timePicker: true,
-                                                                timePicker24Hour: true,
-                                                                timePickerIncrement: 5,
-                                                                locale: {
-                                                                    format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
-                                                                },
-                                                                startDate: moment()
-                                                            });
-                                                        });
-                                                    </script>
-
-
+                                                    <div class="row p-0 m-0">
+                                                        <div class="form-group col-12 mb-0"  style="padding: 0 161px 0 8px; margin-top: 17px">
+                                                            <label for="mySelectForPassenger"
+                                                                   class="form-label pl-1 ml-0 d-block">Select Passenger</label>
+                                                            <select id="mySelectForPassenger"
+                                                                    th:field="*{country}"
+                                                                    class="form-control" style="width: 100%;" multiple>
+                                                                <option th:each="country:${countriesTr}"
+                                                                        th:value="${country}"
+                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                        th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                            </select>
+                                                            <div class="ticket-create-passenger-select text-right">
+                                                                <i id="passenger-selector-arrow"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button class="btn new-passenger-button" type="button">
+                                                                    <strong><i class="fa-solid fa-plus"></i> New Passenger</strong>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
                                                     <div class="col-md-6"
@@ -321,36 +333,6 @@
                                                         </div>
                                                     </div>
 
-
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-0">
-                                                            <label for="mySelectForCountry" class="form-label d-block">Country</label>
-                                                            <select id="mySelectForCountry" th:field="*{country}"
-                                                                    class="form-control" style="width: 100%">
-                                                                <option th:each="country:${countriesTr}"
-                                                                        th:value="${country}"
-                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
-                                                                        th:text="${country.getName()}"></option>
-                                                            </select>
-                                                            <div class="customer-create-country-select text-right">
-                                                                <i id="customer-country-selector"
-                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-md-6" id="genderSelection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputGender" class="form-label">Choose
-                                                                Gender</label>
-                                                            <select id="inputGender" th:field="*{gender}" name="gender"
-                                                                    class="form-select">
-                                                                <option th:each="gender:${genders}" th:value="${gender}"
-                                                                        th:text="${gender.value}"></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
 
                                                     <div class="col-md-6"
                                                          th:classappend="${#fields.hasErrors('customerTRYBalance')} ? 'error' : ''">
@@ -522,9 +504,12 @@
         const $mySelectForTo = $('#mySelectForArrival');
         const $toWhereSelectorArrow = $('#to-where-selector-arrow');
         setupSelect2($mySelectForTo, $toWhereSelectorArrow);
+
+        const $mySelectForPassenger = $('#mySelectForPassenger');
+        const $passengerSelectorArrow = $('#passenger-selector-arrow');
+        setupSelect2($mySelectForPassenger, $passengerSelectorArrow);
     });
 </script>
-
 
 
 <script>
@@ -578,6 +563,22 @@
     }
 
 
+</script>
+
+
+<script>
+    $(function () {
+        $('#companyName25').daterangepicker({
+            showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
+            },
+            startDate: moment()
+        });
+    });
 </script>
 
 
