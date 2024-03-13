@@ -4,25 +4,6 @@
     display: none;
 }
 
-/* Add a Font Awesome arrow using a pseudo-element */
-/*.select2-container--default .select2-selection--single .select2-selection__rendered {*/
-/*    !*width: 100% !important;*!*/
-/*    position: relative;*/
-/*}*/
-
-/*.select2-container--default .select2-selection--single .select2-selection__rendered::after {*/
-/*    content: '\f107'; !* Unicode for the right arrow in Font Awesome *!*/
-/*    font-family: 'Font Awesome 5 Free'; !* Font Awesome font family *!*/
-/*    font-weight: 600; !* Font weight to ensure the icon is displayed *!*/
-/*    position: absolute;*/
-/*    display: block !important;*/
-/*    top: 50%;*/
-/*    right: 12px;*/
-/*    transform: translateY(-50%);*/
-/*    font-size: 14px; !* Adjust the font size as needed *!*/
-/*}*/
-
-
 .select2-container {
     box-sizing: border-box;
     display: inline-block;
@@ -35,14 +16,12 @@
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    height: 37px;
+    height: 38px;
     user-select: none;
     -webkit-user-select: none;
     border: solid 1px #ced4db !important;
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
-    /*width: 100% !important;*/
-    /*max-width: 100% auto;*/
     min-width: fit-content auto;
     display: block;
     padding-left: 12px;
@@ -64,7 +43,7 @@
     box-sizing: border-box;
     cursor: pointer;
     display: block;
-    min-height: 32px;
+    min-height: 38px;
     user-select: none;
     -webkit-user-select: none; }
 .select2-container .select2-selection--multiple .select2-selection__rendered {
@@ -235,11 +214,12 @@
 
 .select2-container--default .select2-selection--multiple {
     background-color: white;
-    border: 1px solid #aaa;
+    border: 1px solid #ced4db;
     border-radius: 4px;
     cursor: text;
-    padding-bottom: 5px;
-    padding-right: 5px;
+    /*padding-bottom: 5px;*/
+    padding-right: 7px;
+    padding-left: 7px;
     position: relative; }
 .select2-container--default .select2-selection--multiple.select2-selection--clearable {
     padding-right: 25px; }
@@ -313,7 +293,7 @@
     margin-right: auto; }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border: solid black 1px;
+    border: solid 1px #ced4db;
     outline: 0; }
 
 .select2-container--default.select2-container--disabled .select2-selection--multiple {

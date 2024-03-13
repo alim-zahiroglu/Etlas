@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>ticket create</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+                        <nav style="--bs-breadcrumb-divider:5 " aria-label="breadcrumb" class="pb-0">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/ticket/list}"><i
+                                        class="fa-solid fa-house"></i> Tickets </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Ticket create
+                                </li>
+                            </ol>
+                        </nav>
+                        <header class="panel-heading text-center"></header>
+                        <div class="row justify-content-center align-items-center pt-0">
+                            <div class="col-12 col-md-12 col-lg-11">
+                                <div class="input-group justify-content-end">
+                                    <div class="col-auto pr-0">
+                                        <div class="col-12 col-sm-6 col-lg-3 pr-1 d-flex align-items-right">
+                                            <a id="staffListLink"
+                                               class="btn text-light list-page-drop-downs pr-4 pl-4 mb-2"
+                                               th:href="@{/ticket/list}"><i class="fa fa-list mr-1"></i> Ticket List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header text-center text-white bold_font"
+                                         style="font-size: x-large;background: #117dc0 !important;">Save New Ticket
+                                    </div>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12 col-md-12 col-lg-10">
+
+                                                <form th:object="${newCustomer}" th:action="@{/customer/create}"
+                                                      method="post" class="row g-3 ">
+
+                                                    <div class="row m-0 mt-2">
+                                                        <div class="col-6 col-md-3 col-lg-3 pb-2">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" th:field="*{individual}"
+                                                                       type="checkbox" id="type-one-way">
+                                                                <label class="form-check-label" for="type-one-way">
+                                                                    <i class="fa-solid fa-arrow-right"></i> One
+                                                                    way</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6 col-md-3 col-lg-3">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" th:field="*{company}"
+                                                                       type="checkbox" id="type-round-trip">
+                                                                <label class="form-check-label" for="type-round-trip">
+                                                                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                                                    Round trip</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6 col-md-3 col-lg-3 pb-2">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" th:field="*{individual}"
+                                                                       type="checkbox" id="ticket-type-single">
+                                                                <label class="form-check-label"
+                                                                       for="ticket-type-single">
+                                                                    <i class="fa-solid fa-user"></i> single</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6 col-md-3 col-lg-3">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" th:field="*{company}"
+                                                                       type="checkbox" id="ticket-type-multiple">
+                                                                <label class="form-check-label"
+                                                                       for="ticket-type-multiple">
+                                                                    <i class="fa-solid fa-users"></i>
+                                                                    multiple</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <hr class="mb-1 mt-3 row pl-0 pr-0 mr-0 ml-0">
+
+                                                    <div class="col-md-6 col-lg-4 mb-0"
+                                                         th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
+                                                         id="TkNo">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputPNR"
+                                                                   class="form-label mb-1 pl-1">PNR</label>
+                                                            <input type="text" th:field="*{firstName}"
+                                                                   class="form-control" id="inputPNR">
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('firstName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('firstName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 col-lg-4 mb-0"
+                                                         style="margin-top: 17px">
+                                                        <label for="mySelectForAirline"
+                                                               class="form-label pl-1 ml-0 mb-1 d-block">Airline</label>
+                                                        <select id="mySelectForAirline"
+                                                                th:field="*{country}"
+                                                                class="form-control mb-0" style="width: 100%">
+                                                            <option th:each="country:${countriesTr}"
+                                                                    th:value="${country}"
+                                                                    th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                    th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                        </select>
+                                                        <div class="ticket-create-airline-select text-right">
+                                                            <i id="airline-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-4"
+                                                         th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
+                                                         id="ticketAmount">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputTicketAmount" class="form-label mb-1 pl-1">Ticket
+                                                                Amount</label>
+                                                            <input type="number" th:field="*{firstName}"
+                                                                   class="form-control" id="inputTicketAmount">
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('firstName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('firstName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row p-0 m-0">
+                                                        <div class="col-12 col-md-12 col-lg-8 pb-0"
+                                                             style="padding: 0 8px; margin-top: 17px">
+                                                            <div class="row p-0 m-0">
+
+                                                                <div class="form-group col-6 mb-0 pl-0">
+                                                                    <label for="mySelectForFrom"
+                                                                           class="form-label pl-1 mb-1 d-block">
+                                                                        <i class="fa-solid fa-plane-departure"></i> From</label>
+                                                                    <select id="mySelectForFrom"
+                                                                            th:field="*{country}"
+                                                                            class="form-control" style="width: 100%">
+                                                                        <option th:each="country:${countriesTr}"
+                                                                                th:value="${country}"
+                                                                                th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                                th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                                    </select>
+                                                                    <div class="ticket-create-from-select text-right">
+                                                                        <i id="from-where-selector-arrow"
+                                                                           class="fa-solid fa-chevron-down rotate-down"></i>
+                                                                    </div>
+
+                                                                    <div class="ticket-create-from-to-switch btn text-right">
+                                                                        <i id="from-to-switch-button"
+                                                                           class="fa-solid fa-arrow-right-arrow-left"></i>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group col-6 mb-0 pr-0">
+                                                                    <label for="mySelectForArrival"
+                                                                           class="form-label pl-1 mb-1 ml-0 d-block">
+                                                                        <i class="fa-solid fa-plane-arrival"></i>
+                                                                        To</label>
+                                                                    <select id="mySelectForArrival"
+                                                                            th:field="*{country}"
+                                                                            class="form-control" style="width: 100%">
+                                                                        <option th:each="country:${countriesTr}"
+                                                                                th:value="${country}"
+                                                                                th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                                th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                                    </select>
+                                                                    <div class="ticket-create-to-select text-right">
+                                                                        <i id="to-where-selector-arrow"
+                                                                           class="fa-solid fa-chevron-down rotate-down"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
+                                                             style="padding: 0 8px 0 4px;margin-top: 16px">
+                                                            <label id="departure-time-label" for="departure-time"
+                                                                   class="form-label mb-1 pl-1">
+                                                                <i class="fa-regular fa-calendar-days"></i> Departure
+                                                                time</label>
+
+                                                            <input type="text" th:field="*{companyName}"
+                                                                   class="form-control" id="departure-time">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row p-0 m-0">
+                                                        <div class="form-group col-12 mb-0"
+                                                             style="padding: 0 161px 0 8px; margin-top: 17px">
+                                                            <label for="mySelectForPassenger"
+                                                                   class="form-label pl-1 mb-1 ml-0 d-block">Select
+                                                                Passenger</label>
+                                                            <select id="mySelectForPassenger"
+                                                                    th:field="*{country}"
+                                                                    class="form-control" style="width: 100%;">
+                                                                <option th:each="country:${countriesTr}"
+                                                                        th:value="${country}"
+                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                        th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                            </select>
+                                                            <div class="ticket-create-passenger-select text-right">
+                                                                <i id="passenger-selector-arrow"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button class="btn new-passenger-button" type="button">
+                                                                    <strong><i class="fa-solid fa-plus"></i> New
+                                                                        Passenger</strong>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row p-0 m-0">
+                                                        <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1">Bought
+                                                                User</label>
+                                                            <select id="inputGender" name="gender" class="form-select">
+                                                                <option th:each="gender:${genders}" th:value="${gender}"
+                                                                        th:text="${gender.value}"></option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                             style="padding: 0 8px 0 4px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1"> <i
+                                                                    class="fa-regular fa-calendar-days"></i> Date of
+                                                                perches</label>
+                                                            <input type="text" th:field="*{companyName}"
+                                                                   class="form-control date-picker" id="date-of-perches">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row p-0 m-0">
+                                                        <!-- Perches price -->
+                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0" style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="perchesPrice" class="form-label mb-1 pl-1">Perches price</label>
+                                                            <div class="input-group currency-input-group" id="perchesPrice">
+                                                                <span class="input-group-text currency-symbol">₺</span>
+                                                                <input type="text" class="form-control" aria-label="Perches price input">
+                                                                <span class="input-group-text">0.00</span>
+                                                                <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                                                        data-toggle="dropdown" aria-expanded="false">
+                                                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                                                </button>
+                                                                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css">
+                                                                    <li><a class="dropdown-item dropdown-menu-item-custom-css change-currency"
+                                                                           data-currency-symbol="₺">₺ TRY</a></li>
+                                                                    <li><a class="dropdown-item dropdown-menu-item-custom-css change-currency"
+                                                                           data-currency-symbol="$">$ USD</a></li>
+                                                                    <li><a class="dropdown-item dropdown-menu-item-custom-css change-currency"
+                                                                           data-currency-symbol="€">€ EUR</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Sales price -->
+                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0" style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="salesPrice" class="form-label mb-1 pl-1">Sales price</label>
+                                                            <div class="input-group currency-input-group" id="salesPrice">
+                                                                <span class="input-group-text currency-symbol">₺</span>
+                                                                <input type="text" class="form-control" aria-label="Sales price input">
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Payed amount -->
+                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0" style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                            <label for="payedAmount" class="form-label mb-1 pl-1">Payed amount</label>
+                                                            <div class="input-group currency-input-group" id="payedAmount" >
+                                                                <span class="input-group-text currency-symbol">₺</span>
+                                                                <input type="text" class="form-control" aria-label="Payed amount input">
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row p-0 m-0">
+                                                        <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             style="padding: 0 8px 0 8px;margin-top: 17px">
+                                                            <label for="receiver-user"
+                                                                   class="form-label pl-1 mb-1 d-block">Receiver</label>
+                                                            <select id="receiver-user" name="gender"
+                                                                    class="form-select">
+                                                                <option th:each="gender:${genders}" th:value="${gender}"
+                                                                        th:text="${gender.value}"></option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             style="padding: 0 8px 0 4px;margin-top: 17px">
+                                                            <label for="mySelectForPayer"
+                                                                   class="form-label pl-1 mb-1 d-block">Payer</label>
+                                                            <select id="mySelectForPayer"
+                                                                    th:field="*{country}"
+                                                                    class="form-control mb-0" style="width: 100%">
+                                                                <option th:each="country:${countriesTr}"
+                                                                        th:value="${country}"
+                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                        th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                            </select>
+                                                            <div class="ticket-create-airline-select text-right">
+                                                                <i id="payer-selector-arrow"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
+                                                             style="padding: 0 8px 0 4px;margin-top: 16px">
+                                                            <label for="companyName" class="form-label mb-1 pl-1"> <i
+                                                                    class="fa-regular fa-calendar-days"></i> Date of
+                                                                payed</label>
+                                                            <input type="text" th:field="*{companyName}"
+                                                                   class="form-control date-picker" id="date-of-payed">
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="col-12"
+                                                         th:classappend="${#fields.hasErrors('companyName')} ? 'error' : ''"
+                                                         id="companySection">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="companyName"
+                                                                   class="form-label pl-1 mb-1 d-block">Notes</label>
+                                                            <textarea type="text" th:field="*{companyName}"
+                                                                      class="form-control" id="companyName">
+
+                                                            </textarea>
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('companyName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('companyName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row justify-content-end pt-3 pr-0 pl-0">
+                                                        <div class="col-12 col-md-6 col-lg-6 text-right p-0">
+                                                            <button type="submit"
+                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
+
+
+<script>
+    $(document).ready(function () {
+        function setupSelect2($select, $selectorArrow) {
+            $select.select2({
+                allowClear: false,
+                closeOnSelect: true,
+            });
+
+            $select.on('select2:open', () => {
+                $selectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
+            });
+
+            $select.on('select2:close', () => {
+                $selectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
+            });
+        }
+
+        const $mySelectForAirLine = $('#mySelectForAirline');
+        const $airlineSelectorArrow = $('#airline-selector-arrow');
+        setupSelect2($mySelectForAirLine, $airlineSelectorArrow);
+
+        const $mySelectForFrom = $('#mySelectForFrom');
+        const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
+        setupSelect2($mySelectForFrom, $fromWhereSelectorArrow);
+
+        const $mySelectForTo = $('#mySelectForArrival');
+        const $toWhereSelectorArrow = $('#to-where-selector-arrow');
+        setupSelect2($mySelectForTo, $toWhereSelectorArrow);
+
+        const $mySelectForPayer = $('#mySelectForPayer');
+        const $payerSelectorArrow = $('#payer-selector-arrow');
+        setupSelect2($mySelectForPayer, $payerSelectorArrow);
+
+    });
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        // Handle one way checkbox click
+        $('#type-one-way').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If one way is checked, uncheck the round trip
+                $('#type-round-trip').prop('checked', false);
+                setSingleDatePickerForDeparture();
+            } else {
+                $('#type-round-trip').prop('checked', true);
+                setMultipleDatePickerForDeparture();
+            }
+        });
+
+        // Handle round trip checkbox click
+        $('#type-round-trip').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If round trip is checked, uncheck the one way
+                $('#type-one-way').prop('checked', false);
+                setMultipleDatePickerForDeparture();
+            } else {
+                $('#type-one-way').prop('checked', true);
+                setSingleDatePickerForDeparture();
+            }
+        });
+
+        // Initial state
+        if ($('#type-one-way').prop('checked')) {
+            setSingleDatePickerForDeparture();
+        } else if ($('#type-round-trip').prop('checked')) {
+            setMultipleDatePickerForDeparture();
+        }
+    });
+
+    // Function to update the departure time label based on checkbox selection
+    function updateDepartureTimeLabel() {
+        const isChecked = $('#type-one-way').prop('checked');
+        const iconHtml = '<i class="fa-regular fa-calendar-days"></i>';
+
+        const label = isChecked ? iconHtml + ' Departure time' : iconHtml + ' Departure time - Return time';
+        $('#departure-time-label').html(label);
+    }
+
+    // Function to set the date picker for a single date
+    function setSingleDatePickerForDeparture() {
+        $('#departure-time').daterangepicker({
+            showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
+            },
+            singleDatePicker: true,
+            startDate: moment()
+        });
+
+        updateDepartureTimeLabel();
+    }
+
+    // Function to set the date picker for a range of dates
+    function setMultipleDatePickerForDeparture() {
+        $('#departure-time').daterangepicker({
+            showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
+            },
+            singleDatePicker: false,
+            startDate: moment()
+        });
+
+        updateDepartureTimeLabel();
+    }
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize mySelectForPassenger
+        $(document).ready(function () {
+            const $mySelectForPassenger = $('#mySelectForPassenger');
+            const $payerSelectorArrow = $('#passenger-selector-arrow');
+
+            $mySelectForPassenger.select2({
+                allowClear: false,
+                closeOnSelect: true,
+            });
+
+            $mySelectForPassenger.on('select2:open', function (e) {
+                $payerSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
+            });
+
+            $mySelectForPassenger.on('select2:close', function (e) {
+                $payerSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
+            });
+        });
+
+        // Handle single ticket checkbox click
+        $('#ticket-type-single').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If single ticket is checked, uncheck the multiple ticket
+                $('#ticket-type-multiple').prop('checked', false);
+                setTicketAmountOneAndReadOnly();
+                setSingleSelectMode();
+            } else {
+                $('#ticket-type-multiple').prop('checked', true);
+                removeReadOnly();
+                setMultipleSelectMode();
+                $('#mySelectForPassenger').val(null).trigger('change');
+            }
+        });
+
+        // Handle multiple ticket checkbox click
+        $('#ticket-type-multiple').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If multiple ticket is checked, uncheck the single ticket
+                $('#ticket-type-single').prop('checked', false);
+                removeReadOnly();
+                setMultipleSelectMode();
+                $('#mySelectForPassenger').val(null).trigger('change');
+            } else {
+                $('#ticket-type-single').prop('checked', true);
+                setTicketAmountOneAndReadOnly();
+                setSingleSelectMode();
+            }
+        });
+
+        // Initial state
+        if ($('#ticket-type-single').prop('checked')) {
+            setTicketAmountOneAndReadOnly();
+            setSingleSelectMode();
+        } else if ($('#ticket-type-multiple').prop('checked')) {
+            removeReadOnly();
+            setMultipleSelectMode();
+            $('#mySelectForPassenger').val(null).trigger('change');
+        }
+    });
+
+    // Add validation for ticket amount input
+    $('#inputTicketAmount').on('input', function () {
+        var amount = $(this).val();
+        if (amount < 1) {
+            $(this).val(1);
+        }
+    });
+
+    function setTicketAmountOneAndReadOnly() {
+        $('#inputTicketAmount').val(1).prop('readonly', true);
+    }
+
+    function removeReadOnly() {
+        $('#inputTicketAmount').prop('readonly', false);
+    }
+
+    function setSingleSelectMode() {
+        $('#mySelectForPassenger').select2({
+            multiple: false
+        });
+    }
+
+    function setMultipleSelectMode() {
+        $('#mySelectForPassenger').select2({
+            multiple: true
+        });
+    }
+
+
+</script>
+
+<script>
+    $(function () {
+        $('.date-picker').daterangepicker({
+            showDropdowns: true,
+            singleDatePicker: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
+            },
+            startDate: moment()
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Handle currency dropdown change for perchesPrice
+        $('#perchesPrice .change-currency').on('click', function () {
+            const currencySymbol = $(this).data('currency-symbol');
+            $('#perchesPrice .currency-symbol').text(currencySymbol);
+            $('#salesPrice .currency-symbol').text(currencySymbol);
+            $('#payedAmount .currency-symbol').text(currencySymbol);
+        });
+    });
+</script>
+
+
+</body>
+</html>

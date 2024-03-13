@@ -49,6 +49,12 @@
           th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css}"/>
     <link rel="icon" type="image/svg+xml" th:href="@{/images/etlas_black_title.svg}" sizes="any">
 
+<!--     date range picker-->
+<!--    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     <title th:if="${title==null}">EtlasTur</title>
     <title th:if="${title!=null}" th:text="${title}"></title>
     <style>
