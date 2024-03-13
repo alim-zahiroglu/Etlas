@@ -212,6 +212,13 @@ input:-webkit-autofill {
   background: #117dc0 !important;
 }
 
+.first-element-of-drop-down{
+  border-radius: 8px 8px 0 0 !important;
+}
+.last-element-of-drop-down{
+  border-radius: 0 0 8px 8px;
+}
+
 
 .password-toggle-up{
   top: 50px;
