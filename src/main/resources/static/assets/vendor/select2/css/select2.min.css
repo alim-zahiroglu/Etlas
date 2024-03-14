@@ -89,7 +89,8 @@
 .select2-results__options {
     list-style: none;
     margin: 0;
-    padding: 0; }
+    padding: 0;
+}
 
 .select2-results__option {
     padding: 6px;
@@ -323,7 +324,9 @@
 
 .select2-container--default .select2-results > .select2-results__options {
     max-height: 250px;
-    overflow-y: auto; }
+    overflow-y: auto;
+
+}
 
 .select2-container--default .select2-results__option .select2-results__option {
     padding-left: 1em; }

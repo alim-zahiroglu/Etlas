@@ -35,6 +35,7 @@ public class CustomerDto {
     private String email;
 
     @NotBlank(message = "Please enter the phone number\n ex: 05552223344")
+    @Size(min = 10, max = 15,message = "Phone must be 10~15 digits long")
     private String phoneNumber;
     private String officeNumber;
 

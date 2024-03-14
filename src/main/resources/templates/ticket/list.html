@@ -1,22 +1,542 @@
-<!DOCTYPE html>
-<html lang="en">
-<head th:replace="~{fragments/head :: header}"></head>
 <body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
 
-<input type="text" name="datetimes" />
+
+                        <div class="row justify-content-center align-items-center pt-0">
+                            <div class="col-12 col-md-12 col-lg-11">
+
+                                <div class="card">
+                                    <div class="card-header text-center text-white bold_font"
+                                         style="font-size: x-large;background: #117dc0 !important;">Save New Ticket
+                                    </div>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12 col-md-12 col-lg-10">
+
+                                                <form th:object="${newTicket}" th:action="@{/ticket/create}"
+                                                      method="post" class="row g-3 ">
+
+                                                    <div class="col-md-6 col-lg-4 mb-0"
+                                                         th:classappend="${#fields.hasErrors('pnrNo')} ? 'error' : ''"
+                                                         id="TkNo">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputPNR"
+                                                                   class="form-label mb-1 pl-1">PNR</label>
+                                                            <input type="text" th:field="*{pnrNo}"
+                                                                   class="form-control" id="inputPNR">
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('pnrNo')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('pnrNo')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 col-lg-4 mb-0"
+                                                         style="margin-top: 17px">
+                                                        <label for="mySelectForAirline"
+                                                               class="form-label pl-1 ml-0 mb-1 d-block">Airline</label>
+                                                        <select id="mySelectForAirline"
+                                                                th:field="*{airLine}"
+                                                                class="form-control mb-0" style="width: 100%">
+                                                            <option th:each="country:${countriesTr}"
+                                                                    th:value="${country}"
+                                                                    th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                    th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                        </select>
+                                                        <div class="ticket-create-airline-select text-right">
+                                                            <i id="airline-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-4"
+                                                         th:classappend="${#fields.hasErrors('ticketAmount')} ? 'error' : ''"
+                                                         id="ticketAmount">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputTicketAmount" class="form-label mb-1 pl-1">Ticket
+                                                                Amount</label>
+                                                            <input type="number" th:field="*{ticketAmount}"
+                                                                   class="form-control" id="inputTicketAmount">
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('ticketAmount')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('ticketAmount')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row justify-content-end pt-3 pr-0 pl-0">
+                                                        <div class="col-12 col-md-6 col-lg-6 text-right p-0">
+                                                            <button type="submit"
+                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                                <div class="modal fade" id="add-new-customer-modal"
+                                                     data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                        <div class="modal-content pr-4 pl-4">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5 text-center w-100"
+                                                                    id="add-new-customer-modal-label">Add New
+                                                                    Customer</h1>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <form th:object="${newCustomer}" id="customerForm"
+                                                                      th:action="@{/ticket/create-add-customer}" method="post"
+                                                                      class="row g-3">
+
+                                                                    <div class="col-md-6"
+                                                                         th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"
+                                                                         id="individualSection">
+                                                                        <div class="form-group p-0 m-0">
+                                                                            <label for="inputFirstName"
+                                                                                   class="form-label">first Name</label>
+                                                                            <input type="text" th:field="*{firstName}"
+                                                                                   class="form-control"
+                                                                                   id="inputFirstName">
+                                                                            <div class="custom-invalid-feedback"
+                                                                                 id="firstNameValidationMessage">
+                                                                                <ul class="p-0 m-0">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6"
+                                                                         th:classappend="${#fields.hasErrors('lastName')} ? 'error' : ''"
+                                                                         id="lastNameSection">
+                                                                        <div class="form-group p-0 m-0">
+                                                                            <label for="inputLastName"
+                                                                                   class="form-label">Last Name</label>
+                                                                            <input type="text" th:field="*{lastName}"
+                                                                                   class="form-control"
+                                                                                   id="inputLastName">
+                                                                            <div class="custom-invalid-feedback"
+                                                                                 th:if="${#fields.hasErrors('lastName')}">
+                                                                                <ul class="p-0 m-0">
+                                                                                    <li th:each="err : ${#fields.errors('lastName')}"
+                                                                                        th:text="${err}"></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6"
+                                                                         th:classappend="${#fields.hasErrors('email')} ? 'error' : ''">
+                                                                        <div class="form-group p-0 m-0">
+                                                                            <label for="inputEmail" class="form-label">Email</label>
+                                                                            <input type="email" th:field="*{email}"
+                                                                                   class="form-control" id="inputEmail"
+                                                                                   spellcheck="false"
+                                                                                   placeholder="ex: example@sever.com">
+
+                                                                            <div class="custom-invalid-feedback"
+                                                                                 th:if="${#fields.hasErrors('email')}">
+                                                                                <ul class="p-0 m-0">
+                                                                                    <li th:each="err : ${#fields.errors('email')}"
+                                                                                        th:text="${err}"></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group mb-0">
+                                                                            <label for="mySelectForCountry"
+                                                                                   class="form-label d-block">Country</label>
+                                                                            <select id="mySelectForCountry"
+                                                                                    th:field="*{country}"
+                                                                                    class="form-control"
+                                                                                    style="width: 100%">
+                                                                                <option th:each="country:${countriesTr}"
+                                                                                        th:value="${country}"
+                                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
+                                                                                        th:text="${country.getName()}"></option>
+                                                                            </select>
+                                                                            <div class="customer-create-country-select text-right">
+                                                                                <i id="customer-country-selector"
+                                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                                class="btn btn-secondary pr-4 pl-4"
+                                                                                data-bs-dismiss="modal">
+                                                                            <strong>Cancel</strong>
+                                                                        </button>
+                                                                        <button type="button" id="saveButton" class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                            <strong>Save</strong>
+                                                                        </button>
+
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
+<script th:src="@{/assets/libs/js/ticket-create-add-customer.js}"></script>
 
 <script>
-  $(function() {
-    $('input[name="datetimes"]').daterangepicker({
-      timePicker: true,
-      singleDatePicker:true,
-      locale: {
-        format: 'MM/DD hh:mm A'
-      }
+    $(document).ready(function () {
+        const $mySelectForCountry = $('#mySelectForCountry');
+        const $customerCountrySelector = $('#customer-country-selector');
+
+        $mySelectForCountry.select2({
+            allowClear: false,
+            closeOnSelect: true,
+        });
+
+        $mySelectForCountry.on('select2:open', function (e) {
+            $customerCountrySelector.removeClass('country-rotate-down').addClass('country-rotate-up');
+        });
+
+        $mySelectForCountry.on('select2:close', function (e) {
+            $customerCountrySelector.removeClass('country-rotate-up').addClass('country-rotate-down');
+        });
     });
-  });
 </script>
 
+<script>
+    $(document).ready(function () {
+        // Handle individual checkbox click
+        $('#type-individual').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If individual is checked, uncheck the company
+                $('#type-company').prop('checked', false);
+                showIndividualSections();
+            } else {
+                $('#type-company').prop('checked', true);
+                showCompanySections();
+            }
+        });
+
+        // Handle company checkbox click
+        $('#type-company').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If company is checked, uncheck the individual
+                $('#type-individual').prop('checked', false);
+                showCompanySections();
+            } else {
+                $('#type-individual').prop('checked', true);
+                showIndividualSections();
+            }
+        });
+
+        // Initial state
+        if ($('#type-individual').prop('checked')) {
+            showIndividualSections();
+        } else if ($('#type-company').prop('checked')) {
+            showCompanySections();
+        }
+    });
+
+    function showIndividualSections() {
+        $('#companySection').hide();
+        $('#officePhoneSection').hide();
+        $('#individualSection').show();
+        $('#lastNameSection').show();
+        $('#genderSelection').show();
+    }
+
+    function showCompanySections() {
+        $('#companySection').show();
+        $('#officePhoneSection').show();
+        $('#individualSection').hide();
+        $('#lastNameSection').hide();
+        $('#genderSelection').hide();
+    }
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        function setupSelect2($select, $selectorArrow) {
+            $select.select2({
+                allowClear: false,
+                closeOnSelect: true,
+            });
+
+            $select.on('select2:open', () => {
+                $selectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
+            });
+
+            $select.on('select2:close', () => {
+                $selectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
+            });
+        }
+
+        const $mySelectForAirLine = $('#mySelectForAirline');
+        const $airlineSelectorArrow = $('#airline-selector-arrow');
+        setupSelect2($mySelectForAirLine, $airlineSelectorArrow);
+
+        const $mySelectForFrom = $('#mySelectForFrom');
+        const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
+        setupSelect2($mySelectForFrom, $fromWhereSelectorArrow);
+
+        const $mySelectForTo = $('#mySelectForArrival');
+        const $toWhereSelectorArrow = $('#to-where-selector-arrow');
+        setupSelect2($mySelectForTo, $toWhereSelectorArrow);
+
+        const $mySelectForBoughtUser = $('#mySelectForBoughtUser');
+        const $boughtUserSelectorArrow = $('#bought-user-selector-arrow');
+        setupSelect2($mySelectForBoughtUser, $boughtUserSelectorArrow);
+
+        const $mySelectForReceiver = $('#receiver-user');
+        const $receiverSelectorArrow = $('#receiver-selector-arrow');
+        setupSelect2($mySelectForReceiver, $receiverSelectorArrow);
+
+        const $mySelectForPayer = $('#mySelectForPayer');
+        const $payerSelectorArrow = $('#payer-selector-arrow');
+        setupSelect2($mySelectForPayer, $payerSelectorArrow);
+
+    });
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        // Handle one way checkbox click
+        $('#type-one-way').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If one way is checked, uncheck the round trip
+                $('#type-round-trip').prop('checked', false);
+                setSingleDatePickerForDeparture();
+            } else {
+                $('#type-round-trip').prop('checked', true);
+                setMultipleDatePickerForDeparture();
+            }
+        });
+
+        // Handle round trip checkbox click
+        $('#type-round-trip').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If round trip is checked, uncheck the one way
+                $('#type-one-way').prop('checked', false);
+                setMultipleDatePickerForDeparture();
+            } else {
+                $('#type-one-way').prop('checked', true);
+                setSingleDatePickerForDeparture();
+            }
+        });
+
+        // Initial state
+        if ($('#type-one-way').prop('checked')) {
+            setSingleDatePickerForDeparture();
+        } else if ($('#type-round-trip').prop('checked')) {
+            setMultipleDatePickerForDeparture();
+        }
+    });
+
+    // Function to update the departure time label based on checkbox selection
+    function updateDepartureTimeLabel() {
+        const isChecked = $('#type-one-way').prop('checked');
+        const iconHtml = '<i class="fa-regular fa-calendar-days"></i>';
+
+        const label = isChecked ? iconHtml + ' Departure time' : iconHtml + ' Departure time - Return time';
+        $('#departure-time-label').html(label);
+    }
+
+    // Function to set the date picker for a single date
+    function setSingleDatePickerForDeparture() {
+        $('#departure-time').daterangepicker({
+            showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
+            },
+            singleDatePicker: true,
+            startDate: moment()
+        });
+
+        updateDepartureTimeLabel();
+    }
+
+    // Function to set the date picker for a range of dates
+    function setMultipleDatePickerForDeparture() {
+        $('#departure-time').daterangepicker({
+            showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
+            },
+            singleDatePicker: false,
+            startDate: moment()
+        });
+
+        updateDepartureTimeLabel();
+    }
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize mySelectForPassenger
+        $(document).ready(function () {
+            const $mySelectForPassenger = $('#mySelectForPassenger');
+            const $payerSelectorArrow = $('#passenger-selector-arrow');
+
+            $mySelectForPassenger.select2({
+                allowClear: false,
+                closeOnSelect: true,
+            });
+
+            $mySelectForPassenger.on('select2:open', function (e) {
+                $payerSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
+            });
+
+            $mySelectForPassenger.on('select2:close', function (e) {
+                $payerSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
+            });
+        });
+
+        // Handle single ticket checkbox click
+        $('#ticket-type-single').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If single ticket is checked, uncheck the multiple ticket
+                $('#ticket-type-multiple').prop('checked', false);
+                setTicketAmountOneAndReadOnly();
+                setSingleSelectMode();
+            } else {
+                $('#ticket-type-multiple').prop('checked', true);
+                removeReadOnly();
+                setMultipleSelectMode();
+                $('#mySelectForPassenger').val(null).trigger('change');
+            }
+        });
+
+        // Handle multiple ticket checkbox click
+        $('#ticket-type-multiple').on('change', function () {
+            if ($(this).prop('checked')) {
+                // If multiple ticket is checked, uncheck the single ticket
+                $('#ticket-type-single').prop('checked', false);
+                removeReadOnly();
+                setMultipleSelectMode();
+                $('#mySelectForPassenger').val(null).trigger('change');
+            } else {
+                $('#ticket-type-single').prop('checked', true);
+                setTicketAmountOneAndReadOnly();
+                setSingleSelectMode();
+            }
+        });
+
+        // Initial state
+        if ($('#ticket-type-single').prop('checked')) {
+            setTicketAmountOneAndReadOnly();
+            setSingleSelectMode();
+        } else if ($('#ticket-type-multiple').prop('checked')) {
+            removeReadOnly();
+            setMultipleSelectMode();
+            $('#mySelectForPassenger').val(null).trigger('change');
+        }
+    });
+
+    // Add validation for ticket amount input
+    $('#inputTicketAmount').on('input', function () {
+        var amount = $(this).val();
+        if (amount < 1) {
+            $(this).val(1);
+        }
+    });
+
+    function setTicketAmountOneAndReadOnly() {
+        $('#inputTicketAmount').val(1).prop('readonly', true);
+    }
+
+    function removeReadOnly() {
+        $('#inputTicketAmount').prop('readonly', false);
+    }
+
+    function setSingleSelectMode() {
+        $('#mySelectForPassenger').select2({
+            multiple: false
+        });
+    }
+
+    function setMultipleSelectMode() {
+        $('#mySelectForPassenger').select2({
+            multiple: true
+        });
+    }
+
+
+</script>
+
+<script>
+    $(function () {
+        $('.date-picker').daterangepicker({
+            showDropdowns: true,
+            singleDatePicker: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 5,
+            locale: {
+                format: 'DD/MM/YYYY' // Adjust the format to display only 24-hour time
+            },
+            startDate: moment()
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Handle currency dropdown change for perchesPrice
+        $('#perchesPrice .change-currency').on('click', function () {
+            const currencySymbol = $(this).data('currency-symbol');
+            const selectedCurrency = $(this).data('selected-currency');
+            $('#perchesPrice .currency-symbol').text(currencySymbol);
+            $('#salesPrice .currency-symbol').text(currencySymbol);
+            $('#payedAmount .currency-symbol').text(currencySymbol);
+            $('#selectedCurrencyUnitInput').val(selectedCurrency);
+        });
+    });
+</script>
 
 </body>
-</html>
