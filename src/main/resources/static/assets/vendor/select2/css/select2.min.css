@@ -101,7 +101,9 @@
     cursor: pointer; }
 
 .select2-container--open .select2-dropdown {
-    left: 0; }
+    z-index: 1060;
+    left: 0;
+}
 
 .select2-container--open .select2-dropdown--above {
     border-bottom: none;
