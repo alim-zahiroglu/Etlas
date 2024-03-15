@@ -33,6 +33,7 @@ public class TicketController {
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("customerList", customerService.getAllCustomers());
+        model.addAttribute("passengerList", customerService.getAllIndividualCustomers());
         model.addAttribute("currencyUnits", currencyUnits.values());
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("genders", Gender.values());
@@ -40,23 +41,7 @@ public class TicketController {
         return "ticket/ticket-create";
     }
 
-//    @PostMapping("/create")
-//    public String saveTicket(@ModelAttribute("newTicket") TicketDto newTicket){
-//        System.out.println(newTicket);
-//
-//        return "ticket/list";
-//    }
 
-//    @PostMapping("/create-add-customer")
-//    public String addCustomer(@ModelAttribute("newCustomer") CustomerDto newCustomer,
-//                              RedirectAttributes redirectAttributes){
-//
-//        CustomerDto createdCustomer = customerService.saveNewCustomer(newCustomer);
-//        redirectAttributes.addFlashAttribute("customerIsCreated",true);
-//        redirectAttributes.addFlashAttribute("createdCustomer",createdCustomer);
-//
-//        return "redirect:/ticket/create";
-//    }
 
     @GetMapping("/list")
     public String getTicketList(Model model){

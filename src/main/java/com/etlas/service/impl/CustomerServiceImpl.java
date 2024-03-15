@@ -33,6 +33,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<CustomerDto> getAllIndividualCustomers() {
+        List<Customer> customers = repository.findAllByCustomerTypeAndIsDeleted(CustomerType.INDIVIDUAL,false);
+        return customers.stream()
+                .map(customer -> mapper.convert(customer, new CustomerDto()))
+                .toList();
+    }
+
+    @Override
     public CustomerDto saveNewCustomer(CustomerDto newCustomer) {
         CustomerDto customerToBeSave;
         if (newCustomer.isCompany()) {

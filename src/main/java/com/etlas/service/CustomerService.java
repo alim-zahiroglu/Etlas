@@ -20,4 +20,6 @@ public interface CustomerService {
     BindingResult checkNewCustomerValidation(CustomerDto newCustomer, BindingResult bindingResult);
 
     BindingResult validateUpdateCustomer(CustomerDto customerToBeUpdate, BindingResult bindingResult);
+
+    List<CustomerDto> getAllIndividualCustomers();
 }

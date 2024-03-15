@@ -149,47 +149,11 @@ $(document).ready(function () {
     const $customerCountrySelector = $('#customer-country-selector');
     setupSelect2($mySelectForCountry, $customerCountrySelector);
 
+    const $mySelectForPassenger = $('#mySelectForPassenger');
+    const $passengerSelectorArrow = $('#passenger-selector-arrow');
+    setupSelect2($mySelectForPassenger, $passengerSelectorArrow);
+
 });
-
-
-
-
-// initialize the dataRangePicker for perches-data and payed-data
-$(function () {
-    $('.date-picker').daterangepicker({
-        showDropdowns: true,
-        singleDatePicker: true,
-        timePicker: true,
-        timePicker24Hour: true,
-        timePickerIncrement: 5,
-        locale: {
-            format: 'DD/MM/YYYY' // Adjust the format to display only 24-hour time
-        },
-        startDate: moment()
-    });
-});
-
-// switch the tripType and ticketType
-// switch the tripType
-$(document).ready(function () {
-    // Initialize mySelectForPassenger
-    $(document).ready(function () {
-        const $mySelectForPassenger = $('#mySelectForPassenger');
-        const $payerSelectorArrow = $('#passenger-selector-arrow');
-
-        $mySelectForPassenger.select2({
-            allowClear: false,
-            closeOnSelect: true,
-        });
-
-        $mySelectForPassenger.on('select2:open', function (e) {
-            $payerSelectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
-        });
-
-        $mySelectForPassenger.on('select2:close', function (e) {
-            $payerSelectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
-        });
-    });
 
     // Handle single ticket checkbox click
     $('#ticket-type-single').on('change', function () {
@@ -230,8 +194,27 @@ $(document).ready(function () {
         setMultipleSelectMode();
         $('#mySelectForPassenger').val(null).trigger('change');
     }
+
+
+
+
+// initialize the dataRangePicker for perches-data and payed-data
+$(function () {
+    $('.date-picker').daterangepicker({
+        showDropdowns: true,
+        singleDatePicker: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        timePickerIncrement: 5,
+        locale: {
+            format: 'DD/MM/YYYY' // Adjust the format to display only 24-hour time
+        },
+        startDate: moment()
+    });
 });
 
+// switch the tripType and ticketType
+// switch the tripType
 // Add validation for ticket amount input
 $('#inputTicketAmount').on('input', function () {
     var amount = $(this).val();
@@ -252,12 +235,14 @@ function setSingleSelectMode() {
     $('#mySelectForPassenger').select2({
         multiple: false
     });
+    $('#uploadTickets').prop('multiple', false).val('');
 }
 
 function setMultipleSelectMode() {
     $('#mySelectForPassenger').select2({
         multiple: true
     });
+    $('#uploadTickets').prop('multiple', true);
 }
 
 // switch ticketType

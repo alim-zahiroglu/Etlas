@@ -214,7 +214,7 @@
                                                             <select id="mySelectForPassenger"
                                                                     th:field="*{passengers}"
                                                                     class="form-control" style="width: 100%;">
-                                                                <option th:each="passenger:${customerList}"
+                                                                <option th:each="passenger:${passengerList}"
                                                                         th:value="${passenger.getId()}"
                                                                         th:text="${passenger.firstName + ',' + passenger.lastName}"></option>
                                                             </select>
@@ -240,7 +240,7 @@
                                                                    class="form-label mb-1 pl-1">Bought
                                                                 User</label>
                                                             <select id="mySelectForBoughtUser"
-                                                                    name="mySelectForBoughtUser" class="form-select">
+                                                                    name="mySelectForBoughtUser" class="form-select" style="width: 100%">
                                                                 <option th:each="user:${userList}"
                                                                         th:value="${user.userName}"
                                                                         th:text="${user.firstName + ' ' + user.lastName}"></option>
@@ -335,7 +335,7 @@
                                                             <label for="receiver-user"
                                                                    class="form-label pl-1 mb-1 d-block">Receiver</label>
                                                             <select id="receiver-user" name="receiver-user"
-                                                                    class="form-select">
+                                                                    class="form-select" style="width: 100%">
                                                                 <option th:each="user:${userList}"
                                                                         th:value="${user.userName}"
                                                                         th:text="${user.firstName + ' ' + user.lastName}"></option>
@@ -393,6 +393,11 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="uploadTickets" class="form-label pl-1">Upload tickets</label>
+                                                        <input class="form-control" type="file" id="uploadTickets">
                                                     </div>
 
 
