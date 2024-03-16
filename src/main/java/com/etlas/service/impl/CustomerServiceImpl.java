@@ -3,6 +3,7 @@ package com.etlas.service.impl;
 import com.etlas.dto.CustomerDto;
 import com.etlas.dto.UserDto;
 import com.etlas.entity.Customer;
+import com.etlas.entity.User;
 import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
@@ -31,6 +32,12 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customer -> mapper.convert(customer, new CustomerDto()))
                 .toList();
     }
+
+    @Override
+    public CustomerDto findById(long id) {
+        Customer customer =  repository.findById(id).orElseThrow(NoSuchElementException::new);
+        return mapper.convert(customer,new CustomerDto());
+    };
 
     @Override
     public List<CustomerDto> getAllIndividualCustomers() {

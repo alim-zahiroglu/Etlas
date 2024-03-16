@@ -8,14 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerConverter implements Converter<String, CustomerDto> {
     private final CustomerService customerService;
-
     public CustomerConverter(CustomerService customerService) {
         this.customerService = customerService;
     }
-
     @Override
     public CustomerDto convert(String customerId) {
+        if (customerId.equals("")) {
+            return null;
+        }
         long id = Long.parseLong(customerId);
-        return customerService.getCustomerById(id);
+        return customerService.findById(id);
     }
 }

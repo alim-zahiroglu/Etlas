@@ -3,8 +3,6 @@ package com.etlas.dto;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.enums.Gender;
-import jakarta.persistence.Transient;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;

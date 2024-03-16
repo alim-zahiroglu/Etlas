@@ -116,8 +116,8 @@
                                                         <select id="mySelectForAirline"
                                                                 th:field="*{airLine}" th:name="airLine"
                                                                 class="form-control mb-0" style="width: 100%">
-                                                            <option th:each="airLineOption:${countriesTr}"
-                                                                    th:value="${airLineOption}"
+                                                            <option th:each="airLineOption:${airLines}"
+                                                                    th:value="${airLineOption.id}"
                                                                     th:text="${airLineOption.name}"></option>
                                                         </select>
                                                         <div class="ticket-create-airline-select text-right">
@@ -209,7 +209,7 @@
                                                                    class="form-label pl-1 mb-1 ml-0 d-block">Select
                                                                 Passenger</label>
                                                             <select id="mySelectForPassenger" multiple
-                                                                    th:field="*{passengers}" name="passengers"
+                                                                    th:field="*{passengersUI}" name="passengers"
                                                                     class="form-control" style="width: 100%;">
                                                                 <option th:each="passenger:${passengerList}"
                                                                         th:value="${passenger.id}"
@@ -342,15 +342,16 @@
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
                                                             </div>
                                                         </div>
+
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
                                                              style="padding: 0 8px 0 4px;margin-top: 17px">
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
                                                             <select id="mySelectForPayer"
-                                                                    th:field="*{payedCustomer}" name="payerCustomer"
+                                                                    th:field="*{payedCustomerUI}" name="payerCustomer"
                                                                     class="form-control mb-0" style="width: 100%">
                                                                 <option th:each="payerCustomer : ${customerList}"
-                                                                        th:value="${payerCustomer.getId()}"
+                                                                        th:value="${payerCustomer.id}"
                                                                         th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">
                                                                 </option>
                                                             </select>

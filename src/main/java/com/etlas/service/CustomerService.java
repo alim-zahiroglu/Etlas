@@ -22,4 +22,6 @@ public interface CustomerService {
     BindingResult validateUpdateCustomer(CustomerDto customerToBeUpdate, BindingResult bindingResult);
 
     List<CustomerDto> getAllIndividualCustomers();
+
+    CustomerDto findById(long id);
 }

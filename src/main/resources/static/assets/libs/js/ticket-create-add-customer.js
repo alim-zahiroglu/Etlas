@@ -32,29 +32,29 @@ document.addEventListener('DOMContentLoaded', function () {
             isValidFirstName = false;
         }
 
-        if (lastName === '') {
-            lastNameValidationMessage.innerHTML = '<li>Last name should not be blank</li>';
-            isValidLastName = false;
-        } else {
-            lastNameValidationMessage.innerHTML = '';
-        }
-
-        if (lastName.length < 2 || lastName.length > 50) {
-            lastNameValidationMessage.innerHTML += '<li>Last name must be 2~50 characters long</li>';
-            isValidLastName = false;
-        }
-
-        if (phone === '') {
-            phoneValidationMessage.innerHTML = '<li>Phone should not be blank</li>';
-            isValidPhone = false;
-        } else {
-            phoneValidationMessage.innerHTML = '';
-        }
-
-        if (phone.length < 10 || phone.length > 15) {
-            phoneValidationMessage.innerHTML += '<li>Phone must be 10~15 digits long</li>';
-            isValidPhone = false;
-        }
+        // if (lastName === '') {
+        //     lastNameValidationMessage.innerHTML = '<li>Last name should not be blank</li>';
+        //     isValidLastName = false;
+        // } else {
+        //     lastNameValidationMessage.innerHTML = '';
+        // }
+        //
+        // if (lastName.length < 2 || lastName.length > 50) {
+        //     lastNameValidationMessage.innerHTML += '<li>Last name must be 2~50 characters long</li>';
+        //     isValidLastName = false;
+        // }
+        //
+        // if (phone === '') {
+        //     phoneValidationMessage.innerHTML = '<li>Phone should not be blank</li>';
+        //     isValidPhone = false;
+        // } else {
+        //     phoneValidationMessage.innerHTML = '';
+        // }
+        //
+        // if (phone.length < 10 || phone.length > 15) {
+        //     phoneValidationMessage.innerHTML += '<li>Phone must be 10~15 digits long</li>';
+        //     isValidPhone = false;
+        // }
 
         // Add or remove error class based on validation result for first name
         const individualSection = document.getElementById('individualSection');
@@ -88,19 +88,22 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 type: "POST",
                 url: "/ticket/create-add-customer",
+                // url: window.location.href,
                 // data: newTicketData + '&' + newCustomerData,
+
                 data: newCustomerData,
                 success: function (response) {
                     // Handle success response
                     console.log("Customer saved successfully");
-                    $('#add-new-customer-modal').modal('hide'); // Close the modal
+                    $('#ticketForm').submit();
+                    // $('#add-new-customer-modal').modal('hide'); // Close the modal
                 },
                 error: function (error) {
                     // Handle error response
                     console.error("Error saving customer", error);
                 }
             });
-            $('#ticketForm').submit();
+            // $('#ticketForm').submit();
         }
 
     });
