@@ -39,7 +39,7 @@ public class CustomerDto {
     private String phoneNumber;
     private String officeNumber;
 
-    private CountriesTr country;
+    private CountriesTr country = CountriesTr.TUR;
     private Gender gender;
 
     private CustomerType customerType;

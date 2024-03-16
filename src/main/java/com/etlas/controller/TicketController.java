@@ -25,11 +25,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class TicketController {
     private final UserService userService;
     private final CustomerService customerService;
+    private boolean isNewCustomerAdded = false;
 
     @GetMapping("/create")
     public String createTicket(Model model){
-        model.addAttribute("newTicket",new TicketDto());
-        model.addAttribute("moneyUnits", currencyUnits.values());
+
+        if (!isNewCustomerAdded){
+            model.addAttribute("newTicket",new TicketDto());
+        }
+
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("customerList", customerService.getAllCustomers());
@@ -37,7 +41,7 @@ public class TicketController {
         model.addAttribute("currencyUnits", currencyUnits.values());
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("genders", Gender.values());
-
+        isNewCustomerAdded = false;
         return "ticket/ticket-create";
     }
 
@@ -51,20 +55,50 @@ public class TicketController {
 
     // Controller method for saving new ticket
     @PostMapping("/create")
-    public ResponseEntity<String> saveNewTicket(@ModelAttribute TicketDto newTicket) {
+    public String saveNewTicket(@ModelAttribute("newTicket") TicketDto newTicket,
+                                RedirectAttributes redirectAttributes,Model model) {
         // Save new ticket logic
-        return ResponseEntity.ok("Ticket saved successfully");
+        if (isNewCustomerAdded) {
+            System.out.println(newTicket + "xxxxxxxxxxxxxxxxxxxx");
+
+            System.out.println("********************"+newTicket.getPassengers());
+            System.out.println("********************"+newTicket.getPayedCustomer());
+
+            redirectAttributes.addFlashAttribute("newTicket",newTicket);
+
+//            model.addAttribute("newTicket",newTicket);
+//            model.addAttribute("countriesTr", CountriesTr.values());
+//            model.addAttribute("userList", userService.findAllUsers());
+//            model.addAttribute("customerList", customerService.getAllCustomers());
+//            model.addAttribute("passengerList", customerService.getAllIndividualCustomers());
+//            model.addAttribute("currencyUnits", currencyUnits.values());
+//            model.addAttribute("newCustomer", new CustomerDto());
+//            model.addAttribute("genders", Gender.values());
+//            isNewCustomerAdded = false;
+            return "redirect:/ticket/create";
+
+        }
+
+        return "redirect:/ticket/create";
     }
 
     // Controller method for saving new customer
     @PostMapping("/create-add-customer")
-    public String saveNewCustomer(@ModelAttribute("newTicket") TicketDto newTicket,
-                                                  @ModelAttribute("newCustomer") CustomerDto newCustomer) {
+    public ResponseEntity<String> addNewCustomer(@ModelAttribute("newTicket") TicketDto ticketDto,
+                                 @ModelAttribute("newCustomer") CustomerDto newCustomer,
+                                 RedirectAttributes redirectAttributes, Model model) {
         // Save new customer logic
         System.out.println(newCustomer + "*******************************");
-        System.out.println(newTicket + "xxxxxxxxxxxxxxxxxxxx");
+        System.out.println(ticketDto + "xxxxxxxxxxxxxxxxxxxx");
+//        ticketDto.setPayedCustomer(newCustomer);
+        isNewCustomerAdded = true;
+        return ResponseEntity.ok("new customer added");
 
-        return "redirect:/ticket/create";
+//        redirectAttributes.addFlashAttribute("newTicket",ticketDto);
+//        model.addAttribute("newTicket",ticketDto);
+
+//        return "redirect:/ticket/create";
+//        return "/ticket/list";
     }
 
 

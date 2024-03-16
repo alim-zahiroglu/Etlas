@@ -88,7 +88,8 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 type: "POST",
                 url: "/ticket/create-add-customer",
-                data: newTicketData + '&' + newCustomerData,
+                // data: newTicketData + '&' + newCustomerData,
+                data: newCustomerData,
                 success: function (response) {
                     // Handle success response
                     console.log("Customer saved successfully");
@@ -99,10 +100,54 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error("Error saving customer", error);
                 }
             });
+            $('#ticketForm').submit();
         }
 
     });
 });
+
+
+
+
+    // Handle single ticket checkbox click
+    $('#ticket-type-single').on('change', function () {
+        if ($(this).prop('checked')) {
+            // If single ticket is checked, uncheck the multiple ticket
+            $('#ticket-type-multiple').prop('checked', false);
+            setTicketAmountOneAndReadOnly();
+            setSingleSelectMode();
+        } else {
+            $('#ticket-type-multiple').prop('checked', true);
+            removeReadOnly();
+            setMultipleSelectMode();
+            // $('#mySelectForPassenger').val(null).trigger('change');
+        }
+    });
+
+    // Handle multiple ticket checkbox click
+    $('#ticket-type-multiple').on('change', function () {
+        if ($(this).prop('checked')) {
+            // If multiple ticket is checked, uncheck the single ticket
+            $('#ticket-type-single').prop('checked', false);
+            removeReadOnly();
+            setMultipleSelectMode();
+            // $('#mySelectForPassenger').val(null).trigger('change');
+        } else {
+            $('#ticket-type-single').prop('checked', true);
+            setTicketAmountOneAndReadOnly();
+            setSingleSelectMode();
+        }
+    });
+
+    // Initial state
+    if ($('#ticket-type-single').prop('checked')) {
+        setTicketAmountOneAndReadOnly();
+        setSingleSelectMode();
+    } else if ($('#ticket-type-multiple').prop('checked')) {
+        removeReadOnly();
+        setMultipleSelectMode();
+        // $('#mySelectForPassenger').val(null).trigger('change');
+    }
 
 // setup select2 dropdowns
 $(document).ready(function () {
@@ -121,6 +166,14 @@ $(document).ready(function () {
         });
     }
 
+    const $mySelectForBoughtUser = $('#mySelectForBoughtUser');
+    const $boughtUserSelectorArrow = $('#bought-user-selector-arrow');
+    setupSelect2($mySelectForBoughtUser, $boughtUserSelectorArrow);
+
+    const $mySelectForReceiver = $('#receiver-user');
+    const $receiverSelectorArrow = $('#receiver-selector-arrow');
+    setupSelect2($mySelectForReceiver, $receiverSelectorArrow);
+
     const $mySelectForAirLine = $('#mySelectForAirline');
     const $airlineSelectorArrow = $('#airline-selector-arrow');
     setupSelect2($mySelectForAirLine, $airlineSelectorArrow);
@@ -133,13 +186,6 @@ $(document).ready(function () {
     const $toWhereSelectorArrow = $('#to-where-selector-arrow');
     setupSelect2($mySelectForTo, $toWhereSelectorArrow);
 
-    const $mySelectForBoughtUser = $('#mySelectForBoughtUser');
-    const $boughtUserSelectorArrow = $('#bought-user-selector-arrow');
-    setupSelect2($mySelectForBoughtUser, $boughtUserSelectorArrow);
-
-    const $mySelectForReceiver = $('#receiver-user');
-    const $receiverSelectorArrow = $('#receiver-selector-arrow');
-    setupSelect2($mySelectForReceiver, $receiverSelectorArrow);
 
     const $mySelectForPayer = $('#mySelectForPayer');
     const $payerSelectorArrow = $('#payer-selector-arrow');
@@ -155,48 +201,6 @@ $(document).ready(function () {
 
 });
 
-    // Handle single ticket checkbox click
-    $('#ticket-type-single').on('change', function () {
-        if ($(this).prop('checked')) {
-            // If single ticket is checked, uncheck the multiple ticket
-            $('#ticket-type-multiple').prop('checked', false);
-            setTicketAmountOneAndReadOnly();
-            setSingleSelectMode();
-        } else {
-            $('#ticket-type-multiple').prop('checked', true);
-            removeReadOnly();
-            setMultipleSelectMode();
-            $('#mySelectForPassenger').val(null).trigger('change');
-        }
-    });
-
-    // Handle multiple ticket checkbox click
-    $('#ticket-type-multiple').on('change', function () {
-        if ($(this).prop('checked')) {
-            // If multiple ticket is checked, uncheck the single ticket
-            $('#ticket-type-single').prop('checked', false);
-            removeReadOnly();
-            setMultipleSelectMode();
-            $('#mySelectForPassenger').val(null).trigger('change');
-        } else {
-            $('#ticket-type-single').prop('checked', true);
-            setTicketAmountOneAndReadOnly();
-            setSingleSelectMode();
-        }
-    });
-
-    // Initial state
-    if ($('#ticket-type-single').prop('checked')) {
-        setTicketAmountOneAndReadOnly();
-        setSingleSelectMode();
-    } else if ($('#ticket-type-multiple').prop('checked')) {
-        removeReadOnly();
-        setMultipleSelectMode();
-        $('#mySelectForPassenger').val(null).trigger('change');
-    }
-
-
-
 
 // initialize the dataRangePicker for perches-data and payed-data
 $(function () {
@@ -209,15 +213,14 @@ $(function () {
         locale: {
             format: 'DD/MM/YYYY' // Adjust the format to display only 24-hour time
         },
-        startDate: moment()
+        // startDate: moment()
     });
 });
 
-// switch the tripType and ticketType
-// switch the tripType
+
 // Add validation for ticket amount input
 $('#inputTicketAmount').on('input', function () {
-    var amount = $(this).val();
+    const amount = $(this).val();
     if (amount < 1) {
         $(this).val(1);
     }
@@ -299,7 +302,7 @@ function setSingleDatePickerForDeparture() {
             format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
         },
         singleDatePicker: true,
-        startDate: moment()
+        // startDate: moment()
     });
 
     updateDepartureTimeLabel();
@@ -316,7 +319,7 @@ function setMultipleDatePickerForDeparture() {
             format: 'DD/MM/YYYY HH:mm' // Adjust the format to display only 24-hour time
         },
         singleDatePicker: false,
-        startDate: moment()
+        // startDate: moment()
     });
 
     updateDepartureTimeLabel();

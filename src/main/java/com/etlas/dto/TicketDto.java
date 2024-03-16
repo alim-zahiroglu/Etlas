@@ -1,5 +1,6 @@
 package com.etlas.dto;
 
+import com.etlas.enums.CountriesTr;
 import com.etlas.enums.currencyUnits;
 import com.etlas.enums.TicketType;
 import com.etlas.enums.TripType;
@@ -25,10 +26,10 @@ public class TicketDto {
     private boolean singleTicket = true;
     private boolean multipleTicket;
     private String pnrNo;
-    private String airLine;
+    private CountriesTr airLine; // change to airline enum or object
     private int ticketAmount;
-    private String fromWhere;
-    private String ToWhere;
+    private CountriesTr fromWhere;
+    private CountriesTr ToWhere;
     private String dateRangeString;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime departureTime;

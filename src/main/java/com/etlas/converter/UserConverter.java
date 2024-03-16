@@ -12,11 +12,12 @@ public class UserConverter implements Converter<String, UserDto> {
         this.userService = userService;
     }
     @Override
-    public UserDto convert(String userName) {
-        if (userName.equals("")) {
+    public UserDto convert(String userId) {
+        if (userId.equals("")) {
             return null;
         }
-        return userService.findByUsername(userName);
+        long id = Long.parseLong(userId);
+        return userService.findById(id);
     }
 
 }

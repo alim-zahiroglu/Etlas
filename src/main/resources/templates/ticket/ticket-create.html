@@ -114,12 +114,11 @@
                                                         <label for="mySelectForAirline"
                                                                class="form-label pl-1 ml-0 mb-1 d-block">Airline</label>
                                                         <select id="mySelectForAirline"
-                                                                th:field="*{airLine}"
+                                                                th:field="*{airLine}" th:name="airLine"
                                                                 class="form-control mb-0" style="width: 100%">
-                                                            <option th:each="country:${countriesTr}"
-                                                                    th:value="${country}"
-                                                                    th:selected="${country.getAlpha3Code() == 'EAT'}"
-                                                                    th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                            <option th:each="airLineOption:${countriesTr}"
+                                                                    th:value="${airLineOption}"
+                                                                    th:text="${airLineOption.name}"></option>
                                                         </select>
                                                         <div class="ticket-create-airline-select text-right">
                                                             <i id="airline-selector-arrow"
@@ -155,12 +154,11 @@
                                                                            class="form-label pl-1 mb-1 d-block">
                                                                         <i class="fa-solid fa-plane-departure"></i> From</label>
                                                                     <select id="mySelectForFrom"
-                                                                            th:field="*{fromWhere}"
+                                                                            th:field="*{fromWhere}" th:name="fromWhere"
                                                                             class="form-control" style="width: 100%">
-                                                                        <option th:each="country:${countriesTr}"
-                                                                                th:value="${country}"
-                                                                                th:selected="${country.getAlpha3Code() == 'EAT'}"
-                                                                                th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                                        <option th:each="fromWhere:${countriesTr}"
+                                                                                th:value="${fromWhere}"
+                                                                                th:text="${fromWhere.name}"></option>
                                                                     </select>
                                                                     <div class="ticket-create-from-select text-right">
                                                                         <i id="from-where-selector-arrow"
@@ -179,12 +177,11 @@
                                                                         <i class="fa-solid fa-plane-arrival"></i>
                                                                         To</label>
                                                                     <select id="mySelectForArrival"
-                                                                            th:field="*{toWhere}"
+                                                                            th:field="*{toWhere}" th:name="toWhere"
                                                                             class="form-control" style="width: 100%">
-                                                                        <option th:each="country:${countriesTr}"
-                                                                                th:value="${country}"
-                                                                                th:selected="${country.getAlpha3Code() == 'EAT'}"
-                                                                                th:text="${country.getAlpha3Code() + ',' + country.getName()}"></option>
+                                                                        <option th:each="toWhere:${countriesTr}"
+                                                                                th:value="${toWhere}"
+                                                                                th:text="${toWhere.getName()}"></option>
                                                                     </select>
                                                                     <div class="ticket-create-to-select text-right">
                                                                         <i id="to-where-selector-arrow"
@@ -201,7 +198,7 @@
                                                                 time</label>
 
                                                             <input type="text" th:field="*{dateRangeString}"
-                                                                   class="form-control" id="departure-time">
+                                                                   class="form-control" id="departure-time" th:name="departure-time">
                                                         </div>
                                                     </div>
 
@@ -211,12 +208,12 @@
                                                             <label for="mySelectForPassenger"
                                                                    class="form-label pl-1 mb-1 ml-0 d-block">Select
                                                                 Passenger</label>
-                                                            <select id="mySelectForPassenger"
-                                                                    th:field="*{passengers}"
+                                                            <select id="mySelectForPassenger" multiple
+                                                                    th:field="*{passengers}" name="passengers"
                                                                     class="form-control" style="width: 100%;">
                                                                 <option th:each="passenger:${passengerList}"
-                                                                        th:value="${passenger.getId()}"
-                                                                        th:text="${passenger.firstName + ',' + passenger.lastName}"></option>
+                                                                        th:value="${passenger.id}"
+                                                                        th:text="${passenger.firstName + ' ' + passenger.lastName}"></option>
                                                             </select>
                                                             <div class="ticket-create-passenger-select text-right">
                                                                 <i id="passenger-selector-arrow"
@@ -239,11 +236,11 @@
                                                             <label for="mySelectForBoughtUser"
                                                                    class="form-label mb-1 pl-1">Bought
                                                                 User</label>
-                                                            <select id="mySelectForBoughtUser"
-                                                                    name="mySelectForBoughtUser" class="form-select" style="width: 100%">
-                                                                <option th:each="user:${userList}"
-                                                                        th:value="${user.userName}"
-                                                                        th:text="${user.firstName + ' ' + user.lastName}"></option>
+                                                            <select id="mySelectForBoughtUser" th:field="*{boughtUser}"
+                                                                    th:name="boughtUser" class="form-select" style="width: 100%">
+                                                                <option th:each="boughtUser:${userList}"
+                                                                        th:value="${boughtUser.id}"
+                                                                        th:text="${boughtUser.firstName + ' ' + boughtUser.lastName}"></option>
                                                             </select>
                                                             <div class="ticket-create-airline-select text-right">
                                                                 <i id="bought-user-selector-arrow"
@@ -334,11 +331,11 @@
                                                              style="padding: 0 8px 0 8px;margin-top: 17px">
                                                             <label for="receiver-user"
                                                                    class="form-label pl-1 mb-1 d-block">Receiver</label>
-                                                            <select id="receiver-user" name="receiver-user"
+                                                            <select id="receiver-user" th:field="*{receivedUser}" name="receiverUser"
                                                                     class="form-select" style="width: 100%">
-                                                                <option th:each="user:${userList}"
-                                                                        th:value="${user.userName}"
-                                                                        th:text="${user.firstName + ' ' + user.lastName}"></option>
+                                                                <option th:each="receiver:${userList}"
+                                                                        th:value="${receiver.id}"
+                                                                        th:text="${receiver.firstName + ' ' + receiver.lastName}"></option>
                                                             </select>
                                                             <div class="ticket-create-airline-select text-right">
                                                                 <i id="receiver-selector-arrow"
@@ -350,11 +347,11 @@
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
                                                             <select id="mySelectForPayer"
-                                                                    th:field="*{payedCustomer}"
+                                                                    th:field="*{payedCustomer}" name="payerCustomer"
                                                                     class="form-control mb-0" style="width: 100%">
-                                                                <option th:each="customer : ${customerList}"
-                                                                        th:value="${customer.getId()}"
-                                                                        th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">
+                                                                <option th:each="payerCustomer : ${customerList}"
+                                                                        th:value="${payerCustomer.getId()}"
+                                                                        th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">
                                                                 </option>
                                                             </select>
                                                             <div class="ticket-create-airline-select text-right">
@@ -426,7 +423,7 @@
                                                             </div>
                                                             <div class="modal-body">
 
-                                                                <form th:object="${newCustomer}" id="customerForm"
+                                                                <form th:object="${newCustomer}" id="customerForm" name="customerForm"
                                                                       th:action="@{/ticket/create-add-customer}" method="post"
                                                                       class="row g-3">
 
@@ -496,13 +493,13 @@
                                                                             <label for="mySelectForCountry"
                                                                                    class="form-label d-block mb-1 pl-1">Country</label>
                                                                             <select id="mySelectForCountry"
-                                                                                    th:field="*{country}"
+                                                                                    th:field="*{country}" name="customerCountry"
                                                                                     class="form-control"
                                                                                     style="width: 100%">
-                                                                                <option th:each="country:${countriesTr}"
-                                                                                        th:value="${country}"
-                                                                                        th:selected="${country.getAlpha3Code() == 'EAT'}"
-                                                                                        th:text="${country.getName()}"></option>
+                                                                                <option th:each="customerCountry:${countriesTr}"
+                                                                                        th:value="${customerCountry}"
+                                                                                        th:selected="${customerCountry.getAlpha3Code() == 'EAT'}"
+                                                                                        th:text="${customerCountry.getName()}"></option>
                                                                             </select>
                                                                             <div class="customer-create-country-select text-right">
                                                                                 <i id="customer-country-selector"
@@ -612,7 +609,7 @@
                                                                                 data-bs-dismiss="modal">
                                                                             <strong>Cancel</strong>
                                                                         </button>
-                                                                        <button type="button" id="saveCustomerButton" class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                        <button type="submit" id="saveCustomerButton" class="btn list-page-drop-downs-export pr-5 pl-5">
                                                                             <strong>Save</strong>
                                                                         </button>
 
