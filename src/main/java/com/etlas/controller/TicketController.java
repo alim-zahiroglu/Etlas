@@ -1,15 +1,11 @@
 package com.etlas.controller;
 
-import com.etlas.dto.AirLineDto;
 import com.etlas.dto.CustomerDto;
 import com.etlas.dto.TicketDto;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.Gender;
 import com.etlas.enums.CurrencyUnits;
-import com.etlas.service.AirLineService;
-import com.etlas.service.CustomerService;
-import com.etlas.service.TicketService;
-import com.etlas.service.UserService;
+import com.etlas.service.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +28,7 @@ public class TicketController {
     private final UserService userService;
     private final CustomerService customerService;
     private final AirLineService airLineService;
+    private final AirportService airportService;
 
 
     private boolean isNewCustomerAdded = false;
@@ -46,6 +43,7 @@ public class TicketController {
         }
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("airLines", airLineService.getAllAirLines());
+        model.addAttribute("airports", airportService.getAllAirports());
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("customerList", customerService.getAllCustomers());

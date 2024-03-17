@@ -181,9 +181,9 @@ $(document).ready(function () {
     const $airlineSelectorArrow = $('#airline-selector-arrow');
     setupSelect2($mySelectForAirLine, $airlineSelectorArrow);
 
-    const $mySelectForFrom = $('#mySelectForFrom');
-    const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
-    setupSelect2($mySelectForFrom, $fromWhereSelectorArrow);
+    // const $mySelectForFrom = $('#mySelectForFrom');
+    // const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
+    // setupSelect2($mySelectForFrom, $fromWhereSelectorArrow);
 
     const $mySelectForTo = $('#mySelectForArrival');
     const $toWhereSelectorArrow = $('#to-where-selector-arrow');

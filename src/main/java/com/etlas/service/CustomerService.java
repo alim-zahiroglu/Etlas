@@ -1,7 +1,6 @@
 package com.etlas.service;
 
 import com.etlas.dto.CustomerDto;
-import com.etlas.dto.UserDto;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
