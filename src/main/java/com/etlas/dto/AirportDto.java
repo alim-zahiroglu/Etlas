@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AirportDto {
     private long id;
-    private String airport;
+    private String airportName;
     private String city;
     private String country;
     private String iataCode;

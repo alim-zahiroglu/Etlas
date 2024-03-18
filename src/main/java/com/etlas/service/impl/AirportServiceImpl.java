@@ -17,6 +17,17 @@ import java.util.stream.Collectors;
 public class AirportServiceImpl implements AirportService {
     private final AirportRepository repository;
     private final MapperUtil mapper;
+
+    @Override
+    public AirportDto findById(Long id) {
+        return mapper.convert(repository.findById(id),new AirportDto());
+    }
+
+    @Override
+    public AirportDto findByIataCode(String iataCode) {
+        return mapper.convert(repository.findByIataCode(iataCode),new AirportDto());
+    }
+
     @Override
     public List<AirportDto> getAllAirports() {
        return repository.findAll().stream()

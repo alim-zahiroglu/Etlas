@@ -38,9 +38,10 @@
                                     </div>
                                     <div class="card-body pt-5 pb-5">
                                         <div class="row justify-content-center align-items-center">
-                                            <div class="col-12 col-md-12 col-lg-10">
+                                            <div class="col-12 col-md-12 col-lg-11">
 
-                                                <form th:object="${newTicket}" th:action="@{/ticket/create}" id="ticketForm"
+                                                <form th:object="${newTicket}" th:action="@{/ticket/create}"
+                                                      id="ticketForm"
                                                       method="post" class="row g-3 ">
 
                                                     <div class="row m-0 mt-2">
@@ -156,10 +157,13 @@
                                                                     <select id="mySelectForFrom"
                                                                             th:field="*{fromWhere}" th:name="fromWhere"
                                                                             class="form-control" style="width: 100%">
-                                                                        <option th:each="airport:${airports}"
-                                                                                th:value="${airport.id}"
-                                                                                th:text="${airport.iataCode + '(' + airport.airport+')'}">
+                                                                        <option th:each="fromWhereOption:${airports}"
+                                                                                th:value="${fromWhereOption.id}"
+                                                                        th:text="${fromWhereOption.airportName} + '(' + ${fromWhereOption.iataCode} + ')' + ${fromWhereOption.city} + ', ' + ${fromWhereOption.country}">
+
                                                                         </option>
+
+
                                                                     </select>
 
                                                                     <div class="ticket-create-from-select text-right">
@@ -181,9 +185,9 @@
                                                                     <select id="mySelectForArrival"
                                                                             th:field="*{toWhere}" th:name="toWhere"
                                                                             class="form-control" style="width: 100%">
-                                                                        <option th:each="toWhere:${countriesTr}"
-                                                                                th:value="${toWhere}"
-                                                                                th:text="${toWhere.getName()}"></option>
+                                                                        <option th:each="toWhereOption:${airports}"
+                                                                                th:value="${toWhereOption.id}"
+                                                                                th:text="${toWhereOption.airportName} + '(' + ${toWhereOption.iataCode} + ')' + ${toWhereOption.city} + ', ' + ${toWhereOption.country}">
                                                                     </select>
                                                                     <div class="ticket-create-to-select text-right">
                                                                         <i id="to-where-selector-arrow"
@@ -200,23 +204,32 @@
                                                                 time</label>
 
                                                             <input type="text" th:field="*{dateRangeString}"
-                                                                   class="form-control" id="departure-time" th:name="departure-time">
+                                                                   class="form-control" id="departure-time"
+                                                                   th:name="departure-time">
                                                         </div>
                                                     </div>
 
                                                     <div class="row p-0 m-0">
                                                         <div class="form-group col-12 mb-0"
+                                                             th:classappend="${#fields.hasErrors('passengersUI')} ? 'error' : ''"
                                                              style="padding: 0 161px 0 8px; margin-top: 17px">
                                                             <label for="mySelectForPassenger"
                                                                    class="form-label pl-1 mb-1 ml-0 d-block">Select
                                                                 Passenger</label>
                                                             <select id="mySelectForPassenger" multiple
-                                                                    th:field="*{passengersUI}" name="passengers"
+                                                                    th:field="*{passengersUI}" th:name="passengers"
                                                                     class="form-control" style="width: 100%;">
                                                                 <option th:each="passenger:${passengerList}"
                                                                         th:value="${passenger.id}"
-                                                                        th:text="${passenger.firstName + ' ' + passenger.lastName}"></option>
+                                                                        th:text="${passenger.customerType.description == 'Company' ? passenger.companyName : (passenger.customerType.description == 'Individual' ? passenger.firstName + ' ' + passenger.lastName : 'Unknown')}">
                                                             </select>
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('passengers')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('passengers')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
                                                             <div class="ticket-create-passenger-select text-right">
                                                                 <i id="passenger-selector-arrow"
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
@@ -239,7 +252,8 @@
                                                                    class="form-label mb-1 pl-1">Bought
                                                                 User</label>
                                                             <select id="mySelectForBoughtUser" th:field="*{boughtUser}"
-                                                                    th:name="boughtUser" class="form-select" style="width: 100%">
+                                                                    th:name="boughtUser" class="form-select"
+                                                                    style="width: 100%">
                                                                 <option th:each="boughtUser:${userList}"
                                                                         th:value="${boughtUser.id}"
                                                                         th:text="${boughtUser.firstName + ' ' + boughtUser.lastName}"></option>
@@ -252,8 +266,9 @@
 
                                                         <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
                                                              style="padding: 0 8px 0 4px;margin-top: 16px">
-                                                            <label for="date-of-perches" class="form-label mb-1 pl-1"> <i
-                                                                    class="fa-regular fa-calendar-days"></i> Date of
+                                                            <label for="date-of-perches" class="form-label mb-1 pl-1">
+                                                                <i
+                                                                        class="fa-regular fa-calendar-days"></i> Date of
                                                                 perches</label>
                                                             <input type="text" th:field="*{dateOfPerches}"
                                                                    class="form-control date-picker"
@@ -333,7 +348,8 @@
                                                              style="padding: 0 8px 0 8px;margin-top: 17px">
                                                             <label for="receiver-user"
                                                                    class="form-label pl-1 mb-1 d-block">Receiver</label>
-                                                            <select id="receiver-user" th:field="*{receivedUser}" name="receiverUser"
+                                                            <select id="receiver-user" th:field="*{receivedUser}"
+                                                                    name="receiverUser"
                                                                     class="form-select" style="width: 100%">
                                                                 <option th:each="receiver:${userList}"
                                                                         th:value="${receiver.id}"
@@ -350,7 +366,7 @@
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
                                                             <select id="mySelectForPayer"
-                                                                    th:field="*{payedCustomerUI}" name="payerCustomer"
+                                                                    th:field="*{payedCustomerUI}" th:name="payerCustomer"
                                                                     class="form-control mb-0" style="width: 100%">
                                                                 <option th:each="payerCustomer : ${customerList}"
                                                                         th:value="${payerCustomer.id}"
@@ -396,7 +412,8 @@
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="uploadTickets" class="form-label pl-1">Upload tickets</label>
+                                                        <label for="uploadTickets" class="form-label pl-1">Upload
+                                                            tickets</label>
                                                         <input class="form-control" type="file" id="uploadTickets">
                                                     </div>
 
@@ -426,8 +443,10 @@
                                                             </div>
                                                             <div class="modal-body">
 
-                                                                <form th:object="${newCustomer}" id="customerForm" name="customerForm"
-                                                                      th:action="@{/ticket/create-add-customer}" method="post"
+                                                                <form th:object="${newCustomer}" id="customerForm"
+                                                                      name="customerForm"
+                                                                      th:action="@{/ticket/create-add-customer}"
+                                                                      method="post"
                                                                       class="row g-3">
 
 
@@ -435,7 +454,8 @@
                                                                          id="individualSection">
                                                                         <div class="form-group p-0 m-0">
                                                                             <label for="inputFirstName"
-                                                                                   class="form-label mb-1 pl-1">first Name</label>
+                                                                                   class="form-label mb-1 pl-1">first
+                                                                                Name</label>
                                                                             <input type="text" th:field="*{firstName}"
                                                                                    class="form-control"
                                                                                    id="inputFirstName">
@@ -451,12 +471,13 @@
                                                                          id="lastNameSection">
                                                                         <div class="form-group p-0 m-0">
                                                                             <label for="inputLastName"
-                                                                                   class="form-label mb-1 pl-1">Last Name</label>
+                                                                                   class="form-label mb-1 pl-1">Last
+                                                                                Name</label>
                                                                             <input type="text" th:field="*{lastName}"
                                                                                    class="form-control"
                                                                                    id="inputLastName">
                                                                             <div class="custom-invalid-feedback"
-                                                                                  id="lastNameValidationMessage">
+                                                                                 id="lastNameValidationMessage">
                                                                                 <ul class="p-0 m-0">
                                                                                 </ul>
                                                                             </div>
@@ -465,7 +486,8 @@
 
                                                                     <div class="col-md-6">
                                                                         <div class="form-group p-0 m-0">
-                                                                            <label for="inputEmail" class="form-label mb-1 pl-1">Email</label>
+                                                                            <label for="inputEmail"
+                                                                                   class="form-label mb-1 pl-1">Email</label>
                                                                             <input type="email" th:field="*{email}"
                                                                                    class="form-control" id="inputEmail"
                                                                                    spellcheck="false"
@@ -476,7 +498,8 @@
 
                                                                     <div class="col-md-6" id="phoneSection">
                                                                         <div class="form-group p-0 m-0">
-                                                                            <label for="inputPhone" class="form-label mb-1 pl-1">Phone</label>
+                                                                            <label for="inputPhone"
+                                                                                   class="form-label mb-1 pl-1">Phone</label>
                                                                             <input type="number"
                                                                                    th:field="*{phoneNumber}"
                                                                                    class="form-control"
@@ -496,7 +519,8 @@
                                                                             <label for="mySelectForCountry"
                                                                                    class="form-label d-block mb-1 pl-1">Country</label>
                                                                             <select id="mySelectForCountry"
-                                                                                    th:field="*{country}" name="customerCountry"
+                                                                                    th:field="*{country}"
+                                                                                    name="customerCountry"
                                                                                     class="form-control"
                                                                                     style="width: 100%">
                                                                                 <option th:each="customerCountry:${countriesTr}"
@@ -514,7 +538,8 @@
 
                                                                     <div class="col-md-6" id="genderSelection">
                                                                         <div class="form-group p-0 m-0">
-                                                                            <label for="inputGender" class="form-label mb-1 pl-1">Choose
+                                                                            <label for="inputGender"
+                                                                                   class="form-label mb-1 pl-1">Choose
                                                                                 Gender</label>
                                                                             <select id="inputGender"
                                                                                     th:field="*{gender}" name="gender"
@@ -612,7 +637,8 @@
                                                                                 data-bs-dismiss="modal">
                                                                             <strong>Cancel</strong>
                                                                         </button>
-                                                                        <button type="submit" id="saveCustomerButton" class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                        <button type="submit" id="saveCustomerButton"
+                                                                                class="btn list-page-drop-downs-export pr-5 pl-5">
                                                                             <strong>Save</strong>
                                                                         </button>
 
@@ -639,35 +665,6 @@
 <div th:replace="~{fragments/javascript :: js}"></div>
 <link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
 <script th:src="@{/assets/libs/js/ticket-create-add-customer.js}"></script>
-
-<script>
-    $('#mySelectForFrom').select2({
-        matcher: function(params, data) {
-            if ($.trim(params.term) === '') {
-                return data;
-            }
-
-            var term = params.term.toUpperCase();
-            var optionText = data.text.toUpperCase();
-
-            // Start index for sequential search
-            var startIndex = 0;
-
-            // Check if all letters in the search term are present sequentially at the beginning of the option text
-            for (var i = 0; i < term.length; i++) {
-                var letterIndex = optionText.indexOf(term[i], startIndex);
-                if (letterIndex === -1 || letterIndex !== startIndex) {
-                    return null;
-                }
-                startIndex++; // Move start index for next letter search
-            }
-
-            return data;
-        }
-    });
-
-
-</script>
 
 </body>
 </html>

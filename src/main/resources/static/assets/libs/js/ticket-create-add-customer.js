@@ -181,14 +181,6 @@ $(document).ready(function () {
     const $airlineSelectorArrow = $('#airline-selector-arrow');
     setupSelect2($mySelectForAirLine, $airlineSelectorArrow);
 
-    // const $mySelectForFrom = $('#mySelectForFrom');
-    // const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
-    // setupSelect2($mySelectForFrom, $fromWhereSelectorArrow);
-
-    const $mySelectForTo = $('#mySelectForArrival');
-    const $toWhereSelectorArrow = $('#to-where-selector-arrow');
-    setupSelect2($mySelectForTo, $toWhereSelectorArrow);
-
 
     const $mySelectForPayer = $('#mySelectForPayer');
     const $payerSelectorArrow = $('#payer-selector-arrow');
@@ -202,6 +194,50 @@ $(document).ready(function () {
     const $passengerSelectorArrow = $('#passenger-selector-arrow');
     setupSelect2($mySelectForPassenger, $passengerSelectorArrow);
 
+});
+
+$(document).ready(function () {
+    function customMatcher(params, data) {
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+
+        const term = params.term.toUpperCase();
+        let optionText = data.text;
+        if (term.length > 3) {
+            optionText = optionText.substring(optionText.indexOf(')') + 1);
+            optionText = optionText.toUpperCase();
+        }
+
+        if (optionText.includes(term)) {
+            return data;  // Match found
+        }
+
+        return null;  // No match
+    }
+
+    function setupSelectForAirport($select, $selectorArrow) {
+        $select.select2({
+            matcher: customMatcher,
+            allowClear: false,
+            closeOnSelect: true,
+        });
+
+        $select.on('select2:open', () => {
+            $selectorArrow.removeClass('country-rotate-down').addClass('country-rotate-up');
+        });
+
+        $select.on('select2:close', () => {
+            $selectorArrow.removeClass('country-rotate-up').addClass('country-rotate-down');
+        });
+    }
+    const $mySelectForFrom = $('#mySelectForFrom');
+    const $fromWhereSelectorArrow = $('#from-where-selector-arrow');
+    setupSelectForAirport($mySelectForFrom, $fromWhereSelectorArrow);
+
+    const $mySelectForTo = $('#mySelectForArrival');
+    const $toWhereSelectorArrow = $('#to-where-selector-arrow');
+    setupSelectForAirport($mySelectForTo, $toWhereSelectorArrow);
 });
 
 

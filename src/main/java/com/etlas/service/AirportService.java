@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface AirportService {
     List<AirportDto> getAllAirports();
+
+    AirportDto findByIataCode(String iataCode);
+
+    AirportDto findById(Long id);
 }

@@ -4,6 +4,7 @@ import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.TicketType;
 import com.etlas.enums.TripType;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,18 +28,22 @@ public class TicketDto {
     private TicketType ticketType;
     private boolean singleTicket;
     private boolean multipleTicket;
+
+    @NotBlank(message = "PNR shouldn't be blank")
     private String pnrNo;
-    private AirLineDto airLine; // change to airline enum or object
+    private AirLineDto airLine;
     private int ticketAmount;
-    private CountriesTr fromWhere;
-    private CountriesTr ToWhere;
+    private AirportDto fromWhere;
+    private AirportDto toWhere;
     private String dateRangeString;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime departureTime;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime returnTime;
+
     private List<CustomerDto> passengers;
     private UserDto boughtUser;
+
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate DateOfPerches;
     private BigDecimal perchesPrice;
@@ -54,6 +59,8 @@ public class TicketDto {
     private String pdfTicket;
 
     private String payedCustomerUI;
+
+    @NotBlank(message = "Passengers shouldn't be blank")
     private List<String> passengersUI;
 
 }

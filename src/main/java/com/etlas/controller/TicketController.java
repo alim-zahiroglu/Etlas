@@ -40,6 +40,8 @@ public class TicketController {
         if (!isNewCustomerAdded){
             TicketDto newTicket = ticketService.initializeNewTicket();
             model.addAttribute("newTicket",newTicket);
+            System.out.println(newTicket.getFromWhere()+"********************");
+            System.out.println(newTicket.getToWhere()+"********************");
         }
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("airLines", airLineService.getAllAirLines());
@@ -75,6 +77,7 @@ public class TicketController {
             System.out.println("********************"+newTicket.getPayedCustomerUI());
             System.out.println("********************"+newTicket.getBoughtUser());
             System.out.println("********************"+newTicket.getReceivedUser());
+
             newTicket.setPayedCustomerUI(addedCustomerId);
             if (newTicket.getPassengersUI().size()>1){
                 newTicket.getPassengersUI().add(addedCustomerId);
@@ -99,16 +102,11 @@ public class TicketController {
         CustomerDto savedCustomer = customerService.saveNewCustomer(newCustomer);
         System.out.println(newCustomer + "*******************************");
         System.out.println(savedCustomer.getId() + "*****************************");
-//        ticketDto.setPayedCustomer(newCustomer);
+
         isNewCustomerAdded = true;
         addedCustomerId = String.valueOf(savedCustomer.getId());
         return ResponseEntity.ok("new customer added");
 
-//        redirectAttributes.addFlashAttribute("newTicket",ticketDto);
-//        model.addAttribute("newTicket",ticketDto);
-
-//        return "redirect:/ticket/create";
-//        return "/ticket/list";
     }
 
 
