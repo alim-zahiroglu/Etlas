@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // showing successfully create message
-
 document.addEventListener('DOMContentLoaded', function () {
     const createSuccessToast = document.getElementById('createSuccessToast');
     setTimeout(function () {
@@ -81,6 +80,18 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set timeout to hide the toast after 2 seconds
         setTimeout(function () {
             createSuccessToast.classList.remove('show');
+
+        }, 2000);  // 2500 milliseconds = 2.5 seconds (time the toast is visible)
+    }, 300);  // 300 milliseconds = 0.3 second (delay before showing the toast)
+});
+document.addEventListener('DOMContentLoaded', function () {
+    const createTicketSuccessToast = document.getElementById('createTicketSuccessToast');
+    setTimeout(function () {
+        createTicketSuccessToast.classList.add('show');
+
+        // Set timeout to hide the toast after 2 seconds
+        setTimeout(function () {
+            createTicketSuccessToast.classList.remove('show');
 
         }, 2000);  // 2500 milliseconds = 2.5 seconds (time the toast is visible)
     }, 300);  // 300 milliseconds = 0.3 second (delay before showing the toast)

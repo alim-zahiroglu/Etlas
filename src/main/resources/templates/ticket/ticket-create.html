@@ -680,6 +680,29 @@
                                                     </div>
                                                 </div>
 
+                                                <div id="create_ticket_toast_up_layer" th:if="${isNewTicketSaved} == true">
+                                                    <div id="create_ticket_toast_container"
+                                                         class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                         data-autohide="true">
+                                                        <div id="createTicketSuccessToast" class="toast" role="alert"
+                                                             aria-live="assertive" aria-atomic="true">
+                                                            <div class="toast-header create_toast_header">
+                                                                <strong class="me-auto">Success</strong>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+
+
+                                                            <div class="toast-body create_toast_body" th:inline="text">
+                                                                Ticket <strong style="color: green"
+                                                                                 th:text="${savedTicket.pnrNo}"></strong>
+                                                                successfully saved!
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

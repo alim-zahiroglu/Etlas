@@ -71,6 +71,9 @@ public class TicketController {
         System.out.println("************************************************************************************");
         System.out.println(newTicket);
         ticketService.saveNewTicket(newTicket);
+
+        redirectAttributes.addFlashAttribute("savedTicket",new TicketDto());
+        redirectAttributes.addFlashAttribute("isNewTicketSaved",true);
         return "redirect:/ticket/create";
     }
 
