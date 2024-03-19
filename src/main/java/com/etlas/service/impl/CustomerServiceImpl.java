@@ -4,6 +4,7 @@ import com.etlas.dto.CustomerDto;
 import com.etlas.dto.UserDto;
 import com.etlas.entity.Customer;
 import com.etlas.entity.User;
+import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
@@ -24,6 +25,17 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
     private final MapperUtil mapper;
+
+    @Override
+    public CustomerDto initializeNewCustomer() {
+        return CustomerDto.builder()
+                .Individual(true)
+                .country(CountriesTr.TUR)
+                .customerTRYBalance(BigDecimal.ZERO)
+                .customerUSDBalance(BigDecimal.ZERO)
+                .customerEURBalance(BigDecimal.ZERO)
+                .build();
+    }
 
     @Override
     public List<CustomerDto> getAllCustomers() {

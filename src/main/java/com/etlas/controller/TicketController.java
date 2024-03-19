@@ -41,6 +41,7 @@ public class TicketController {
             TicketDto newTicket = ticketService.initializeNewTicket();
             model.addAttribute("newTicket",newTicket);
         }
+
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("airLines", airLineService.getAllAirLines());
         model.addAttribute("airports", airportService.getAllAirports());
@@ -48,7 +49,6 @@ public class TicketController {
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
-
         model.addAttribute("genders", Gender.values());
 
         isNewCustomerAdded = false; // set new customer added false
@@ -61,8 +61,11 @@ public class TicketController {
 
         // check which button is clicked
         if (isNewCustomerAdded) {
+            CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
             TicketDto ticket = ticketService.adjustNewTicket(newTicket,addedCustomerId);
             redirectAttributes.addFlashAttribute("newTicket",ticket);
+            redirectAttributes.addFlashAttribute("addedCustomer",addedCustomer);
+            redirectAttributes.addFlashAttribute("isNewCustomerAdded",true);
             return "redirect:/ticket/create";
         }
         System.out.println("************************************************************************************");

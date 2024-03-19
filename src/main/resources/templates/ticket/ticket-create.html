@@ -649,6 +649,37 @@
                                                     </div>
                                                 </div>
 
+
+
+                                                <div id="create_toast_up_layer" th:if="${isNewCustomerAdded} == true">
+                                                    <div id="create_toast_container"
+                                                         class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                         data-autohide="true">
+                                                        <div id="createSuccessToast" class="toast" role="alert"
+                                                             aria-live="assertive" aria-atomic="true">
+                                                            <div class="toast-header create_toast_header">
+                                                                <strong class="me-auto">Success</strong>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+
+
+                                                            <div th:if="${addedCustomer.customerType.description} == 'Individual'" class="toast-body create_toast_body" th:inline="text">
+                                                                Customer <strong style="color: green"
+                                                                                 th:text="${addedCustomer.firstName + ' ' + addedCustomer.lastName}"></strong>
+                                                                successfully added!
+                                                            </div>
+
+                                                            <div th:if="${addedCustomer.customerType.description} == 'Company'" class="toast-body create_toast_body" th:inline="text">
+                                                                Customer <strong style="color: green"
+                                                                                 th:text="${addedCustomer.companyName}"></strong>
+                                                                successfully Added!
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -664,6 +695,7 @@
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
 <link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
+<script th:src="@{/assets/libs/js/delet_update_confirmation.js}"></script>
 <script th:src="@{/assets/libs/js/ticket-create-add-customer.js}"></script>
 
 </body>

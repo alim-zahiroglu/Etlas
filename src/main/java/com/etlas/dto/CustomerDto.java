@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
+@Builder
 public class CustomerDto {
     private long id;
 
@@ -37,12 +38,12 @@ public class CustomerDto {
     private String phoneNumber;
     private String officeNumber;
 
-    private CountriesTr country = CountriesTr.TUR;
+    private CountriesTr country;
     private Gender gender;
 
     private CustomerType customerType;
     private boolean Company;
-    private boolean Individual = true;
+    private boolean Individual;
 
     private BigDecimal customerTRYBalance;
     private BigDecimal customerEURBalance;
