@@ -58,8 +58,6 @@ public class TicketDto {
     private String notes;
     private String pdfTicket;
 
-    private String payedCustomerUI;
-
     @NotBlank(message = "Passengers shouldn't be blank")
     private List<String> passengersUI;
 

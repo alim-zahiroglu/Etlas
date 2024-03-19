@@ -219,7 +219,7 @@
                                                             <select id="mySelectForPassenger" multiple
                                                                     th:field="*{passengersUI}" th:name="passengers"
                                                                     class="form-control" style="width: 100%;">
-                                                                <option th:each="passenger:${passengerList}"
+                                                                <option th:each="passenger:${customerList}"
                                                                         th:value="${passenger.id}"
                                                                         th:text="${passenger.customerType.description == 'Company' ? passenger.companyName : (passenger.customerType.description == 'Individual' ? passenger.firstName + ' ' + passenger.lastName : 'Unknown')}">
                                                             </select>
@@ -366,7 +366,7 @@
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
                                                             <select id="mySelectForPayer"
-                                                                    th:field="*{payedCustomerUI}" th:name="payerCustomer"
+                                                                    th:field="*{payedCustomer}" th:name="payerCustomer"
                                                                     class="form-control mb-0" style="width: 100%">
                                                                 <option th:each="payerCustomer : ${customerList}"
                                                                         th:value="${payerCustomer.id}"

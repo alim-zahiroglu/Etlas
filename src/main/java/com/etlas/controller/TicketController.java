@@ -36,12 +36,10 @@ public class TicketController {
 
     @GetMapping("/create")
     public String createTicket(Model model){
-
+        // check new customer added or not
         if (!isNewCustomerAdded){
             TicketDto newTicket = ticketService.initializeNewTicket();
             model.addAttribute("newTicket",newTicket);
-            System.out.println(newTicket.getFromWhere()+"********************");
-            System.out.println(newTicket.getToWhere()+"********************");
         }
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("airLines", airLineService.getAllAirLines());
@@ -49,62 +47,39 @@ public class TicketController {
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("customerList", customerService.getAllCustomers());
-        model.addAttribute("passengerList", customerService.getAllIndividualCustomers());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
 
         model.addAttribute("genders", Gender.values());
-        isNewCustomerAdded = false;
+
+        isNewCustomerAdded = false; // set new customer added false
         return "ticket/ticket-create";
     }
 
-
-
-    @GetMapping("/list")
-    public String getTicketList(Model model){
-
-        return "ticket/list";
-    }
-
-    // Controller method for saving new ticket
     @PostMapping("/create")
     public String saveNewTicket(@ModelAttribute("newTicket") TicketDto newTicket,
-                                RedirectAttributes redirectAttributes,Model model) {
-        // Save new ticket logic
+                                RedirectAttributes redirectAttributes, Model model) {
+
+        // check which button is clicked
         if (isNewCustomerAdded) {
-            System.out.println(newTicket + "xxxxxxxxxxxxxxxxxxxx");
-
-            System.out.println("********************"+newTicket.getPayedCustomerUI());
-            System.out.println("********************"+newTicket.getPayedCustomerUI());
-            System.out.println("********************"+newTicket.getBoughtUser());
-            System.out.println("********************"+newTicket.getReceivedUser());
-
-            newTicket.setPayedCustomerUI(addedCustomerId);
-            if (newTicket.getPassengersUI().size()>1){
-                newTicket.getPassengersUI().add(addedCustomerId);
-            }else {
-                newTicket.setPassengersUI(List.of(addedCustomerId));
-            }
-
-            redirectAttributes.addFlashAttribute("newTicket",newTicket);
-
+            TicketDto ticket = ticketService.adjustNewTicket(newTicket,addedCustomerId);
+            redirectAttributes.addFlashAttribute("newTicket",ticket);
             return "redirect:/ticket/create";
-
         }
-
+        System.out.println("************************************************************************************");
+        System.out.println(newTicket);
+        ticketService.saveNewTicket(newTicket);
         return "redirect:/ticket/create";
     }
 
     // Controller method for saving new customer
     @PostMapping("/create-add-customer")
-    public ResponseEntity<String> addNewCustomer(
-                                 @ModelAttribute("newCustomer") CustomerDto newCustomer) {
+    public ResponseEntity<String> addNewCustomer(@ModelAttribute("newCustomer") CustomerDto newCustomer) {
         // Save new customer logic
         CustomerDto savedCustomer = customerService.saveNewCustomer(newCustomer);
-        System.out.println(newCustomer + "*******************************");
-        System.out.println(savedCustomer.getId() + "*****************************");
 
         isNewCustomerAdded = true;
         addedCustomerId = String.valueOf(savedCustomer.getId());
+
         return ResponseEntity.ok("new customer added");
 
     }

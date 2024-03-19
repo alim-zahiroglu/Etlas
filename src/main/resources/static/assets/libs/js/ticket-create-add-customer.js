@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Handle success response
                     console.log("Customer saved successfully");
                     $('#ticketForm').submit();
-                    // $('#add-new-customer-modal').modal('hide'); // Close the modal
+                    $('#add-new-customer-modal').modal('hide'); // Close the modal
                 },
                 error: function (error) {
                     // Handle error response

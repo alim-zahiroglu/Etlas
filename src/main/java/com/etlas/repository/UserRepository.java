@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserNameAndIsDeleted(String username, Boolean isDeleted);
 
-    List<User> findAllByIsDeleted(boolean isDeleted);
+    List<User> findAllByIsDeletedOrderByLastUpdateDateTimeDesc(boolean isDeleted);
 
     boolean existsByUserName(String userName);
 

@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAllUsers() {
-        return repository.findAllByIsDeleted(false).stream()
+        return repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false).stream()
                 .map(user -> mapper.convert(user,new UserDto()))
                 .collect(Collectors.toList());
     }
