@@ -48,7 +48,7 @@ public class Customer extends BaseEntity{
     @Transient // ignore to save
     private boolean Company;
     @Transient // // ignore to save
-    private boolean Individual = true;
+    private boolean Individual;
 
     private BigDecimal customerTRYBalance;
     private BigDecimal customerEURBalance;

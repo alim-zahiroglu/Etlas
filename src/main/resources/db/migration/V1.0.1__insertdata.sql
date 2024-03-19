@@ -60,13 +60,13 @@ values
     ('2024-03-15 00:00:00', 23, false, '2024-03-15 00:00:00', 1, 'INDIVIDUAL', 'Emma', 'Lee', 'FEMALE', 'emma@mailinator.com', '05234567890', 'USA', null, null, 6900, 600, 245),
     ('2024-03-16 00:00:00', 24, false, '2024-03-16 00:00:00', 1, 'INDIVIDUAL', 'Noah', 'White', 'MALE', 'noah@mailinator.com', '05678901234', 'CAN', null, null, 5800, 550, 230),
     ('2024-03-17 00:00:00', 25, false, '2024-03-17 00:00:00', 1, 'INDIVIDUAL', 'Olivia', 'Davis', 'FEMALE', 'olivia@mailinator.com', '05345678901', 'GBR', null, null, 7700, 650, 265),
-    ('2024-03-18 00:00:00', 26, false, '2024-03-18 00:00:00', 1, 'INDIVIDUAL', 'Liam', 'Taylor', 'MALE', 'liamtaylor@mailinator.com', '05789012345', 'TUR', null, null, 6300, 500, 205),
-    ('2024-03-19 00:00:00', 27, false, '2024-03-19 00:00:00', 1, 'INDIVIDUAL', 'Ava', 'Moore', 'FEMALE', 'avamoore@mailinator.com', '05456789012', 'FRA', null, null, 7100, 600, 240),
-    ('2024-03-20 00:00:00', 28, false, '2024-03-20 00:00:00', 1, 'INDIVIDUAL', 'Oliver', 'Robinson', 'MALE', 'oliverrobinson@mailinator.com', '05901234567', 'USA', null, null, 5500, 450, 185),
-    ('2024-03-21 00:00:00', 29, false, '2024-03-21 00:00:00', 1, 'INDIVIDUAL', 'Emma', 'Young', 'FEMALE', 'emmayoung@mailinator.com', '05345678901', 'CAN', null, null, 7400, 700, 275),
-    ('2024-03-22 00:00:00', 30, false, '2024-03-22 00:00:00', 1, 'INDIVIDUAL', 'Mia', 'Anderson', 'FEMALE', 'mia@mailinator.com', '05789012345', 'GBR', null, null, 6000, 550, 220),
-    ('2024-03-23 00:00:00', 31, false, '2024-03-23 00:00:00', 1, 'INDIVIDUAL', 'Lucas', 'Garcia', 'MALE', 'lucasgarcia@mailinator.com', '05456789012', 'TUR', null, null, 7900, 750, 300),
-    ('2024-03-24 00:00:00', 32, false, '2024-03-24 00:00:00', 1, 'INDIVIDUAL', 'Sophia', 'Taylor', 'FEMALE', 'sophiataylor@mailinator.com', '05901234567', 'FRA', null, null, 6500, 600, 245);
+    ('2024-03-18 00:00:00', 26, false, '2024-03-10 00:00:00', 1, 'INDIVIDUAL', 'Liam', 'Taylor', 'MALE', 'liamtaylor@mailinator.com', '05789012345', 'TUR', null, null, 6300, 500, 205),
+    ('2024-03-19 00:00:00', 27, false, '2024-03-10 00:00:00', 1, 'INDIVIDUAL', 'Ava', 'Moore', 'FEMALE', 'avamoore@mailinator.com', '05456789012', 'FRA', null, null, 7100, 600, 240),
+    ('2024-03-20 00:00:00', 28, false, '2024-03-10 00:00:00', 1, 'INDIVIDUAL', 'Oliver', 'Robinson', 'MALE', 'oliverrobinson@mailinator.com', '05901234567', 'USA', null, null, 5500, 450, 185),
+    ('2024-03-21 00:00:00', 29, false, '2024-03-10 00:00:00', 1, 'INDIVIDUAL', 'Emma', 'Young', 'FEMALE', 'emmayoung@mailinator.com', '05345678901', 'CAN', null, null, 7400, 700, 275),
+    ('2024-03-22 00:00:00', 30, false, '2024-03-10 00:00:00', 1, 'INDIVIDUAL', 'Mia', 'Anderson', 'FEMALE', 'mia@mailinator.com', '05789012345', 'GBR', null, null, 6000, 550, 220),
+    ('2024-03-23 00:00:00', 31, false, '2024-03-10 00:00:00', 1, 'INDIVIDUAL', 'Lucas', 'Garcia', 'MALE', 'lucasgarcia@mailinator.com', '05456789012', 'TUR', null, null, 7900, 750, 300),
+    ('2024-03-24 00:00:00', 32, false, '2024-03-10 00:00:00', 1, 'INDIVIDUAL', 'Sophia', 'Taylor', 'FEMALE', 'sophiataylor@mailinator.com', '05901234567', 'FRA', null, null, 6500, 600, 245);
 
 
 -- INSERT INTO CountriesEN (iso2, iso3, name) VALUES

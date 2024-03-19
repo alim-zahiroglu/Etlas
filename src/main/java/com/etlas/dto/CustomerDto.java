@@ -3,8 +3,6 @@ package com.etlas.dto;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.enums.Gender;
-import jakarta.persistence.Transient;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -35,10 +33,11 @@ public class CustomerDto {
     private String email;
 
     @NotBlank(message = "Please enter the phone number\n ex: 05552223344")
+    @Size(min = 10, max = 15,message = "Phone must be 10~15 digits long")
     private String phoneNumber;
     private String officeNumber;
 
-    private CountriesTr country;
+    private CountriesTr country = CountriesTr.TUR;
     private Gender gender;
 
     private CustomerType customerType;

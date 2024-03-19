@@ -1,22 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="~{fragments/head :: header}"></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
 <body>
-
-<input type="text" name="datetimes" />
-
-<script>
-  $(function() {
-    $('input[name="datetimes"]').daterangepicker({
-      timePicker: true,
-      singleDatePicker:true,
-      locale: {
-        format: 'MM/DD hh:mm A'
-      }
-    });
-  });
-</script>
-
+<h1>hello ticket list page</h1>
+<h1 th:text="${newCustomer.firstName}"></h1>
 
 </body>
 </html>

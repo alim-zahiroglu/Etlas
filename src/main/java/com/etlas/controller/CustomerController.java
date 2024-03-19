@@ -32,7 +32,6 @@ public class CustomerController {
         model.addAttribute("newCustomer",new CustomerDto());
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("genders", Gender.values());
-        model.addAttribute("customerType", CustomerType.values());
         return "/customer/customer-create";
     }
 
@@ -44,7 +43,6 @@ public class CustomerController {
 
             model.addAttribute("countriesTr", CountriesTr.values());
             model.addAttribute("genders", Gender.values());
-            model.addAttribute("customerType", CustomerType.values());
             return "/customer/customer-create";
         }
 
