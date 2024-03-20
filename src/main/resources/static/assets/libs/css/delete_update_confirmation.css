@@ -35,6 +35,11 @@
     border: none;
     background: transparent;
 }
+#create_ticket_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
 .create_toast_header{
     background: #d1e7de !important;
     color: #664d03 !important;

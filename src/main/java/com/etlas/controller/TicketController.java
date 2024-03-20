@@ -7,11 +7,13 @@ import com.etlas.enums.Gender;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.service.*;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +42,8 @@ public class TicketController {
         if (!isNewCustomerAdded){
             TicketDto newTicket = ticketService.initializeNewTicket();
             model.addAttribute("newTicket",newTicket);
+            String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
+            model.addAttribute("currencySymbol", currencySymbol);
         }
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("airLines", airLineService.getAllAirLines());
@@ -48,26 +52,55 @@ public class TicketController {
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
-
         model.addAttribute("genders", Gender.values());
+
 
         isNewCustomerAdded = false; // set new customer added false
         return "ticket/ticket-create";
     }
 
     @PostMapping("/create")
-    public String saveNewTicket(@ModelAttribute("newTicket") TicketDto newTicket,
-                                RedirectAttributes redirectAttributes, Model model) {
-
+    public String saveNewTicket(@Valid @ModelAttribute("newTicket") TicketDto newTicket,
+                                BindingResult bindingResult, Model model,
+                                RedirectAttributes redirectAttributes) {
         // check which button is clicked
         if (isNewCustomerAdded) {
+            CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
             TicketDto ticket = ticketService.adjustNewTicket(newTicket,addedCustomerId);
+            String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
+
             redirectAttributes.addFlashAttribute("newTicket",ticket);
+            redirectAttributes.addFlashAttribute("addedCustomer",addedCustomer);
+            redirectAttributes.addFlashAttribute("isNewCustomerAdded",true);
+            redirectAttributes.addFlashAttribute("currencySymbol",currencySymbol);
+
+
+            System.out.println("************************************************************************************");
+            System.out.println(ticket);
             return "redirect:/ticket/create";
+        }
+        bindingResult = ticketService.validateTicket(newTicket,bindingResult);
+        if (bindingResult.hasErrors()){
+            String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
+            model.addAttribute("newCustomer", new CustomerDto());
+            model.addAttribute("airLines", airLineService.getAllAirLines());
+            model.addAttribute("airports", airportService.getAllAirports());
+            model.addAttribute("countriesTr", CountriesTr.values());
+            model.addAttribute("userList", userService.findAllUsers());
+            model.addAttribute("customerList", customerService.getAllCustomers());
+            model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("genders", Gender.values());
+            model.addAttribute("currencySymbol", currencySymbol);
+            System.out.println("************************************************************************************");
+            System.out.println(newTicket);
+            return "ticket/ticket-create";
         }
         System.out.println("************************************************************************************");
         System.out.println(newTicket);
         ticketService.saveNewTicket(newTicket);
+
+        redirectAttributes.addFlashAttribute("savedTicket",new TicketDto());
+        redirectAttributes.addFlashAttribute("isNewTicketSaved",true);
         return "redirect:/ticket/create";
     }
 

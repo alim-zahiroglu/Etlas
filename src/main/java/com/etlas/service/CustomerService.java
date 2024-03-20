@@ -23,4 +23,6 @@ public interface CustomerService {
     List<CustomerDto> getAllIndividualCustomers();
 
     CustomerDto findById(long id);
+
+    CustomerDto initializeNewCustomer();
 }

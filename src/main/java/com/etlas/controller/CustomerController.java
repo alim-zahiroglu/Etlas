@@ -29,7 +29,8 @@ public class CustomerController {
     }
     @GetMapping("/create")
     public String customerCreate(Model model){
-        model.addAttribute("newCustomer",new CustomerDto());
+        CustomerDto newCustomer = customerService.initializeNewCustomer();
+        model.addAttribute("newCustomer",newCustomer);
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("genders", Gender.values());
         return "/customer/customer-create";
