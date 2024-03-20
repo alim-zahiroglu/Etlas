@@ -31,9 +31,6 @@ public class CustomerServiceImpl implements CustomerService {
         return CustomerDto.builder()
                 .Individual(true)
                 .country(CountriesTr.TUR)
-                .customerTRYBalance(BigDecimal.ZERO)
-                .customerUSDBalance(BigDecimal.ZERO)
-                .customerEURBalance(BigDecimal.ZERO)
                 .build();
     }
 

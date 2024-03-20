@@ -1,6 +1,7 @@
 package com.etlas.service;
 
 import com.etlas.dto.TicketDto;
+import org.springframework.validation.BindingResult;
 
 public interface TicketService {
     TicketDto initializeNewTicket();
@@ -8,4 +9,6 @@ public interface TicketService {
     TicketDto adjustNewTicket(TicketDto newTicket, String addedCustomerId);
 
     TicketDto saveNewTicket(TicketDto newTicket);
+
+    BindingResult validateTicket(TicketDto newTicket, BindingResult bindingResult);
 }
