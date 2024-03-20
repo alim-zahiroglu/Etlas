@@ -32,10 +32,15 @@ public class TicketController {
     private final AirLineService airLineService;
     private final AirportService airportService;
 
-
     private boolean isNewCustomerAdded = false;
     private String addedCustomerId;
 
+    @GetMapping("/list")
+    public String getAllTickets(Model model){
+        List<TicketDto> ticketList = ticketService.findAllTickets();
+        model.addAttribute("ticketList",ticketList);
+        return "/ticket/ticket-list";
+    }
     @GetMapping("/create")
     public String createTicket(Model model){
         // check new customer added or not

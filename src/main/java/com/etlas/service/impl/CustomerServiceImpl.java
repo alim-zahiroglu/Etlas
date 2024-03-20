@@ -1,9 +1,7 @@
 package com.etlas.service.impl;
 
 import com.etlas.dto.CustomerDto;
-import com.etlas.dto.UserDto;
 import com.etlas.entity.Customer;
-import com.etlas.entity.User;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
@@ -18,7 +16,6 @@ import org.springframework.validation.FieldError;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

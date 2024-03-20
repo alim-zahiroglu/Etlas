@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -175,5 +176,14 @@ public class TicketServiceImpl implements TicketService {
         } else {
             throw new IllegalArgumentException("Invalid date-time range format");
         }
+    }
+
+    @Override
+    public List<TicketDto> findAllTickets() {
+        List<Ticket> tickets = repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false);
+
+        return tickets.stream()
+                .map(ticket -> mapper.convert(ticket, new TicketDto()))
+                .collect(Collectors.toList());
     }
 }

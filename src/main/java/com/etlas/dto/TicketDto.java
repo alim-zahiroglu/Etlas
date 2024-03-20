@@ -50,6 +50,7 @@ public class TicketDto {
     private BigDecimal perchesPrice;
     private BigDecimal salesPrice;
     private BigDecimal payedAmount;
+    private String payedCard;
     private BigDecimal profit;
     private CurrencyUnits currencyUnit;
     private UserDto receivedUser;

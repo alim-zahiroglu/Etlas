@@ -194,6 +194,10 @@ $(document).ready(function () {
     const $passengerSelectorArrow = $('#passenger-selector-arrow');
     setupSelect2($mySelectForPassenger, $passengerSelectorArrow);
 
+    const $selectedCreditCard = $('#selected-credit-card');
+    const $selectedCardSelectorArrow = $('#selected-card-selector-arrow');
+    setupSelect2($selectedCreditCard, $selectedCardSelectorArrow);
+
 });
 
 $(document).ready(function () {

@@ -50,9 +50,11 @@ public class Ticket extends BaseEntity{
     @ManyToOne
     private Airport ToWhere;
 
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime departureTime;
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime returnTime;
 
     @ManyToMany
