@@ -67,9 +67,13 @@ public class TicketController {
         if (isNewCustomerAdded) {
             CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
             TicketDto ticket = ticketService.adjustNewTicket(newTicket,addedCustomerId);
+            String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
+
             redirectAttributes.addFlashAttribute("newTicket",ticket);
             redirectAttributes.addFlashAttribute("addedCustomer",addedCustomer);
             redirectAttributes.addFlashAttribute("isNewCustomerAdded",true);
+            redirectAttributes.addFlashAttribute("currencySymbol",currencySymbol);
+
 
             System.out.println("************************************************************************************");
             System.out.println(ticket);

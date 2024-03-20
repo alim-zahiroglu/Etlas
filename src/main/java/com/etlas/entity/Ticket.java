@@ -1,8 +1,5 @@
 package com.etlas.entity;
 
-import com.etlas.dto.CustomerDto;
-import com.etlas.dto.UserDto;
-import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.TicketType;
 import com.etlas.enums.TripType;
@@ -11,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,13 +22,15 @@ import java.util.List;
 @Table(name = "tickets")
 public class Ticket extends BaseEntity{
 
+    @Enumerated(EnumType.STRING)
     private TripType tripType;
 
     @Transient
-    private boolean oneWayTrip = true;
+    private boolean oneWayTrip;
     @Transient
     private boolean roundTrip;
 
+    @Enumerated(EnumType.STRING)
     private TicketType ticketType;
 
     @Transient
@@ -47,10 +44,11 @@ public class Ticket extends BaseEntity{
     @ManyToOne
     private AirLine airLine;
     private int ticketAmount;
-    @Enumerated(EnumType.STRING)
-    private CountriesTr fromWhere; // change to airPortCode enum or object
-    @Enumerated(EnumType.STRING)
-    private CountriesTr ToWhere;  // change to airPortCode enum or object
+
+    @ManyToOne
+    private Airport fromWhere;
+    @ManyToOne
+    private Airport ToWhere;
 
     @Column(columnDefinition = "DATE")
     private LocalDateTime departureTime;
