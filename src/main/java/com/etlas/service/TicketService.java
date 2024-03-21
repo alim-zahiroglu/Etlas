@@ -15,4 +15,8 @@ public interface TicketService {
     BindingResult validateTicket(TicketDto newTicket, BindingResult bindingResult);
 
     List<TicketDto> findAllTickets();
+
+    TicketDto findById(long ticketId);
+
+    TicketDto prepareTicketToUpdate(TicketDto ticketTobeUpdate);
 }

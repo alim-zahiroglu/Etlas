@@ -149,20 +149,20 @@
                                                     </td>
 
                                                     <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
-                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long\'></i> ' + ${ticket.toWhere.city}"></span><br/>
-                                                        <span th:utext="${ticket.toWhere.city}+' <i class=\'fa-solid fa-arrow-right-long\'></i> ' + ${ticket.fromWhere.city}"></span>
+                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span><br/>
+                                                        <span th:utext="${ticket.toWhere.city}+' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.fromWhere.city}"></span>
                                                     </td>
                                                     <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
-                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long\'></i> ' + ${ticket.toWhere.city}"></span>
+                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span>
                                                     </td>
 
                                                     <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
-                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span><br/>
-                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure\'></i>  ' + ${#temporals.format(ticket.returnTime, 'dd-MM-yyyy, HH:mm')}"></span>
+                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span><br/>
+                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.returnTime, 'dd-MM-yyyy, HH:mm')}"></span>
                                                     </td>
 
                                                     <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
-                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span>
+                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span>
 
                                                     </td>
 

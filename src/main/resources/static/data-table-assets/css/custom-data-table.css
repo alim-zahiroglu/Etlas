@@ -179,7 +179,7 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     color: #f8a526 !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     background: transparent !important;
 }
 
@@ -188,7 +188,7 @@
     padding-bottom: 0 !important;
     font-weight: bold !important;
     color: #f89a08 !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     background: transparent !important;
 }
 
@@ -196,7 +196,7 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     color:#ef4863 !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     background: transparent !important;
 }
 
@@ -205,7 +205,7 @@
     padding-bottom: 0 !important;
     color: #f12446 !important;
     font-weight: bold !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     background: transparent !important;
 
 }
@@ -214,7 +214,7 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     color: #1ca24e !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     background: transparent !important;
 }
 .custom_download_button:hover{
@@ -222,7 +222,7 @@
     padding-bottom: 0 !important;
     color: #01ce2a !important;
     font-weight: bold !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     background: transparent !important;
 }
 /* CSS for the rotation effect */
@@ -260,6 +260,10 @@
     }
 }
 
+
+.departure-css{
+    font-size: 12px;
+}
 
 
 .users_table td a {

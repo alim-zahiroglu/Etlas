@@ -63,14 +63,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveNewTicket(TicketDto newTicket) {
-        System.out.println("-------------->"+ newTicket);
         prepareToSave(newTicket);
-
-        System.out.println("**************"+newTicket);
-
-        repository.save(mapper.convert(newTicket, new Ticket()));
-
-        return null;
+        Ticket savedTicket = repository.save(mapper.convert(newTicket, new Ticket()));
+        return mapper.convert(savedTicket, new TicketDto());
     }
 
     private void prepareToSave(TicketDto newTicket) {
@@ -138,7 +133,7 @@ public class TicketServiceImpl implements TicketService {
     private void saveBalanceRecord(TicketDto newTicket) {
         if (newTicket.getPayedAmount().compareTo(BigDecimal.ZERO)>0){
 
-//            saveNewBalanceRecord();
+//          TODO  saveNewBalanceRecord();
             System.out.println("********************** -> new balance record is saved");
         }
     }
@@ -185,5 +180,53 @@ public class TicketServiceImpl implements TicketService {
         return tickets.stream()
                 .map(ticket -> mapper.convert(ticket, new TicketDto()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public TicketDto findById(long ticketId) {
+        Ticket ticket = repository.findByIdAndIsDeleted(ticketId,false);
+        return mapper.convert(ticket, new TicketDto());
+    }
+
+    @Override
+    public TicketDto prepareTicketToUpdate(TicketDto ticketTobeUpdate) {
+        if (ticketTobeUpdate.getTripType().equals(TripType.ONEWAY)){
+            ticketTobeUpdate.setOneWayTrip(true);
+            ticketTobeUpdate.setRoundTrip(false);
+            // set departure time string
+
+            LocalDateTime departure = ticketTobeUpdate.getDepartureTime();
+            String departureTime = departure.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+            ticketTobeUpdate.setDateRangeString(departureTime);
+        } else {
+            ticketTobeUpdate.setOneWayTrip(false);
+            ticketTobeUpdate.setRoundTrip(true);
+            // set departure time string
+            LocalDateTime departure = ticketTobeUpdate.getDepartureTime();
+            LocalDateTime returnTime = ticketTobeUpdate.getReturnTime();
+
+            String departureTimeString = departure.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+            String returnTimeString = returnTime.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+
+            ticketTobeUpdate.setDateRangeString(departureTimeString + " - " + returnTimeString);
+        }
+        if (ticketTobeUpdate.getTicketType().equals(TicketType.SINGLE)){
+            ticketTobeUpdate.setSingleTicket(true);
+            ticketTobeUpdate.setMultipleTicket(false);
+        }else {
+            ticketTobeUpdate.setSingleTicket(false);
+            ticketTobeUpdate.setMultipleTicket(true);
+        }
+        // set passengers
+        List<String> passengersUI = ticketTobeUpdate.getPassengers().stream()
+                .map(ticket->String.valueOf(ticket.getId()))
+                .toList();
+        ticketTobeUpdate.setPassengersUI(passengersUI);
+
+        // set paid customer
+        String payedCustomer = String.valueOf(ticketTobeUpdate.getPayedCustomer().getId());
+        ticketTobeUpdate.setPayedCustomerUI(payedCustomer);
+
+        return ticketTobeUpdate;
     }
 }

@@ -14,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -79,9 +76,6 @@ public class TicketController {
             redirectAttributes.addFlashAttribute("isNewCustomerAdded",true);
             redirectAttributes.addFlashAttribute("currencySymbol",currencySymbol);
 
-
-            System.out.println("************************************************************************************");
-            System.out.println(ticket);
             return "redirect:/ticket/create";
         }
         bindingResult = ticketService.validateTicket(newTicket,bindingResult);
@@ -96,15 +90,13 @@ public class TicketController {
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("genders", Gender.values());
             model.addAttribute("currencySymbol", currencySymbol);
-            System.out.println("************************************************************************************");
-            System.out.println(newTicket);
+
             return "ticket/ticket-create";
         }
-        System.out.println("************************************************************************************");
-        System.out.println(newTicket);
-        ticketService.saveNewTicket(newTicket);
 
-        redirectAttributes.addFlashAttribute("savedTicket",new TicketDto());
+        TicketDto savedTicket = ticketService.saveNewTicket(newTicket);
+
+        redirectAttributes.addFlashAttribute("savedTicket",savedTicket.getPnrNo());
         redirectAttributes.addFlashAttribute("isNewTicketSaved",true);
         return "redirect:/ticket/create";
     }
@@ -121,6 +113,67 @@ public class TicketController {
         return ResponseEntity.ok("new customer added");
 
     }
+
+    @GetMapping("/update/{ticketId}")
+    public String updateTicket(@PathVariable long ticketId, Model model){
+
+        if (!isNewCustomerAdded){
+            TicketDto ticketTobeUpdate = ticketService.findById(ticketId);
+            TicketDto ticket = ticketService.prepareTicketToUpdate(ticketTobeUpdate);
+            model.addAttribute("ticketTobeUpdate",ticket);
+
+            String currencySymbol = ticket.getCurrencyUnit().getCurrencySymbol();
+            model.addAttribute("currencySymbol", currencySymbol);
+        }
+        model.addAttribute("newCustomer", new CustomerDto());
+        model.addAttribute("airLines", airLineService.getAllAirLines());
+        model.addAttribute("airports", airportService.getAllAirports());
+        model.addAttribute("userList", userService.findAllUsers());
+        model.addAttribute("customerList", customerService.getAllCustomers());
+        model.addAttribute("countriesTr", CountriesTr.values());
+        model.addAttribute("currencyUnits", CurrencyUnits.values());
+        model.addAttribute("genders", Gender.values());
+
+        isNewCustomerAdded = false; // set new customer added false
+
+        return "ticket/ticket-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String saveUpdatedTicket(@ModelAttribute("updatedTicket") TicketDto updatedTicket,
+                                    BindingResult bindingResult, Model model,
+                                    RedirectAttributes redirectAttributes){
+
+        System.out.println("**********************"+updatedTicket);
+
+        // check which button is clicked
+        if (isNewCustomerAdded) {
+        CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
+        TicketDto ticket = ticketService.adjustNewTicket(updatedTicket,addedCustomerId);
+        String currencySymbol = updatedTicket.getCurrencyUnit().getCurrencySymbol();
+
+        redirectAttributes.addFlashAttribute("ticketTobeUpdate",ticket);
+        redirectAttributes.addFlashAttribute("addedCustomer",addedCustomer);
+        redirectAttributes.addFlashAttribute("isNewCustomerAdded",true);
+        redirectAttributes.addFlashAttribute("currencySymbol",currencySymbol);
+        redirectAttributes.addAttribute("ticketId", ticket.getId());
+
+        return "redirect:/ticket/update/{ticketId}";
+    }
+        model.addAttribute("newCustomer", new CustomerDto());
+        model.addAttribute("airLines", airLineService.getAllAirLines());
+        model.addAttribute("airports", airportService.getAllAirports());
+        model.addAttribute("userList", userService.findAllUsers());
+        model.addAttribute("customerList", customerService.getAllCustomers());
+        model.addAttribute("countriesTr", CountriesTr.values());
+        model.addAttribute("currencyUnits", CurrencyUnits.values());
+        model.addAttribute("genders", Gender.values());
+
+        isNewCustomerAdded = false; // set new customer added false
+
+        return "ticket/ticket-update";
+    }
+
 
 
 

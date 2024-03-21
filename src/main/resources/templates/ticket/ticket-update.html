@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>ticket create</title>
+<title>ticket update</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body>
 <div class="wrapper">
@@ -16,7 +16,7 @@
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/ticket/list}"><i
                                         class="fa-solid fa-house"></i> Tickets </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i
-                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Ticket create
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Ticket update
                                 </li>
                             </ol>
                         </nav>
@@ -34,13 +34,13 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header text-center text-white bold_font"
-                                         style="font-size: x-large;background: #117dc0 !important;">Save New Ticket
+                                         style="font-size: x-large;background: #117dc0 !important;">Update Ticket
                                     </div>
                                     <div class="card-body pt-5 pb-5">
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-11">
 
-                                                <form th:object="${newTicket}" th:action="@{/ticket/create}"
+                                                <form th:object="${ticketTobeUpdate}" th:action="@{/ticket/update/{ticketId}(ticketId = ${ticketTobeUpdate.getId()})}"
                                                       id="ticketForm"
                                                       method="post" class="row g-3 ">
 
@@ -435,7 +435,7 @@
                                                          id="notesSection">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="notes"
-                                                                   class="form-label pl-1 mb-1 d-block">Note</label>
+                                                                   class="form-label pl-1 mb-1 d-block">Notes</label>
                                                             <textarea type="text" th:field="*{notes}"
                                                                       class="form-control" id="notes">
 
@@ -460,7 +460,7 @@
                                                     <div class="row justify-content-end pt-3 pr-0 pl-0">
                                                         <div class="col-12 col-md-6 col-lg-6 text-right p-0">
 
-                                                            <a th:href="@{/ticket/create}"
+                                                            <a th:href="@{/ticket/update/{ticketId}(ticketId = ${ticketTobeUpdate.getId()})}"
                                                                style="text-decoration: none">
                                                                 <button type="button" id="clearInputButton"
                                                                         class="btn btn-secondary pr-5 pl-5 mr-2">
@@ -469,8 +469,8 @@
                                                             </a>
 
                                                             <button type="submit" id="saveTicketButton"
-                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
-                                                                Save
+                                                                    class="btn update-page-update_button pr-5 pl-5">
+                                                                Update
                                                             </button>
 
 
