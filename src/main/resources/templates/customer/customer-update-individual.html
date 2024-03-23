@@ -130,7 +130,7 @@
                                                             <label for="customerTRYBalance" class="form-label">Customer Balance</label>
                                                             <div class="input-group">
                                                                 <input type="number" class="form-control" th:field="*{customerTRYBalance}" id="customerTRYBalance"
-                                                                       name="customerBalance">
+                                                                       name="customerBalance" readonly>
                                                                 <span class="input-group-text" id="currencyTRYSymbol">₺</span>
                                                                 <span class="input-group-text">0.00</span>
                                                                 <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('customerTRYBalance')}">
@@ -147,7 +147,7 @@
                                                             <label for="customerTRYBalance" class="form-label">Customer Balance</label>
                                                             <div class="input-group">
                                                                 <input type="number" class="form-control" th:field="*{customerUSDBalance}" id="customerUSDBalance"
-                                                                       name="customerBalance">
+                                                                       name="customerBalance" readonly>
                                                                 <span class="input-group-text" id="currencyUSDSymbol">$</span>
                                                                 <span class="input-group-text">0.00</span>
                                                                 <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('customerUSDBalance')}">
@@ -164,7 +164,7 @@
                                                             <label for="customerEURBalance" class="form-label">Customer Balance</label>
                                                             <div class="input-group">
                                                                 <input type="number" class="form-control" th:field="*{customerEURBalance}" id="customerEURBalance"
-                                                                       name="customerBalance">
+                                                                       name="customerBalance" readonly>
                                                                 <span class="input-group-text" id="currencyEURSymbol">€</span>
                                                                 <span class="input-group-text">0.00</span>
                                                                 <div class="custom-invalid-feedback" th:if="${#fields.hasErrors('customerEURBalance')}">

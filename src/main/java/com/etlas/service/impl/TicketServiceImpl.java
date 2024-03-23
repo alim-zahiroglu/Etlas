@@ -1,6 +1,7 @@
 package com.etlas.service.impl;
 
 import com.etlas.dto.*;
+import com.etlas.entity.Customer;
 import com.etlas.entity.Ticket;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.TicketType;
@@ -9,6 +10,7 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.TicketRepository;
 import com.etlas.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -29,6 +31,8 @@ public class TicketServiceImpl implements TicketService {
     private final CustomerService customerService;
     private final TicketRepository repository;
     private final MapperUtil mapper;
+
+
     @Override
     public TicketDto initializeNewTicket() {
         AirLineDto turkishAirline = airLineService.findByName("Turkish Airlines");
@@ -289,4 +293,8 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
+    @Override
+    public boolean isCustomerHasTickets(Customer customer) {
+        return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer,false);
+    }
 }

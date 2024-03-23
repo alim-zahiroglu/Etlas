@@ -7,7 +7,8 @@ import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
 import com.etlas.service.CustomerService;
-import lombok.RequiredArgsConstructor;
+import com.etlas.service.TicketService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -18,10 +19,17 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
+    private final TicketService ticketService;
     private final MapperUtil mapper;
+
+    public CustomerServiceImpl(CustomerRepository repository, @Lazy TicketService ticketService, MapperUtil mapper) {
+        this.repository = repository;
+        this.ticketService = ticketService;
+        this.mapper = mapper;
+    }
 
     @Override
     public CustomerDto initializeNewCustomer() {
@@ -98,6 +106,19 @@ public class CustomerServiceImpl implements CustomerService {
             return mapper.convert(customerToBeDelete, new CustomerDto());
         }
         return null;
+    }
+
+    @Override
+    public boolean isCustomerDeletable(long customerId) {
+        Customer customer = repository.findById(customerId)
+                .orElseThrow(NoSuchElementException::new);
+        if (customer != null) {
+            boolean isCustomerHasTicket = ticketService.isCustomerHasTickets(customer);
+            return customer.getCustomerUSDBalance().compareTo(BigDecimal.ZERO) >= 0 &&
+                    customer.getCustomerTRYBalance().compareTo(BigDecimal.ZERO) >= 0 &&
+                    customer.getCustomerEURBalance().compareTo(BigDecimal.ZERO) >= 0 && !isCustomerHasTicket;
+        }
+        return true;
     }
 
     @Override

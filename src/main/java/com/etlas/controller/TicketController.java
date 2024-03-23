@@ -180,8 +180,9 @@ public class TicketController {
 
         redirectAttributes.addFlashAttribute("savedTicket",savedTicket.getPnrNo());
         redirectAttributes.addFlashAttribute("isTicketUpdated",true);
+        redirectAttributes.addFlashAttribute("updatedTicket",savedTicket);
 
-        System.out.println("updated ticket: " + updatedTicket);
+//        System.out.println("updated ticket: " + updatedTicket);
 
         return "redirect:/ticket/list";
     }

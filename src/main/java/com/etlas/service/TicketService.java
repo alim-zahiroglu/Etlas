@@ -1,6 +1,7 @@
 package com.etlas.service;
 
 import com.etlas.dto.TicketDto;
+import com.etlas.entity.Customer;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface TicketService {
     BindingResult validateUpdatedTicket(TicketDto updatedTicket, BindingResult bindingResult);
 
     TicketDto saveUpdatedTicket(TicketDto updatedTicket);
+
+    boolean isCustomerHasTickets(Customer customer);
 }

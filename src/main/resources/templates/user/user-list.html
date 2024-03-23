@@ -182,7 +182,8 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
                                                     <div class="toast-body delete_toast_body" th:inline="text">
-                                                        User <strong style="color: red" th:text="${deleteMessage}"></strong>
+                                                        <strong>This user couldn't be deleted!,</strong><br>
+                                                        <span style="color: red" th:text="${deleteMessage}"></span>
                                                     </div>
                                                 </div>
                                             </div>

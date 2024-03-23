@@ -57,6 +57,13 @@ public class CustomerController {
     @GetMapping("/delete")
     public String deleteCustomer(@RequestParam("customerId") long customerId,
                                  RedirectAttributes redirectAttributes){
+        boolean isCustomerDeletable = customerService.isCustomerDeletable(customerId);
+
+        if (!isCustomerDeletable) {
+            redirectAttributes.addFlashAttribute("customerIsDeleted", false);
+            redirectAttributes.addFlashAttribute("deleteMessage", "because it is used in a ticket or has debt to pay.");
+            return "redirect:/customer/list";
+        }
         CustomerDto deletedCustomer = customerService.deleteCustomer(customerId);
         redirectAttributes.addFlashAttribute("customerIsDeleted",true);
         redirectAttributes.addFlashAttribute("deletedCustomer", deletedCustomer);

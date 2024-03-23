@@ -127,8 +127,9 @@
                                                     <th scope="col">Departure Time</th>
                                                     <th scope="col">Passenger</th>
                                                     <th scope="col">Bought User</th>
-                                                    <th scope="col">Ticket Amount</th>
-                                                    <th scope="col">Payed Card</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Paid Customer</th>
+                                                    <th scope="col">Paid Card</th>
                                                     <th scope="col">Action</th>
                                                 </tr>
                                                 </thead>
@@ -167,16 +168,32 @@
                                                     </td>
 
                                                     <td>
-                                                        <span th:if="${ticket.passengers.get(0).customerType.description == 'Company'}"
-                                                                th:text="${ticket.passengers.get(0).companyName}"></span>
+                                                        <a th:href="@{/passenger/details/list/{ticketId}(ticketId=${ticket.id})}">
 
-                                                        <span th:if="${ticket.passengers.get(0).customerType.description == 'Individual'}"
-                                                              th:text="${ticket.passengers.get(0).firstName} + ' ' + ${ticket.passengers.get(0).lastName}"></span>
+                                                        <span th:if="${ticket.passengers.get(0).customerType.description == 'Company'}"
+                                                              th:text="${ticket.passengers.get(0).companyName}"></span>
+
+                                                            <span th:if="${ticket.passengers.get(0).customerType.description == 'Individual'}"
+                                                                  th:text="${ticket.passengers.get(0).firstName} + ' ' + ${ticket.passengers.get(0).lastName}">
+
+                                                            </span>
+                                                        </a>
                                                     </td>
 
                                                     <td th:text="${ticket.boughtUser.firstName} +' '+ ${ticket.boughtUser.lastName}"></td>
 
                                                     <td th:text="${ticket.ticketAmount}"></td>
+
+                                                    <td>
+                                                        <a th:href="@{/customer/details/{customerId}(customerId=${ticket.payedCustomer.id})}">
+
+                                                           <span th:if="${ticket.payedCustomer.customerType.description == 'Company'}"
+                                                                 th:text="${ticket.payedCustomer.companyName}"></span>
+
+                                                            <span th:if="${ticket.payedCustomer.customerType.description == 'Individual'}"
+                                                                  th:text="${ticket.payedCustomer.firstName} + ' ' + ${ticket.payedCustomer.lastName}"></span>
+                                                        </a>
+                                                    </td>
 
 
                                                     <td th:text="${ticket.payedCard}"></td>
@@ -242,7 +259,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer" th:if="${customerIsDeleted} == true">
+                                        <div id="delete_toast_up_layer" th:if="${tiketIsDeleted} == true">
                                             <div id="delete_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -253,17 +270,9 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast"
                                                                 aria-label="Close"></button>
                                                     </div>
-                                                    <div th:if="${deletedCustomer.customerType.description} == 'Individual'"
-                                                         class="toast-body delete_toast_body" th:inline="text">
-                                                        Customer <strong style="color: red"
-                                                                         th:text="${deletedCustomer.firstName + ' ' + deletedCustomer.lastName}"></strong>
-                                                        is successfully deleted!
-                                                    </div>
-
-                                                    <div th:if="${deletedCustomer.customerType.description} == 'Company'"
-                                                         class="toast-body delete_toast_body" th:inline="text">
-                                                        Customer <strong style="color: red"
-                                                                         th:text="${deletedCustomer.companyName}"></strong>
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                        Ticket <strong style="color: red"
+                                                                         th:text="${deletedTicketName}"></strong>
                                                         is successfully deleted!
                                                     </div>
 
@@ -271,39 +280,21 @@
                                             </div>
                                         </div>
 
-                                        <div id="create_toast_up_layer" th:if="${customerIsCreated} == true">
-                                            <div id="create_toast_container"
-                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
-                                                 data-autohide="true">
-                                                <div id="createSuccessToast" class="toast" role="alert"
-                                                     aria-live="assertive" aria-atomic="true">
-                                                    <div class="toast-header create_toast_header">
-                                                        <strong class="me-auto">Success</strong>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                                                aria-label="Close"></button>
+                                        <div id="delete_toast_up_layer_false" th:if="${tiketIsDeleted} == false">
+                                            <div id="delete_toast_container_false" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-autohide="true">
+                                                <div id="deleteUnSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header delete_toast_header">
+                                                        <strong class="me-auto">Not Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-
-
-                                                    <div th:if="${createdCustomer.customerType.description} == 'Individual'"
-                                                         class="toast-body create_toast_body" th:inline="text">
-                                                        Customer <strong style="color: green"
-                                                                         th:text="${createdCustomer.firstName + ' ' + createdCustomer.lastName}"></strong>
-                                                        successfully created!
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                         <strong style="color: red" th:text="${deleteMessage}"></strong>
                                                     </div>
-
-                                                    <div th:if="${createdCustomer.customerType.description} == 'Company'"
-                                                         class="toast-body create_toast_body" th:inline="text">
-                                                        Customer <strong style="color: green"
-                                                                         th:text="${createdCustomer.companyName}"></strong>
-                                                        successfully created!
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
 
-
-                                        <div id="update_toast_up_layer" th:if="${customerIsUpdated} == true">
+                                        <div id="update_toast_up_layer" th:if="${isTicketUpdated} == true">
                                             <div id="update_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -315,23 +306,17 @@
                                                                 aria-label="Close"></button>
                                                     </div>
 
-                                                    <div th:if="${updatedCustomer.customerType.description} == 'Individual'"
-                                                         class="toast-body update_toast_body" th:inline="text">
-                                                        Customer <strong style="color: #fa9803"
-                                                                         th:text="${updatedCustomer.firstName + ' ' + updatedCustomer.lastName}"></strong>
-                                                        successfully updated!
-                                                    </div>
-
-                                                    <div th:if="${updatedCustomer.customerType.description} == 'Company'"
-                                                         class="toast-body update_toast_body" th:inline="text">
-                                                        Customer <strong style="color: #fa9803"
-                                                                         th:text="${updatedCustomer.companyName}"></strong>
+                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                        Ticket <strong style="color: #fa9803"
+                                                                         th:text="${updatedTicket.pnrNo}"></strong>
                                                         successfully updated!
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
+
+
 
                                     </div>
                                 </div>
