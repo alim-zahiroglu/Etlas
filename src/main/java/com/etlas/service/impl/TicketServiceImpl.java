@@ -140,21 +140,35 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public BindingResult validateTicket(TicketDto newTicket, BindingResult bindingResult) {
-        LocalDateTime[] startEndDate = parseDateTimeRange(newTicket.getDateRangeString());
-        LocalDate departureDate = startEndDate[0].toLocalDate();
-        LocalDate perchesDate = newTicket.getDateOfPerches();
 
         if (repository.existsByPnrNo(newTicket.getPnrNo())) {
-            bindingResult.addError(new FieldError("newTicket", "pnrNo", "this PNR already exist"));
+            bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + newTicket.getPnrNo() + " is already exist"));
         }
+        return validateNewAndUpdatedTicket(newTicket, bindingResult);
+
+    }
+    @Override
+    public BindingResult validateUpdatedTicket(TicketDto updatedTicket, BindingResult bindingResult) {
+
+        if (repository.existsByPnrNoAndIdNot(updatedTicket.getPnrNo(),updatedTicket.getId())){
+            bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + updatedTicket.getPnrNo() + " is already exist"));
+        }
+        return validateNewAndUpdatedTicket(updatedTicket, bindingResult);
+
+    }
+    private BindingResult validateNewAndUpdatedTicket(TicketDto ticket, BindingResult bindingResult) {
+        LocalDateTime[] startEndDate = parseDateTimeRange(ticket.getDateRangeString());
+        LocalDate departureDate = startEndDate[0].toLocalDate();
+        LocalDate perchesDate = ticket.getDateOfPerches();
+
         if (perchesDate.isAfter(departureDate)){
-            bindingResult.addError(new FieldError("newTicket", "dateOfPerches", "Date of perches couldn't be after departure date"));
+            bindingResult.addError(new FieldError("updatedTicket", "dateOfPerches", "Date of perches: '" + ticket.getDateOfPerches() + "' couldn't be after departure date"));
         }
-        if (newTicket.getPassengersUI().size() > newTicket.getTicketAmount()){
-            bindingResult.addError(new FieldError("newTicket", "passengersUI", "Passengers couldn't be more then ticket amount"));
+        if (ticket.getPassengersUI().size() > ticket.getTicketAmount()){
+            bindingResult.addError(new FieldError("updatedTicket", "passengersUI", "Passengers couldn't be more then ticket amount"));
         }
 
-    return bindingResult;
+        return bindingResult;
     }
 
     private LocalDateTime[] parseDateTimeRange(String dateTimeRange) {

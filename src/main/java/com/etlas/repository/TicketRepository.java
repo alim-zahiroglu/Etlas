@@ -11,4 +11,6 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
     List<Ticket> findAllByIsDeletedOrderByLastUpdateDateTimeDesc(boolean isDeleted);
 
     Ticket findByIdAndIsDeleted(long ticketId, boolean isDeleted);
+
+  boolean existsByPnrNoAndIdNot(String pnrNo,long id);
 }

@@ -120,11 +120,12 @@ public class TicketController {
         if (!isNewCustomerAdded){
             TicketDto ticketTobeUpdate = ticketService.findById(ticketId);
             TicketDto ticket = ticketService.prepareTicketToUpdate(ticketTobeUpdate);
-            model.addAttribute("ticketTobeUpdate",ticket);
+            model.addAttribute("ticketTobeUpdate", ticket);
 
             String currencySymbol = ticket.getCurrencyUnit().getCurrencySymbol();
             model.addAttribute("currencySymbol", currencySymbol);
         }
+
         model.addAttribute("newCustomer", new CustomerDto());
         model.addAttribute("airLines", airLineService.getAllAirLines());
         model.addAttribute("airports", airportService.getAllAirports());
@@ -134,45 +135,52 @@ public class TicketController {
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("genders", Gender.values());
 
-        isNewCustomerAdded = false; // set new customer added false
-
+        isNewCustomerAdded = false;
         return "ticket/ticket-update";
     }
 
+
     @PostMapping("/update/{id}")
-    public String saveUpdatedTicket(@ModelAttribute("updatedTicket") TicketDto updatedTicket,
+    public String saveUpdatedTicket(@Valid @ModelAttribute("ticketTobeUpdate") TicketDto updatedTicket,
                                     BindingResult bindingResult, Model model,
                                     RedirectAttributes redirectAttributes){
 
-        System.out.println("**********************"+updatedTicket);
-
-        // check which button is clicked
         if (isNewCustomerAdded) {
-        CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
-        TicketDto ticket = ticketService.adjustNewTicket(updatedTicket,addedCustomerId);
-        String currencySymbol = updatedTicket.getCurrencyUnit().getCurrencySymbol();
+            CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
+            TicketDto ticket = ticketService.adjustNewTicket(updatedTicket, addedCustomerId);
+            String currencySymbol = updatedTicket.getCurrencyUnit().getCurrencySymbol();
 
-        redirectAttributes.addFlashAttribute("ticketTobeUpdate",ticket);
-        redirectAttributes.addFlashAttribute("addedCustomer",addedCustomer);
-        redirectAttributes.addFlashAttribute("isNewCustomerAdded",true);
-        redirectAttributes.addFlashAttribute("currencySymbol",currencySymbol);
-        redirectAttributes.addAttribute("ticketId", ticket.getId());
+            redirectAttributes.addFlashAttribute("ticketTobeUpdate", ticket);
+            redirectAttributes.addFlashAttribute("addedCustomer", addedCustomer);
+            redirectAttributes.addFlashAttribute("isNewCustomerAdded", true);
+            redirectAttributes.addFlashAttribute("currencySymbol", currencySymbol);
 
-        return "redirect:/ticket/update/{ticketId}";
+            return "redirect:/ticket/update/{id}";
+        }
+
+
+        ticketService.validateUpdatedTicket(updatedTicket, bindingResult);
+        if (bindingResult.hasErrors()){
+            String currencySymbol = updatedTicket.getCurrencyUnit().getCurrencySymbol();
+
+            model.addAttribute("newCustomer", new CustomerDto());
+            model.addAttribute("airLines", airLineService.getAllAirLines());
+            model.addAttribute("airports", airportService.getAllAirports());
+            model.addAttribute("countriesTr", CountriesTr.values());
+            model.addAttribute("userList", userService.findAllUsers());
+            model.addAttribute("customerList", customerService.getAllCustomers());
+            model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("genders", Gender.values());
+            model.addAttribute("currencySymbol", currencySymbol);
+
+            return "ticket/ticket-update";
+        }
+
+        System.out.println("updated ticket: " + updatedTicket);
+
+        return "redirect:/ticket/list";
     }
-        model.addAttribute("newCustomer", new CustomerDto());
-        model.addAttribute("airLines", airLineService.getAllAirLines());
-        model.addAttribute("airports", airportService.getAllAirports());
-        model.addAttribute("userList", userService.findAllUsers());
-        model.addAttribute("customerList", customerService.getAllCustomers());
-        model.addAttribute("countriesTr", CountriesTr.values());
-        model.addAttribute("currencyUnits", CurrencyUnits.values());
-        model.addAttribute("genders", Gender.values());
 
-        isNewCustomerAdded = false; // set new customer added false
-
-        return "ticket/ticket-update";
-    }
 
 
 
