@@ -176,6 +176,11 @@ public class TicketController {
             return "ticket/ticket-update";
         }
 
+        TicketDto savedTicket = ticketService.saveUpdatedTicket(updatedTicket);
+
+        redirectAttributes.addFlashAttribute("savedTicket",savedTicket.getPnrNo());
+        redirectAttributes.addFlashAttribute("isTicketUpdated",true);
+
         System.out.println("updated ticket: " + updatedTicket);
 
         return "redirect:/ticket/list";

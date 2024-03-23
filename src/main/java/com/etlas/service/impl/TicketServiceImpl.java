@@ -243,4 +243,50 @@ public class TicketServiceImpl implements TicketService {
 
         return ticketTobeUpdate;
     }
+
+    @Override
+    public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
+        prepareToSaveUpdatedTicket(updatedTicket);
+        Ticket savedTicket = repository.save(mapper.convert(updatedTicket, new Ticket()));
+        return mapper.convert(savedTicket, new TicketDto());
+    }
+    private void prepareToSaveUpdatedTicket(TicketDto updatedTicket) {
+        prepareToSave(updatedTicket);
+        adjustOldPaidCustomerBalanceAndBalanceRecord(updatedTicket);
+        reMoveOldBalanceRecord(updatedTicket);
+    }
+
+    private void adjustOldPaidCustomerBalanceAndBalanceRecord(TicketDto updatedTicket) {
+        TicketDto oldTicket = findById(updatedTicket.getId());
+
+        CustomerDto oldPidCustomer = oldTicket.getPayedCustomer();
+        CurrencyUnits oldCurrencyUnits = oldTicket.getCurrencyUnit();
+
+        BigDecimal oldSales = oldTicket.getSalesPrice();
+        BigDecimal oldPaid = oldTicket.getPayedAmount();
+        BigDecimal unPaid = oldSales.subtract(oldPaid);
+
+        if (oldCurrencyUnits.getDescription().equals("₺ TRY")) {
+            BigDecimal newBalance = oldPidCustomer.getCustomerTRYBalance().add(unPaid);
+            oldPidCustomer.setCustomerTRYBalance(newBalance);
+            customerService.saveNewCustomer(oldPidCustomer);
+
+        } else if (oldCurrencyUnits.getDescription().equals("$ USD")) {
+            BigDecimal newBalance = oldPidCustomer.getCustomerUSDBalance().add(unPaid);
+            oldPidCustomer.setCustomerUSDBalance(newBalance);
+            customerService.saveNewCustomer(oldPidCustomer);
+        } else {
+            BigDecimal newBalance = oldPidCustomer.getCustomerEURBalance().add(unPaid);
+            oldPidCustomer.setCustomerEURBalance(newBalance);
+            customerService.saveNewCustomer(oldPidCustomer);
+        }
+    }
+
+    private void reMoveOldBalanceRecord(TicketDto updatedTicket) {
+        if (updatedTicket.getPayedAmount().compareTo(BigDecimal.ZERO) > 0) {
+            // TODO removeOldBalanceRecord();
+            System.out.println("********************** -> old balance record is removed");
+        }
+    }
+
 }

@@ -21,4 +21,6 @@ public interface TicketService {
     TicketDto prepareTicketToUpdate(TicketDto ticketTobeUpdate);
 
     BindingResult validateUpdatedTicket(TicketDto updatedTicket, BindingResult bindingResult);
+
+    TicketDto saveUpdatedTicket(TicketDto updatedTicket);
 }
