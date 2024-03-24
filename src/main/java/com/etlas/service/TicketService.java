@@ -28,4 +28,8 @@ public interface TicketService {
     boolean isCustomerHasTickets(Customer customer);
 
     boolean isUserBoughtTicketOrReceiveMoney(String userName);
+
+    boolean isTicketDeletable(long ticketId);
+
+    boolean deleteTicket(long ticketId);
 }

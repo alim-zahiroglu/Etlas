@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -301,5 +302,23 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public boolean isUserBoughtTicketOrReceiveMoney(String userName) {
         return repository.existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(userName, userName,false);
+    }
+
+    @Override
+    public boolean isTicketDeletable(long ticketId) {
+        TicketDto deletedTicket = findById(ticketId);
+        if (deletedTicket.isRoundTrip()){
+            return deletedTicket.getReturnTime().isBefore(LocalDateTime.now());
+        }
+        return deletedTicket.getDepartureTime().isBefore(LocalDateTime.now());
+    }
+
+    @Override
+    public boolean deleteTicket(long ticketId) {
+        Ticket ticketToBeDeleted = repository.findById(ticketId).orElseThrow(NoSuchElementException::new);
+        ticketToBeDeleted.setPnrNo(ticketToBeDeleted.getPnrNo() + "_deleted");
+        ticketToBeDeleted.setDeleted(true);
+        repository.save(ticketToBeDeleted);
+        return true;
     }
 }

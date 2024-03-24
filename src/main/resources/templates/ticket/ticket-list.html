@@ -208,8 +208,8 @@
                                                         <a href="#" class="delete-row">
                                                             <button type="button" id="delete-row"
                                                                     class="btn custom_delete_button p-1"
-                                                                    th:data-customer="${ticket.pnrNo}"
-                                                                    th:data-customerId="${ticket.id}">
+                                                                    th:data-ticket-pnr="${ticket.pnrNo}"
+                                                                    th:data-ticketId="${ticket.id}">
                                                                 <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                             </button>
                                                         </a>
@@ -244,7 +244,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <!-- Dynamic content to display username -->
-                                                        <p id="confirmationCustomerName"></p>
+                                                        <p id="confirmationTicketPnr"></p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -259,7 +259,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer" th:if="${tiketIsDeleted} == true">
+                                        <div id="delete_toast_up_layer" th:if="${ticketIsDeleted} == true">
                                             <div id="delete_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -280,7 +280,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer_false" th:if="${tiketIsDeleted} == false">
+                                        <div id="delete_toast_up_layer_false" th:if="${ticketIsDeleted} == false">
                                             <div id="delete_toast_container_false" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-autohide="true">
                                                 <div id="deleteUnSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                                                     <div class="toast-header delete_toast_header">
@@ -288,7 +288,8 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
                                                     <div class="toast-body delete_toast_body" th:inline="text">
-                                                         <strong style="color: red" th:text="${deleteMessage}"></strong>
+                                                        <strong>This ticket can not be deleted!</strong><br>
+                                                        <span style="color: red" th:text="${deleteMessage}"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,6 +331,7 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<script th:src="@{/assets/libs/js/customer_delet_update_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/ticket/delete_modal_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
 </body>
 </html>
