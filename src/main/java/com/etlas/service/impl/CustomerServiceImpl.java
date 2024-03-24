@@ -114,6 +114,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(NoSuchElementException::new);
         if (customer != null) {
             boolean isCustomerHasTicket = ticketService.isCustomerHasTickets(customer);
+            // TODO check if customer has visa
             return customer.getCustomerUSDBalance().compareTo(BigDecimal.ZERO) >= 0 &&
                     customer.getCustomerTRYBalance().compareTo(BigDecimal.ZERO) >= 0 &&
                     customer.getCustomerEURBalance().compareTo(BigDecimal.ZERO) >= 0 && !isCustomerHasTicket;

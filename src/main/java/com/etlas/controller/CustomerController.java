@@ -61,7 +61,7 @@ public class CustomerController {
 
         if (!isCustomerDeletable) {
             redirectAttributes.addFlashAttribute("customerIsDeleted", false);
-            redirectAttributes.addFlashAttribute("deleteMessage", "because it is used in a ticket or has debt to pay.");
+            redirectAttributes.addFlashAttribute("deleteMessage", "because the customer is used in a ticket or has debt to pay.");
             return "redirect:/customer/list";
         }
         CustomerDto deletedCustomer = customerService.deleteCustomer(customerId);

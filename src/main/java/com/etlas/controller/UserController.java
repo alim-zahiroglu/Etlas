@@ -60,7 +60,7 @@ public class UserController {
             return "redirect:/user/list";
         }
         redirectAttributes.addFlashAttribute("userIsDeleted", false);
-        redirectAttributes.addFlashAttribute("deleteMessage", "This is the only admin user, you can't delete it!");
+        redirectAttributes.addFlashAttribute("deleteMessage", "This is the only admin user or the user used in a ticket, transaction or visa");
         return "redirect:/user/list";
     }
 

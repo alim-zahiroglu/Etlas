@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
             deleteSuccessToast.classList.remove('show');
 
-        }, 3000);  // 2000 milliseconds = 2.5 seconds (time the toast is visible)
+        }, 3500);  // 2000 milliseconds = 3.5 seconds (time the toast is visible)
     }, 300);  // 1000 milliseconds = 0.3 second (delay before showing the toast)
 });
 

@@ -297,4 +297,9 @@ public class TicketServiceImpl implements TicketService {
     public boolean isCustomerHasTickets(Customer customer) {
         return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer,false);
     }
+
+    @Override
+    public boolean isUserBoughtTicketOrReceiveMoney(String userName) {
+        return repository.existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(userName, userName,false);
+    }
 }

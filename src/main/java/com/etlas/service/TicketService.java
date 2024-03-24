@@ -26,4 +26,6 @@ public interface TicketService {
     TicketDto saveUpdatedTicket(TicketDto updatedTicket);
 
     boolean isCustomerHasTickets(Customer customer);
+
+    boolean isUserBoughtTicketOrReceiveMoney(String userName);
 }

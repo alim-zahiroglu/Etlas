@@ -16,4 +16,6 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
   boolean existsByPnrNoAndIdNot(String pnrNo,long id);
 
   boolean existsByPayedCustomerOrPassengersAndIsDeleted(Customer customer,Customer passenger, boolean isDeleted);
+
+    boolean existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(String userName, String userName1, boolean isDeleted);
 }
