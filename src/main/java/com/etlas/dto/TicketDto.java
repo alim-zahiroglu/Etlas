@@ -1,9 +1,6 @@
 package com.etlas.dto;
 
-import com.etlas.enums.CountriesTr;
-import com.etlas.enums.CurrencyUnits;
-import com.etlas.enums.TicketType;
-import com.etlas.enums.TripType;
+import com.etlas.enums.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -62,6 +59,8 @@ public class TicketDto {
     private CurrencyUnits currencyUnit;
     private UserDto receivedUser;
     private CustomerDto payedCustomer;
+
+    private PaidType paidType;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateOfPayed;

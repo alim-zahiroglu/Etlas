@@ -111,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
     // Handle single ticket checkbox click
     $('#ticket-type-single').on('change', function () {
         if ($(this).prop('checked')) {
@@ -173,9 +172,13 @@ $(document).ready(function () {
     const $boughtUserSelectorArrow = $('#bought-user-selector-arrow');
     setupSelect2($mySelectForBoughtUser, $boughtUserSelectorArrow);
 
-    const $mySelectForReceiver = $('#receiver-user');
+    const $mySelectForReceiver = $('#received-user');
     const $receiverSelectorArrow = $('#receiver-selector-arrow');
     setupSelect2($mySelectForReceiver, $receiverSelectorArrow);
+
+    const $mySelectForReceivedCard = $('#receiver-card');
+    const $receivedCardSelectorArrow = $('#receiver-card-selector-arrow');
+    setupSelect2($mySelectForReceivedCard, $receivedCardSelectorArrow);
 
     const $mySelectForAirLine = $('#mySelectForAirline');
     const $airlineSelectorArrow = $('#airline-selector-arrow');
@@ -391,7 +394,31 @@ $(document).ready(function () {
         $('#salesPrice .currency-symbol').text(currencySymbol);
         $('#payedAmount .currency-symbol').text(currencySymbol);
         $('#selectedCurrencyUnitInput').val(selectedCurrency);
+    });
 });
+
+
+// switch the paid type
+document.addEventListener('DOMContentLoaded', function () {
+    const paidTypeSelect = document.getElementById('selected-paid-type');
+    const receivedUserSelect = document.getElementById('received-user');
+    const receivedCardSelect = document.getElementById('receiver-card');
+
+    function updateReceivedUserAndCard() {
+        const selectedPaidType = paidTypeSelect.value;
+        if (selectedPaidType === 'BYHAND') {
+            receivedCardSelect.disabled = true;
+            receivedUserSelect.disabled = false;
+        } else if (selectedPaidType === 'BYCARD') {
+            receivedUserSelect.disabled = true;
+            receivedCardSelect.disabled = false;
+        }
+    }
+
+    paidTypeSelect.addEventListener('input', updateReceivedUserAndCard);
+
+    // Initial update based on the initial value of the paid type select
+    updateReceivedUserAndCard();
 });
 
 

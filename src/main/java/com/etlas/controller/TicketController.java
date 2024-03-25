@@ -5,6 +5,7 @@ import com.etlas.dto.TicketDto;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.Gender;
 import com.etlas.enums.CurrencyUnits;
+import com.etlas.enums.PaidType;
 import com.etlas.service.*;
 
 import jakarta.validation.Valid;
@@ -53,6 +54,7 @@ public class TicketController {
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("customerList", customerService.getAllCustomers());
+        model.addAttribute("paidTypes", PaidType.values());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("genders", Gender.values());
 
@@ -88,6 +90,7 @@ public class TicketController {
             model.addAttribute("userList", userService.findAllUsers());
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("paidTypes", PaidType.values());
             model.addAttribute("genders", Gender.values());
             model.addAttribute("currencySymbol", currencySymbol);
 
@@ -96,7 +99,7 @@ public class TicketController {
 
         TicketDto savedTicket = ticketService.saveNewTicket(newTicket);
 
-        redirectAttributes.addFlashAttribute("savedTicket",savedTicket.getPnrNo());
+        redirectAttributes.addFlashAttribute("savedTicketName",savedTicket.getPnrNo());
         redirectAttributes.addFlashAttribute("isNewTicketSaved",true);
         return "redirect:/ticket/create";
     }
@@ -133,6 +136,7 @@ public class TicketController {
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
+        model.addAttribute("paidTypes", PaidType.values());
         model.addAttribute("genders", Gender.values());
 
         isNewCustomerAdded = false;
@@ -170,6 +174,7 @@ public class TicketController {
             model.addAttribute("userList", userService.findAllUsers());
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("paidTypes", PaidType.values());
             model.addAttribute("genders", Gender.values());
             model.addAttribute("currencySymbol", currencySymbol);
 

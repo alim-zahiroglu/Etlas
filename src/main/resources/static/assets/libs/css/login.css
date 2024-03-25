@@ -170,7 +170,6 @@ input:-webkit-autofill {
   transform: translateY(-50%); /* Vertically center the icon */
   cursor: pointer;
   font-size: 14px;
-  z-index: 1050 !important;
 }
 
 .ticket-create-to-select{
