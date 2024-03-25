@@ -4,8 +4,9 @@ import com.etlas.dto.UserDto;
 import com.etlas.entity.User;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.UserRepository;
+import com.etlas.service.TicketService;
 import com.etlas.service.UserService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -18,11 +19,18 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final MapperUtil mapper;
     private final PasswordEncoder passwordEncoder;
+    private final TicketService ticketService;
+
+    public UserServiceImpl(UserRepository repository, MapperUtil mapper, PasswordEncoder passwordEncoder, @Lazy TicketService ticketService) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
+        this.ticketService = ticketService;
+    }
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -126,10 +134,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserDeletable(String username) {
         User userToBeDelete = repository.findByUserNameAndIsDeleted(username,false);
-        if (userToBeDelete.getRole().getDescription().equals("Admin")){
-            List<User> users = repository.findAllByRoleAndIsDeleted(userToBeDelete.getRole(),false);
-            return users.size() > 1;
+        if (userToBeDelete != null){
+            boolean isOnlyAdmin = false;
+            if (userToBeDelete.getRole().getDescription().equals("Admin")) {
+                List<User> users = repository.findAllByRoleAndIsDeleted(userToBeDelete.getRole(),false);
+                isOnlyAdmin = users.size() == 1;
+            }
+           boolean isUserUsedInTicket = ticketService.isUserBoughtTicketOrReceiveMoney(userToBeDelete.getUserName());
+
+            // TODO check if user used in transaction
+            // TODO check if user used in visa
+
+            return !isUserUsedInTicket && !isOnlyAdmin;
         }
-        return true;
+        return false;
     }
 }

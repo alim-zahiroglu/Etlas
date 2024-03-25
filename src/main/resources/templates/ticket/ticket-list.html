@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>customer list</title>
+<title>ticket list</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body class="bg-light">
 <div class="wrapper">
@@ -18,20 +18,20 @@
                         <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a href="#"><i
-                                        class="fa-solid fa-house"></i> Customers </a></li>
+                                        class="fa-solid fa-house"></i> Tickets </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i
-                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Customer list
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Ticket list
                                 </li>
                             </ol>
                         </nav>
 
                         <header class="panel-heading text-center pt-5">
-                            <h4 class="panel-title bold_font">Customers</h4>
+                            <h4 class="panel-title bold_font">Tickets</h4>
                         </header>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card border-0 shadow-none bg-light justify-content-center align-items-center">
-                                    <div class="col-12 col-md-12 col-lg-11">
+                                    <div class="col-11">
 
                                         <div class="row bg-white mr-0 ml-0 table_top_search_bar_column"
                                              style="border-radius: 5px">
@@ -72,9 +72,9 @@
 
                                             <div class="col-12 col-md-12 col-lg-4 text-right pr-1">
 
-                                                <a th:href="@{/customer/create}">
+                                                <a th:href="@{/ticket/create}">
                                                     <button class="btn list-page-drop-downs mr-0" id="userCreate">
-                                                        <i class="fa-solid fa-user-plus"></i> New Customer
+                                                        <i class="fa-solid fa-user-plus"></i> New Ticket
                                                     </button>
                                                 </a>
                                                 <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
@@ -121,68 +121,104 @@
                                                    class="table table-hover table-bordered bg-white users_table">
                                                 <thead class="custom_table_header">
                                                 <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Customer Type</th>
-                                                    <th scope="col">Phone</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Country</th>
-                                                    <th scope="col">balance TRY</th>
-                                                    <th scope="col">balance USD</th>
+                                                    <th scope="col">PNR</th>
+                                                    <th scope="col">Airline</th>
+                                                    <th scope="col">From-To</th>
+                                                    <th scope="col">Departure Time</th>
+                                                    <th scope="col">Passenger</th>
+                                                    <th scope="col">Bought User</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Paid Customer</th>
+                                                    <th scope="col">Paid Card</th>
                                                     <th scope="col">Action</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:each="customer :${customerList}"
-                                                    th:class="${customer.customerType.description eq 'Company'} ? 'company-row' : 'individual-row'">
+
+                                                <!--                                                th:class="${customer.customerType.description eq 'Company'} ? 'company-row' : 'individual-row'"-->
+
+                                                <tr th:each="ticket :${ticketList}">
                                                     <td>
-                                                        <a th:href="@{/customer/details/{customerId}(customerId=${customer.id})}">
-                                                            <!-- Check customer type and display appropriate name -->
-                                                            <span th:if="${customer.customerType.description eq 'Company'}"
-                                                                  th:utext="${customer.companyName}"></span>
-                                                            <span th:if="${customer.customerType.description eq 'Individual'}"
-                                                                  th:text="${customer.firstName} + ' ' + ${customer.lastName}"></span>
+                                                        <a th:href="@{/ticket/details/{ticketId}(ticketId=${ticket.id})}">
+                                                            <span th:utext="${ticket.pnrNo}"></span>
                                                         </a>
                                                     </td>
 
                                                     <td>
                                                         <!-- Check customer type and display appropriate name -->
-                                                        <span th:if="${customer.customerType.description eq 'Company'}"
-                                                              th:utext="'<i class=\'fa-solid fa-building\'></i> ' + ${customer.customerType.description}"></span>
-                                                        <span th:if="${customer.customerType.description eq 'Individual'}"
-                                                              th:utext="'<i class=\'fa-solid fa-user\'></i> ' + ${customer.customerType.description}"></span>
+                                                        <span th:text="${ticket.airLine.name}"></span>
                                                     </td>
 
-                                                    <td th:if="${customer.officeNumber != null && customer.phoneNumber != null}">
-                                                        <span th:text="${customer.phoneNumber}"></span><br/>
-                                                        <span th:text="${customer.officeNumber}"></span>
+                                                    <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
+                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span><br/>
+                                                        <span th:utext="${ticket.toWhere.city}+' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.fromWhere.city}"></span>
                                                     </td>
-                                                    <td th:if="${customer.officeNumber != null && customer.phoneNumber == null}"
-                                                        th:text="${customer.officeNumber}"></td>
-                                                    <td th:if="${customer.officeNumber == null && customer.phoneNumber != null}"
-                                                        th:text="${customer.phoneNumber}"></td>
-                                                    <td th:if="${customer.officeNumber == null && customer.phoneNumber == null}"></td>
+                                                    <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
+                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span>
+                                                    </td>
 
-                                                    <td th:text="${customer.email}"></td>
+                                                    <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
+                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span><br/>
+                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.returnTime, 'dd-MM-yyyy, HH:mm')}"></span>
+                                                    </td>
 
-                                                    <td th:text="${customer.country.getName()}"></td>
+                                                    <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
+                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <a th:href="@{/passenger/details/list/{ticketId}(ticketId=${ticket.id})}">
+
+                                                        <span th:if="${ticket.passengers.get(0).customerType.description == 'Company'}"
+                                                              th:text="${ticket.passengers.get(0).companyName}"></span>
+
+                                                            <span th:if="${ticket.passengers.get(0).customerType.description == 'Individual'}"
+                                                                  th:text="${ticket.passengers.get(0).firstName} + ' ' + ${ticket.passengers.get(0).lastName}">
+
+                                                            </span>
+                                                        </a>
+                                                    </td>
+
+                                                    <td th:text="${ticket.boughtUser.firstName} +' '+ ${ticket.boughtUser.lastName}"></td>
+
+                                                    <td th:text="${ticket.ticketAmount}"></td>
+
+                                                    <td>
+                                                        <a th:href="@{/customer/details/{customerId}(customerId=${ticket.payedCustomer.id})}">
+
+                                                           <span th:if="${ticket.payedCustomer.customerType.description == 'Company'}"
+                                                                 th:text="${ticket.payedCustomer.companyName}"></span>
+
+                                                            <span th:if="${ticket.payedCustomer.customerType.description == 'Individual'}"
+                                                                  th:text="${ticket.payedCustomer.firstName} + ' ' + ${ticket.payedCustomer.lastName}"></span>
+                                                        </a>
+                                                    </td>
 
 
-                                                    <td th:text="${customer.customerTRYBalance} + ' ₺'"></td>
+                                                    <td th:text="${ticket.payedCard}"></td>
 
-                                                    <td th:text="${customer.customerUSDBalance} + ' $'"></td>
 
                                                     <td class="actions">
-                                                        <a th:href="@{/customer/update/{customerId}(customerId = ${customer.id})}">
+                                                        <a th:href="@{/ticket/update/{ticketId}(ticketId = ${ticket.id})}">
                                                             <button type="button" class="btn custom_update_button p-1">
                                                                 <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>
                                                             </button>
                                                         </a>
                                                         <a href="#" class="delete-row">
                                                             <button type="button" id="delete-row"
-                                                                    class="btn custom_delete_button p-1 delete-row"
-                                                                    th:data-customer="${customer.customerType.description eq 'Company' ? customer.companyName : (customer.firstName + ' ' + customer.lastName)}"
-                                                                    th:data-customerId="${customer.id}">
+                                                                    class="btn custom_delete_button p-1"
+                                                                    th:data-ticket-pnr="${ticket.pnrNo}"
+                                                                    th:data-ticketId="${ticket.id}">
                                                                 <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                            </button>
+                                                        </a>
+                                                        <a href="#" class="download-ticket">
+                                                            <button type="button" id="download-ticket"
+                                                                    class="btn custom_download_button p-1"
+                                                                    th:data-customer="${ticket.pnrNo}"
+                                                                    th:data-customerId="${ticket.id}">
+                                                                <i class="fa-solid fa-download download-rotate-on-hover"></i>
                                                             </button>
                                                         </a>
                                                     </td>
@@ -208,7 +244,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <!-- Dynamic content to display username -->
-                                                        <p id="confirmationCustomerName"></p>
+                                                        <p id="confirmationTicketPnr"></p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -223,7 +259,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer" th:if="${customerIsDeleted} == true">
+                                        <div id="delete_toast_up_layer" th:if="${ticketIsDeleted} == true">
                                             <div id="delete_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -234,17 +270,9 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast"
                                                                 aria-label="Close"></button>
                                                     </div>
-                                                    <div th:if="${deletedCustomer.customerType.description} == 'Individual'"
-                                                         class="toast-body delete_toast_body" th:inline="text">
-                                                        Customer <strong style="color: red"
-                                                                         th:text="${deletedCustomer.firstName + ' ' + deletedCustomer.lastName}"></strong>
-                                                        is successfully deleted!
-                                                    </div>
-
-                                                    <div th:if="${deletedCustomer.customerType.description} == 'Company'"
-                                                         class="toast-body delete_toast_body" th:inline="text">
-                                                        Customer <strong style="color: red"
-                                                                         th:text="${deletedCustomer.companyName}"></strong>
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                        Ticket <strong style="color: red"
+                                                                         th:text="${deletedTicketName}"></strong>
                                                         is successfully deleted!
                                                     </div>
 
@@ -252,60 +280,22 @@
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer_false" th:if="${customerIsDeleted} == false">
-                                            <div id="delete_toast_container_false"
-                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
-                                                 data-autohide="true">
-                                                <div id="deleteUnSuccessToast" class="toast" role="alert"
-                                                     aria-live="assertive" aria-atomic="true">
+                                        <div id="delete_toast_up_layer_false" th:if="${ticketIsDeleted} == false">
+                                            <div id="delete_toast_container_false" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-autohide="true">
+                                                <div id="deleteUnSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                                                     <div class="toast-header delete_toast_header">
                                                         <strong class="me-auto">Not Success</strong>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                                                aria-label="Close"></button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-
                                                     <div class="toast-body delete_toast_body" th:inline="text">
-                                                        <strong>This customer can not be deleted!</strong><br>
+                                                        <strong>This ticket can not be deleted!</strong><br>
                                                         <span style="color: red" th:text="${deleteMessage}"></span>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div id="create_toast_up_layer" th:if="${customerIsCreated} == true">
-                                            <div id="create_toast_container"
-                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
-                                                 data-autohide="true">
-                                                <div id="createSuccessToast" class="toast" role="alert"
-                                                     aria-live="assertive" aria-atomic="true">
-                                                    <div class="toast-header create_toast_header">
-                                                        <strong class="me-auto">Success</strong>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                                                aria-label="Close"></button>
-                                                    </div>
-
-
-                                                    <div th:if="${createdCustomer.customerType.description} == 'Individual'"
-                                                         class="toast-body create_toast_body" th:inline="text">
-                                                        Customer <strong style="color: green"
-                                                                         th:text="${createdCustomer.firstName + ' ' + createdCustomer.lastName}"></strong>
-                                                        successfully created!
-                                                    </div>
-
-                                                    <div th:if="${createdCustomer.customerType.description} == 'Company'"
-                                                         class="toast-body create_toast_body" th:inline="text">
-                                                        Customer <strong style="color: green"
-                                                                         th:text="${createdCustomer.companyName}"></strong>
-                                                        successfully created!
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div id="update_toast_up_layer" th:if="${customerIsUpdated} == true">
+                                        <div id="update_toast_up_layer" th:if="${isTicketUpdated} == true">
                                             <div id="update_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -317,23 +307,17 @@
                                                                 aria-label="Close"></button>
                                                     </div>
 
-                                                    <div th:if="${updatedCustomer.customerType.description} == 'Individual'"
-                                                         class="toast-body update_toast_body" th:inline="text">
-                                                        Customer <strong style="color: #fa9803"
-                                                                         th:text="${updatedCustomer.firstName + ' ' + updatedCustomer.lastName}"></strong>
-                                                        successfully updated!
-                                                    </div>
-
-                                                    <div th:if="${updatedCustomer.customerType.description} == 'Company'"
-                                                         class="toast-body update_toast_body" th:inline="text">
-                                                        Customer <strong style="color: #fa9803"
-                                                                         th:text="${updatedCustomer.companyName}"></strong>
+                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                        Ticket <strong style="color: #fa9803"
+                                                                         th:text="${updatedTicket.pnrNo}"></strong>
                                                         successfully updated!
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
+
+
 
                                     </div>
                                 </div>
@@ -347,7 +331,7 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<script th:src="@{/assets/libs/js/customer/delete_modal_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/ticket/delete_modal_confirmation.js}"></script>
 <script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
 </body>
 </html>

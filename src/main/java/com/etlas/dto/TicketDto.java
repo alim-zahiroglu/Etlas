@@ -1,9 +1,7 @@
 package com.etlas.dto;
 
-import com.etlas.enums.CountriesTr;
-import com.etlas.enums.CurrencyUnits;
-import com.etlas.enums.TicketType;
-import com.etlas.enums.TripType;
+import com.etlas.enums.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -47,13 +45,22 @@ public class TicketDto {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate DateOfPerches;
+
+    @Min(value = 0, message = "Please enter a valid price")
     private BigDecimal perchesPrice;
+
+    @Min(value = 0, message = "Please enter a valid price")
     private BigDecimal salesPrice;
+
+    @Min(value = 0, message = "Please enter a valid price")
     private BigDecimal payedAmount;
+    private String payedCard;
     private BigDecimal profit;
     private CurrencyUnits currencyUnit;
     private UserDto receivedUser;
     private CustomerDto payedCustomer;
+
+    private PaidType paidType;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateOfPayed;

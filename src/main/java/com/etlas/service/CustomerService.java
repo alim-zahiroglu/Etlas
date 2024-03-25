@@ -25,4 +25,6 @@ public interface CustomerService {
     CustomerDto findById(long id);
 
     CustomerDto initializeNewCustomer();
+
+    boolean isCustomerDeletable(long customerId);
 }

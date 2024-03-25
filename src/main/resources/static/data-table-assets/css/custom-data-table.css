@@ -209,16 +209,35 @@
     background: transparent !important;
 
 }
+
+.custom_download_button{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #1ca24e !important;
+    font-size: 16px !important;
+    background: transparent !important;
+}
+.custom_download_button:hover{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #01ce2a !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    background: transparent !important;
+}
 /* CSS for the rotation effect */
 .update-rotate-on-hover:hover {
     transition: transform 0.1s ease-in-out;
     transform: rotate(15deg);
 }
 
-.rotate-on-hover {
+.rotate-on-hover .download-rotate-on-hover {
     transition: transform 0.1s ease-in-out;
 }
 
+.download-rotate-on-hover:hover {
+    animation: rotateAnimation 0.5s ease-in-out;
+}
 .rotate-on-hover:hover {
     animation: rotateAnimation 0.5s ease-in-out;
 }
@@ -241,6 +260,10 @@
     }
 }
 
+
+.departure-css{
+    font-size: 12px;
+}
 
 
 .users_table td a {

@@ -1,15 +1,14 @@
 package com.etlas.service.impl;
 
 import com.etlas.dto.CustomerDto;
-import com.etlas.dto.UserDto;
 import com.etlas.entity.Customer;
-import com.etlas.entity.User;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
 import com.etlas.service.CustomerService;
-import lombok.RequiredArgsConstructor;
+import com.etlas.service.TicketService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -18,13 +17,19 @@ import org.springframework.validation.FieldError;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
+    private final TicketService ticketService;
     private final MapperUtil mapper;
+
+    public CustomerServiceImpl(CustomerRepository repository, @Lazy TicketService ticketService, MapperUtil mapper) {
+        this.repository = repository;
+        this.ticketService = ticketService;
+        this.mapper = mapper;
+    }
 
     @Override
     public CustomerDto initializeNewCustomer() {
@@ -101,6 +106,20 @@ public class CustomerServiceImpl implements CustomerService {
             return mapper.convert(customerToBeDelete, new CustomerDto());
         }
         return null;
+    }
+
+    @Override
+    public boolean isCustomerDeletable(long customerId) {
+        Customer customer = repository.findById(customerId)
+                .orElseThrow(NoSuchElementException::new);
+        if (customer != null) {
+            boolean isCustomerHasTicket = ticketService.isCustomerHasTickets(customer);
+            // TODO check if customer has visa
+            return customer.getCustomerUSDBalance().compareTo(BigDecimal.ZERO) >= 0 &&
+                    customer.getCustomerTRYBalance().compareTo(BigDecimal.ZERO) >= 0 &&
+                    customer.getCustomerEURBalance().compareTo(BigDecimal.ZERO) >= 0 && !isCustomerHasTicket;
+        }
+        return true;
     }
 
     @Override

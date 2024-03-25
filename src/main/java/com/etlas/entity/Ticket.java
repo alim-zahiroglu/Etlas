@@ -1,6 +1,7 @@
 package com.etlas.entity;
 
 import com.etlas.enums.CurrencyUnits;
+import com.etlas.enums.PaidType;
 import com.etlas.enums.TicketType;
 import com.etlas.enums.TripType;
 import jakarta.persistence.*;
@@ -50,9 +51,11 @@ public class Ticket extends BaseEntity{
     @ManyToOne
     private Airport ToWhere;
 
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime departureTime;
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime returnTime;
 
     @ManyToMany
@@ -74,6 +77,9 @@ public class Ticket extends BaseEntity{
 
     @ManyToOne
     private User receivedUser;
+
+    @Enumerated(EnumType.STRING)
+    private PaidType paidType;
 
     @ManyToOne
     private Customer payedCustomer;

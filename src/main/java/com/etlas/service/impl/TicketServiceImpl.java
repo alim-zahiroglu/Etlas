@@ -1,6 +1,7 @@
 package com.etlas.service.impl;
 
 import com.etlas.dto.*;
+import com.etlas.entity.Customer;
 import com.etlas.entity.Ticket;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.TicketType;
@@ -9,6 +10,7 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.TicketRepository;
 import com.etlas.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -18,6 +20,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +32,8 @@ public class TicketServiceImpl implements TicketService {
     private final CustomerService customerService;
     private final TicketRepository repository;
     private final MapperUtil mapper;
+
+
     @Override
     public TicketDto initializeNewTicket() {
         AirLineDto turkishAirline = airLineService.findByName("Turkish Airlines");
@@ -62,14 +68,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveNewTicket(TicketDto newTicket) {
-        System.out.println("-------------->"+ newTicket);
         prepareToSave(newTicket);
-
-        System.out.println("**************"+newTicket);
-
-        repository.save(mapper.convert(newTicket, new Ticket()));
-
-        return null;
+        Ticket savedTicket = repository.save(mapper.convert(newTicket, new Ticket()));
+        return mapper.convert(savedTicket, new TicketDto());
     }
 
     private void prepareToSave(TicketDto newTicket) {
@@ -137,28 +138,42 @@ public class TicketServiceImpl implements TicketService {
     private void saveBalanceRecord(TicketDto newTicket) {
         if (newTicket.getPayedAmount().compareTo(BigDecimal.ZERO)>0){
 
-//            saveNewBalanceRecord();
+//          TODO  saveNewBalanceRecord();
             System.out.println("********************** -> new balance record is saved");
         }
     }
 
     @Override
     public BindingResult validateTicket(TicketDto newTicket, BindingResult bindingResult) {
-        LocalDateTime[] startEndDate = parseDateTimeRange(newTicket.getDateRangeString());
-        LocalDate departureDate = startEndDate[0].toLocalDate();
-        LocalDate perchesDate = newTicket.getDateOfPerches();
 
         if (repository.existsByPnrNo(newTicket.getPnrNo())) {
-            bindingResult.addError(new FieldError("newTicket", "pnrNo", "this PNR already exist"));
+            bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + newTicket.getPnrNo() + " is already exist"));
         }
+        return validateNewAndUpdatedTicket(newTicket, bindingResult);
+
+    }
+    @Override
+    public BindingResult validateUpdatedTicket(TicketDto updatedTicket, BindingResult bindingResult) {
+
+        if (repository.existsByPnrNoAndIdNot(updatedTicket.getPnrNo(),updatedTicket.getId())){
+            bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + updatedTicket.getPnrNo() + " is already exist"));
+        }
+        return validateNewAndUpdatedTicket(updatedTicket, bindingResult);
+
+    }
+    private BindingResult validateNewAndUpdatedTicket(TicketDto ticket, BindingResult bindingResult) {
+        LocalDateTime[] startEndDate = parseDateTimeRange(ticket.getDateRangeString());
+        LocalDate departureDate = startEndDate[0].toLocalDate();
+        LocalDate perchesDate = ticket.getDateOfPerches();
+
         if (perchesDate.isAfter(departureDate)){
-            bindingResult.addError(new FieldError("newTicket", "dateOfPerches", "Date of perches couldn't be after departure date"));
+            bindingResult.addError(new FieldError("updatedTicket", "dateOfPerches", "Date of perches: '" + ticket.getDateOfPerches() + "' couldn't be after departure date"));
         }
-        if (newTicket.getPassengersUI().size() > newTicket.getTicketAmount()){
-            bindingResult.addError(new FieldError("newTicket", "passengersUI", "Passengers couldn't be more then ticket amount"));
+        if (ticket.getPassengersUI().size() > ticket.getTicketAmount()){
+            bindingResult.addError(new FieldError("updatedTicket", "passengersUI", "Passengers couldn't be more then ticket amount"));
         }
 
-    return bindingResult;
+        return bindingResult;
     }
 
     private LocalDateTime[] parseDateTimeRange(String dateTimeRange) {
@@ -175,5 +190,135 @@ public class TicketServiceImpl implements TicketService {
         } else {
             throw new IllegalArgumentException("Invalid date-time range format");
         }
+    }
+
+    @Override
+    public List<TicketDto> findAllTickets() {
+        List<Ticket> tickets = repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false);
+
+        return tickets.stream()
+                .map(ticket -> mapper.convert(ticket, new TicketDto()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public TicketDto findById(long ticketId) {
+        Ticket ticket = repository.findByIdAndIsDeleted(ticketId,false);
+        return mapper.convert(ticket, new TicketDto());
+    }
+
+    @Override
+    public TicketDto prepareTicketToUpdate(TicketDto ticketTobeUpdate) {
+        if (ticketTobeUpdate.getTripType().equals(TripType.ONEWAY)){
+            ticketTobeUpdate.setOneWayTrip(true);
+            ticketTobeUpdate.setRoundTrip(false);
+            // set departure time string
+
+            LocalDateTime departure = ticketTobeUpdate.getDepartureTime();
+            String departureTime = departure.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+            ticketTobeUpdate.setDateRangeString(departureTime);
+        } else {
+            ticketTobeUpdate.setOneWayTrip(false);
+            ticketTobeUpdate.setRoundTrip(true);
+            // set departure time string
+            LocalDateTime departure = ticketTobeUpdate.getDepartureTime();
+            LocalDateTime returnTime = ticketTobeUpdate.getReturnTime();
+
+            String departureTimeString = departure.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+            String returnTimeString = returnTime.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+
+            ticketTobeUpdate.setDateRangeString(departureTimeString + " - " + returnTimeString);
+        }
+        if (ticketTobeUpdate.getTicketType().equals(TicketType.SINGLE)){
+            ticketTobeUpdate.setSingleTicket(true);
+            ticketTobeUpdate.setMultipleTicket(false);
+        }else {
+            ticketTobeUpdate.setSingleTicket(false);
+            ticketTobeUpdate.setMultipleTicket(true);
+        }
+        // set passengers
+        List<String> passengersUI = ticketTobeUpdate.getPassengers().stream()
+                .map(ticket->String.valueOf(ticket.getId()))
+                .toList();
+        ticketTobeUpdate.setPassengersUI(passengersUI);
+
+        // set paid customer
+        String payedCustomer = String.valueOf(ticketTobeUpdate.getPayedCustomer().getId());
+        ticketTobeUpdate.setPayedCustomerUI(payedCustomer);
+
+        return ticketTobeUpdate;
+    }
+
+    @Override
+    public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
+        prepareToSaveUpdatedTicket(updatedTicket);
+        Ticket savedTicket = repository.save(mapper.convert(updatedTicket, new Ticket()));
+        return mapper.convert(savedTicket, new TicketDto());
+    }
+    private void prepareToSaveUpdatedTicket(TicketDto updatedTicket) {
+        prepareToSave(updatedTicket);
+        adjustOldPaidCustomerBalanceAndBalanceRecord(updatedTicket);
+        reMoveOldBalanceRecord(updatedTicket);
+    }
+
+    private void adjustOldPaidCustomerBalanceAndBalanceRecord(TicketDto updatedTicket) {
+        TicketDto oldTicket = findById(updatedTicket.getId());
+
+        CustomerDto oldPidCustomer = oldTicket.getPayedCustomer();
+        CurrencyUnits oldCurrencyUnits = oldTicket.getCurrencyUnit();
+
+        BigDecimal oldSales = oldTicket.getSalesPrice();
+        BigDecimal oldPaid = oldTicket.getPayedAmount();
+        BigDecimal unPaid = oldSales.subtract(oldPaid);
+
+        if (oldCurrencyUnits.getDescription().equals("₺ TRY")) {
+            BigDecimal newBalance = oldPidCustomer.getCustomerTRYBalance().add(unPaid);
+            oldPidCustomer.setCustomerTRYBalance(newBalance);
+            customerService.saveNewCustomer(oldPidCustomer);
+
+        } else if (oldCurrencyUnits.getDescription().equals("$ USD")) {
+            BigDecimal newBalance = oldPidCustomer.getCustomerUSDBalance().add(unPaid);
+            oldPidCustomer.setCustomerUSDBalance(newBalance);
+            customerService.saveNewCustomer(oldPidCustomer);
+        } else {
+            BigDecimal newBalance = oldPidCustomer.getCustomerEURBalance().add(unPaid);
+            oldPidCustomer.setCustomerEURBalance(newBalance);
+            customerService.saveNewCustomer(oldPidCustomer);
+        }
+    }
+
+    private void reMoveOldBalanceRecord(TicketDto updatedTicket) {
+        if (updatedTicket.getPayedAmount().compareTo(BigDecimal.ZERO) > 0) {
+            // TODO removeOldBalanceRecord();
+            System.out.println("********************** -> old balance record is removed");
+        }
+    }
+
+    @Override
+    public boolean isCustomerHasTickets(Customer customer) {
+        return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer,false);
+    }
+
+    @Override
+    public boolean isUserBoughtTicketOrReceiveMoney(String userName) {
+        return repository.existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(userName, userName,false);
+    }
+
+    @Override
+    public boolean isTicketDeletable(long ticketId) {
+        TicketDto deletedTicket = findById(ticketId);
+        if (deletedTicket.isRoundTrip()){
+            return deletedTicket.getReturnTime().isBefore(LocalDateTime.now());
+        }
+        return deletedTicket.getDepartureTime().isBefore(LocalDateTime.now());
+    }
+
+    @Override
+    public boolean deleteTicket(long ticketId) {
+        Ticket ticketToBeDeleted = repository.findById(ticketId).orElseThrow(NoSuchElementException::new);
+        ticketToBeDeleted.setPnrNo(ticketToBeDeleted.getPnrNo() + "_deleted");
+        ticketToBeDeleted.setDeleted(true);
+        repository.save(ticketToBeDeleted);
+        return true;
     }
 }
