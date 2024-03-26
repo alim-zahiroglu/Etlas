@@ -19,10 +19,10 @@
                             </a>
                             <ul id="tickets" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a th:href="@{/ticket/list}" class="sidebar-link sub-item">Ticket List</a>
+                                    <a th:href="@{/ticket/create}" class="sidebar-link">New Ticket</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a th:href="@{/ticket/create}" class="sidebar-link">Ticket Create</a>
+                                    <a th:href="@{/ticket/list}" class="sidebar-link sub-item">Ticket List</a>
                                 </li>
                             </ul>
                         </li>
@@ -33,10 +33,10 @@
                             </a>
                             <ul id="customers" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a th:href="@{/customer/list}" class="sidebar-link sub-item">Customer List</a>
+                                    <a th:href="@{/customer/create}" class="sidebar-link">New Customer</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a th:href="@{/customer/create}" class="sidebar-link">Customer Create</a>
+                                    <a th:href="@{/customer/list}" class="sidebar-link sub-item">Customer List</a>
                                 </li>
                             </ul>
                         </li>
@@ -78,13 +78,28 @@
                         </li>
 
                         <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-target="#cards" data-toggle="collapse"
+                               aria-expanded="false"><i class="fa-solid fa-credit-card pe-2"></i>
+                                Cards
+                            </a>
+                            <ul id="cards" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a th:href="@{/card/create}" class="sidebar-link">New Card</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a th:href="@{/card/list}" class="sidebar-link">Card List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-target="#users" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-user-group pe-2"></i>
                                 Users
                             </a>
                             <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a th:href="@{/user/create}" class="sidebar-link">User Create</a>
+                                    <a th:href="@{/user/create}" class="sidebar-link">New User</a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a th:href="@{/user/list}" class="sidebar-link">User List</a>

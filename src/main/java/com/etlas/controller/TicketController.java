@@ -207,5 +207,15 @@ public class TicketController {
         return "redirect:/ticket/list";
     }
 
+    @GetMapping("/customer/details/{customerId}")
+    public String showCustomerDetails(@PathVariable("customerId") long customerId, Model model){
+        CustomerDto customer = customerService.getCustomerById(customerId);
+        model.addAttribute("customer",customer);
+        if (customer.getCustomerType().getDescription().equals("Company")){
+            return "/ticket/customer-details-company";
+        }
+        return "/ticket/customer-details-individual";
+    }
+
 
 }

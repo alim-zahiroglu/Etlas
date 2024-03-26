@@ -185,7 +185,7 @@
                                                     <td th:text="${ticket.ticketAmount}"></td>
 
                                                     <td>
-                                                        <a th:href="@{/customer/details/{customerId}(customerId=${ticket.payedCustomer.id})}">
+                                                        <a th:href="@{/ticket/customer/details/{customerId}(customerId=${ticket.payedCustomer.id})}">
 
                                                            <span th:if="${ticket.payedCustomer.customerType.description == 'Company'}"
                                                                  th:text="${ticket.payedCustomer.companyName}"></span>

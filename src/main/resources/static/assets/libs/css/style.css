@@ -3210,7 +3210,7 @@ btn-link
 }
 
 
-/*------------------------- Card Varience --------------------------*/
+/*------------------------- CardDto Varience --------------------------*/
 
 .card-figure {
     position: relative;
@@ -3385,7 +3385,7 @@ btn-link
 }
 
 
-/*------------------------- Card Navigation --------------------------*/
+/*------------------------- CardDto Navigation --------------------------*/
 
 .card-header-tabs {}
 
@@ -3681,7 +3681,7 @@ btn-link
 }
 
 
-/*--- Simple Card Tabs ----*/
+/*--- Simple CardDto Tabs ----*/
 
 .simple-card {
     background-color: #fff;
@@ -3716,7 +3716,7 @@ btn-link
 }
 
 
-/*--- Simple Card Outline Tabs ----*/
+/*--- Simple CardDto Outline Tabs ----*/
 
 .simple-outline-card {
     border-radius: 4px;
