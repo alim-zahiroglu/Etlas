@@ -196,7 +196,13 @@
                                                     </td>
 
 
-                                                    <td th:text="${ticket.payedCard}"></td>
+                                                    <td>
+                                                        <a th:href="@{/ticket/card/details/{cardId}(cardId=${ticket.paidCard.id})}">
+                                                            <span th:text="${ticket.paidCard.getCardOwner()}"></span><br/>
+                                                        </a>
+<!--                                                        <span class="ticket_table_second_line" th:text="${'('+ticket.paidCard.getBankName()+')'}"></span>-->
+                                                        <span class="ticket_table_second_line" th:text="${ticket.paidCard.getBankName()}"></span>
+                                                    </td>
 
 
                                                     <td class="actions">
@@ -272,7 +278,7 @@
                                                     </div>
                                                     <div class="toast-body delete_toast_body" th:inline="text">
                                                         Ticket <strong style="color: red"
-                                                                         th:text="${deletedTicketName}"></strong>
+                                                                       th:text="${deletedTicketName}"></strong>
                                                         is successfully deleted!
                                                     </div>
 
@@ -281,11 +287,15 @@
                                         </div>
 
                                         <div id="delete_toast_up_layer_false" th:if="${ticketIsDeleted} == false">
-                                            <div id="delete_toast_container_false" class="position-fixed top-0 start-50 translate-middle-x mt-3" data-autohide="true">
-                                                <div id="deleteUnSuccessToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                            <div id="delete_toast_container_false"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="deleteUnSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
                                                     <div class="toast-header delete_toast_header">
                                                         <strong class="me-auto">Not Success</strong>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
                                                     </div>
                                                     <div class="toast-body delete_toast_body" th:inline="text">
                                                         <strong>This ticket can not be deleted!</strong><br>
@@ -309,14 +319,13 @@
 
                                                     <div class="toast-body update_toast_body" th:inline="text">
                                                         Ticket <strong style="color: #fa9803"
-                                                                         th:text="${updatedTicket.pnrNo}"></strong>
+                                                                       th:text="${updatedTicket.pnrNo}"></strong>
                                                         successfully updated!
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
-
 
 
                                     </div>

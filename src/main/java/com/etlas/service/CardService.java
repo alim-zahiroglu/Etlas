@@ -11,4 +11,10 @@ public interface CardService {
     boolean isCardDeletable(String cardId);
 
     CardDto deleteCard(String cardId);
+
+    List<CardDto> findAllCardList();
+
+    CardDto findById(long paidCardId);
+
+    void saveCreditCard(CardDto creditCard);
 }

@@ -82,7 +82,7 @@ public class Ticket extends BaseEntity{
     private PaidType paidType;
 
     @ManyToOne
-    private Card payedCard;
+    private Card paidCard;
     @ManyToOne
     private Card receivedCard;
     @ManyToOne

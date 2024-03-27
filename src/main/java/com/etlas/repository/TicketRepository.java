@@ -21,9 +21,9 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
     boolean existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(String userName, String userName1, boolean isDeleted);
 
-    boolean existsByPayedCard_IdOrReceivedCard_IdAndIsDeleted(long payedCardId, long receivedCardId, boolean isDeleted);
+    boolean existsByPaidCard_IdOrReceivedCard_IdAndIsDeleted(long payedCardId, long receivedCardId, boolean isDeleted);
 
-  @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM Ticket t WHERE (t.payedCard.id = :payedCardId OR t.receivedCard.id = :receivedCardId) AND t.isDeleted = :isDeleted")
+  @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM Ticket t WHERE (t.paidCard.id = :payedCardId OR t.receivedCard.id = :receivedCardId) AND t.isDeleted = :isDeleted")
   boolean existsByPayedCardIdOrReceivedCardIdAndIsDeleted(@Param("payedCardId") long payedCardId, @Param("receivedCardId") long receivedCardId, @Param("isDeleted") boolean isDeleted);
 
 

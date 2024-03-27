@@ -55,7 +55,7 @@ public class TicketDto {
 
     @Min(value = 0, message = "Please enter a valid price")
     private BigDecimal payedAmount;
-    private CardDto payedCard;
+    private CardDto paidCard;
     private BigDecimal profit;
     private CurrencyUnits currencyUnit;
     private UserDto receivedUser;

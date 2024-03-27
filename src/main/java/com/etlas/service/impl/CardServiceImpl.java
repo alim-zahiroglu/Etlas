@@ -6,7 +6,7 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CardRepository;
 import com.etlas.service.CardService;
 import com.etlas.service.TicketService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -16,12 +16,23 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
     private final CardRepository repository;
     private final MapperUtil mapper;
     private final TicketService ticketService;
 
+    public CardServiceImpl(CardRepository repository, MapperUtil mapper, @Lazy TicketService ticketService) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.ticketService = ticketService;
+    }
+
+
+    @Override
+    public CardDto findById(long paidCardId) {
+       Card card = repository.findById(paidCardId).orElseThrow(NoSuchElementException::new);
+       return mapper.convert(card, new CardDto());
+    }
 
     @Override
     public CardDto saveNewCard(CardDto newCard) {
@@ -45,6 +56,19 @@ public class CardServiceImpl implements CardService {
                     cardDto.setDueDateUI(result);
                     return cardDto;
                 })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveCreditCard(CardDto creditCard) {
+        repository.save(mapper.convert(creditCard, new Card()));
+    }
+
+    @Override
+    public List<CardDto> findAllCardList() {
+        List<Card> cardList = repository.findAllByIsDeletedOrderByAvailableLimitDesc(false);
+        return cardList.stream()
+                .map(card -> mapper.convert(card, new CardDto()))
                 .collect(Collectors.toList());
     }
 

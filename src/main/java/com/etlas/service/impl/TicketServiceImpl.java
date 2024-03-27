@@ -10,7 +10,6 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.TicketRepository;
 import com.etlas.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -31,6 +30,7 @@ public class TicketServiceImpl implements TicketService {
     private final AirportService airportService;
     private final CustomerService customerService;
     private final TicketRepository repository;
+    private final CardService cardService;
     private final MapperUtil mapper;
 
 
@@ -43,6 +43,9 @@ public class TicketServiceImpl implements TicketService {
         return TicketDto.builder()
                 .singleTicket(true)
                 .oneWayTrip(true)
+                .perchesPrice(BigDecimal.ZERO)
+                .salesPrice(BigDecimal.ZERO)
+                .payedAmount(BigDecimal.ZERO)
                 .airLine(turkishAirline)
                 .fromWhere(fromWhere)
                 .toWhere(toWhere)
@@ -123,6 +126,7 @@ public class TicketServiceImpl implements TicketService {
             BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(unPayed);
             customer.setCustomerTRYBalance(newBalance);
             customerService.saveNewCustomer(customer);
+            calculateCreditCardLimit(newTicket);
 
         } else if (currencyUnits.getDescription().equals("$ USD")) {
             BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(unPayed);
@@ -133,6 +137,14 @@ public class TicketServiceImpl implements TicketService {
             customer.setCustomerEURBalance(newBalance);
             customerService.saveNewCustomer(customer);
         }
+    }
+
+    private void calculateCreditCardLimit(TicketDto newTicket) {
+        long paidCardId = newTicket.getPaidCard().getId();
+        CardDto creditCard = cardService.findById(paidCardId);
+        BigDecimal newLimit = creditCard.getAvailableLimit().subtract(newTicket.getPayedAmount());
+        creditCard.setAvailableLimit(newLimit);
+        cardService.saveCreditCard(creditCard);
     }
 
     private void saveBalanceRecord(TicketDto newTicket) {
@@ -167,10 +179,10 @@ public class TicketServiceImpl implements TicketService {
         LocalDate perchesDate = ticket.getDateOfPerches();
 
         if (perchesDate.isAfter(departureDate)){
-            bindingResult.addError(new FieldError("updatedTicket", "dateOfPerches", "Date of perches: '" + ticket.getDateOfPerches() + "' couldn't be after departure date"));
+            bindingResult.addError(new FieldError("ticket", "dateOfPerches", "Date of perches: '" + ticket.getDateOfPerches() + "' couldn't be after departure date"));
         }
         if (ticket.getPassengersUI().size() > ticket.getTicketAmount()){
-            bindingResult.addError(new FieldError("updatedTicket", "passengersUI", "Passengers couldn't be more then ticket amount"));
+            bindingResult.addError(new FieldError("ticket", "passengersUI", "Passengers couldn't be more then ticket amount"));
         }
 
         return bindingResult;
