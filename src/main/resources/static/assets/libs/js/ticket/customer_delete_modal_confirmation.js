@@ -1,9 +1,11 @@
 // Add an event listener for the delete button clicks
-const deleteCustomer = document.querySelectorAll('#delete-row');
-deleteCustomer.addEventListener('click', function () {
-    const customer = this.getAttribute('data-customer');
-    const customerId = this.getAttribute('data-customerId');
-    showConfirmationModal(customer, customerId);
+const deleteButtons = document.querySelectorAll('#delete-row');
+deleteButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        const customer = this.getAttribute('data-customer');
+        const customerId = this.getAttribute('data-customerId');
+        showConfirmationModal(customer, customerId);
+    });
 });
 
 function showConfirmationModal(customer, customerId) {
@@ -20,7 +22,7 @@ function showConfirmationModal(customer, customerId) {
     // Add an event listener for the OK button in the modal
     document.getElementById('confirmDelete').addEventListener('click', function () {
         // Redirect to the delete URL
-        window.location.href = `/customer/delete?customerId=${customerId}`;
+        window.location.href = `/ticket/customer/delete?customerId=${customerId}`;
     });
 
     // Add an event listener for modal close events (when Cancel or close button is clicked)

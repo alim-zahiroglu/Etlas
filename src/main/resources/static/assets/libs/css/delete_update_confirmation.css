@@ -57,6 +57,12 @@
     border: none;
     background: transparent;
 }
+
+#customer_update_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
 .update_toast_header{
     background: #fff3cd !important;
     color: #664d03 !important;
@@ -80,6 +86,6 @@
 .ticket_table_second_line {
     font-family: 'Lato', serif;
     font-style: italic;
-    font-size: 13px;
+    font-size: 14px;
 
 }

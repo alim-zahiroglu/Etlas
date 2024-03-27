@@ -215,6 +215,8 @@ public class TicketController {
         return "redirect:/ticket/list";
     }
 
+
+    // customer details
     @GetMapping("/customer/details/{customerId}")
     public String showCustomerDetails(@PathVariable("customerId") long customerId, Model model){
         CustomerDto customer = customerService.getCustomerById(customerId);
@@ -223,6 +225,44 @@ public class TicketController {
             return "/ticket/customer-details-company";
         }
         return "/ticket/customer-details-individual";
+    }
+
+    @GetMapping("/customer/update/{customerId}")
+    public String customerUpdate(@PathVariable("customerId") long customerId, Model model){
+
+        CustomerDto customerToBeUpdate = customerService.getCustomerById(customerId);
+
+        model.addAttribute("customerToBeUpdate",customerToBeUpdate);
+        model.addAttribute("countries",CountriesTr.values());
+
+        if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
+            return "/ticket/customer-update-company";
+        } else {
+            model.addAttribute("genders",Gender.values());
+            return "/ticket/customer-update-individual";
+        }
+    }
+
+    @PostMapping("/customer/update/{id}/{customerType}")
+    public String saveUpdatedCustomer(@Valid @ModelAttribute("customerToBeUpdate") CustomerDto customerToBeUpdate,
+                                      BindingResult bindingResult,RedirectAttributes redirectAttributes, Model model){
+        bindingResult = customerService.validateUpdateCustomer(customerToBeUpdate,bindingResult);
+        if (bindingResult.hasErrors()){
+            if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
+                model.addAttribute("countries",CountriesTr.values());
+                return "/ticket/customer-update-company";
+            }else {
+                model.addAttribute("countries",CountriesTr.values());
+                model.addAttribute("genders",Gender.values());
+                return "/ticket/customer-update-individual";
+            }
+
+        }
+
+        CustomerDto updatedCustomer = customerService.saveUpdatedCustomer(customerToBeUpdate);
+        redirectAttributes.addFlashAttribute("customerIsUpdated",true);
+        redirectAttributes.addFlashAttribute("updatedCustomerName",updatedCustomer.getFirstName() + " " + updatedCustomer.getLastName());
+        return "redirect:/ticket/list";
     }
 
 
