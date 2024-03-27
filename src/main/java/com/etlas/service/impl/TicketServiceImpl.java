@@ -321,4 +321,10 @@ public class TicketServiceImpl implements TicketService {
         repository.save(ticketToBeDeleted);
         return true;
     }
+
+    @Override
+    public boolean isCardUsedInAnyTicket(String cardId) {
+        long id = Long.parseLong(cardId);
+        return repository.existsByPayedCardIdOrReceivedCardIdAndIsDeleted(id, id, false);
+    }
 }

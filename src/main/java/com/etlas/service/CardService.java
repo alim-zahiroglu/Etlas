@@ -7,4 +7,8 @@ import java.util.List;
 public interface CardService {
     CardDto saveNewCard(CardDto newCard);
     List<CardDto> getAllCards();
+
+    boolean isCardDeletable(String cardId);
+
+    CardDto deleteCard(String cardId);
 }

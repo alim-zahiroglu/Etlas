@@ -48,26 +48,25 @@ public class CardController {
             model.addAttribute("bankNames", bankService.getAllBankNames());
             return "card/card-create";
         }
-        System.out.println(newCard);
         CardDto createdCard = cardService.saveNewCard(newCard);
         redirectAttributes.addFlashAttribute("isNewCardSaved", true);
         redirectAttributes.addFlashAttribute("savedCardName", createdCard.getCardOwner());
         return "redirect:/card/list";
     }
 
-//    @GetMapping("/delete")
-//    public String deleteCard(@RequestParam("username") String username,
-//                             RedirectAttributes redirectAttributes){
-//        if (bankService.isUserDeletable(username)) {
-//            UserDto deletedUser = bankService.deleteUser(username);
-//            redirectAttributes.addFlashAttribute("userIsDeleted", true);
-//            redirectAttributes.addFlashAttribute("deletedUser", deletedUser);
-//            return "redirect:/user/list";
-//        }
-//        redirectAttributes.addFlashAttribute("userIsDeleted", false);
-//        redirectAttributes.addFlashAttribute("deleteMessage", "This is the only admin user or the user used in a ticket, transaction or visa");
-//        return "redirect:/user/list";
-//    }
+    @GetMapping("/delete")
+    public String deleteCard(@RequestParam("cardId") String cardId,
+                             RedirectAttributes redirectAttributes){
+        if (cardService.isCardDeletable(cardId)) {
+            CardDto deletedCard = cardService.deleteCard(cardId);
+            redirectAttributes.addFlashAttribute("isCardDeleted", true);
+            redirectAttributes.addFlashAttribute("deleteCardName", deletedCard.getCardOwner());
+            return "redirect:/card/list";
+        }
+        redirectAttributes.addFlashAttribute("isCardDeleted", false);
+        redirectAttributes.addFlashAttribute("deleteMessage", "Because this card used in a ticket or a visa");
+        return "redirect:/card/list";
+    }
 //
 //    @GetMapping("/update/{userName}")
 //    public String updateUser(@PathVariable("userName") String userName, Model model){

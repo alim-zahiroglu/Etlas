@@ -82,6 +82,10 @@ public class Ticket extends BaseEntity{
     private PaidType paidType;
 
     @ManyToOne
+    private Card payedCard;
+    @ManyToOne
+    private Card receivedCard;
+    @ManyToOne
     private Customer payedCustomer;
     @Column(columnDefinition = "DATE")
     private LocalDate dateOfPayed;

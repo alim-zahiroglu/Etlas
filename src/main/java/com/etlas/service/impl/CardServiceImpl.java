@@ -5,14 +5,14 @@ import com.etlas.entity.Card;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CardRepository;
 import com.etlas.service.CardService;
+import com.etlas.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class CardServiceImpl implements CardService {
     private final CardRepository repository;
     private final MapperUtil mapper;
+    private final TicketService ticketService;
 
 
     @Override
@@ -45,5 +46,18 @@ public class CardServiceImpl implements CardService {
                     return cardDto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isCardDeletable(String cardId) {
+       return !ticketService.isCardUsedInAnyTicket(cardId);
+    }
+
+    @Override
+    public CardDto deleteCard(String cardId) {
+        Card card = repository.findById(Long.parseLong(cardId)).orElseThrow(NoSuchElementException::new);
+        card.setDeleted(true);
+        Card deletedCard = repository.save(card);
+        return mapper.convert(deletedCard, new CardDto());
     }
 }
