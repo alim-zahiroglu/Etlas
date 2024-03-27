@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>card list</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body class="bg-light">
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider:" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list/card}"><i
+                                        class="fa-solid fa-house"></i> Cards </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Card list
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center">
+                            <h4 class="panel-title bold_font">Cards</h4>
+                        </header>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0 shadow-none bg-light justify-content-center align-items-center">
+                                    <div class="col-12 col-md-12 col-lg-10">
+
+                                        <div class="row bg-white mr-0 ml-0" style="border-radius: 5px">
+                                            <div class="col-6 col-md-6 col-lg-4 pl-1">
+                                                <div class="dropdown pl-0">
+
+                                                    <a th:href="@{/card/list}">
+                                                        <button class="btn card_table_view mr-0" id="cardList">
+                                                            <i class="fa-solid fa-table"></i> Table View
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-8 text-right pr-1">
+                                                <a th:href="@{/card/create}">
+                                                    <button class="btn list-page-drop-downs mr-0" id="userCreate">
+                                                        <i class="fa-solid fa-user-plus"></i> New Card
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row pt-4 pb-0">
+                                            <div class="col-12 col-md-6 col-lg-4 mb-0" th:each="card :${cardList}">
+                                                <div class="card m-0 mb-4" style="border-radius: 30px;">
+                                                    <img th:src="@{/images/card_background.png}"/>
+                                                    <div class="card-body p-0 w-100" style="position: absolute;">
+                                                        <div class="row w-100">
+                                                            <div class="col-4 p-0 m-0" id="first-row-left">
+                                                                <a th:href="@{/card/update/{cardId}(cardId = ${card.id})}" style="text-decoration: none" class="m-0 p-0">
+                                                                    <button type="button" class="btn card_view_custom_update_button m-0 pr-0" style="top: 0">
+                                                                        <i class="fa-solid fa-pen-to-square update-rotate-on-hover action-buttons"></i>
+                                                                    </button>
+                                                                </a>
+                                                                <a href="#" class="delete-row p-0 m-0" style="text-decoration: none">
+                                                                    <button type="button" id="delete-row" class="btn card_view_custom_delete_button delete-row m-0 p-0 pl-1"
+                                                                            style="top: 0" th:data-card="${card.cardOwner}" th:data-cardId="${card.id}">
+                                                                        <i class="fa-solid fa-trash-can rotate-on-hover action-buttons"></i>
+                                                                    </button>
+                                                                </a>
+                                                                <a th:href="@{/card/addBalance/{cardId}(cardId = ${card.id})}" style="text-decoration: none" class="p-0 m-0">
+                                                                    <button type="button" class="btn custom_add_balance_button m-0 p-0 pl-1" style="top: 0">
+                                                                        <i class="fa-solid fa-plus rotate-on-hover action-buttons"></i>
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-8 p-0 m-0 text-right" id="first-row-right">
+                                                                <p class="card-view-text" th:text="${card.bankName}" id="special-title"></p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row w-100">
+                                                            <div class="col-12 p-0 m-0 text-right" id="second-row-right">
+                                                                <p class="card-view-text" th:text="${card.availableLimitUI} + ' ₺'" id="availableLimit"></p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row w-100">
+                                                            <div class="col-9 p-0 m-0" id="bottom-row-left">
+                                                                <p class="card-view-text-bottom" th:text="${card.cardOwner}" id="card-owner"></p>
+
+                                                            </div>
+                                                            <div class="col-3 p-0 m-0 text-right" id="bottom-row-right">
+                                                                <p class="card-view-text-bottom" th:text="${card.dueDateUI}" id="card-dueDate"></p>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class=" modal fade
+                                        " id="confirmationModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content p-2">
+                                        <div class=" delete_confirmation_popup justify-content-center">
+
+                                            <div class="d-flex flex-column align-items-center">
+                                                <img th:src="@{/images/delete_worning.png}" class="mt-4"/>
+                                                <h5 class="modal-title mt-3 pb-2"
+                                                    id="confirmationModalLabel">Confirm Deletion</h5>
+                                            </div>
+                                            <!-- No close button here -->
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Dynamic content to display username -->
+                                            <p id="confirmationCardName"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    onclick="closeConfirmationModal()">Cancel
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger" id="confirmDelete">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="delete_toast_up_layer" th:if="${isCardDeleted} == true">
+                                <div id="delete_toast_container"
+                                     class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                     data-autohide="true">
+                                    <div id="deleteSuccessToast" class="toast" role="alert"
+                                         aria-live="assertive" aria-atomic="true">
+                                        <div class="toast-header delete_toast_header">
+                                            <strong class="me-auto">Success</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body delete_toast_body" th:inline="text">
+                                            Card <strong style="color: red"
+                                                         th:text="${deleteCardName}"></strong> successfully
+                                            deleted!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="delete_toast_up_layer_false" th:if="${isCardDeleted} == false">
+                                <div id="delete_toast_container_false"
+                                     class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                     data-autohide="true">
+                                    <div id="deleteUnSuccessToast" class="toast" role="alert"
+                                         aria-live="assertive" aria-atomic="true">
+                                        <div class="toast-header delete_toast_header">
+                                            <strong class="me-auto">Not Success</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body delete_toast_body" th:inline="text">
+                                            <strong>This card couldn't be deleted!,</strong><br>
+                                            <span style="color: red" th:text="${deleteMessage}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="create_toast_up_layer" th:if="${isNewCardSaved} == true">
+                                <div id="create_toast_container"
+                                     class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                     data-autohide="true">
+                                    <div id="createSuccessToast" class="toast" role="alert"
+                                         aria-live="assertive" aria-atomic="true">
+                                        <div class="toast-header create_toast_header">
+                                            <strong class="me-auto">Success</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body create_toast_body" th:inline="text">
+                                            Card <strong style="color: green"
+                                                         th:text="${savedCardName}"></strong> successfully
+                                            added!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="update_toast_up_layer" th:if="${isCardUpdated} == true">
+                                <div id="update_toast_container"
+                                     class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                     data-autohide="true">
+                                    <div id="updateSuccessToast" class="toast" role="alert"
+                                         aria-live="assertive" aria-atomic="true">
+                                        <div class="toast-header update_toast_header">
+                                            <strong class="me-auto">Success</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body update_toast_body" th:inline="text">
+                                            Card <strong style="color: #fa9803"
+                                                         th:text="${updatedCardName}"></strong> successfully
+                                            updated!
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<script th:src="@{/assets/libs/js/card/delete_modal_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/card/adjust_card_text.js}"></script>
+<script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
+</body>
+</html>

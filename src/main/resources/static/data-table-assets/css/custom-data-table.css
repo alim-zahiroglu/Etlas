@@ -36,6 +36,36 @@
     background: #117dc0 !important;
 
 }
+.card_table_view{
+    background: #22c55f !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+.card_table_view:hover{
+    background: #159f49 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+.card_card_view{
+    background: #f8a526 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+.card_card_view:hover{
+    background: #d58a19 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+.select-view-drop-downs{
+    color: #fff!important;
+    font-weight: bold !important;
+    background: #ef4863 !important;
+
+}
 
 .list-page-drop-downs:hover {
     color: #fff!important;
@@ -175,6 +205,34 @@
     border: white !important;
 }
 
+.card-view-text {
+    color: #ffffff;
+    font-family: 'Ubuntu', serif;
+    font-weight: 500;
+}
+.card-view-text-bottom{
+    color: #ffffff;
+    font-family: 'Fredoka', serif;
+    font-weight: 500;
+}
+
+
+
+.card_view_custom_update_button{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #f8a526 !important;
+    background: transparent !important;
+}
+
+.card_view_custom_update_button:hover{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-weight: bold !important;
+    color: #f89a08 !important;
+    background: transparent !important;
+}
+
 .custom_update_button{
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -190,6 +248,22 @@
     color: #f89a08 !important;
     font-size: 16px !important;
     background: transparent !important;
+}
+
+.card_view_custom_delete_button{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color:#ef4863 !important;
+    background: transparent !important;
+}
+
+.card_view_custom_delete_button:hover{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #f12446 !important;
+    font-weight: bold !important;
+    background: transparent !important;
+
 }
 
 .custom_delete_button{
@@ -223,6 +297,20 @@
     color: #01ce2a !important;
     font-weight: bold !important;
     font-size: 16px !important;
+    background: transparent !important;
+}
+.custom_add_balance_button{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #eaeaea !important;
+    background: transparent !important;
+}
+
+.custom_add_balance_button:hover{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
     background: transparent !important;
 }
 /* CSS for the rotation effect */

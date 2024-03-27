@@ -24,8 +24,15 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping("/list")
-    public String getAllUsers(Model model){
-        return "user/user-list";
+    public String getAllCards(Model model){
+        model.addAttribute("cardList", cardService.getAllCards());
+        return "card/card-list";
+    }
+
+    @GetMapping("/list/card")
+    public String getAllCardsCardView(Model model){
+        model.addAttribute("cardList", cardService.getAllCards());
+        return "card/card-list-card";
     }
 
     @GetMapping("/create")
@@ -41,15 +48,15 @@ public class CardController {
             model.addAttribute("bankNames", bankService.getAllBankNames());
             return "card/card-create";
         }
+        System.out.println(newCard);
         CardDto createdCard = cardService.saveNewCard(newCard);
-        System.out.println("createdCard = " + createdCard);
-        redirectAttributes.addFlashAttribute("IsNewCardSaved", true);
+        redirectAttributes.addFlashAttribute("isNewCardSaved", true);
         redirectAttributes.addFlashAttribute("savedCardName", createdCard.getCardOwner());
         return "redirect:/card/list";
     }
 
 //    @GetMapping("/delete")
-//    public String deleteUser(@RequestParam("username") String username,
+//    public String deleteCard(@RequestParam("username") String username,
 //                             RedirectAttributes redirectAttributes){
 //        if (bankService.isUserDeletable(username)) {
 //            UserDto deletedUser = bankService.deleteUser(username);
