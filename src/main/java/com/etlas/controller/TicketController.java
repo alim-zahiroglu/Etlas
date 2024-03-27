@@ -29,6 +29,7 @@ public class TicketController {
     private final CustomerService customerService;
     private final AirLineService airLineService;
     private final AirportService airportService;
+    private final CardService cardService;
 
     private boolean isNewCustomerAdded = false;
     private String addedCustomerId;
@@ -56,6 +57,7 @@ public class TicketController {
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("paidTypes", PaidType.values());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
+        model.addAttribute("cardList", cardService.findAllCardList());
         model.addAttribute("genders", Gender.values());
 
 
@@ -91,16 +93,22 @@ public class TicketController {
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("paidTypes", PaidType.values());
+            model.addAttribute("cardList", cardService.findAllCardList());
             model.addAttribute("genders", Gender.values());
             model.addAttribute("currencySymbol", currencySymbol);
+
+            System.out.println(bindingResult.getAllErrors() + "**************************************");
+
+            System.out.println(newTicket + "**************************************");
 
             return "ticket/ticket-create";
         }
 
         TicketDto savedTicket = ticketService.saveNewTicket(newTicket);
-
-        redirectAttributes.addFlashAttribute("savedTicketName",savedTicket.getPnrNo());
         redirectAttributes.addFlashAttribute("isNewTicketSaved",true);
+        redirectAttributes.addFlashAttribute("savedTicketName",savedTicket.getPnrNo());
+
+        System.out.println(newTicket + "**************************************");
         return "redirect:/ticket/create";
     }
 
@@ -137,6 +145,7 @@ public class TicketController {
         model.addAttribute("countriesTr", CountriesTr.values());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("paidTypes", PaidType.values());
+        model.addAttribute("cardList", cardService.findAllCardList());
         model.addAttribute("genders", Gender.values());
 
         isNewCustomerAdded = false;
@@ -175,6 +184,7 @@ public class TicketController {
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("paidTypes", PaidType.values());
+            model.addAttribute("cardList", cardService.findAllCardList());
             model.addAttribute("genders", Gender.values());
             model.addAttribute("currencySymbol", currencySymbol);
 
@@ -186,8 +196,6 @@ public class TicketController {
         redirectAttributes.addFlashAttribute("savedTicket",savedTicket.getPnrNo());
         redirectAttributes.addFlashAttribute("isTicketUpdated",true);
         redirectAttributes.addFlashAttribute("updatedTicket",savedTicket);
-
-//        System.out.println("updated ticket: " + updatedTicket);
 
         return "redirect:/ticket/list";
     }

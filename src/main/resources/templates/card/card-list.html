@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>ticket list</title>
+<title>card list</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body class="bg-light">
 <div class="wrapper">
     <div th:replace="~{fragments/header :: header}"></div>
     <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
     <div class="dashboard-main-wrapper pt-3">
-
         <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
                 <div class="container-fluid dashboard-content">
-
-
                     <div class="ecommerce-widget pt-4">
 
-                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                        <nav style="--bs-breadcrumb-divider:" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item custom-breadcrumb-item"><a href="#"><i
-                                        class="fa-solid fa-house"></i> Tickets </a></li>
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i
+                                        class="fa-solid fa-house"></i> Cards </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i
-                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Ticket list
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Card list
                                 </li>
                             </ol>
                         </nav>
 
-                        <header class="panel-heading text-center pt-5">
-                            <h4 class="panel-title bold_font">Tickets</h4>
+                        <header class="panel-heading text-center">
+                            <h4 class="panel-title bold_font">Cards</h4>
                         </header>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card border-0 shadow-none bg-light justify-content-center align-items-center">
-                                    <div class="col-11">
+                                    <div class="col-12 col-md-12 col-lg-10">
+
 
                                         <div class="row bg-white mr-0 ml-0 table_top_search_bar_column"
                                              style="border-radius: 5px">
                                             <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2 pl-1">
-                                                <div class="col-12 dropdown pl-0">
+
+                                                <div class="col-12 text-left pl-0">
                                                     <button class="btn list-page-drop-downs dropdown-toggle"
-                                                            type="button"
-                                                            id="more_actions" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">
+                                                            type="button" id="more_actions"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
                                                         <i class="fa-solid fa-list"></i> More Actions
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-custom-css"
@@ -52,29 +51,35 @@
                                                             <span style="margin-left: auto;"><img
                                                                     th:src="@{/images/copy.png}"></span>
                                                         </a>
-
                                                         <a class="dropdown-item dropdown-menu-item-custom-css"
                                                            id="more_actions_print"
-                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                           style="display: flex; align-items: center; border-radius: 0 0 8px 8px">
                                                             <span>Print</span>
                                                             <span style="margin-left: auto;"><img
                                                                     th:src="@{/images/print.png}"></span>
                                                         </a>
                                                     </div>
+                                                    <a th:href="@{/card/list/card}">
+                                                        <button class="btn card_card_view ml-1"
+                                                                id="cardCardView" style="display: inline">
+                                                            <i class="fa-solid fa-credit-card"></i> Card View
+                                                        </button>
+                                                    </a>
                                                 </div>
 
+
+
                                             </div>
+
                                             <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2">
                                                 <input type="search" class="form-control mb-2 mb-md-0 mb-sm-2"
                                                        id="myInput" placeholder="Search...">
-
                                             </div>
 
                                             <div class="col-12 col-md-12 col-lg-4 text-right pr-1">
-
-                                                <a th:href="@{/ticket/create}">
+                                                <a th:href="@{/card/create}">
                                                     <button class="btn list-page-drop-downs mr-0" id="userCreate">
-                                                        <i class="fa-solid fa-user-plus"></i> New Ticket
+                                                        <i class="fa-solid fa-user-plus"></i> New Card
                                                     </button>
                                                 </a>
                                                 <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
@@ -87,10 +92,11 @@
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css"
                                                          aria-labelledby="export_buttons">
                                                         <div class="export_header" style="cursor: pointer"><span
-                                                                class="pr-4">Export As</span>
-                                                            <i class="fa-solid fa-download"></i></div>
+                                                                class="pr-4">Export As</span> <i
+                                                                class="fa-solid fa-download"></i></div>
                                                         <a class="dropdown-item dropdown-menu-item-custom-css"
-                                                           id="export_pdf" style="display: flex; align-items: center;">
+                                                           id="export_pdf"
+                                                           style="display: flex; align-items: center;">
                                                             <span>PDF</span>
                                                             <span style="margin-left: auto;"><img
                                                                     th:src="@{/images/pdf.png}"></span>
@@ -102,136 +108,64 @@
                                                             <span style="margin-left: auto;"><img
                                                                     th:src="@{/images/excel.png}"></span>
                                                         </a>
-
                                                         <a class="dropdown-item dropdown-menu-item-custom-css"
                                                            id="export_csv"
-                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                           style="display: flex; align-items: center; border-radius: 0 0 8px 8px">
                                                             <span>CSV</span>
                                                             <span style="margin-left: auto;"><img
                                                                     th:src="@{/images/csv.png}"></span>
                                                         </a>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
+
 
                                         <div class="table-responsive">
                                             <table id="example"
                                                    class="table table-hover table-bordered bg-white users_table">
                                                 <thead class="custom_table_header">
                                                 <tr>
-                                                    <th scope="col">PNR</th>
-                                                    <th scope="col">Airline</th>
-                                                    <th scope="col">From-To</th>
-                                                    <th scope="col">Departure Time</th>
-                                                    <th scope="col">Passenger</th>
-                                                    <th scope="col">Bought User</th>
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Paid Customer</th>
-                                                    <th scope="col">Paid Card</th>
+                                                    <th scope="col">Card Owner</th>
+                                                    <th scope="col">Bank Name</th>
+                                                    <th scope="col">Available limit</th>
+                                                    <th scope="col">Due Date</th>
                                                     <th scope="col">Action</th>
+
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                <!--                                                th:class="${customer.customerType.description eq 'Company'} ? 'company-row' : 'individual-row'"-->
-
-                                                <tr th:each="ticket :${ticketList}">
-                                                    <td>
-                                                        <a th:href="@{/ticket/details/{ticketId}(ticketId=${ticket.id})}">
-                                                            <span th:utext="${ticket.pnrNo}"></span>
-                                                        </a>
-                                                    </td>
-
-                                                    <td>
-                                                        <!-- Check customer type and display appropriate name -->
-                                                        <span th:text="${ticket.airLine.name}"></span>
-                                                    </td>
-
-                                                    <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
-                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span><br/>
-                                                        <span th:utext="${ticket.toWhere.city}+' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.fromWhere.city}"></span>
-                                                    </td>
-                                                    <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
-                                                        <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span>
-                                                    </td>
-
-                                                    <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
-                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span><br/>
-                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.returnTime, 'dd-MM-yyyy, HH:mm')}"></span>
-                                                    </td>
-
-                                                    <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
-                                                        <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span>
-
-                                                    </td>
-
-                                                    <td>
-                                                        <a th:href="@{/passenger/details/list/{ticketId}(ticketId=${ticket.id})}">
-
-                                                        <span th:if="${ticket.passengers.get(0).customerType.description == 'Company'}"
-                                                              th:text="${ticket.passengers.get(0).companyName}"></span>
-
-                                                            <span th:if="${ticket.passengers.get(0).customerType.description == 'Individual'}"
-                                                                  th:text="${ticket.passengers.get(0).firstName} + ' ' + ${ticket.passengers.get(0).lastName}">
-
-                                                            </span>
-                                                        </a>
-                                                    </td>
-
-                                                    <td th:text="${ticket.boughtUser.firstName} +' '+ ${ticket.boughtUser.lastName}"></td>
-
-                                                    <td th:text="${ticket.ticketAmount}"></td>
-
-                                                    <td>
-                                                        <a th:href="@{/ticket/customer/details/{customerId}(customerId=${ticket.payedCustomer.id})}">
-
-                                                           <span th:if="${ticket.payedCustomer.customerType.description == 'Company'}"
-                                                                 th:text="${ticket.payedCustomer.companyName}"></span>
-
-                                                            <span th:if="${ticket.payedCustomer.customerType.description == 'Individual'}"
-                                                                  th:text="${ticket.payedCustomer.firstName} + ' ' + ${ticket.payedCustomer.lastName}"></span>
-                                                        </a>
-                                                    </td>
-
-
-                                                    <td>
-                                                        <a th:href="@{/ticket/card/details/{cardId}(cardId=${ticket.paidCard.id})}">
-                                                            <span th:text="${ticket.paidCard.getCardOwner()}"></span><br/>
-                                                        </a>
-<!--                                                        <span class="ticket_table_second_line" th:text="${'('+ticket.paidCard.getBankName()+')'}"></span>-->
-                                                        <span class="ticket_table_second_line" th:text="${ticket.paidCard.getBankName()}"></span>
-                                                    </td>
-
-
+                                                <tr th:each="card :${cardList}">
+                                                    <td th:text="${card.cardOwner} "></td>
+                                                    <td th:text="${card.bankName}"></td>
+                                                    <td th:text="${card.availableLimitUI} + ' ₺'"></td>
+                                                    <td th:text="${card.dueDateUI}"></td>
                                                     <td class="actions">
-                                                        <a th:href="@{/ticket/update/{ticketId}(ticketId = ${ticket.id})}">
+                                                        <a th:href="@{/card/update/{cardId}(cardId = ${card.id})}">
                                                             <button type="button" class="btn custom_update_button p-1">
                                                                 <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>
                                                             </button>
                                                         </a>
                                                         <a href="#" class="delete-row">
                                                             <button type="button" id="delete-row"
-                                                                    class="btn custom_delete_button p-1"
-                                                                    th:data-ticket-pnr="${ticket.pnrNo}"
-                                                                    th:data-ticketId="${ticket.id}">
+                                                                    class="btn custom_delete_button p-1 delete-row"
+                                                                    th:data-card="${card.cardOwner}"
+                                                                    th:data-cardId="${card.id}">
                                                                 <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                             </button>
                                                         </a>
-                                                        <a href="#" class="download-ticket">
-                                                            <button type="button" id="download-ticket"
-                                                                    class="btn custom_download_button p-1"
-                                                                    th:data-customer="${ticket.pnrNo}"
-                                                                    th:data-customerId="${ticket.id}">
-                                                                <i class="fa-solid fa-download download-rotate-on-hover"></i>
+                                                        <a th:href="@{/card/addBalance/{cardId}(cardId = ${card.id})}">
+                                                            <button type="button"
+                                                                    class="btn custom_download_button p-1">
+                                                                <i class="fa-solid fa-plus rotate-on-hover"></i>
                                                             </button>
                                                         </a>
                                                     </td>
                                                 </tr>
+
                                                 </tbody>
                                             </table>
-
                                         </div>
 
 
@@ -250,7 +184,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <!-- Dynamic content to display username -->
-                                                        <p id="confirmationTicketPnr"></p>
+                                                        <p id="confirmationCardName"></p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
@@ -265,7 +199,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer" th:if="${ticketIsDeleted} == true">
+                                        <div id="delete_toast_up_layer" th:if="${isCardDeleted} == true">
                                             <div id="delete_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -277,16 +211,16 @@
                                                                 aria-label="Close"></button>
                                                     </div>
                                                     <div class="toast-body delete_toast_body" th:inline="text">
-                                                        Ticket <strong style="color: red"
-                                                                       th:text="${deletedTicketName}"></strong>
-                                                        is successfully deleted!
+                                                        Card <strong style="color: red"
+                                                                     th:text="${deleteCardName}"></strong> successfully
+                                                        deleted!
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div id="delete_toast_up_layer_false" th:if="${ticketIsDeleted} == false">
+
+                                        <div id="delete_toast_up_layer_false" th:if="${isCardDeleted} == false">
                                             <div id="delete_toast_container_false"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -298,14 +232,36 @@
                                                                 aria-label="Close"></button>
                                                     </div>
                                                     <div class="toast-body delete_toast_body" th:inline="text">
-                                                        <strong>This ticket can not be deleted!</strong><br>
+                                                        <strong>This card couldn't be deleted!,</strong><br>
                                                         <span style="color: red" th:text="${deleteMessage}"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div id="update_toast_up_layer" th:if="${isTicketUpdated} == true">
+
+                                        <div id="create_toast_up_layer" th:if="${isNewCardSaved} == true">
+                                            <div id="create_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="createSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body create_toast_body" th:inline="text">
+                                                        Card <strong style="color: green"
+                                                                     th:text="${savedCardName}"></strong> successfully
+                                                        added!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="update_toast_up_layer" th:if="${isCardUpdated} == true">
                                             <div id="update_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
@@ -316,17 +272,15 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast"
                                                                 aria-label="Close"></button>
                                                     </div>
-
                                                     <div class="toast-body update_toast_body" th:inline="text">
-                                                        Ticket <strong style="color: #fa9803"
-                                                                       th:text="${updatedTicket.pnrNo}"></strong>
-                                                        successfully updated!
+                                                        Card <strong style="color: #fa9803"
+                                                                     th:text="${updatedCardName}"></strong> successfully
+                                                        updated!
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
-
 
                                     </div>
                                 </div>
@@ -340,7 +294,7 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<script th:src="@{/assets/libs/js/ticket/delete_modal_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/card/delete_modal_confirmation.js}"></script>
 <script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
 </body>
 </html>

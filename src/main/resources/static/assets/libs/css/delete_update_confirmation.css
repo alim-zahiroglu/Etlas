@@ -76,3 +76,10 @@
 .individual-row {
     /* Add any other styles for individual rows if needed */
 }
+
+.ticket_table_second_line {
+    font-family: 'Lato', serif;
+    font-style: italic;
+    font-size: 13px;
+
+}

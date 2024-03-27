@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class CardDto {
+    private Long id;
     @NotBlank(message = "Card owner name is mandatory")
     private String cardOwner;
 
@@ -27,5 +28,9 @@ public class CardDto {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dueDate;
+
+    private String availableLimitUI;
+
+    private String dueDateUI;
 
 }

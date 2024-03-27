@@ -268,13 +268,14 @@
                                                         <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
                                                              style="padding: 0 8px 0 4px;margin-top: 17px">
                                                             <label for="selected-credit-card"
-                                                                   class="form-label pl-1 mb-1 d-block">Paid Card</label>
-                                                            <select id="selected-credit-card" th:field="*{payedCard}"
+                                                                   class="form-label pl-1 mb-1 d-block">Paid
+                                                                Card</label>
+                                                            <select id="selected-credit-card" th:field="*{paidCard}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
-                                                                <option th:each="receiver:${userList}"
-                                                                        th:value="${receiver.id}"
-                                                                        th:text="${receiver.firstName + ' ' + receiver.lastName}"></option>
+                                                                <option th:each="paidCard : ${cardList}"
+                                                                        th:value="${paidCard.id}"
+                                                                        th:text="${paidCard.cardOwner + ' (' + paidCard.bankName + ')'}"></option>
                                                             </select>
                                                             <div class="ticket-create-airline-select text-right">
                                                                 <i id="selected-card-selector-arrow"
@@ -310,6 +311,7 @@
                                                     <div class="row p-0 m-0">
 
                                                         <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
+                                                             th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"
                                                              style="padding: 0 8px 0 8px;margin-top: 16px">
                                                             <label for="perchesPrice" class="form-label mb-1 pl-1">Perches
                                                                 price</label>
@@ -337,7 +339,13 @@
                                                                         </a>
                                                                     </li>
                                                                 </ul>
-
+                                                            </div>
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('perchesPrice')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('perchesPrice')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
                                                             </div>
                                                         </div>
 
@@ -352,6 +360,14 @@
                                                                        class="form-control"
                                                                        aria-label="Sales price input">
                                                                 <span class="input-group-text">0.00</span>
+                                                            </div>
+
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('salesPrice')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('salesPrice')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
                                                             </div>
                                                         </div>
 
@@ -368,12 +384,20 @@
                                                                        aria-label="Payed amount input">
                                                                 <span class="input-group-text">0.00</span>
                                                             </div>
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('payedAmount')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('payedAmount')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
 
                                                         <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
                                                              style="padding: 0 8px 0 8px;margin-top: 17px">
                                                             <label for="selected-paid-type"
-                                                                   class="form-label pl-1 mb-1 d-block">Paid Type</label>
+                                                                   class="form-label pl-1 mb-1 d-block">Paid
+                                                                Type</label>
                                                             <select id="selected-paid-type" th:field="*{paidType}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
@@ -396,7 +420,8 @@
                                                         <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
                                                              style="padding: 0 8px 0 8px;margin-top: 17px">
                                                             <label for="received-user"
-                                                                   class="form-label pl-1 mb-1 d-block">Received User</label>
+                                                                   class="form-label pl-1 mb-1 d-block">Received
+                                                                User</label>
                                                             <select id="received-user" th:field="*{receivedUser}"
                                                                     name="receiverUser"
                                                                     class="form-select" style="width: 100%">
@@ -413,13 +438,14 @@
                                                         <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
                                                              style="padding: 0 8px 0 4px;margin-top: 17px">
                                                             <label for="receiver-card"
-                                                                   class="form-label pl-1 mb-1 d-block">Received card</label>
-                                                            <select id="receiver-card" th:field="*{receivedUser}"
+                                                                   class="form-label pl-1 mb-1 d-block">Received
+                                                                card</label>
+                                                            <select id="receiver-card" th:field="*{receivedCard}"
                                                                     name="receiver-card"
                                                                     class="form-select" style="width: 100%">
-                                                                <option th:each="receiver:${userList}"
-                                                                        th:value="${receiver.id}"
-                                                                        th:text="${receiver.firstName + ' ' + receiver.lastName}"></option>
+                                                                <option th:each="receiverCard : ${cardList}"
+                                                                        th:value="${receiverCard.id}"
+                                                                        th:text="${receiverCard.cardOwner + ' (' + receiverCard.bankName + ')'}"></option>
                                                             </select>
                                                             <div class="ticket-create-airline-select text-right">
                                                                 <i id="receiver-card-selector-arrow"
@@ -802,8 +828,7 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
-<script th:src="@{/assets/libs/js/ticket-create-add-customer.js}"></script>
+<script th:src="@{/assets/libs/js/ticket/ticket-create-add-customer.js}"></script>
 <script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
 
 <script>

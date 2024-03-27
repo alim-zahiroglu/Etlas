@@ -1,5 +1,6 @@
 package com.etlas.dto;
 
+import com.etlas.entity.Card;
 import com.etlas.enums.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -54,10 +55,11 @@ public class TicketDto {
 
     @Min(value = 0, message = "Please enter a valid price")
     private BigDecimal payedAmount;
-    private String payedCard;
+    private CardDto paidCard;
     private BigDecimal profit;
     private CurrencyUnits currencyUnit;
     private UserDto receivedUser;
+    private CardDto receivedCard;
     private CustomerDto payedCustomer;
 
     private PaidType paidType;
