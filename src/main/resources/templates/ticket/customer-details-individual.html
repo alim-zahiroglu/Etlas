@@ -34,7 +34,7 @@
                                                th:data-customerId="${customer.id}">
                                                 <i class="fa-solid fa-trash-can"></i> Delete
                                             </a>
-                                            <a th:href="@{/customer/update/{customerId}(customerId=${customer.id})}" class="btn btn-warning">
+                                            <a th:href="@{/ticket/customer/update/{customerId}(customerId=${customer.id})}" class="btn btn-warning">
                                                 <i class="fa-solid fa-pen-to-square"></i> Update
                                             </a>
                                             <a th:href="@{/customer/create}" class="btn btn-success">
@@ -193,7 +193,6 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
-<script th:src="@{/assets/libs/js/customer/delete_modal_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/ticket/customer_delete_modal_confirmation.js}"></script>
 </body>
 </html>
