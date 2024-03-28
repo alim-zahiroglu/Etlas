@@ -285,7 +285,8 @@ public class TicketServiceImpl implements TicketService {
     private void prepareToSaveUpdatedTicket(TicketDto updatedTicket) {
         prepareToSave(updatedTicket);
         adjustOldPaidCustomerBalanceAndBalanceRecord(updatedTicket);
-        reMoveOldBalanceRecord(updatedTicket);
+        adjustOldCreditCardLimit(updatedTicket);
+        removeOldBalanceRecord(updatedTicket);
     }
 
     private void adjustOldPaidCustomerBalanceAndBalanceRecord(TicketDto updatedTicket) {
@@ -314,7 +315,31 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-    private void reMoveOldBalanceRecord(TicketDto updatedTicket) {
+    private void adjustOldCreditCardLimit(TicketDto updatedTicket) {
+
+        TicketDto oldTicket = findById(updatedTicket.getId());
+        CardDto oldCreditCard = oldTicket.getPaidCard();
+
+        if (oldTicket.getCurrencyUnit().equals(CurrencyUnits.TRY)) {
+            BigDecimal newLimit = oldCreditCard.getAvailableLimitTRY().add(oldTicket.getPerchesPrice());
+            oldCreditCard.setAvailableLimitTRY(newLimit);
+            cardService.saveCreditCard(oldCreditCard);
+        }
+
+        if (oldTicket.getCurrencyUnit().equals(CurrencyUnits.USD)) {
+            BigDecimal newLimit = oldCreditCard.getAvailableLimitUSD().add(oldTicket.getPerchesPrice());
+            oldCreditCard.setAvailableLimitUSD(newLimit);
+            cardService.saveCreditCard(oldCreditCard);
+        }
+
+        if (oldTicket.getCurrencyUnit().equals(CurrencyUnits.EUR)) {
+            BigDecimal newLimit = oldCreditCard.getAvailableLimitEUR().add(oldTicket.getPerchesPrice());
+            oldCreditCard.setAvailableLimitEUR(newLimit);
+            cardService.saveCreditCard(oldCreditCard);
+        }
+    }
+
+    private void removeOldBalanceRecord(TicketDto updatedTicket) {
         if (updatedTicket.getPayedAmount().compareTo(BigDecimal.ZERO) > 0) {
             // TODO removeOldBalanceRecord();
             System.out.println("********************** -> old balance record is removed");

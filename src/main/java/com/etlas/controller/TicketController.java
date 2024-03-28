@@ -49,7 +49,9 @@ public class TicketController {
             String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
             model.addAttribute("currencySymbol", currencySymbol);
         }
-        model.addAttribute("newCustomer", new CustomerDto());
+        CustomerDto newCustomer = customerService.initializeNewCustomer();
+
+        model.addAttribute("newCustomer", newCustomer);
         model.addAttribute("airLines", airLineService.getAllAirLines());
         model.addAttribute("airports", airportService.getAllAirports());
         model.addAttribute("countriesTr", CountriesTr.values());
@@ -85,7 +87,9 @@ public class TicketController {
         bindingResult = ticketService.validateTicket(newTicket,bindingResult);
         if (bindingResult.hasErrors()){
             String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
-            model.addAttribute("newCustomer", new CustomerDto());
+            CustomerDto newCustomer = customerService.initializeNewCustomer();
+
+            model.addAttribute("newCustomer", newCustomer);
             model.addAttribute("airLines", airLineService.getAllAirLines());
             model.addAttribute("airports", airportService.getAllAirports());
             model.addAttribute("countriesTr", CountriesTr.values());
@@ -132,7 +136,9 @@ public class TicketController {
             model.addAttribute("currencySymbol", currencySymbol);
         }
 
-        model.addAttribute("newCustomer", new CustomerDto());
+        CustomerDto newCustomer = customerService.initializeNewCustomer();
+
+        model.addAttribute("newCustomer", newCustomer);
         model.addAttribute("airLines", airLineService.getAllAirLines());
         model.addAttribute("airports", airportService.getAllAirports());
         model.addAttribute("userList", userService.findAllUsers());
@@ -171,7 +177,9 @@ public class TicketController {
         if (bindingResult.hasErrors()){
             String currencySymbol = updatedTicket.getCurrencyUnit().getCurrencySymbol();
 
-            model.addAttribute("newCustomer", new CustomerDto());
+            CustomerDto newCustomer = customerService.initializeNewCustomer();
+
+            model.addAttribute("newCustomer", newCustomer);
             model.addAttribute("airLines", airLineService.getAllAirLines());
             model.addAttribute("airports", airportService.getAllAirports());
             model.addAttribute("countriesTr", CountriesTr.values());
