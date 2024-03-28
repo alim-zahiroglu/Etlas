@@ -9,10 +9,12 @@ import com.etlas.service.TicketService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +31,15 @@ public class CardServiceImpl implements CardService {
 
 
     @Override
+    public CardDto initiateNewCard() {
+        return CardDto.builder()
+                .availableLimitTRY(BigDecimal.ZERO)
+                .availableLimitUSD(BigDecimal.ZERO)
+                .availableLimitEUR(BigDecimal.ZERO)
+                .build();
+    }
+
+    @Override
     public CardDto findById(long paidCardId) {
        Card card = repository.findById(paidCardId).orElseThrow(NoSuchElementException::new);
        return mapper.convert(card, new CardDto());
@@ -36,27 +47,64 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardDto saveNewCard(CardDto newCard) {
+        CardDto card = prepareCardToSave(newCard);
         Card savedCard = repository.save(mapper.convert(newCard, new Card()));
         return mapper.convert(savedCard, new CardDto());
+    }
+    private CardDto prepareCardToSave(CardDto newCard) {
+        if (newCard.getAvailableLimitTRY() == null) {
+            newCard.setAvailableLimitTRY(BigDecimal.ZERO);
+        }
+        if (newCard.getAvailableLimitUSD() == null) {
+            newCard.setAvailableLimitUSD(BigDecimal.ZERO);
+        }
+        if (newCard.getAvailableLimitEUR() == null) {
+            newCard.setAvailableLimitEUR(BigDecimal.ZERO);
+        }
+        return newCard;
     }
 
     @Override
     public List<CardDto> getAllCards() {
-        int monthValue = LocalDate.now().getMonthValue();
-        List<Card> cardList = repository.findAllByIsDeletedOrderByAvailableLimitDesc(false);
+
+        List<Card> cardList = repository.findAllByIsDeletedOrderByAvailableLimitTRYDesc(false);
         return cardList.stream()
                 .map(card -> mapper.convert(card, new CardDto()))
-                .map(cardDto -> {
-                    int dayOfMonth = cardDto.getDueDate().getDayOfMonth();
-                    DecimalFormat formatter = new DecimalFormat("#,###.00");
-                    String formattedValue = formatter.format(cardDto.getAvailableLimit());
-                    cardDto.setAvailableLimitUI(formattedValue);
-
-                    String result = String.format("%02d/%02d", dayOfMonth, monthValue);
-                    cardDto.setDueDateUI(result);
-                    return cardDto;
-                })
+                .map(this::prepareToUI)
                 .collect(Collectors.toList());
+    }
+
+    private CardDto prepareToUI(CardDto cardDto) {
+        DecimalFormat formatter = new DecimalFormat("#,##0.00");
+
+        //set available TRY balance to UI
+        BigDecimal tryValue = cardDto.getAvailableLimitTRY();
+        String formattedTRYValue = (!Objects.equals(tryValue, BigDecimal.ZERO)) ? formatter.format(tryValue) : "0.00";
+        cardDto.setAvailableLimitTRYUI(formattedTRYValue);
+
+        //set available USD balance to UI
+        BigDecimal usdValue = cardDto.getAvailableLimitUSD();
+        String formattedUSDValue = (!Objects.equals(usdValue, BigDecimal.ZERO)) ? formatter.format(usdValue) : "0.00";
+        cardDto.setAvailableLimitUSDUI(formattedUSDValue);
+
+        //set available EUR balance to UI
+        BigDecimal eurValue = cardDto.getAvailableLimitEUR();
+        String formattedEURValue = (!Objects.equals(eurValue, BigDecimal.ZERO)) ? formatter.format(eurValue) : "0.00";
+        cardDto.setAvailableLimitEURUI(formattedEURValue);
+
+        String[] date = cardDto.getDueDate().split("/");
+        int dayOfMonth = Integer.parseInt(date[0]);
+        int monthValue = LocalDate.now().getMonthValue();
+        int dayValue = LocalDate.now().getDayOfMonth();
+
+        if (dayOfMonth < dayValue && monthValue == 12) {
+            monthValue = 1;
+        } else if (dayOfMonth < dayValue) {
+            monthValue++;
+        }
+        String result = String.format("%02d/%02d", dayOfMonth, monthValue);
+        cardDto.setDueDate(result);
+        return cardDto;
     }
 
     @Override
@@ -66,7 +114,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public List<CardDto> findAllCardList() {
-        List<Card> cardList = repository.findAllByIsDeletedOrderByAvailableLimitDesc(false);
+        List<Card> cardList = repository.findAllByIsDeletedOrderByAvailableLimitTRYDesc(false);
         return cardList.stream()
                 .map(card -> mapper.convert(card, new CardDto()))
                 .collect(Collectors.toList());

@@ -97,10 +97,6 @@ public class TicketController {
             model.addAttribute("genders", Gender.values());
             model.addAttribute("currencySymbol", currencySymbol);
 
-            System.out.println(bindingResult.getAllErrors() + "**************************************");
-
-            System.out.println(newTicket + "**************************************");
-
             return "ticket/ticket-create";
         }
 
@@ -108,7 +104,6 @@ public class TicketController {
         redirectAttributes.addFlashAttribute("isNewTicketSaved",true);
         redirectAttributes.addFlashAttribute("savedTicketName",savedTicket.getPnrNo());
 
-        System.out.println(newTicket + "**************************************");
         return "redirect:/ticket/create";
     }
 

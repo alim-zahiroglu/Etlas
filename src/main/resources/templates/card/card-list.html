@@ -128,7 +128,9 @@
                                                 <tr>
                                                     <th scope="col">Card Owner</th>
                                                     <th scope="col">Bank Name</th>
-                                                    <th scope="col">Available limit</th>
+                                                    <th scope="col">Balance ₺</th>
+                                                    <th scope="col">Balance $</th>
+                                                    <th scope="col">Balance €</th>
                                                     <th scope="col">Due Date</th>
                                                     <th scope="col">Action</th>
 
@@ -139,8 +141,10 @@
                                                 <tr th:each="card :${cardList}">
                                                     <td th:text="${card.cardOwner} "></td>
                                                     <td th:text="${card.bankName}"></td>
-                                                    <td th:text="${card.availableLimitUI} + ' ₺'"></td>
-                                                    <td th:text="${card.dueDateUI}"></td>
+                                                    <td th:text="${card.availableLimitTRY} + ' ₺'"></td>
+                                                    <td th:text="${card.availableLimitUSD} + ' $'"></td>
+                                                    <td th:text="${card.availableLimitEUR} + ' €'"></td>
+                                                    <td th:text="${card.dueDate}"></td>
                                                     <td class="actions">
                                                         <a th:href="@{/card/update/{cardId}(cardId = ${card.id})}">
                                                             <button type="button" class="btn custom_update_button p-1">

@@ -24,13 +24,18 @@ public class CardDto {
     private String bankName;
 
     @Min(value = 0, message = "Available limit must be greater than or equal to 0")
-    private BigDecimal availableLimit;
+    private BigDecimal availableLimitTRY;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dueDate;
+    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
+    private BigDecimal availableLimitUSD;
 
-    private String availableLimitUI;
+    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
+    private BigDecimal availableLimitEUR;
 
-    private String dueDateUI;
+    private String dueDate;
+
+    private String availableLimitTRYUI;
+    private String availableLimitUSDUI;
+    private String availableLimitEURUI;
 
 }

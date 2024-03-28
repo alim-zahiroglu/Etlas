@@ -1,6 +1,6 @@
 // initialize the dataRangePicker for perches-data and payed-data
 $(function () {
-    $('.date-picker').daterangepicker({
+    $('#car-due-date').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,
         timePicker: false,
@@ -8,7 +8,7 @@ $(function () {
         timePickerIncrement: 5,
         autoApply:true,
         locale: {
-            format: 'DD/MM/YYYY' // Adjust the format to display only 24-hour time
+            format: 'DD/MM' // Adjust the format to display only 24-hour time
         },
         // startDate: moment()
     });

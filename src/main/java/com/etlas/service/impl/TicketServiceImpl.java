@@ -142,8 +142,8 @@ public class TicketServiceImpl implements TicketService {
     private void calculateCreditCardLimit(TicketDto newTicket) {
         long paidCardId = newTicket.getPaidCard().getId();
         CardDto creditCard = cardService.findById(paidCardId);
-        BigDecimal newLimit = creditCard.getAvailableLimit().subtract(newTicket.getPayedAmount());
-        creditCard.setAvailableLimit(newLimit);
+        BigDecimal newLimit = creditCard.getAvailableLimitTRY().subtract(newTicket.getPayedAmount());
+        creditCard.setAvailableLimitTRY(newLimit);
         cardService.saveCreditCard(creditCard);
     }
 
