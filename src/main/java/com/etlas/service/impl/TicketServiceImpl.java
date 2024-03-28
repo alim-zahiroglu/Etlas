@@ -95,7 +95,8 @@ public class TicketServiceImpl implements TicketService {
 
         newTicket.setPayedCustomer(customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI())));
 
-        calculateCustomerBalanceAndCreditCardLimitsAndProfit(newTicket);
+        calculateCustomerBalanceAndProfit(newTicket);
+        calculateCreditCardLimit(newTicket);
         saveBalanceRecord(newTicket);
     }
 
@@ -106,7 +107,7 @@ public class TicketServiceImpl implements TicketService {
         newTicket.setPassengers(passengers);
 
     }
-    private void calculateCustomerBalanceAndCreditCardLimitsAndProfit (TicketDto newTicket) {
+    private void calculateCustomerBalanceAndProfit(TicketDto newTicket) {
         long payedCustomerId = Long.parseLong(newTicket.getPayedCustomerUI());
         CustomerDto customer = customerService.findById(payedCustomerId);
         CurrencyUnits currencyUnits = newTicket.getCurrencyUnit();
@@ -126,7 +127,6 @@ public class TicketServiceImpl implements TicketService {
             BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(unPayed);
             customer.setCustomerTRYBalance(newBalance);
             customerService.saveNewCustomer(customer);
-            calculateCreditCardLimit(newTicket);
 
         } else if (currencyUnits.getDescription().equals("$ USD")) {
             BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(unPayed);
@@ -142,9 +142,24 @@ public class TicketServiceImpl implements TicketService {
     private void calculateCreditCardLimit(TicketDto newTicket) {
         long paidCardId = newTicket.getPaidCard().getId();
         CardDto creditCard = cardService.findById(paidCardId);
-        BigDecimal newLimit = creditCard.getAvailableLimitTRY().subtract(newTicket.getPayedAmount());
-        creditCard.setAvailableLimitTRY(newLimit);
-        cardService.saveCreditCard(creditCard);
+
+        if (newTicket.getCurrencyUnit().equals(CurrencyUnits.TRY)) {
+            BigDecimal newLimit = creditCard.getAvailableLimitTRY().subtract(newTicket.getPerchesPrice());
+            creditCard.setAvailableLimitTRY(newLimit);
+            cardService.saveCreditCard(creditCard);
+        }
+
+        if (newTicket.getCurrencyUnit().equals(CurrencyUnits.USD)) {
+            BigDecimal newLimit = creditCard.getAvailableLimitUSD().subtract(newTicket.getPerchesPrice());
+            creditCard.setAvailableLimitUSD(newLimit);
+            cardService.saveCreditCard(creditCard);
+        }
+
+        if (newTicket.getCurrencyUnit().equals(CurrencyUnits.EUR)) {
+            BigDecimal newLimit = creditCard.getAvailableLimitEUR().subtract(newTicket.getPerchesPrice());
+            creditCard.setAvailableLimitEUR(newLimit);
+            cardService.saveCreditCard(creditCard);
+        }
     }
 
     private void saveBalanceRecord(TicketDto newTicket) {
@@ -328,7 +343,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public boolean deleteTicket(long ticketId) {
         Ticket ticketToBeDeleted = repository.findById(ticketId).orElseThrow(NoSuchElementException::new);
-        ticketToBeDeleted.setPnrNo(ticketToBeDeleted.getPnrNo() + "_deleted");
+        ticketToBeDeleted.setPnrNo(ticketToBeDeleted.getPnrNo() + "_" + LocalDateTime.now());
         ticketToBeDeleted.setDeleted(true);
         repository.save(ticketToBeDeleted);
         return true;
