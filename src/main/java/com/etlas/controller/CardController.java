@@ -36,13 +36,14 @@ public class CardController {
     }
 
     @GetMapping("/create")
-    public String userCreate(Model model){
-        model.addAttribute("newCard",new CardDto());
+    public String cardCreate(Model model){
+        CardDto newCard = cardService.initiateNewCard();
+        model.addAttribute("newCard",newCard);
         model.addAttribute("bankNames", bankService.getAllBankNames());
         return "/card/card-create";
     }
     @PostMapping("/create")
-    public String saveUser(@Valid @ModelAttribute("newCard") CardDto newCard, BindingResult bindingResult,
+    public String saveCard(@Valid @ModelAttribute("newCard") CardDto newCard, BindingResult bindingResult,
                            RedirectAttributes redirectAttributes, Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("bankNames", bankService.getAllBankNames());

@@ -17,4 +17,6 @@ public interface CardService {
     CardDto findById(long paidCardId);
 
     void saveCreditCard(CardDto creditCard);
+
+    CardDto initiateNewCard();
 }

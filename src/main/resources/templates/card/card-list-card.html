@@ -80,11 +80,23 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="row w-100">
-                                                            <div class="col-12 p-0 m-0 text-right" id="second-row-right">
-                                                                <p class="card-view-text" th:text="${card.availableLimitUI} + ' ₺'" id="availableLimit"></p>
+
+                                                            <div class="col-12 p-0 m-0 text-right" id="second-row-top-right">
+                                                                <p class="card-view-text" th:text="${card.availableLimitTRYUI} + ' ₺'" id="availableTRYLimit"></p>
                                                             </div>
-                                                        </div>
+
+
+
+                                                            <div class="col-12 p-0 m-0 text-right" id="second-row-mid-right">
+                                                                <p class="card-view-text" th:text="${card.availableLimitUSDUI} + ' $'" id="availableUSDLimit"></p>
+                                                            </div>
+
+
+
+                                                            <div class="col-12 p-0 m-0 text-right" id="second-row-bottom-right">
+                                                                <p class="card-view-text" th:text="${card.availableLimitEURUI} + ' €'" id="availableEURLimit"></p>
+                                                            </div>
+
 
                                                         <div class="row w-100">
                                                             <div class="col-9 p-0 m-0" id="bottom-row-left">
@@ -92,7 +104,7 @@
 
                                                             </div>
                                                             <div class="col-3 p-0 m-0 text-right" id="bottom-row-right">
-                                                                <p class="card-view-text-bottom" th:text="${card.dueDateUI}" id="card-dueDate"></p>
+                                                                <p class="card-view-text-bottom" th:text="${card.dueDate}" id="card-dueDate"></p>
                                                             </div>
                                                         </div>
 

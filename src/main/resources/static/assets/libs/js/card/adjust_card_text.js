@@ -9,14 +9,14 @@ function resizeText() {
         const firsRowLeft = cardWidth / 10;
         const firsRowRight = cardWidth / 60;
 
-        const secondRowFontSize = cardWidth / 17;
-        const secondRowTop = cardWidth / 5;
+        const secondRowTop = cardWidth / 8;
+        const secondRowMidTop = cardWidth / 7.2;
+        const secondRowBottomTop = cardWidth / 6.4;
 
-        const bottomRowTop = cardWidth / 3.8;
-        const bottomRowLeft = cardWidth / 12;
+        const bottomRowTop = cardWidth / 5.6;
+        const bottomRowLeftTop = cardWidth / 6.3;
+        const bottomRowLeft = cardWidth / 14;
 
-        const bottomRowRightTop = cardWidth / 3.4;
-        const bottomRowRight = cardWidth / 12;
 
 
         card.querySelector('#first-row-left').style.top = firsRowTop + 'px';
@@ -26,17 +26,25 @@ function resizeText() {
         card.querySelector('#first-row-right').style.top = firsRowTop + 'px';
         card.querySelector('#first-row-right').style.right = firsRowRight + 'px';
 
-        card.querySelector('#availableLimit').style.fontSize = secondRowFontSize + 'px';
-        card.querySelector('#second-row-right').style.right = buttonSize + 'px';
-        card.querySelector('#second-row-right').style.top = secondRowTop + 'px';
+        card.querySelector('#availableTRYLimit').style.fontSize = fontSize + 'px';
+        card.querySelector('#second-row-top-right').style.right = buttonSize + 'px';
+        card.querySelector('#second-row-top-right').style.top = secondRowTop + 'px';
+
+        card.querySelector('#availableUSDLimit').style.fontSize = fontSize + 'px';
+        card.querySelector('#second-row-mid-right').style.right = buttonSize + 'px';
+        card.querySelector('#second-row-mid-right').style.top = secondRowMidTop + 'px';
+
+        card.querySelector('#availableEURLimit').style.fontSize = fontSize + 'px';
+        card.querySelector('#second-row-bottom-right').style.right = buttonSize + 'px';
+        card.querySelector('#second-row-bottom-right').style.top = secondRowBottomTop + 'px';
 
         card.querySelector('#bottom-row-left').style.fontSize = fontSize + 'px';
         card.querySelector('#bottom-row-left').style.left = bottomRowLeft + 'px';
-        card.querySelector('#bottom-row-left').style.top = bottomRowTop + 'px';
+        card.querySelector('#bottom-row-left').style.top = bottomRowLeftTop + 'px';
 
-        card.querySelector('#bottom-row-right').style.fontSize = fontSize + 'px';
-        card.querySelector('#bottom-row-right').style.right = bottomRowRight + 'px';
-        card.querySelector('#bottom-row-right').style.top = bottomRowRightTop + 'px';
+        card.querySelector('#bottom-row-right').style.fontSize = buttonSize + 'px';
+        card.querySelector('#bottom-row-right').style.right = bottomRowLeft + 'px';
+        card.querySelector('#bottom-row-right').style.top = bottomRowTop + 'px';
 
 
         card.querySelectorAll('.action-buttons').forEach(function (button) {

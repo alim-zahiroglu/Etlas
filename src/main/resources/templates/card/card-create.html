@@ -90,31 +90,85 @@
                                                     </div>
 
                                                     <div class="col-md-6"
-                                                         th:classappend="${#fields.hasErrors('availableLimit')} ? 'error' : ''">
+                                                         th:classappend="${#fields.hasErrors('availableLimitTRY')} ? 'error' : ''">
                                                         <div class="form-group p-0 m-0">
-                                                            <label for="inputAvailableLimit" class="form-label pl-1">Available
-                                                                limit</label>
-                                                            <input type="number" th:field="*{availableLimit}"
-                                                                   class="form-control"
-                                                                   id="inputAvailableLimit">
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('availableLimit')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('availableLimit')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
+                                                            <label for="customerTRYBalance" class="form-label pl-1">Available
+                                                                Balance</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{availableLimitTRY}"
+                                                                       id="customerTRYBalance"
+                                                                       name="customerBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyTRYSymbol">₺</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('availableLimitTRY')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('availableLimitTRY')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6"
+                                                         th:classappend="${#fields.hasErrors('availableLimitUSD')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="customerTRYBalance" class="form-label pl-1">Available
+                                                                Balance</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{availableLimitUSD}"
+                                                                       id="customerUSDBalance"
+                                                                       name="customerBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyUSDSymbol">$</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('availableLimitUSD')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('availableLimitUSD')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6"
+                                                         th:classappend="${#fields.hasErrors('availableLimitEUR')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="customerEURBalance" class="form-label pl-1">Available
+                                                                Balance</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{availableLimitEUR}"
+                                                                       id="customerEURBalance"
+                                                                       name="customerBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyEURSymbol">€</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('availableLimitEUR')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('availableLimitEUR')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6"
                                                          style="padding: 0 8px 0 8px;margin-top: 16px">
-                                                        <label for="date-of-payed" class="form-label pl-1">
+                                                        <label for="car-due-date" class="form-label pl-1">
                                                             <i class="fa-regular fa-calendar-days"></i> Due
                                                             Date</label>
                                                         <input type="text" th:field="*{dueDate}"
                                                                class="form-control date-picker"
-                                                               id="date-of-payed">
+                                                               id="car-due-date">
                                                     </div>
 
 

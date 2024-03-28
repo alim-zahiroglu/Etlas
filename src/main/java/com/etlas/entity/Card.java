@@ -3,8 +3,6 @@ package com.etlas.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +22,12 @@ public class Card extends BaseEntity{
     private String cardOwner;
 
     private String bankName;
-    private BigDecimal availableLimit;
 
-    @Column(columnDefinition = "DATE")
-    private LocalDate dueDate;
+    private BigDecimal availableLimitTRY;
+
+    private BigDecimal availableLimitUSD;
+
+    private BigDecimal availableLimitEUR;
+
+    private String dueDate;
 }
