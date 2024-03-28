@@ -178,7 +178,7 @@
                                                             </button>
                                                         </a>
                                                         <a href="#" class="delete-row">
-                                                            <button type="button" id="delete-row"
+                                                            <button type="button" id="delete-customer-row"
                                                                     class="btn custom_delete_button p-1 delete-row"
                                                                     th:data-customer="${customer.customerType.description eq 'Company' ? customer.companyName : (customer.firstName + ' ' + customer.lastName)}"
                                                                     th:data-customerId="${customer.id}">
@@ -193,7 +193,7 @@
                                         </div>
 
 
-                                        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="customerConfirmationModal" tabindex="-1" role="dialog"
                                              aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content p-2">

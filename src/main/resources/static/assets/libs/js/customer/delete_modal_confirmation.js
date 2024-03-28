@@ -1,10 +1,13 @@
 // Add an event listener for the delete button clicks
-const deleteCustomer = document.querySelectorAll('#delete-row');
-deleteCustomer.addEventListener('click', function () {
-    const customer = this.getAttribute('data-customer');
-    const customerId = this.getAttribute('data-customerId');
-    showConfirmationModal(customer, customerId);
+const deleteCustomerButtons = document.querySelectorAll('#delete-customer-row');
+deleteCustomerButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        const customer = this.getAttribute('data-customer');
+        const customerId = this.getAttribute('data-customerId');
+        showConfirmationModal(customer, customerId);
+    });
 });
+
 
 function showConfirmationModal(customer, customerId) {
     // Disable body scroll when modal is open
@@ -15,7 +18,7 @@ function showConfirmationModal(customer, customerId) {
     confirmationCustomerNameElement.innerHTML = `Are you sure you want to delete customer <strong style="color: red;">'${customer}'</strong>?`;
 
     // Show the confirmation modal
-    const confirmationModal = $('#confirmationModal').modal('show');
+    const confirmationModal = $('#customerConfirmationModal').modal('show');
 
     // Add an event listener for the OK button in the modal
     document.getElementById('confirmDelete').addEventListener('click', function () {
@@ -36,5 +39,5 @@ function showConfirmationModal(customer, customerId) {
 
 function closeConfirmationModal() {
     $('body').css('overflow', 'auto');
-    $('#confirmationModal').modal('hide');
+    $('#customerConfirmationModal').modal('hide');
 }
