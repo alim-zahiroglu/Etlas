@@ -1,9 +1,11 @@
 package com.etlas.service.impl;
 
 import com.etlas.dto.CardDto;
+import com.etlas.entity.Bank;
 import com.etlas.entity.Card;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CardRepository;
+import com.etlas.service.BankService;
 import com.etlas.service.CardService;
 import com.etlas.service.TicketService;
 import org.springframework.context.annotation.Lazy;
@@ -21,11 +23,13 @@ import java.util.stream.Collectors;
 public class CardServiceImpl implements CardService {
     private final CardRepository repository;
     private final MapperUtil mapper;
+    private final BankService bankService;
     private final TicketService ticketService;
 
-    public CardServiceImpl(CardRepository repository, MapperUtil mapper, @Lazy TicketService ticketService) {
+    public CardServiceImpl(CardRepository repository, MapperUtil mapper, BankService bankService, @Lazy TicketService ticketService) {
         this.repository = repository;
         this.mapper = mapper;
+        this.bankService = bankService;
         this.ticketService = ticketService;
     }
 
@@ -48,7 +52,8 @@ public class CardServiceImpl implements CardService {
     @Override
     public CardDto saveNewCard(CardDto newCard) {
         CardDto card = prepareCardToSave(newCard);
-        Card savedCard = repository.save(mapper.convert(newCard, new Card()));
+        saveBankNames(newCard);
+        Card savedCard = repository.save(mapper.convert(card, new Card()));
         return mapper.convert(savedCard, new CardDto());
     }
     private CardDto prepareCardToSave(CardDto newCard) {
@@ -62,6 +67,15 @@ public class CardServiceImpl implements CardService {
             newCard.setAvailableLimitEUR(BigDecimal.ZERO);
         }
         return newCard;
+    }
+
+    private void saveBankNames(CardDto newCard) {
+        if (newCard.getBankName() != null) {
+            String bankName = newCard.getBankName();
+            if (!bankService.isBankNameExist(bankName)) {
+                bankService.saveBankName(Bank.builder().bankName(bankName).build());
+            }
+        }
     }
 
     @Override

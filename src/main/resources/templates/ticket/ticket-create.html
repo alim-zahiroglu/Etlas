@@ -266,6 +266,7 @@
                                                         </div>
 
                                                         <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
+                                                             th:classappend="${#fields.hasErrors('paidCard')} ? 'error' : ''"
                                                              style="padding: 0 8px 0 4px;margin-top: 17px">
                                                             <label for="selected-credit-card"
                                                                    class="form-label pl-1 mb-1 d-block">Paid
@@ -281,6 +282,18 @@
                                                                 <i id="selected-card-selector-arrow"
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
                                                             </div>
+
+                                                            <div class="custom-invalid-feedback"
+                                                                 style="position: absolute"
+                                                                 th:if="${#fields.hasErrors('paidCard')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('paidCard')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+
+
+
                                                         </div>
 
                                                         <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
