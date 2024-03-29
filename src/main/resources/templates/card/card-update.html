@@ -18,7 +18,7 @@
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i
                                         class="fa-solid fa-house"></i> Cards </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i
-                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Add new card
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Update card
                                 </li>
                             </ol>
                         </nav>
@@ -39,15 +39,17 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header text-center text-white bold_font"
-                                         style="font-size: x-large;background: #117dc0 !important;">Add New Card
+                                         style="font-size: x-large;background: #f8a526 !important;">Update Card
                                     </div>
                                     <div class="card-body pt-5 pb-5">
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form th:object="${newCard}" th:action="@{/card/create}" method="post"
+                                                <form th:object="${cardToBeUpdate}" th:action="@{/card/update/{cardId}(cardId = ${cardToBeUpdate.id})}" method="post"
                                                       class="row g-3">
 
+
+                                                    <input th:field="*{fromForUpdateUI}" class="col-md-6" hidden="hidden">
 
                                                     <div class="col-md-6"
                                                          th:classappend="${#fields.hasErrors('cardOwner')} ? 'error' : ''">
@@ -174,10 +176,11 @@
 
                                                     <div class="row pt-4 m-0">
                                                         <div class="col-12 col-md-12 col-lg-12 text-right">
-                                                            <button type="submit"
-                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
-                                                                Save
+                                                            <button type="submit" id="saveTicketButton"
+                                                                    class="btn update-page-update_button pr-5 pl-5">
+                                                                Update
                                                             </button>
+
                                                         </div>
                                                     </div>
 

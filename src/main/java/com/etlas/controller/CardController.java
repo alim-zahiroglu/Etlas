@@ -10,6 +10,7 @@ import com.etlas.service.CardService;
 import com.etlas.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,32 +74,31 @@ public class CardController {
         if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
     }
-//
-//    @GetMapping("/update/{userName}")
-//    public String updateUser(@PathVariable("userName") String userName, Model model){
-//        UserDto userToBeUpdate = bankService.getUserByUserName(userName);
-//        model.addAttribute("userToBeUpdate",userToBeUpdate);
-//        model.addAttribute("roles", Role.values());
-//        model.addAttribute("genders", Gender.values());
-//        model.addAttribute("userStatuses", UserStatus.values());
-//        return "user/user-update";
-//    }
-//
-//    @PostMapping("/update/{id}")
-//    public String saveUpdatedUser(@Valid @ModelAttribute("userToBeUpdate") UserDto userToBeUpdate, BindingResult bindingResult,
-//                                  Model model, RedirectAttributes redirectAttributes){
-//        bindingResult = bankService.validateUpdatedUser(userToBeUpdate,bindingResult);
-//        if (bindingResult.hasErrors()){
-//            userToBeUpdate.setUseDefaultPassword(false);
-//            userToBeUpdate.setUseCurrentPassword(false);
-//            model.addAttribute("roles", Role.values());
-//            model.addAttribute("genders", Gender.values());
-//            model.addAttribute("userStatuses", UserStatus.values());
-//            return "user/user-update";
-//        }
-//        UserDto updatedUser = bankService.saveUpdatedUser(userToBeUpdate);
-//        redirectAttributes.addFlashAttribute("userIsUpdated", true);
-//        redirectAttributes.addFlashAttribute("updatedUser", updatedUser);
-//        return "redirect:/user/list";
-//    }
+
+    @GetMapping("/update/{cardId}")
+    public String updateCard(@PathVariable("cardId") long id, @Param("from") String from, Model model){
+        CardDto cardToBeUpdate = cardService.findById(id);
+        cardToBeUpdate.setFromForUpdateUI(from);
+
+        model.addAttribute("cardToBeUpdate",cardToBeUpdate);
+        model.addAttribute("bankNames", bankService.getAllBankNames());
+        return "card/card-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String saveUpdatedUser(@Valid @ModelAttribute("cardToBeUpdate") CardDto cardToBeUpdate, BindingResult bindingResult,
+                                  Model model, RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("bankNames", bankService.getAllBankNames());
+            return "card/card-update";
+        }
+        CardDto updatedCard = cardService.updateCard(cardToBeUpdate);
+        redirectAttributes.addFlashAttribute("isCardUpdated", true);
+        redirectAttributes.addFlashAttribute("updatedCardName", updatedCard.getCardOwner());
+
+        System.out.println(cardToBeUpdate.getFromForUpdateUI() + "***********************************");
+        if (cardToBeUpdate.getFromForUpdateUI().equals("card")) return "redirect:/card/list/card";
+        return "redirect:/card/list";
+    }
 }

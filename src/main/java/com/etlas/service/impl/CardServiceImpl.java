@@ -69,6 +69,11 @@ public class CardServiceImpl implements CardService {
         return newCard;
     }
 
+    @Override
+    public CardDto updateCard(CardDto cardToBeUpdate) {
+        return saveNewCard(cardToBeUpdate);
+    }
+
     private void saveBankNames(CardDto newCard) {
         if (newCard.getBankName() != null) {
             String bankName = newCard.getBankName();

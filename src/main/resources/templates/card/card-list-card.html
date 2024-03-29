@@ -58,11 +58,13 @@
                                                     <div class="card-body p-0 w-100" style="position: absolute;">
                                                         <div class="row w-100">
                                                             <div class="col-4 p-0 m-0" id="first-row-left">
-                                                                <a th:href="@{/card/update/{cardId}(cardId = ${card.id})}"
+                                                                <a href="#"
                                                                    style="text-decoration: none" class="m-0 p-0">
                                                                     <button type="button"
                                                                             class="btn card_view_custom_update_button m-0 pr-0"
-                                                                            style="top: 0">
+                                                                            id="cardUpdateCardList"
+                                                                            th:data-from="card"
+                                                                            th:data-cardId="${card.id}">
                                                                         <i class="fa-solid fa-pen-to-square update-rotate-on-hover action-buttons"></i>
                                                                     </button>
                                                                 </a>

@@ -19,4 +19,6 @@ public interface CardService {
     void saveCreditCard(CardDto creditCard);
 
     CardDto initiateNewCard();
+
+    CardDto updateCard(CardDto cardToBeUpdate);
 }

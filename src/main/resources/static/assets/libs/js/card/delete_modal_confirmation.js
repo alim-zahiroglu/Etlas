@@ -42,3 +42,25 @@ function closeConfirmationModal() {
     $('body').css('overflow', 'auto');
     $('#confirmationModal').modal('hide');
 }
+
+
+function addUpdateButtonEventListeners(buttonSelector) {
+    const updateButtons = document.querySelectorAll(buttonSelector);
+    updateButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const cardId = this.getAttribute('data-cardId');
+            const from = this.getAttribute('data-from');
+            goToUpdatePage(cardId, from);
+        });
+    });
+}
+
+function goToUpdatePage(cardId, from) {
+    window.location.href = `/card/update/${cardId}?from=${from}`;
+}
+
+// Add event listeners for update buttons in the list view page
+addUpdateButtonEventListeners('#cardUpdateList');
+
+// Add event listeners for update buttons in the card view page
+addUpdateButtonEventListeners('#cardUpdateCardList');
