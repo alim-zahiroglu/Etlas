@@ -44,23 +44,29 @@ function closeConfirmationModal() {
 }
 
 
-function addUpdateButtonEventListeners(buttonSelector) {
-    const updateButtons = document.querySelectorAll(buttonSelector);
-    updateButtons.forEach(button => {
+
+// Add event listeners for update buttons
+addButtonEventListeners('#cardUpdateList',callCardUpdateEndpoint);
+
+// Add event listeners for addBalance buttons
+addButtonEventListeners('#add-balance',callAddBalanceEndpoint);
+
+function addButtonEventListeners(buttonSelector, endpointCallback) {
+    const buttons = document.querySelectorAll(buttonSelector);
+    buttons.forEach(button => {
         button.addEventListener('click', function () {
             const cardId = this.getAttribute('data-cardId');
             const from = this.getAttribute('data-from');
-            goToUpdatePage(cardId, from);
+            endpointCallback(cardId, from);
         });
     });
 }
 
-function goToUpdatePage(cardId, from) {
+function callCardUpdateEndpoint(cardId, from) {
     window.location.href = `/card/update/${cardId}?from=${from}`;
 }
 
-// Add event listeners for update buttons in the list view page
-addUpdateButtonEventListeners('#cardUpdateList');
+function callAddBalanceEndpoint(cardId, from) {
+    window.location.href = `/card/addBalance/${cardId}?from=${from}`;
+}
 
-// Add event listeners for update buttons in the card view page
-addUpdateButtonEventListeners('#cardUpdateCardList');
