@@ -1,5 +1,6 @@
 package com.etlas.service;
 
+import com.etlas.dto.CardBalanceDto;
 import com.etlas.dto.CardDto;
 
 import java.util.List;
@@ -21,4 +22,10 @@ public interface CardService {
     CardDto initiateNewCard();
 
     CardDto updateCard(CardDto cardToBeUpdate);
+
+    CardBalanceDto initiateFordBalance();
+
+    CardDto addBalance(CardBalanceDto cardBalanceDto);
+
+    CardBalanceDto singleCardInitiateFordBalance(String cardId);
 }

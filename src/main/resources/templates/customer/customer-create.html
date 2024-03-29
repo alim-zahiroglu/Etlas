@@ -304,81 +304,8 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
-
-<script>
-    $(document).ready(function () {
-        const $mySelectForCountry = $('#mySelectForCountry');
-        const $customerCountrySelector = $('#customer-country-selector');
-
-        $mySelectForCountry.select2({
-            allowClear: false,
-            closeOnSelect: true,
-        });
-
-        $mySelectForCountry.on('select2:open', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-down').addClass('country-rotate-up');
-        });
-
-        $mySelectForCountry.on('select2:close', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-up').addClass('country-rotate-down');
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        // Handle individual checkbox click
-        $('#type-individual').on('change', function () {
-            if ($(this).prop('checked')) {
-                // If individual is checked, uncheck the company
-                $('#type-company').prop('checked', false);
-                showIndividualSections();
-            } else {
-                $('#type-company').prop('checked', true);
-                showCompanySections();
-            }
-        });
-
-        // Handle company checkbox click
-        $('#type-company').on('change', function () {
-            if ($(this).prop('checked')) {
-                // If company is checked, uncheck the individual
-                $('#type-individual').prop('checked', false);
-                showCompanySections();
-            } else {
-                $('#type-individual').prop('checked', true);
-                showIndividualSections();
-            }
-        });
-
-        // Initial state
-        if ($('#type-individual').prop('checked')) {
-            showIndividualSections();
-        } else if ($('#type-company').prop('checked')) {
-            showCompanySections();
-        }
-    });
-
-    function showIndividualSections() {
-        $('#companySection').hide();
-        $('#officePhoneSection').hide();
-        $('#individualSection').show();
-        $('#lastNameSection').show();
-        $('#genderSelection').show();
-    }
-
-    function showCompanySections() {
-        $('#companySection').show();
-        $('#officePhoneSection').show();
-        $('#individualSection').hide();
-        $('#lastNameSection').hide();
-        $('#genderSelection').hide();
-    }
-
-
-</script>
-
+<link rel="stylesheet" th:href="@{/assets/libs/css/select2-arrow-rotate.css}"/>
+<script th:src="@{/assets/libs/js/customer/customer-create-select2.js}"></script>
 
 </body>
 </html>

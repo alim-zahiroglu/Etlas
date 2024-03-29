@@ -141,9 +141,9 @@
                                                 <tr th:each="card :${cardList}">
                                                     <td th:text="${card.cardOwner} "></td>
                                                     <td th:text="${card.bankName}"></td>
-                                                    <td th:text="${card.availableLimitTRY} + ' ₺'"></td>
-                                                    <td th:text="${card.availableLimitUSD} + ' $'"></td>
-                                                    <td th:text="${card.availableLimitEUR} + ' €'"></td>
+                                                    <td th:text="${card.availableLimitTRYUI} + ' ₺'"></td>
+                                                    <td th:text="${card.availableLimitUSDUI} + ' $'"></td>
+                                                    <td th:text="${card.availableLimitEURUI} + ' €'"></td>
                                                     <td th:text="${card.dueDate}"></td>
                                                     <td class="actions">
                                                         <a href="#">
@@ -286,6 +286,41 @@
                                                         Card <strong style="color: #fa9803"
                                                                      th:text="${updatedCardName}"></strong> successfully
                                                         updated!
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="add_balance_toast_up_layer" th:if="${isBalanceAdded} == true">
+                                            <div id="add_balance_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="addBalanceSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close"
+                                                                data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+
+                                                    <div class="toast-body create_toast_body" th:inline="text">
+                                                        <p>
+                                                            Balance successfully added to <strong
+                                                                style="color: green"
+                                                                th:text="${balanceAddedCard.cardOwner + ' (' + balanceAddedCard.bankName + ')'}"></strong>
+                                                        </p>
+                                                        <p>
+                                                            New Balances: <br/>
+                                                            <strong style="color: green"
+                                                                    th:text="${'TRY balance: ' + balanceAddedCard.availableLimitTRY}"></strong><br/>
+                                                            <strong style="color: green"
+                                                                    th:text="${'USD balance: ' + balanceAddedCard.availableLimitUSD}"></strong><br/>
+                                                            <strong style="color: green"
+                                                                    th:text="${'EUR balance: ' + balanceAddedCard.availableLimitEUR}"></strong><br/>
+                                                        </p>
                                                     </div>
 
                                                 </div>

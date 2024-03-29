@@ -1,13 +1,9 @@
 package com.etlas.controller;
 
+import com.etlas.dto.CardBalanceDto;
 import com.etlas.dto.CardDto;
-import com.etlas.dto.UserDto;
-import com.etlas.enums.Gender;
-import com.etlas.enums.Role;
-import com.etlas.enums.UserStatus;
 import com.etlas.service.BankService;
 import com.etlas.service.CardService;
-import com.etlas.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -97,8 +93,57 @@ public class CardController {
         redirectAttributes.addFlashAttribute("isCardUpdated", true);
         redirectAttributes.addFlashAttribute("updatedCardName", updatedCard.getCardOwner());
 
-        System.out.println(cardToBeUpdate.getFromForUpdateUI() + "***********************************");
         if (cardToBeUpdate.getFromForUpdateUI().equals("card")) return "redirect:/card/list/card";
+        return "redirect:/card/list";
+    }
+
+    @GetMapping("/addBalance")
+    public String cardAddBalance(Model model){
+
+        model.addAttribute("balance", cardService.initiateFordBalance());
+        model.addAttribute("cardList", cardService.getAllCards());
+        return "card/add-balance";
+    }
+    @PostMapping("/addBalance")
+    public String saveBalanceAddedCard(@Valid @ModelAttribute("balance")
+                                       CardBalanceDto cardBalanceDto, BindingResult bindingResult,
+                                       Model model, RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("cardList", cardService.getAllCards());
+            return "card/add-balance";
+        }
+
+        CardDto balanceAddedCard = cardService.addBalance(cardBalanceDto);
+        redirectAttributes.addFlashAttribute("isBalanceAdded", true);
+        redirectAttributes.addFlashAttribute("balanceAddedCard", balanceAddedCard);
+        return "redirect:/card/addBalance";
+    }
+    @GetMapping("/addBalance/{cardId}")
+    public String singleCardAddBalance(@PathVariable String cardId,
+                                       @Param("from") String from, Model model){
+
+        model.addAttribute("balance", cardService.singleCardInitiateFordBalance(cardId));
+        model.addAttribute("cardList", cardService.getAllCards());
+        model.addAttribute("from", from);
+
+        if (from.equals("card")) return "card/add-balance-card-view";
+
+        return "card/add-balance-list-view";
+    }
+
+    @PostMapping("/addBalance/{cardId}")
+    public String singleCardAddBalanceSave(@ModelAttribute("balance")CardBalanceDto cardBalanceDto,
+                                           @PathVariable String cardId,
+                                           @Param("from") String from, RedirectAttributes redirectAttributes){
+
+        cardBalanceDto.setCard(cardService.findById(Long.parseLong(cardId)));
+        CardDto balanceAddedCard = cardService.addBalance(cardBalanceDto);
+
+        redirectAttributes.addFlashAttribute("isBalanceAdded", true);
+        redirectAttributes.addFlashAttribute("balanceAddedCard", balanceAddedCard);
+
+        if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
     }
 }

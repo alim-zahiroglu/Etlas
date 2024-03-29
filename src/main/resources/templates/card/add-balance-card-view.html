@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>user create</title>
+<head th:replace="~{fragments/head :: header}"></head>
+
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list/card}"><i
+                                        class="fa-solid fa-house"></i> Cards </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Add balance
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center"></header>
+
+                        <div class="row justify-content-center align-items-center pt-4">
+
+                            <div class="col-12 col-md-12 col-lg-8">
+                                <div class="input-group justify-content-end">
+                                    <div class="col-auto pr-0">
+                                        <div class="col-12 col-sm-6 col-lg-3 pr-1 d-flex align-items-right">
+                                            <a id="staffListLink"
+                                               class="btn text-light list-page-drop-downs pr-4 pl-4 mb-2"
+                                               th:href="@{/card/list/card}"><i class="fa fa-list mr-1"></i>Card List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header text-center text-white bold_font"
+                                         style="font-size: x-large;background: #22c55f !important;">Add Balance
+                                    </div>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12 col-md-12 col-lg-10">
+
+                                                <form th:object="${balance}" th:action="@{/card/addBalance/{cardId}(cardId = ${balance.card.id} , from=${from})}"
+                                                      method="post"
+                                                      class="row g-3">
+
+                                                    <div class="col-md-6"
+                                                         id="cardToAddBalance">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="cardTName" class="form-label pl-1">Card</label>
+                                                            <input type="text" th:value="${balance.card.cardOwner + ' (' + balance.card.bankName + ')'}"
+                                                                   readonly
+                                                                   class="form-control" id="cardTName">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="cardTRYBalance" class="form-label pl-1">Added
+                                                                Amount</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{tryBalance}"
+                                                                       id="cardTRYBalance"
+                                                                       name="cardBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyTRYSymbol">₺</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="cardUSDBalance" class="form-label pl-1">Added
+                                                                Amount</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{usdBalance}"
+                                                                       id="cardUSDBalance"
+                                                                       name="cardBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyUSDSymbol">$</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="cardEURBalance" class="form-label pl-1">Added
+                                                                Amount</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{eurBalance}"
+                                                                       id="cardEURBalance"
+                                                                       name="customerBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyEURSymbol">€</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row pt-4 m-0">
+                                                        <div class="col-12 col-md-12 col-lg-12 text-right">
+                                                            <button type="submit"
+                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<link rel="stylesheet" th:href="@{/assets/libs/css/select2-arrow-rotate.css}"/>
+<script th:src="@{/assets/libs/js/card/card-add-balance-select2.js}"></script>
+<script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
+</body>
+</html>
