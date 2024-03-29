@@ -56,16 +56,21 @@ public class CardController {
     }
 
     @GetMapping("/delete")
-    public String deleteCard(@RequestParam("cardId") String cardId,
+    public String deleteCard(@RequestParam("cardId") String cardId, @RequestParam("from") String from,
                              RedirectAttributes redirectAttributes){
         if (cardService.isCardDeletable(cardId)) {
             CardDto deletedCard = cardService.deleteCard(cardId);
             redirectAttributes.addFlashAttribute("isCardDeleted", true);
             redirectAttributes.addFlashAttribute("deleteCardName", deletedCard.getCardOwner());
+
+            if (from.equals("card")) return "redirect:/card/list/card";
+
             return "redirect:/card/list";
         }
         redirectAttributes.addFlashAttribute("isCardDeleted", false);
         redirectAttributes.addFlashAttribute("deleteMessage", "Because this card used in a ticket or a visa");
+
+        if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
     }
 //
