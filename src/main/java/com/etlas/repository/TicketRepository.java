@@ -15,6 +15,8 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
     Ticket findByIdAndIsDeleted(long ticketId, boolean isDeleted);
 
+//  @Query("SELECT CASE WHEN COUNT(t) > 0 THEN TRUE ELSE FALSE END FROM Ticket t WHERE LOWER(t.pnrNo) = LOWER(:pnrNo) AND t.id <> :id")
+//  boolean existsByPnrNoAndIdNot(@Param("pnrNo") String pnrNo, @Param("id") long id);
   boolean existsByPnrNoAndIdNot(String pnrNo,long id);
 
   boolean existsByPayedCustomerOrPassengersAndIsDeleted(Customer customer,Customer passenger, boolean isDeleted);
