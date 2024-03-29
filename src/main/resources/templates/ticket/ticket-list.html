@@ -197,10 +197,9 @@
 
 
                                                     <td>
-                                                        <a th:href="@{/ticket/card/details/{cardId}(cardId=${ticket.paidCard.id})}">
+                                                        <a th:href="@{/card/details/{cardId}(cardId=${ticket.paidCard.id},from='ticket')}">
                                                             <span th:text="${ticket.paidCard.getCardOwner()}"></span><br/>
                                                         </a>
-<!--                                                        <span class="ticket_table_second_line" th:text="${'('+ticket.paidCard.getBankName()+')'}"></span>-->
                                                         <span class="ticket_table_second_line" th:text="${ticket.paidCard.getBankName()}"></span>
                                                     </td>
 
@@ -343,6 +342,27 @@
                                                         Customer <strong style="color: #fa9803"
                                                                        th:text="${updatedCustomerName}"></strong>
                                                         successfully updated!
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="card_update_toast_up_layer" th:if="${isCardUpdated} == true">
+                                            <div id="card_update_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="cardUpdateSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header update_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                        Card <strong style="color: #fa9803"
+                                                                     th:text="${updatedCardName}"></strong> successfully
+                                                        updated!
                                                     </div>
 
                                                 </div>

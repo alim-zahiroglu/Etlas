@@ -267,13 +267,4 @@ public class TicketController {
         redirectAttributes.addFlashAttribute("updatedCustomerName",updatedCustomer.getFirstName() + " " + updatedCustomer.getLastName());
         return "redirect:/ticket/list";
     }
-
-    @GetMapping("card/details/{cardId}")
-    public String showCardDetails(@PathVariable("cardId") String cardId, Model model){
-        model.addAttribute("card",cardService.getCardById(Long.parseLong(cardId)));
-        model.addAttribute("from", "ticket");
-        return "/card/card-details";
-    }
-
-
 }

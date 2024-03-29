@@ -14,7 +14,8 @@
 
                         <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i class="fa-solid fa-house"></i> Cards </a></li>
+                                <li th:if="${from == 'ticket'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/ticket/list}"><i class="fa-solid fa-house"></i> Tickets </a></li>
+                                <li th:unless="${from == 'ticket'}"class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i class="fa-solid fa-house"></i> Cards </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Card details</li>
                             </ol>
                         </nav>
@@ -30,6 +31,7 @@
 
                                         <div class="btn-group">
                                             <a href="#" class="btn btn-danger delete-row" id="delete-row"
+                                               th:classappend="${from == 'ticket' ? 'disabled' : ''}"
                                                th:data-card="${card.cardOwner + ' (' + card.bankName + ')'}"
                                                th:data-cardId="${card.id}"
                                                th:data-from="${from}">
