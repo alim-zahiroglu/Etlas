@@ -118,14 +118,17 @@
                                                                id="availableEURLimit"></p>
                                                         </div>
 
-
                                                         <div class="row w-100">
                                                             <div class="col-9 p-0 m-0" id="bottom-row-left">
-                                                                <p class="card-view-text-bottom"
-                                                                   th:text="${card.cardOwner}" id="card-owner"></p>
+                                                                <a th:href="@{/card/details/{cardId}(cardId = ${card.id},from = 'card')}"
+                                                                   class="card_owner_link" style="text-decoration: none">
+                                                                    <p class="card-view-text-bottom"
+                                                                       th:text="${card.cardOwner}" id="card-owner"></p>
+                                                                </a>
                                                             </div>
                                                             <div class="col-3 p-0 m-0 text-right" id="bottom-row-right">
-                                                                <p class="card-view-text-bottom" th:text="${card.dueDate}"
+                                                                <p class="card-view-text-bottom"
+                                                                   th:text="${card.dueDate}"
                                                                    id="card-dueDate"></p>
                                                             </div>
                                                         </div>

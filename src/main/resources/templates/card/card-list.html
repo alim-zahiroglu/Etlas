@@ -139,7 +139,11 @@
                                                 <tbody>
 
                                                 <tr th:each="card :${cardList}">
-                                                    <td th:text="${card.cardOwner} "></td>
+                                                    <td>
+                                                        <a th:href="@{/card/details/{cardId}(cardId = ${card.id})}" class="card_owner_link">
+                                                            <span th:text="${card.cardOwner}"></span>
+                                                        </a>
+                                                    </td>
                                                     <td th:text="${card.bankName}"></td>
                                                     <td th:text="${card.availableLimitTRYUI} + ' ₺'"></td>
                                                     <td th:text="${card.availableLimitUSDUI} + ' $'"></td>

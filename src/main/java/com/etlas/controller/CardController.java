@@ -146,4 +146,16 @@ public class CardController {
         if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
     }
+
+    @GetMapping("/details/{cardId}")
+    public String cardDetail(@PathVariable String cardId,
+                             @Param("from") String from, Model model) {
+        CardDto card = cardService.getCardById(Long.parseLong(cardId));
+        model.addAttribute("card",card);
+        System.out.println(card.getAvailableLimitTRYUI());
+        System.out.println(card.getAvailableLimitUSDUI());
+        System.out.println(card.getAvailableLimitEURUI());
+        model.addAttribute("from",from);
+        return "card/card-details";
+    }
 }

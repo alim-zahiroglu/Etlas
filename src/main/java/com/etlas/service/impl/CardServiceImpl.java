@@ -108,6 +108,13 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    public CardDto getCardById(long cardId) {
+        Card foundCard = repository.findById(cardId).orElseThrow(NoSuchElementException::new);
+        CardDto card = mapper.convert(foundCard, new CardDto());
+        return prepareToUI(card);
+    }
+
+    @Override
     public List<CardDto> getAllCards() {
 
         List<Card> cardList = repository.findAllByIsDeletedOrderByAvailableLimitTRYDesc(false);
