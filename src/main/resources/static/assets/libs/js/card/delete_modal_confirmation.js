@@ -4,11 +4,12 @@ deleteButtons.forEach(button => {
     button.addEventListener('click', function () {
         const cardName = this.getAttribute('data-card');
         const cardId = this.getAttribute('data-cardId');
-        showConfirmationModal(cardName, cardId);
+        const from = this.getAttribute('data-from');
+        showConfirmationModal(cardName, cardId, from);
     });
 });
 
-function showConfirmationModal(cardName, cardId) {
+function showConfirmationModal(cardName, cardId, from) {
     // Disable body scroll when modal is open
     $('body').css('overflow', 'hidden');
 
@@ -22,7 +23,8 @@ function showConfirmationModal(cardName, cardId) {
     // Add an event listener for the OK button in the modal
     document.getElementById('confirmDelete').addEventListener('click', function () {
         // Redirect to the delete URL
-        window.location.href = `/card/delete?cardId=${cardId}`;
+        window.location.href = `/card/delete?cardId=${cardId}&from=${from}`;
+
     });
 
     // Add an event listener for modal close events (when Cancel or close button is clicked)
@@ -40,3 +42,31 @@ function closeConfirmationModal() {
     $('body').css('overflow', 'auto');
     $('#confirmationModal').modal('hide');
 }
+
+
+
+// Add event listeners for update buttons
+addButtonEventListeners('#cardUpdateList',callCardUpdateEndpoint);
+
+// Add event listeners for addBalance buttons
+addButtonEventListeners('#add-balance',callAddBalanceEndpoint);
+
+function addButtonEventListeners(buttonSelector, endpointCallback) {
+    const buttons = document.querySelectorAll(buttonSelector);
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            const cardId = this.getAttribute('data-cardId');
+            const from = this.getAttribute('data-from');
+            endpointCallback(cardId, from);
+        });
+    });
+}
+
+function callCardUpdateEndpoint(cardId, from) {
+    window.location.href = `/card/update/${cardId}?from=${from}`;
+}
+
+function callAddBalanceEndpoint(cardId, from) {
+    window.location.href = `/card/addBalance/${cardId}?from=${from}`;
+}
+

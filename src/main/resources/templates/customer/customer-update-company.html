@@ -187,28 +187,8 @@
     </div>
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
-<link rel="stylesheet" th:href="@{/assets/libs/css/customer-create.css}"/>
-<script th:src="@{/assets/libs/js/customer-create.js}"></script>
-
-<script>
-    $(document).ready(function () {
-        const $mySelectForCountry = $('#mySelectForCountry');
-        const $customerCountrySelector = $('#customer-country-selector');
-
-        $mySelectForCountry.select2({
-            allowClear: false,
-            closeOnSelect: true,
-        });
-
-        $mySelectForCountry.on('select2:open', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-down').addClass('country-rotate-up');
-        });
-
-        $mySelectForCountry.on('select2:close', function (e) {
-            $customerCountrySelector.removeClass('country-rotate-up').addClass('country-rotate-down');
-        });
-    });
-</script>
+<link rel="stylesheet" th:href="@{/assets/libs/css/select2-arrow-rotate.css}"/>
+<script th:src="@{/assets/libs/js/customer/customer-create-select2.js}"></script>
 
 </body>
 </html>

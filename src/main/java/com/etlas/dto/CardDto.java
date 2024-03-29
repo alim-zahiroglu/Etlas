@@ -23,13 +23,13 @@ public class CardDto {
     @NotBlank(message = "Bank name is mandatory")
     private String bankName;
 
-    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
+//    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
     private BigDecimal availableLimitTRY;
 
-    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
+//    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
     private BigDecimal availableLimitUSD;
 
-    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
+//    @Min(value = 0, message = "Available limit must be greater than or equal to 0")
     private BigDecimal availableLimitEUR;
 
     private String dueDate;
@@ -37,5 +37,9 @@ public class CardDto {
     private String availableLimitTRYUI;
     private String availableLimitUSDUI;
     private String availableLimitEURUI;
+
+    private String fromForUpdateUI;
+
+    private String fromForAddBalanceUI;
 
 }

@@ -1,5 +1,6 @@
 package com.etlas.service.impl;
 
+import com.etlas.dto.CardBalanceDto;
 import com.etlas.dto.CardDto;
 import com.etlas.entity.Bank;
 import com.etlas.entity.Card;
@@ -44,6 +45,29 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    public CardBalanceDto initiateFordBalance() {
+        List<Card> cardList =repository.findAllNonDeletedOrderByAvailableLimitTRY();
+        CardDto minTryCardDto = mapper.convert(cardList.get(0), new CardDto());
+        return CardBalanceDto.builder()
+                .card(minTryCardDto)
+                .tryBalance(BigDecimal.ZERO)
+                .usdBalance(BigDecimal.ZERO)
+                .eurBalance(BigDecimal.ZERO)
+                .build();
+
+    }
+    @Override
+    public CardBalanceDto singleCardInitiateFordBalance(String cardId) {
+        Card oldCard = repository.findById(Long.parseLong(cardId)).orElseThrow(NoSuchElementException::new);
+        return CardBalanceDto.builder()
+                .card(mapper.convert(oldCard, new CardDto()))
+                .tryBalance(BigDecimal.ZERO)
+                .usdBalance(BigDecimal.ZERO)
+                .eurBalance(BigDecimal.ZERO)
+                .build();
+    }
+
+    @Override
     public CardDto findById(long paidCardId) {
        Card card = repository.findById(paidCardId).orElseThrow(NoSuchElementException::new);
        return mapper.convert(card, new CardDto());
@@ -67,6 +91,11 @@ public class CardServiceImpl implements CardService {
             newCard.setAvailableLimitEUR(BigDecimal.ZERO);
         }
         return newCard;
+    }
+
+    @Override
+    public CardDto updateCard(CardDto cardToBeUpdate) {
+        return saveNewCard(cardToBeUpdate);
     }
 
     private void saveBankNames(CardDto newCard) {
@@ -145,5 +174,21 @@ public class CardServiceImpl implements CardService {
         card.setDeleted(true);
         Card deletedCard = repository.save(card);
         return mapper.convert(deletedCard, new CardDto());
+    }
+
+    @Override
+    public CardDto addBalance(CardBalanceDto cardBalanceDto) {
+        Card oldCard = repository.findById(cardBalanceDto.getCard().getId()).orElseThrow(NoSuchElementException::new);
+
+        if(cardBalanceDto.getTryBalance() == null) cardBalanceDto.setTryBalance(BigDecimal.ZERO);
+        if(cardBalanceDto.getUsdBalance() == null) cardBalanceDto.setUsdBalance(BigDecimal.ZERO);
+        if(cardBalanceDto.getEurBalance() == null) cardBalanceDto.setEurBalance(BigDecimal.ZERO);
+
+        oldCard.setAvailableLimitTRY(oldCard.getAvailableLimitTRY().add(cardBalanceDto.getTryBalance()));
+        oldCard.setAvailableLimitUSD(oldCard.getAvailableLimitUSD().add(cardBalanceDto.getUsdBalance()));
+        oldCard.setAvailableLimitEUR(oldCard.getAvailableLimitEUR().add(cardBalanceDto.getEurBalance()));
+
+        Card updatedCard = repository.save(oldCard);
+        return mapper.convert(updatedCard, new CardDto());
     }
 }

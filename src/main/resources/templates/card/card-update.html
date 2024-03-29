@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>user create</title>
+<head th:replace="~{fragments/head :: header}"></head>
+
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i
+                                        class="fa-solid fa-house"></i> Cards </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Update card
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center"></header>
+
+                        <div class="row justify-content-center align-items-center pt-4">
+
+                            <div class="col-12 col-md-12 col-lg-8">
+                                <div class="input-group justify-content-end">
+                                    <div class="col-auto pr-0">
+                                        <div class="col-12 col-sm-6 col-lg-3 pr-1 d-flex align-items-right">
+                                            <a id="staffListLink"
+                                               class="btn text-light list-page-drop-downs pr-4 pl-4 mb-2"
+                                               th:href="@{/card/list}"><i class="fa fa-list mr-1"></i>Card List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header text-center text-white bold_font"
+                                         style="font-size: x-large;background: #f8a526 !important;">Update Card
+                                    </div>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12 col-md-12 col-lg-10">
+
+                                                <form th:object="${cardToBeUpdate}" th:action="@{/card/update/{cardId}(cardId = ${cardToBeUpdate.id})}" method="post"
+                                                      class="row g-3">
+
+
+                                                    <input th:field="*{fromForUpdateUI}" class="col-md-6" hidden="hidden">
+
+                                                    <div class="col-md-6"
+                                                         th:classappend="${#fields.hasErrors('cardOwner')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputFirstName"
+                                                                   class="form-label pl-1">Owner Name</label>
+                                                            <input type="text" th:field="*{cardOwner}"
+                                                                   class="form-control" id="inputFirstName">
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('cardOwner')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('cardOwner')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-6"
+                                                         th:classappend="${#fields.hasErrors('bankName')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputFirstName" class="form-label pl-1">Bank
+                                                                Name</label>
+                                                            <input type="text" th:field="*{bankName}" list="bankListOptions"
+                                                                   class="form-control" id="inputBankName">
+
+                                                            <datalist id="bankListOptions">
+                                                                <option th:each="name : ${bankNames}" th:text="${name}" th:value="${name}">
+                                                            </datalist>
+
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('bankName')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('bankName')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6"
+                                                         th:classappend="${#fields.hasErrors('availableLimitTRY')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="customerTRYBalance" class="form-label pl-1">Available
+                                                                Balance</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{availableLimitTRY}"
+                                                                       id="customerTRYBalance"
+                                                                       name="customerBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyTRYSymbol">₺</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('availableLimitTRY')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('availableLimitTRY')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6"
+                                                         th:classappend="${#fields.hasErrors('availableLimitUSD')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="customerTRYBalance" class="form-label pl-1">Available
+                                                                Balance</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{availableLimitUSD}"
+                                                                       id="customerUSDBalance"
+                                                                       name="customerBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyUSDSymbol">$</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('availableLimitUSD')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('availableLimitUSD')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6"
+                                                         th:classappend="${#fields.hasErrors('availableLimitEUR')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="customerEURBalance" class="form-label pl-1">Available
+                                                                Balance</label>
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{availableLimitEUR}"
+                                                                       id="customerEURBalance"
+                                                                       name="customerBalance">
+                                                                <span class="input-group-text"
+                                                                      id="currencyEURSymbol">€</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('availableLimitEUR')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('availableLimitEUR')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6"
+                                                         style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                        <label for="car-due-date" class="form-label pl-1">
+                                                            <i class="fa-regular fa-calendar-days"></i> Due
+                                                            Date</label>
+                                                        <input type="text" th:field="*{dueDate}"
+                                                               class="form-control date-picker"
+                                                               id="car-due-date">
+                                                    </div>
+
+
+                                                    <div class="row pt-4 m-0">
+                                                        <div class="col-12 col-md-12 col-lg-12 text-right">
+                                                            <button type="submit" id="saveTicketButton"
+                                                                    class="btn update-page-update_button pr-5 pl-5">
+                                                                Update
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<script th:src="@{/assets/libs/js/card/card-create-data-picker.js}"></script>
+</body>
+</html>

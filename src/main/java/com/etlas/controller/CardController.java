@@ -1,15 +1,12 @@
 package com.etlas.controller;
 
+import com.etlas.dto.CardBalanceDto;
 import com.etlas.dto.CardDto;
-import com.etlas.dto.UserDto;
-import com.etlas.enums.Gender;
-import com.etlas.enums.Role;
-import com.etlas.enums.UserStatus;
 import com.etlas.service.BankService;
 import com.etlas.service.CardService;
-import com.etlas.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,44 +53,97 @@ public class CardController {
     }
 
     @GetMapping("/delete")
-    public String deleteCard(@RequestParam("cardId") String cardId,
+    public String deleteCard(@RequestParam("cardId") String cardId, @RequestParam("from") String from,
                              RedirectAttributes redirectAttributes){
         if (cardService.isCardDeletable(cardId)) {
             CardDto deletedCard = cardService.deleteCard(cardId);
             redirectAttributes.addFlashAttribute("isCardDeleted", true);
             redirectAttributes.addFlashAttribute("deleteCardName", deletedCard.getCardOwner());
+
+            if (from.equals("card")) return "redirect:/card/list/card";
+
             return "redirect:/card/list";
         }
         redirectAttributes.addFlashAttribute("isCardDeleted", false);
         redirectAttributes.addFlashAttribute("deleteMessage", "Because this card used in a ticket or a visa");
+
+        if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
     }
-//
-//    @GetMapping("/update/{userName}")
-//    public String updateUser(@PathVariable("userName") String userName, Model model){
-//        UserDto userToBeUpdate = bankService.getUserByUserName(userName);
-//        model.addAttribute("userToBeUpdate",userToBeUpdate);
-//        model.addAttribute("roles", Role.values());
-//        model.addAttribute("genders", Gender.values());
-//        model.addAttribute("userStatuses", UserStatus.values());
-//        return "user/user-update";
-//    }
-//
-//    @PostMapping("/update/{id}")
-//    public String saveUpdatedUser(@Valid @ModelAttribute("userToBeUpdate") UserDto userToBeUpdate, BindingResult bindingResult,
-//                                  Model model, RedirectAttributes redirectAttributes){
-//        bindingResult = bankService.validateUpdatedUser(userToBeUpdate,bindingResult);
-//        if (bindingResult.hasErrors()){
-//            userToBeUpdate.setUseDefaultPassword(false);
-//            userToBeUpdate.setUseCurrentPassword(false);
-//            model.addAttribute("roles", Role.values());
-//            model.addAttribute("genders", Gender.values());
-//            model.addAttribute("userStatuses", UserStatus.values());
-//            return "user/user-update";
-//        }
-//        UserDto updatedUser = bankService.saveUpdatedUser(userToBeUpdate);
-//        redirectAttributes.addFlashAttribute("userIsUpdated", true);
-//        redirectAttributes.addFlashAttribute("updatedUser", updatedUser);
-//        return "redirect:/user/list";
-//    }
+
+    @GetMapping("/update/{cardId}")
+    public String updateCard(@PathVariable("cardId") long id, @Param("from") String from, Model model){
+        CardDto cardToBeUpdate = cardService.findById(id);
+        cardToBeUpdate.setFromForUpdateUI(from);
+
+        model.addAttribute("cardToBeUpdate",cardToBeUpdate);
+        model.addAttribute("bankNames", bankService.getAllBankNames());
+        return "card/card-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String saveUpdatedUser(@Valid @ModelAttribute("cardToBeUpdate") CardDto cardToBeUpdate, BindingResult bindingResult,
+                                  Model model, RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("bankNames", bankService.getAllBankNames());
+            return "card/card-update";
+        }
+        CardDto updatedCard = cardService.updateCard(cardToBeUpdate);
+        redirectAttributes.addFlashAttribute("isCardUpdated", true);
+        redirectAttributes.addFlashAttribute("updatedCardName", updatedCard.getCardOwner());
+
+        if (cardToBeUpdate.getFromForUpdateUI().equals("card")) return "redirect:/card/list/card";
+        return "redirect:/card/list";
+    }
+
+    @GetMapping("/addBalance")
+    public String cardAddBalance(Model model){
+
+        model.addAttribute("balance", cardService.initiateFordBalance());
+        model.addAttribute("cardList", cardService.getAllCards());
+        return "card/add-balance";
+    }
+    @PostMapping("/addBalance")
+    public String saveBalanceAddedCard(@Valid @ModelAttribute("balance")
+                                       CardBalanceDto cardBalanceDto, BindingResult bindingResult,
+                                       Model model, RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("cardList", cardService.getAllCards());
+            return "card/add-balance";
+        }
+
+        CardDto balanceAddedCard = cardService.addBalance(cardBalanceDto);
+        redirectAttributes.addFlashAttribute("isBalanceAdded", true);
+        redirectAttributes.addFlashAttribute("balanceAddedCard", balanceAddedCard);
+        return "redirect:/card/addBalance";
+    }
+    @GetMapping("/addBalance/{cardId}")
+    public String singleCardAddBalance(@PathVariable String cardId,
+                                       @Param("from") String from, Model model){
+
+        model.addAttribute("balance", cardService.singleCardInitiateFordBalance(cardId));
+        model.addAttribute("cardList", cardService.getAllCards());
+        model.addAttribute("from", from);
+
+        if (from.equals("card")) return "card/add-balance-card-view";
+
+        return "card/add-balance-list-view";
+    }
+
+    @PostMapping("/addBalance/{cardId}")
+    public String singleCardAddBalanceSave(@ModelAttribute("balance")CardBalanceDto cardBalanceDto,
+                                           @PathVariable String cardId,
+                                           @Param("from") String from, RedirectAttributes redirectAttributes){
+
+        cardBalanceDto.setCard(cardService.findById(Long.parseLong(cardId)));
+        CardDto balanceAddedCard = cardService.addBalance(cardBalanceDto);
+
+        redirectAttributes.addFlashAttribute("isBalanceAdded", true);
+        redirectAttributes.addFlashAttribute("balanceAddedCard", balanceAddedCard);
+
+        if (from.equals("card")) return "redirect:/card/list/card";
+        return "redirect:/card/list";
+    }
 }
