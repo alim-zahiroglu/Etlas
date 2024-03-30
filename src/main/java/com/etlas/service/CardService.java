@@ -28,4 +28,6 @@ public interface CardService {
     CardDto addBalance(CardBalanceDto cardBalanceDto);
 
     CardBalanceDto singleCardInitiateFordBalance(String cardId);
+
+    CardDto getCardById(long parseLong);
 }

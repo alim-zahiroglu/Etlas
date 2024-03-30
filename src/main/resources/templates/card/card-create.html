@@ -45,7 +45,7 @@
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form th:object="${newCard}" th:action="@{/card/create}" method="post"
+                                                <form th:object="${newCard}" th:action="@{/card/create(from=${from})}" method="post"
                                                       class="row g-3">
 
 

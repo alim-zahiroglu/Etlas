@@ -33,22 +33,26 @@ public class CardController {
     }
 
     @GetMapping("/create")
-    public String cardCreate(Model model){
+    public String cardCreate(Model model,@Param("from") String from){
         CardDto newCard = cardService.initiateNewCard();
         model.addAttribute("newCard",newCard);
         model.addAttribute("bankNames", bankService.getAllBankNames());
+        model.addAttribute("from", from);
         return "/card/card-create";
     }
     @PostMapping("/create")
     public String saveCard(@Valid @ModelAttribute("newCard") CardDto newCard, BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes, Model model){
+                           RedirectAttributes redirectAttributes,
+                           @Param("from") String from, Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("bankNames", bankService.getAllBankNames());
+            model.addAttribute("from", from);
             return "card/card-create";
         }
         CardDto createdCard = cardService.saveNewCard(newCard);
         redirectAttributes.addFlashAttribute("isNewCardSaved", true);
         redirectAttributes.addFlashAttribute("savedCardName", createdCard.getCardOwner());
+        if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
     }
 
@@ -78,15 +82,18 @@ public class CardController {
 
         model.addAttribute("cardToBeUpdate",cardToBeUpdate);
         model.addAttribute("bankNames", bankService.getAllBankNames());
+        model.addAttribute("from", from);
         return "card/card-update";
     }
 
     @PostMapping("/update/{id}")
     public String saveUpdatedUser(@Valid @ModelAttribute("cardToBeUpdate") CardDto cardToBeUpdate, BindingResult bindingResult,
+                                  @Param("from") String from,
                                   Model model, RedirectAttributes redirectAttributes){
 
         if (bindingResult.hasErrors()){
             model.addAttribute("bankNames", bankService.getAllBankNames());
+            model.addAttribute("from", from);
             return "card/card-update";
         }
         CardDto updatedCard = cardService.updateCard(cardToBeUpdate);
@@ -94,6 +101,7 @@ public class CardController {
         redirectAttributes.addFlashAttribute("updatedCardName", updatedCard.getCardOwner());
 
         if (cardToBeUpdate.getFromForUpdateUI().equals("card")) return "redirect:/card/list/card";
+        if (from.equals("ticket")) return "redirect:/ticket/list";
         return "redirect:/card/list";
     }
 
@@ -145,5 +153,17 @@ public class CardController {
 
         if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
+    }
+
+    @GetMapping("/details/{cardId}")
+    public String cardDetail(@PathVariable String cardId,
+                             @Param("from") String from, Model model) {
+        CardDto card = cardService.getCardById(Long.parseLong(cardId));
+        model.addAttribute("card",card);
+        System.out.println(card.getAvailableLimitTRYUI());
+        System.out.println(card.getAvailableLimitUSDUI());
+        System.out.println(card.getAvailableLimitEURUI());
+        model.addAttribute("from",from);
+        return "card/card-details";
     }
 }

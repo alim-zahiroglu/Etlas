@@ -267,6 +267,4 @@ public class TicketController {
         redirectAttributes.addFlashAttribute("updatedCustomerName",updatedCustomer.getFirstName() + " " + updatedCustomer.getLastName());
         return "redirect:/ticket/list";
     }
-
-
 }

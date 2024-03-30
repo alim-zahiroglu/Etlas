@@ -63,6 +63,17 @@
     border: none;
     background: transparent;
 }
+#card_update_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
+#add_balance_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
+
 .update_toast_header{
     background: #fff3cd !important;
     color: #664d03 !important;

@@ -15,7 +15,9 @@
 
                         <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i
+                                <li th:if="${from == 'ticket'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/ticket/list}"><i
+                                        class="fa-solid fa-house"></i> Tickets </a></li>
+                                <li th:unless="${from == 'ticket'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i
                                         class="fa-solid fa-house"></i> Cards </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i
                                         class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Update card
@@ -45,7 +47,7 @@
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form th:object="${cardToBeUpdate}" th:action="@{/card/update/{cardId}(cardId = ${cardToBeUpdate.id})}" method="post"
+                                                <form th:object="${cardToBeUpdate}" th:action="@{/card/update/{cardId}(cardId = ${cardToBeUpdate.id},from=${from})}" method="post"
                                                       class="row g-3">
 
 
