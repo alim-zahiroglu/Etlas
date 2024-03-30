@@ -33,22 +33,26 @@ public class CardController {
     }
 
     @GetMapping("/create")
-    public String cardCreate(Model model){
+    public String cardCreate(Model model,@Param("from") String from){
         CardDto newCard = cardService.initiateNewCard();
         model.addAttribute("newCard",newCard);
         model.addAttribute("bankNames", bankService.getAllBankNames());
+        model.addAttribute("from", from);
         return "/card/card-create";
     }
     @PostMapping("/create")
     public String saveCard(@Valid @ModelAttribute("newCard") CardDto newCard, BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes, Model model){
+                           RedirectAttributes redirectAttributes,
+                           @Param("from") String from, Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("bankNames", bankService.getAllBankNames());
+            model.addAttribute("from", from);
             return "card/card-create";
         }
         CardDto createdCard = cardService.saveNewCard(newCard);
         redirectAttributes.addFlashAttribute("isNewCardSaved", true);
         redirectAttributes.addFlashAttribute("savedCardName", createdCard.getCardOwner());
+        if (from.equals("card")) return "redirect:/card/list/card";
         return "redirect:/card/list";
     }
 
