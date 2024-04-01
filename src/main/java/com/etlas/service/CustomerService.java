@@ -27,4 +27,6 @@ public interface CustomerService {
     CustomerDto initializeNewCustomer();
 
     boolean isCustomerDeletable(long customerId);
+
+    void save(CustomerDto customer);
 }

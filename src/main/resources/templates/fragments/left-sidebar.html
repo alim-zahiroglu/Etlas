@@ -13,9 +13,10 @@
                         <hr style="background: white;height: 1px; opacity: 1">
                     </div>
                     <ul class="sidebar-nav text-left">
+
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-target="#tickets" data-toggle="collapse"
-                               aria-expanded="false"><i class="fa-solid fa-plane"></i> Tickets
+                               aria-expanded="false"><i class="fa-solid fa-plane"></i> Ticket
                             </a>
                             <ul id="tickets" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
@@ -28,8 +29,23 @@
                         </li>
 
                         <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-target="#visa" data-toggle="collapse"
+                               aria-expanded="false"><i class="fa-brands fa-cc-visa"></i>
+                                Visa
+                            </a>
+                            <ul id="visa" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">New visa</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Visa List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-target="#customers" data-toggle="collapse"
-                               aria-expanded="false"><i class="fa-solid fa-address-card"></i> Customers
+                               aria-expanded="false"><i class="fa-solid fa-address-card"></i> Customer
                             </a>
                             <ul id="customers" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
@@ -42,37 +58,16 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-target="#visa" data-toggle="collapse"
-                               aria-expanded="false"><i class="fa-brands fa-cc-visa"></i>
-                                Visa
-                            </a>
-                            <ul id="visa" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Visa 1</a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Visa 2</a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Visa 3</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-target="#Transactions" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-money-check-dollar"></i>
-                                Transactions
+                                Balance Record
                             </a>
                             <ul id="Transactions" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Transactions 1</a>
+                                    <a th:href="@{/record/create}" class="sidebar-link">New Record</a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Transactions 2</a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">Transactions 3</a>
+                                    <a th:href="@{/record/list}" class="sidebar-link">Record List</a>
                                 </li>
                             </ul>
                         </li>
@@ -80,7 +75,7 @@
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-target="#cards" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-credit-card pe-2"></i>
-                                Cards
+                                Card
                             </a>
                             <ul id="cards" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
@@ -98,7 +93,7 @@
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link collapsed" data-target="#users" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-user-group pe-2"></i>
-                                Users
+                                User
                             </a>
                             <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                                 <li class="sidebar-item">
