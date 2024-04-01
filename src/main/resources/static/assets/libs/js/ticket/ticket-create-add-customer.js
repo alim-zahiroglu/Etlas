@@ -408,9 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedPaidType = paidTypeSelect.value;
         if (selectedPaidType === 'BYHAND') {
             receivedCardSelect.disabled = true;
-            receivedUserSelect.disabled = false;
         } else if (selectedPaidType === 'BYCARD') {
-            receivedUserSelect.disabled = true;
             receivedCardSelect.disabled = false;
         }
     }

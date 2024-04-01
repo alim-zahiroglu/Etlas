@@ -32,6 +32,7 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository repository;
     private final CardService cardService;
     private final MapperUtil mapper;
+    private final BalanceService balanceService;
 
 
     @Override
@@ -60,9 +61,9 @@ public class TicketServiceImpl implements TicketService {
         int passengerSize = newTicket.getPassengersUI().size();
         int ticketAmount = newTicket.getTicketAmount();
 
-        if (passengerSize >=1 && passengerSize < ticketAmount){
+        if (passengerSize >= 1 && passengerSize < ticketAmount) {
             newTicket.getPassengersUI().add(addedCustomerId);  // add new customer to passenger list
-        }else if (passengerSize <= 1 && ticketAmount == 1){
+        } else if (passengerSize <= 1 && ticketAmount == 1) {
             newTicket.setPassengersUI(List.of(addedCustomerId)); // make list from new passenger
         }
         newTicket.setPayedCustomerUI(addedCustomerId); // set new customer to payer
@@ -73,6 +74,8 @@ public class TicketServiceImpl implements TicketService {
     public TicketDto saveNewTicket(TicketDto newTicket) {
         prepareToSave(newTicket);
         Ticket savedTicket = repository.save(mapper.convert(newTicket, new Ticket()));
+        // save balance record
+        saveBalanceRecord(mapper.convert(savedTicket, new TicketDto()));
         return mapper.convert(savedTicket, new TicketDto());
     }
 
@@ -84,29 +87,29 @@ public class TicketServiceImpl implements TicketService {
         newTicket.setDepartureTime(departureDate);
         setPassengers(newTicket);
 
-        if (newTicket.isRoundTrip()){
+        if (newTicket.isRoundTrip()) {
             newTicket.setTripType(TripType.ROUND);
             newTicket.setReturnTime(returnDateTime);
-        }else newTicket.setTripType(TripType.ONEWAY);
+        } else newTicket.setTripType(TripType.ONEWAY);
 
-        if (newTicket.isMultipleTicket()){
+        if (newTicket.isMultipleTicket()) {
             newTicket.setTicketType(TicketType.MULTIPLE);
-        }else newTicket.setTicketType(TicketType.SINGLE);
+        } else newTicket.setTicketType(TicketType.SINGLE);
 
         newTicket.setPayedCustomer(customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI())));
 
         calculateCustomerBalanceAndProfit(newTicket);
         calculateCreditCardLimit(newTicket);
-        saveBalanceRecord(newTicket);
     }
 
-    private void setPassengers(TicketDto newTicket){
+    private void setPassengers(TicketDto newTicket) {
         List<CustomerDto> passengers = newTicket.getPassengersUI().stream()
                 .map(Long::parseLong).map(customerService::findById)
                 .toList();
         newTicket.setPassengers(passengers);
 
     }
+
     private void calculateCustomerBalanceAndProfit(TicketDto newTicket) {
         long payedCustomerId = Long.parseLong(newTicket.getPayedCustomerUI());
         CustomerDto customer = customerService.findById(payedCustomerId);
@@ -123,7 +126,7 @@ public class TicketServiceImpl implements TicketService {
 
         newTicket.setProfit(sales.subtract(perches));
 
-        if (currencyUnits.getDescription().equals("₺ TRY")){
+        if (currencyUnits.getDescription().equals("₺ TRY")) {
             BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(unPayed);
             customer.setCustomerTRYBalance(newBalance);
             customerService.saveNewCustomer(customer);
@@ -132,7 +135,7 @@ public class TicketServiceImpl implements TicketService {
             BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(unPayed);
             customer.setCustomerUSDBalance(newBalance);
             customerService.saveNewCustomer(customer);
-        }else {
+        } else {
             BigDecimal newBalance = customer.getCustomerEURBalance().subtract(unPayed);
             customer.setCustomerEURBalance(newBalance);
             customerService.saveNewCustomer(customer);
@@ -163,10 +166,21 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private void saveBalanceRecord(TicketDto newTicket) {
-        if (newTicket.getPayedAmount().compareTo(BigDecimal.ZERO)>0){
+        if (newTicket.getPayedAmount().compareTo(BigDecimal.ZERO) > 0) {
 
-//          TODO  saveNewBalanceRecord();
-            System.out.println("********************** -> new balance record is saved");
+            BalanceRecordDto balanceRecord = BalanceRecordDto.builder()
+                    .paidType(newTicket.getPaidType())
+                    .giver(newTicket.getPayedCustomer())
+                    .receiver(newTicket.getReceivedUser())
+                    .receiverCard(newTicket.getReceivedCard())
+                    .amount(newTicket.getPayedAmount().doubleValue())
+                    .currencyUnit(newTicket.getCurrencyUnit())
+                    .date(newTicket.getDateOfPayed())
+                    .linkedTicketId(newTicket.getId())
+                    .description(newTicket.getFromWhere().getCity() + " -> " + newTicket.getToWhere().getCity() + ", PnrNo:" + newTicket.getPnrNo())
+                    .build();
+            balanceService.saveBalanceRecordFromTicket(balanceRecord);
+
         }
     }
 
@@ -179,24 +193,26 @@ public class TicketServiceImpl implements TicketService {
         return validateNewAndUpdatedTicket(newTicket, bindingResult);
 
     }
+
     @Override
     public BindingResult validateUpdatedTicket(TicketDto updatedTicket, BindingResult bindingResult) {
 
-        if (repository.existsByPnrNoAndIdNot(updatedTicket.getPnrNo(),updatedTicket.getId())){
+        if (repository.existsByPnrNoAndIdNot(updatedTicket.getPnrNo(), updatedTicket.getId())) {
             bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + updatedTicket.getPnrNo() + " is already exist"));
         }
         return validateNewAndUpdatedTicket(updatedTicket, bindingResult);
 
     }
+
     private BindingResult validateNewAndUpdatedTicket(TicketDto ticket, BindingResult bindingResult) {
         LocalDateTime[] startEndDate = parseDateTimeRange(ticket.getDateRangeString());
         LocalDate departureDate = startEndDate[0].toLocalDate();
         LocalDate perchesDate = ticket.getDateOfPerches();
 
-        if (perchesDate.isAfter(departureDate)){
+        if (perchesDate.isAfter(departureDate)) {
             bindingResult.addError(new FieldError("ticket", "dateOfPerches", "Date of perches: '" + ticket.getDateOfPerches() + "' couldn't be after departure date"));
         }
-        if (ticket.getPassengersUI().size() > ticket.getTicketAmount()){
+        if (ticket.getPassengersUI().size() > ticket.getTicketAmount()) {
             bindingResult.addError(new FieldError("ticket", "passengersUI", "Passengers couldn't be more then ticket amount"));
         }
 
@@ -230,13 +246,13 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto findById(long ticketId) {
-        Ticket ticket = repository.findByIdAndIsDeleted(ticketId,false);
+        Ticket ticket = repository.findByIdAndIsDeleted(ticketId, false);
         return mapper.convert(ticket, new TicketDto());
     }
 
     @Override
     public TicketDto prepareTicketToUpdate(TicketDto ticketTobeUpdate) {
-        if (ticketTobeUpdate.getTripType().equals(TripType.ONEWAY)){
+        if (ticketTobeUpdate.getTripType().equals(TripType.ONEWAY)) {
             ticketTobeUpdate.setOneWayTrip(true);
             ticketTobeUpdate.setRoundTrip(false);
             // set departure time string
@@ -256,16 +272,16 @@ public class TicketServiceImpl implements TicketService {
 
             ticketTobeUpdate.setDateRangeString(departureTimeString + " - " + returnTimeString);
         }
-        if (ticketTobeUpdate.getTicketType().equals(TicketType.SINGLE)){
+        if (ticketTobeUpdate.getTicketType().equals(TicketType.SINGLE)) {
             ticketTobeUpdate.setSingleTicket(true);
             ticketTobeUpdate.setMultipleTicket(false);
-        }else {
+        } else {
             ticketTobeUpdate.setSingleTicket(false);
             ticketTobeUpdate.setMultipleTicket(true);
         }
         // set passengers
         List<String> passengersUI = ticketTobeUpdate.getPassengers().stream()
-                .map(ticket->String.valueOf(ticket.getId()))
+                .map(ticket -> String.valueOf(ticket.getId()))
                 .toList();
         ticketTobeUpdate.setPassengersUI(passengersUI);
 
@@ -280,16 +296,21 @@ public class TicketServiceImpl implements TicketService {
     public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
         prepareToSaveUpdatedTicket(updatedTicket);
         Ticket savedTicket = repository.save(mapper.convert(updatedTicket, new Ticket()));
+
         return mapper.convert(savedTicket, new TicketDto());
     }
+
     private void prepareToSaveUpdatedTicket(TicketDto updatedTicket) {
-        prepareToSave(updatedTicket);
-        adjustOldPaidCustomerBalanceAndBalanceRecord(updatedTicket);
-        adjustOldCreditCardLimit(updatedTicket);
         removeOldBalanceRecord(updatedTicket);
+        adjustOldPaidCustomerBalance(updatedTicket);
+        adjustOldCreditCardLimit(updatedTicket);
+        prepareToSave(updatedTicket);
+        saveBalanceRecord(updatedTicket);
+//        saveBalanceRecord(mapper.convert(savedTicket, new TicketDto()));
+
     }
 
-    private void adjustOldPaidCustomerBalanceAndBalanceRecord(TicketDto updatedTicket) {
+    private void adjustOldPaidCustomerBalance(TicketDto updatedTicket) {
         TicketDto oldTicket = findById(updatedTicket.getId());
 
         CustomerDto oldPidCustomer = oldTicket.getPayedCustomer();
@@ -340,26 +361,24 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private void removeOldBalanceRecord(TicketDto updatedTicket) {
-        if (updatedTicket.getPayedAmount().compareTo(BigDecimal.ZERO) > 0) {
-            // TODO removeOldBalanceRecord();
-            System.out.println("********************** -> old balance record is removed");
-        }
+        long recordId = balanceService.findRecordIdByLinkedTicketId(updatedTicket.getId());
+        balanceService.deleteBalanceRecordFromTicket(recordId);
     }
 
     @Override
     public boolean isCustomerHasTickets(Customer customer) {
-        return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer,false);
+        return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer, false);
     }
 
     @Override
     public boolean isUserBoughtTicketOrReceiveMoney(String userName) {
-        return repository.existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(userName, userName,false);
+        return repository.existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(userName, userName, false);
     }
 
     @Override
     public boolean isTicketDeletable(long ticketId) {
         TicketDto deletedTicket = findById(ticketId);
-        if (deletedTicket.isRoundTrip()){
+        if (deletedTicket.isRoundTrip()) {
             return deletedTicket.getReturnTime().isBefore(LocalDateTime.now());
         }
         return deletedTicket.getDepartureTime().isBefore(LocalDateTime.now());

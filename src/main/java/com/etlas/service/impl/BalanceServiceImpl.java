@@ -64,6 +64,11 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
+    public void saveBalanceRecordFromTicket(BalanceRecordDto balanceRecord) {
+        repository.save(mapper.convert(balanceRecord, new BalanceRecord()));
+    }
+
+    @Override
     public void deleteBalanceRecord(long recordId) {
         BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
         Customer giver = record.getGiver();
@@ -81,5 +86,17 @@ public class BalanceServiceImpl implements BalanceService {
         customerService.save(mapper.convert(giver, new CustomerDto()));
         record.setDeleted(true);
         repository.save(record);
+    }
+
+    @Override
+    public void deleteBalanceRecordFromTicket(long recordId) {
+        BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
+        record.setDeleted(true);
+        repository.save(record);
+    }
+
+    @Override
+    public long findRecordIdByLinkedTicketId(long linkedTickedId) {
+        return repository.findByLinkedTicketIdAndIsDeleted(linkedTickedId, false).getId();
     }
 }

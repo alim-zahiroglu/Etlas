@@ -40,5 +40,8 @@ public class BalanceRecordDto {
     private boolean byHand;
     private boolean byCard;
 
+    private long linkedTicketId;
+    private long linkedVisaId;
+
 
 }

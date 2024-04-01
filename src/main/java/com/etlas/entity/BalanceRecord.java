@@ -37,4 +37,7 @@ public class BalanceRecord extends BaseEntity{
     private PaidType paidType;
     private String description;
 
+    private long linkedTicketId;
+    private long linkedVisaId;
+
 }

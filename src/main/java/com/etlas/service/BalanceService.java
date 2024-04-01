@@ -12,4 +12,10 @@ public interface BalanceService {
     List<BalanceRecordDto> getAllBalanceRecords();
 
     void deleteBalanceRecord(long parseLong);
+
+    void saveBalanceRecordFromTicket(BalanceRecordDto balanceRecord);
+
+    long findRecordIdByLinkedTicketId(long linkedTicketId);
+
+    void deleteBalanceRecordFromTicket(long recordId);
 }

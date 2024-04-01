@@ -58,7 +58,7 @@ public class Ticket extends BaseEntity{
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime returnTime;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Customer> passengers;
 
     @ManyToOne
