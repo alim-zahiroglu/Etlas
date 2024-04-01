@@ -14,7 +14,8 @@
 
                         <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
+                                <li th:if="${from == 'record'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/record/list}"><i class="fa-solid fa-house"></i> Balance Records </a></li>
+                                <li th:unless="${from == 'record'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Customer details</li>
                             </ol>
                         </nav>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>customer list</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body class="bg-light">
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+
+
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a href="#"><i
+                                        class="fa-solid fa-house"></i> Balance Records </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Record list
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center pt-5">
+                            <h4 class="panel-title bold_font">Balance Records</h4>
+                        </header>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0 shadow-none bg-light justify-content-center align-items-center">
+                                    <div class="col-12 col-md-12 col-lg-11">
+
+                                        <div class="row bg-white mr-0 ml-0 table_top_search_bar_column"
+                                             style="border-radius: 5px">
+                                            <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2 pl-1">
+                                                <div class="col-12 dropdown pl-0">
+                                                    <button class="btn list-page-drop-downs dropdown-toggle"
+                                                            type="button"
+                                                            id="more_actions" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa-solid fa-list"></i> More Actions
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-custom-css"
+                                                         aria-labelledby="more_actions">
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="more_actions_copy"
+                                                           style="display: flex; align-items: center;">
+                                                            <span>Copy</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/copy.png}"></span>
+                                                        </a>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="more_actions_print"
+                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                            <span>Print</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/print.png}"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2">
+                                                <input type="search" class="form-control mb-2 mb-md-0 mb-sm-2"
+                                                       id="myInput" placeholder="Search...">
+
+                                            </div>
+
+                                            <div class="col-12 col-md-12 col-lg-4 text-right pr-1">
+
+                                                <a th:href="@{/record/create}">
+                                                    <button class="btn list-page-drop-downs mr-0" id="userCreate">
+                                                        <i class="fa-solid fa-user-plus"></i> New Record
+                                                    </button>
+                                                </a>
+                                                <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
+                                                    <button class="btn list-page-drop-downs-export dropdown-toggle"
+                                                            type="button"
+                                                            id="export_buttons" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa-solid fa-file-export"></i> Export
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css"
+                                                         aria-labelledby="export_buttons">
+                                                        <div class="export_header" style="cursor: pointer"><span
+                                                                class="pr-4">Export As</span>
+                                                            <i class="fa-solid fa-download"></i></div>
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="export_pdf" style="display: flex; align-items: center;">
+                                                            <span>PDF</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/pdf.png}"></span>
+                                                        </a>
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="export_excel"
+                                                           style="display: flex; align-items: center;">
+                                                            <span>Excel</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/excel.png}"></span>
+                                                        </a>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="export_csv"
+                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                            <span>CSV</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/csv.png}"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <table id="example"
+                                                   class="table table-hover table-bordered bg-white users_table">
+                                                <thead class="custom_table_header">
+                                                <tr>
+                                                    <th scope="col">Giver</th>
+                                                    <th scope="col">Receiver</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Received Card</th>
+                                                    <th scope="col">description</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="record :${recordList}">
+                                                    <td>
+                                                        <a th:href="@{/customer/details/{customerId}(customerId=${record.giver.id},from='record')}">
+                                                            <!-- Check customer type and display appropriate name -->
+                                                            <span th:if="${record.giver.customerType.description eq 'Company'}"
+                                                                  th:utext="${record.giver.companyName}"></span>
+                                                            <span th:if="${record.giver.customerType.description eq 'Individual'}"
+                                                                  th:text="${record.giver.firstName} + ' ' + ${record.giver.lastName}"></span>
+                                                        </a>
+                                                    </td>
+
+                                                    <td th:text="${record.receiver.firstName + ' ' + record.receiver.lastName}"></td>
+
+                                                    <td>
+                                                        <span th:text="${record.amount}"></span>
+                                                        <span th:text="${record.currencyUnit.description == '₺ TRY' ? ' ₺' : (record.currencyUnit.description == '$ USD' ? ' $' : ' €')}"></span>
+                                                    </td>
+
+                                                    <td th:text="${#temporals.format(record.date, 'dd/MM/yyyy')}"></td>
+
+                                                    <td th:if="${record.paidType.description == 'By Card'}"
+                                                        th:text="${record.receiverCard != null ? record.receiverCard.cardOwner + ' (' + record.receiverCard.bankName + ')' : 'None'}">
+
+                                                    </td>
+                                                    <td th:if="${record.paidType.description == 'By Hand'}"
+                                                        th:text="None">
+                                                    </td>
+
+                                                    <td th:text="${record.description}"></td>
+
+                                                    <td class="actions">
+                                                        <a th:href="@{/record/update/{recordId}(recordId = ${record.id})}">
+                                                            <button type="button" class="btn custom_update_button p-1">
+                                                                <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>
+                                                            </button>
+                                                        </a>
+                                                        <a href="#" class="delete-row">
+                                                            <button type="button" id="delete-customer-row"
+                                                                    class="btn custom_delete_button p-1 delete-row"
+                                                                    th:data-recordId="${record.id}">
+                                                                <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+
+                                        <div class="modal fade" id="customerConfirmationModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content p-2">
+                                                    <div class=" delete_confirmation_popup justify-content-center">
+
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <img th:src="@{/images/delete_worning.png}" class="mt-4"/>
+                                                            <h5 class="modal-title mt-3 pb-2"
+                                                                id="confirmationModalLabel">Confirm Deletion</h5>
+                                                        </div>
+                                                        <!-- No close button here -->
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!-- Dynamic content to display username -->
+                                                        <p id="confirmationRecord"></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                onclick="closeConfirmationModal()">Cancel
+                                                        </button>
+
+                                                        <button type="button" class="btn btn-danger" id="confirmDelete">
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="delete_toast_up_layer" th:if="${isRecordDeleted} == true">
+                                            <div id="delete_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="deleteSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header delete_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div
+                                                         class="toast-body delete_toast_body" th:inline="text">
+                                                        <strong style="color: red">Balance record is successfully deleted!</strong>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="delete_toast_up_layer_false" th:if="${customerIsDeleted} == false">
+                                            <div id="delete_toast_container_false"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="deleteUnSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header delete_toast_header">
+                                                        <strong class="me-auto">Not Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                        <strong>This customer can not be deleted!</strong><br>
+                                                        <span style="color: red" th:text="${deleteMessage}"></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="create_toast_up_layer" th:if="${isNewRecordSaved} == true">
+                                            <div id="create_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="createSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="toast-body create_toast_body" th:inline="text">
+                                                        <strong style="color: green"> new record  successfully saved!</strong>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="update_toast_up_layer" th:if="${customerIsUpdated} == true">
+                                            <div id="update_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="updateSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header update_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div th:if="${updatedCustomer.customerType.description} == 'Individual'"
+                                                         class="toast-body update_toast_body" th:inline="text">
+                                                        Customer <strong style="color: #fa9803"
+                                                                         th:text="${updatedCustomer.firstName + ' ' + updatedCustomer.lastName}"></strong>
+                                                        successfully updated!
+                                                    </div>
+
+                                                    <div th:if="${updatedCustomer.customerType.description} == 'Company'"
+                                                         class="toast-body update_toast_body" th:inline="text">
+                                                        Customer <strong style="color: #fa9803"
+                                                                         th:text="${updatedCustomer.companyName}"></strong>
+                                                        successfully updated!
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<script th:src="@{/assets/libs/js/balance/delete_modal_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
+</body>
+</html>

@@ -60,23 +60,16 @@ $(document).ready(function () {
 
 
 // switch the paid type
-document.addEventListener('DOMContentLoaded', function () {
-    const paidTypeSelect = document.getElementById('selected-paid-type');
-    const receivedUserSelect = document.getElementById('received-user');
-    const receivedCardSelect = document.getElementById('receiver-card');
-});
-
-// switch the paid type
 $(document).ready(function () {
     // Handle byHand checkbox click
     $('#type-byHand').on('change', function () {
         if ($(this).prop('checked')) {
             // If byHand is checked, uncheck the byCard
             $('#type-byCard').prop('checked', false);
-            showIndividualSections();
+            removeCard();
         } else {
             $('#type-byCard').prop('checked', true);
-            showCompanySections();
+            addCard();
         }
     });
 
@@ -85,36 +78,28 @@ $(document).ready(function () {
         if ($(this).prop('checked')) {
             // If byCard is checked, uncheck the byHand
             $('#type-byHand').prop('checked', false);
-            showCompanySections();
+            addCard();
         } else {
             $('#type-byHand').prop('checked', true);
-            showIndividualSections();
+            removeCard();
         }
     });
 
     // Initial state
     if ($('#type-byHand').prop('checked')) {
-        showIndividualSections();
+       removeCard();
     } else if ($('#type-byCard').prop('checked')) {
-        showCompanySections();
+        addCard();
     }
 });
 
-function showIndividualSections() {
-    $('#companySection').hide();
-    $('#officePhoneSection').hide();
-    $('#individualSection').show();
-    $('#lastNameSection').show();
-    $('#genderSelection').show();
+function addCard() {
+    const receivedCardSelect = document.getElementById('mySelectForCard');
+        receivedCardSelect.disabled = false;
 }
+function removeCard() {
+    const receivedCardSelect = document.getElementById('mySelectForCard');
+    receivedCardSelect.disabled = true;
 
-function showCompanySections() {
-    $('#companySection').show();
-    $('#officePhoneSection').show();
-    $('#individualSection').hide();
-    $('#lastNameSection').hide();
-    $('#genderSelection').hide();
 }
-
-
 

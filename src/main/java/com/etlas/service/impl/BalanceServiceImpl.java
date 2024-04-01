@@ -3,6 +3,7 @@ package com.etlas.service.impl;
 import com.etlas.dto.BalanceRecordDto;
 import com.etlas.dto.CustomerDto;
 import com.etlas.entity.BalanceRecord;
+import com.etlas.entity.Customer;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.PaidType;
 import com.etlas.mapper.MapperUtil;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,12 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
+    public List<BalanceRecordDto> getAllBalanceRecords() {
+        List<BalanceRecord> records = repository.findAllByIsDeleted(false);
+        return records.stream().map(record -> mapper.convert(record, new BalanceRecordDto())).toList();
+    }
+
+    @Override
     public BalanceRecordDto saveBalanceRecord(BalanceRecordDto newRecord) {
         prepareRecordToSave(newRecord);
         BalanceRecord savedRecord = repository.save(mapper.convert(newRecord, new BalanceRecord()));
@@ -37,21 +45,41 @@ public class BalanceServiceImpl implements BalanceService {
     private void prepareRecordToSave(BalanceRecordDto newRecord) {
         if (newRecord.isByHand()) {
             newRecord.setPaidType(PaidType.BYHAND);
+        } else if (newRecord.isByCard()) {
+            newRecord.setPaidType(PaidType.BYCARD);
         }
-        newRecord.setPaidType(PaidType.BYCARD);
         calculateCustomerBalance(newRecord);
     }
     private void calculateCustomerBalance(BalanceRecordDto newRecord) {
        if(newRecord.getCurrencyUnit().equals(CurrencyUnits.TRY)){
-           newRecord.getGiver().setCustomerTRYBalance(newRecord.getGiver().getCustomerTRYBalance().subtract(BigDecimal.valueOf(newRecord.getAmount())));
+           newRecord.getGiver().setCustomerTRYBalance(newRecord.getGiver().getCustomerTRYBalance().add(BigDecimal.valueOf(newRecord.getAmount())));
        }
         if(newRecord.getCurrencyUnit().equals(CurrencyUnits.USD)){
-            newRecord.getGiver().setCustomerUSDBalance(newRecord.getGiver().getCustomerUSDBalance().subtract(BigDecimal.valueOf(newRecord.getAmount())));
+            newRecord.getGiver().setCustomerUSDBalance(newRecord.getGiver().getCustomerUSDBalance().add(BigDecimal.valueOf(newRecord.getAmount())));
         }
         if(newRecord.getCurrencyUnit().equals(CurrencyUnits.EUR)){
-            newRecord.getGiver().setCustomerEURBalance(newRecord.getGiver().getCustomerEURBalance().subtract(BigDecimal.valueOf(newRecord.getAmount())));
+            newRecord.getGiver().setCustomerEURBalance(newRecord.getGiver().getCustomerEURBalance().add(BigDecimal.valueOf(newRecord.getAmount())));
         }
         customerService.save(newRecord.getGiver());
     }
 
+    @Override
+    public void deleteBalanceRecord(long recordId) {
+        BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
+        Customer giver = record.getGiver();
+
+        // undo the balance
+        if (record.getCurrencyUnit().equals(CurrencyUnits.TRY)) {
+            giver.setCustomerTRYBalance(giver.getCustomerTRYBalance().subtract(BigDecimal.valueOf(record.getAmount())));
+        }
+        if (record.getCurrencyUnit().equals(CurrencyUnits.USD)) {
+            giver.setCustomerUSDBalance(giver.getCustomerUSDBalance().subtract(BigDecimal.valueOf(record.getAmount())));
+        }
+        if (record.getCurrencyUnit().equals(CurrencyUnits.EUR)) {
+            giver.setCustomerEURBalance(giver.getCustomerEURBalance().subtract(BigDecimal.valueOf(record.getAmount())));
+        }
+        customerService.save(mapper.convert(giver, new CustomerDto()));
+        record.setDeleted(true);
+        repository.save(record);
+    }
 }

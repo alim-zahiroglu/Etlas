@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class BalanceRecordDto {
+    private Long id;
 
     @NotNull(message = "please select a receiver")
     private UserDto receiver;
@@ -28,7 +29,6 @@ public class BalanceRecordDto {
     private double amount;
     private CurrencyUnits currencyUnit;
 
-    @NotNull(message = "please select a receiver card")
     private CardDto receiverCard;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")

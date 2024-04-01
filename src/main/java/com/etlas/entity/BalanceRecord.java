@@ -22,6 +22,9 @@ public class BalanceRecord extends BaseEntity{
     @ManyToOne
     private User receiver;
 
+    @ManyToOne
+    private Card receiverCard;
+
     private double amount;
 
     @Enumerated(value = EnumType.STRING)

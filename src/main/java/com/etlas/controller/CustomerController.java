@@ -6,6 +6,7 @@ import com.etlas.enums.*;
 import com.etlas.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -109,9 +110,11 @@ public class CustomerController {
     }
 
     @GetMapping("/details/{customerId}")
-    public String showCustomerDetails(@PathVariable("customerId") long customerId, Model model){
+    public String showCustomerDetails(@PathVariable("customerId") long customerId,
+                                      @Param("from") String from, Model model){
         CustomerDto customer = customerService.getCustomerById(customerId);
         model.addAttribute("customer",customer);
+        model.addAttribute("from",from);
         if (customer.getCustomerType().getDescription().equals("Company")){
             return "/customer/customer-details-company";
         }
