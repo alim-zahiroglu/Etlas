@@ -34,4 +34,6 @@ public interface TicketService {
     boolean deleteTicket(long ticketId);
 
     boolean isCardUsedInAnyTicket(String cardId);
+
+    void save(TicketDto linkedTicket);
 }

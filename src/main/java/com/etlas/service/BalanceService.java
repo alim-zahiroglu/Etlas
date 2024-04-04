@@ -18,4 +18,12 @@ public interface BalanceService {
     long findRecordIdByLinkedTicketId(long linkedTicketId);
 
     void deleteBalanceRecordFromTicket(long recordId);
+
+    BalanceRecordDto getBalanceRecordById(long parseLong);
+
+    BalanceRecordDto initiateUpdateRecord(long parseLong);
+
+    void saveUpdatedBalanceRecord(BalanceRecordDto updatedBalanceRecord);
+
+    void removeOldBalance(long recordId);
 }

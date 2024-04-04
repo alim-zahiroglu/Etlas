@@ -79,6 +79,11 @@ public class TicketServiceImpl implements TicketService {
         return mapper.convert(savedTicket, new TicketDto());
     }
 
+    @Override
+    public void save(TicketDto linkedTicket) {
+        repository.save(mapper.convert(linkedTicket, new Ticket()));
+    }
+
     private void prepareToSave(TicketDto newTicket) {
         LocalDateTime[] departureAndReturnDateTime = parseDateTimeRange(newTicket.getDateRangeString());
         LocalDateTime departureDate = departureAndReturnDateTime[0];
@@ -306,7 +311,6 @@ public class TicketServiceImpl implements TicketService {
         adjustOldCreditCardLimit(updatedTicket);
         prepareToSave(updatedTicket);
         saveBalanceRecord(updatedTicket);
-//        saveBalanceRecord(mapper.convert(savedTicket, new TicketDto()));
 
     }
 
@@ -362,7 +366,9 @@ public class TicketServiceImpl implements TicketService {
 
     private void removeOldBalanceRecord(TicketDto updatedTicket) {
         long recordId = balanceService.findRecordIdByLinkedTicketId(updatedTicket.getId());
-        balanceService.deleteBalanceRecordFromTicket(recordId);
+        if (recordId != 0) {
+            balanceService.removeOldBalance(recordId);
+        }
     }
 
     @Override
