@@ -299,22 +299,20 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
-        prepareToSaveUpdatedTicket(updatedTicket);
+
+        removeOldBalanceRecord(updatedTicket); // remove old balance record
+        resetOldPaidCustomerBalance(updatedTicket); // reset old paid customer balance
+        resetOldCreditCardLimit(updatedTicket); // reset old credit card limit
+        prepareToSave(updatedTicket); // prepare to save updated ticket
+        saveBalanceRecord(updatedTicket); // save new balance record if it has paid amount
+
         Ticket savedTicket = repository.save(mapper.convert(updatedTicket, new Ticket()));
 
         return mapper.convert(savedTicket, new TicketDto());
     }
 
-    private void prepareToSaveUpdatedTicket(TicketDto updatedTicket) {
-        removeOldBalanceRecord(updatedTicket);
-        adjustOldPaidCustomerBalance(updatedTicket);
-        adjustOldCreditCardLimit(updatedTicket);
-        prepareToSave(updatedTicket);
-        saveBalanceRecord(updatedTicket);
 
-    }
-
-    private void adjustOldPaidCustomerBalance(TicketDto updatedTicket) {
+    private void resetOldPaidCustomerBalance(TicketDto updatedTicket) {
         TicketDto oldTicket = findById(updatedTicket.getId());
 
         CustomerDto oldPidCustomer = oldTicket.getPayedCustomer();
@@ -340,7 +338,7 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-    private void adjustOldCreditCardLimit(TicketDto updatedTicket) {
+    private void resetOldCreditCardLimit(TicketDto updatedTicket) {
 
         TicketDto oldTicket = findById(updatedTicket.getId());
         CardDto oldCreditCard = oldTicket.getPaidCard();

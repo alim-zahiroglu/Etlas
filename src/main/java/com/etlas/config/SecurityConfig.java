@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login")
                 )
-                .rememberMe(token->token.tokenValiditySeconds(300).key("Etlas").userDetailsService(securityService)); // Redirects the user to "/home" after successful login
+                .rememberMe(token->token.tokenValiditySeconds(3600).key("Etlas").userDetailsService(securityService)); // Redirects the user to "/home" after successful login
 
         return http.build();
     }

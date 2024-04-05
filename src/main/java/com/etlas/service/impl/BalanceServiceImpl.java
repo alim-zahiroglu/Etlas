@@ -98,12 +98,12 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public void saveUpdatedBalanceRecord(BalanceRecordDto updatedBalanceRecord) {
-        BalanceRecord record = repository.findById(updatedBalanceRecord.getId()).orElseThrow(NoSuchFieldError::new);
-        deleteBalanceRecord(updatedBalanceRecord.getId());
-        resetOldTicketPaidAmount(record);
-        saveBalanceRecord(updatedBalanceRecord);
-        if (updatedBalanceRecord.getLinkedTicketId() != 0) {
-            TicketDto linkedTicket = ticketService.findById(updatedBalanceRecord.getLinkedTicketId());
+        deleteBalanceRecord(updatedBalanceRecord.getId()); // delete the old record
+        saveBalanceRecord(updatedBalanceRecord);         // save the updated record
+
+        TicketDto linkedTicket = ticketService.findById(updatedBalanceRecord.getLinkedTicketId());
+
+        if (linkedTicket != null) {
             linkedTicket.setPayedAmount(BigDecimal.valueOf(updatedBalanceRecord.getAmount()));
             ticketService.save(linkedTicket);
         }
@@ -119,7 +119,7 @@ public class BalanceServiceImpl implements BalanceService {
     public void deleteBalanceRecord(long recordId) {
         BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
         resetCustomerBalance(record);         // undo the customer balance
-        deleteOldTicketPaidAmount(record);    // delete the ticket paid amount
+        deleteOldTicketPaidAmount(record);    // reset the ticket paid amount
         record.setDeleted(true);
         repository.save(record);
     }
@@ -139,15 +139,8 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     private void deleteOldTicketPaidAmount(BalanceRecord record) {
-        if (record.getLinkedTicketId() != 0) {
-            TicketDto linkedTicket = ticketService.findById(record.getLinkedTicketId());
-            linkedTicket.setPayedAmount(BigDecimal.valueOf(record.getAmount()));
-            ticketService.save(linkedTicket);
-        }
-    }
-    private void resetOldTicketPaidAmount(BalanceRecord record) {
-        if (record.getLinkedTicketId() !=0) {
-            TicketDto linkedTicket = ticketService.findById(record.getLinkedTicketId());
+        TicketDto linkedTicket = ticketService.findById(record.getLinkedTicketId());
+        if (linkedTicket != null) {
             linkedTicket.setPayedAmount(BigDecimal.valueOf(record.getAmount()));
             ticketService.save(linkedTicket);
         }
@@ -155,13 +148,6 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public void removeOldBalance(long recordId) {
-        BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
-        record.setDeleted(true);
-        repository.save(record);
-    }
-
-    @Override
-    public void deleteBalanceRecordFromTicket(long recordId) {
         BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
         record.setDeleted(true);
         repository.save(record);

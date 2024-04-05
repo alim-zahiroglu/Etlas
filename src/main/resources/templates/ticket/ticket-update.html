@@ -92,14 +92,13 @@
 
                                                     <hr class="mb-1 mt-3 row pl-0 pr-0 mr-0 ml-0">
 
-                                                    <div class="col-md-6 col-lg-4 mb-0"
+                                                    <div class="col-12 col-md-6 col-lg-4 mb-0"
                                                          th:classappend="${#fields.hasErrors('pnrNo')} ? 'error' : ''"
                                                          id="pnrNo">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputPNR"
                                                                    class="form-label mb-1 pl-1">PNR</label>
-                                                            <input type="text" th:width="*{pnrNo}" th:name="pnrNo"
-                                                                   th:value="${ticketTobeUpdate.getPnrNo()}"
+                                                            <input type="text" th:field="*{pnrNo}" th:name="pnrNo"
                                                                    class="form-control" id="inputPNR">
 
                                                             <div class="custom-invalid-feedback"
@@ -113,7 +112,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6 col-lg-4 mb-0"
+                                                    <div class="col-12 col-md-6 col-lg-4 mb-0"
                                                          style="margin-top: 17px">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="mySelectForAirline"
@@ -132,7 +131,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6 col-lg-4"
+                                                    <div class="col-md-12 col-lg-4"
                                                          id="ticketAmount">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputTicketAmount"
@@ -199,7 +198,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
-                                                             style="padding: 0 8px 0 4px;margin-top: 16px">
+                                                             style="padding: 0 8px ;margin-top: 16px">
                                                             <label id="departure-time-label" for="departure-time"
                                                                    class="form-label mb-1 pl-1">
                                                                 <i class="fa-regular fa-calendar-days"></i> Departure
@@ -248,8 +247,8 @@
 
 
                                                     <div class="row p-0 m-0">
-                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
-                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                        <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             style="padding: 0 8px;margin-top: 16px">
                                                             <label for="mySelectForBoughtUser"
                                                                    class="form-label mb-1 pl-1">Bought
                                                                 User</label>
@@ -266,10 +265,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
-                                                             style="padding: 0 8px 0 4px;margin-top: 17px">
+                                                        <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             th:classappend="${#fields.hasErrors('paidCard')} ? 'error' : ''"
+                                                             style="padding: 0 8px;margin-top: 17px">
                                                             <label for="selected-credit-card"
-                                                                   class="form-label pl-1 mb-1 d-block">Paid Card</label>
+                                                                   class="form-label pl-1 mb-1 d-block">Paid
+                                                                Card</label>
                                                             <select id="selected-credit-card" th:field="*{paidCard}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
@@ -281,11 +282,23 @@
                                                                 <i id="selected-card-selector-arrow"
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
                                                             </div>
+
+                                                            <div class="custom-invalid-feedback"
+                                                                 style="position: absolute"
+                                                                 th:if="${#fields.hasErrors('paidCard')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('paidCard')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+
+
+
                                                         </div>
 
-                                                        <div class="form-group col-12 col-md-4 col-lg-4 mb-0"
+                                                        <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
                                                              th:classappend="${#fields.hasErrors('dateOfPerches')} ? 'error' : ''"
-                                                             style="padding: 0 8px 0 4px;margin-top: 16px">
+                                                             style="padding: 0 8px;margin-top: 16px">
                                                             <label for="date-of-perches" class="form-label mb-1 pl-1">
                                                                 <i class="fa-regular fa-calendar-days"></i> Date of
                                                                 perches</label>
@@ -310,8 +323,9 @@
 
                                                     <div class="row p-0 m-0">
 
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                        <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"
+                                                             style="padding: 0 8px;margin-top: 16px">
                                                             <label for="perchesPrice" class="form-label mb-1 pl-1">Perches
                                                                 price</label>
                                                             <div class="input-group currency-input-group"
@@ -338,7 +352,6 @@
                                                                         </a>
                                                                     </li>
                                                                 </ul>
-
                                                             </div>
                                                             <div class="custom-invalid-feedback"
                                                                  th:if="${#fields.hasErrors('perchesPrice')}">
@@ -347,11 +360,10 @@
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
-
                                                         </div>
 
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
+                                                        <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             style="padding: 0 8px;margin-top: 16px">
                                                             <label for="salesPrice" class="form-label mb-1 pl-1">Sales
                                                                 price</label>
                                                             <div class="input-group currency-input-group"
@@ -372,87 +384,9 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- Payed amount -->
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 8px;margin-top: 16px">
-                                                            <label for="payedAmount" class="form-label mb-1 pl-1">Paid
-                                                                amount</label>
-                                                            <div class="input-group currency-input-group"
-                                                                 id="payedAmount">
-                                                                <span class="input-group-text currency-symbol">₺</span>
-                                                                <input type="number" th:field="*{payedAmount}"
-                                                                       class="form-control"
-                                                                       aria-label="Payed amount input">
-                                                                <span class="input-group-text">0.00</span>
-                                                            </div>
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('payedAmount')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('payedAmount')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 8px;margin-top: 17px">
-                                                            <label for="selected-paid-type"
-                                                                   class="form-label pl-1 mb-1 d-block">Paid Type</label>
-                                                            <select id="selected-paid-type" th:field="*{paidType}"
-                                                                    name="selectedCard"
-                                                                    class="form-select" style="width: 100%">
-                                                                <option th:each="type:${paidTypes}"
-                                                                        th:value="${type}"
-                                                                        th:text="${type.description}"></option>
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <input type="hidden" th:field="*{currencyUnit}"
-                                                           id="selectedCurrencyUnitInput">
-
-                                                    <input type="hidden" id="selectedCurrencySymbolInput"
-                                                           th:value="${currencySymbol}">
-
-
-                                                    <div class="row p-0 m-0">
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 8px;margin-top: 17px">
-                                                            <label for="received-user"
-                                                                   class="form-label pl-1 mb-1 d-block">Received User</label>
-                                                            <select id="received-user" th:field="*{receivedUser}"
-                                                                    name="receiverUser"
-                                                                    class="form-select" style="width: 100%">
-                                                                <option th:each="receiver:${userList}"
-                                                                        th:value="${receiver.id}"
-                                                                        th:text="${receiver.firstName + ' ' + receiver.lastName}"></option>
-                                                            </select>
-                                                            <div class="ticket-create-airline-select text-right">
-                                                                <i id="receiver-selector-arrow"
-                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 4px;margin-top: 17px">
-                                                            <label for="receiver-card"
-                                                                   class="form-label pl-1 mb-1 d-block">Received card</label>
-                                                            <select id="receiver-card" th:field="*{receivedCard}"
-                                                                    name="receiver-card"
-                                                                    class="form-select" style="width: 100%">
-                                                                <option th:each="receiverCard : ${cardList}"
-                                                                        th:value="${receiverCard.id}"
-                                                                        th:text="${receiverCard.cardOwner + ' (' + receiverCard.bankName + ')'}"></option>
-                                                            </select>
-                                                            <div class="ticket-create-airline-select text-right">
-                                                                <i id="receiver-card-selector-arrow"
-                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 4px;margin-top: 17px">
+                                                        <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
+                                                             style="padding: 0 8px;margin-top: 17px">
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
                                                             <select id="mySelectForPayer"
@@ -470,19 +404,120 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
-                                                             style="padding: 0 8px 0 4px;margin-top: 16px">
-                                                            <label for="date-of-payed" class="form-label mb-1 pl-1">
-                                                                <i
-                                                                        class="fa-regular fa-calendar-days"></i>
-                                                                Date of
-                                                                paid</label>
-                                                            <input type="text" th:field="*{dateOfPayed}"
-                                                                   class="form-control date-picker"
-                                                                   id="date-of-payed">
-                                                        </div>
+                                                        <!-- Payed amount -->
+                                                        <!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
+                                                        <!--                                                             style="padding: 0 8px 0 8px;margin-top: 16px">-->
+                                                        <!--                                                            <label for="payedAmount" class="form-label mb-1 pl-1">Paid-->
+                                                        <!--                                                                amount</label>-->
+                                                        <!--                                                            <div class="input-group currency-input-group"-->
+                                                        <!--                                                                 id="payedAmount">-->
+                                                        <!--                                                                <span class="input-group-text currency-symbol">₺</span>-->
+                                                        <!--                                                                <input type="number" th:field="*{payedAmount}"-->
+                                                        <!--                                                                       class="form-control"-->
+                                                        <!--                                                                       aria-label="Payed amount input">-->
+                                                        <!--                                                                <span class="input-group-text">0.00</span>-->
+                                                        <!--                                                            </div>-->
+                                                        <!--                                                            <div class="custom-invalid-feedback"-->
+                                                        <!--                                                                 th:if="${#fields.hasErrors('payedAmount')}">-->
+                                                        <!--                                                                <ul class="p-0 m-0">-->
+                                                        <!--                                                                    <li th:each="err : ${#fields.errors('payedAmount')}"-->
+                                                        <!--                                                                        th:text="${err}"></li>-->
+                                                        <!--                                                                </ul>-->
+                                                        <!--                                                            </div>-->
+                                                        <!--                                                        </div>-->
+
+                                                        <!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
+                                                        <!--                                                             style="padding: 0 8px 0 8px;margin-top: 17px">-->
+                                                        <!--                                                            <label for="selected-paid-type"-->
+                                                        <!--                                                                   class="form-label pl-1 mb-1 d-block">Paid-->
+                                                        <!--                                                                Type</label>-->
+                                                        <!--                                                            <select id="selected-paid-type" th:field="*{paidType}"-->
+                                                        <!--                                                                    name="selectedCard"-->
+                                                        <!--                                                                    class="form-select" style="width: 100%">-->
+                                                        <!--                                                                <option th:each="type:${paidTypes}"-->
+                                                        <!--                                                                        th:value="${type}"-->
+                                                        <!--                                                                        th:text="${type.description}"></option>-->
+                                                        <!--                                                            </select>-->
+                                                        <!--                                                        </div>-->
 
                                                     </div>
+
+                                                    <input type="hidden" th:field="*{currencyUnit}"
+                                                           id="selectedCurrencyUnitInput">
+
+                                                    <input type="hidden" id="selectedCurrencySymbolInput"
+                                                           th:value="${currencySymbol}">
+
+
+                                                    <!--                                                    <div class="row p-0 m-0">-->
+                                                    <!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
+                                                    <!--                                                             style="padding: 0 8px 0 8px;margin-top: 17px">-->
+                                                    <!--                                                            <label for="received-user"-->
+                                                    <!--                                                                   class="form-label pl-1 mb-1 d-block">Received-->
+                                                    <!--                                                                User</label>-->
+                                                    <!--                                                            <select id="received-user" th:field="*{receivedUser}"-->
+                                                    <!--                                                                    name="receiverUser"-->
+                                                    <!--                                                                    class="form-select" style="width: 100%">-->
+                                                    <!--                                                                <option th:each="receiver:${userList}"-->
+                                                    <!--                                                                        th:value="${receiver.id}"-->
+                                                    <!--                                                                        th:text="${receiver.firstName + ' ' + receiver.lastName}"></option>-->
+                                                    <!--                                                            </select>-->
+                                                    <!--                                                            <div class="ticket-create-airline-select text-right">-->
+                                                    <!--                                                                <i id="receiver-selector-arrow"-->
+                                                    <!--                                                                   class="fa-solid fa-chevron-down rotate-down"></i>-->
+                                                    <!--                                                            </div>-->
+                                                    <!--                                                        </div>-->
+
+                                                    <!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
+                                                    <!--                                                             style="padding: 0 8px 0 4px;margin-top: 17px">-->
+                                                    <!--                                                            <label for="receiver-card"-->
+                                                    <!--                                                                   class="form-label pl-1 mb-1 d-block">Received-->
+                                                    <!--                                                                card</label>-->
+                                                    <!--                                                            <select id="receiver-card" th:field="*{receivedCard}"-->
+                                                    <!--                                                                    name="receiver-card"-->
+                                                    <!--                                                                    class="form-select" style="width: 100%">-->
+                                                    <!--                                                                <option th:each="receiverCard : ${cardList}"-->
+                                                    <!--                                                                        th:value="${receiverCard.id}"-->
+                                                    <!--                                                                        th:text="${receiverCard.cardOwner + ' (' + receiverCard.bankName + ')'}"></option>-->
+                                                    <!--                                                            </select>-->
+                                                    <!--                                                            <div class="ticket-create-airline-select text-right">-->
+                                                    <!--                                                                <i id="receiver-card-selector-arrow"-->
+                                                    <!--                                                                   class="fa-solid fa-chevron-down rotate-down"></i>-->
+                                                    <!--                                                            </div>-->
+                                                    <!--                                                        </div>-->
+
+                                                    <!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
+                                                    <!--                                                             style="padding: 0 8px 0 4px;margin-top: 17px">-->
+                                                    <!--                                                            <label for="mySelectForPayer"-->
+                                                    <!--                                                                   class="form-label pl-1 mb-1 d-block">Payer</label>-->
+                                                    <!--                                                            <select id="mySelectForPayer"-->
+                                                    <!--                                                                    th:field="*{payedCustomerUI}"-->
+                                                    <!--                                                                    th:name="payerCustomer"-->
+                                                    <!--                                                                    class="form-control mb-0" style="width: 100%">-->
+                                                    <!--                                                                <option th:each="payerCustomer : ${customerList}"-->
+                                                    <!--                                                                        th:value="${payerCustomer.id}"-->
+                                                    <!--                                                                        th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">-->
+                                                    <!--                                                                </option>-->
+                                                    <!--                                                            </select>-->
+                                                    <!--                                                            <div class="ticket-create-airline-select text-right">-->
+                                                    <!--                                                                <i id="payer-selector-arrow"-->
+                                                    <!--                                                                   class="fa-solid fa-chevron-down rotate-down"></i>-->
+                                                    <!--                                                            </div>-->
+                                                    <!--                                                        </div>-->
+
+                                                    <!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
+                                                    <!--                                                             style="padding: 0 8px 0 4px;margin-top: 16px">-->
+                                                    <!--                                                            <label for="date-of-payed" class="form-label mb-1 pl-1">-->
+                                                    <!--                                                                <i-->
+                                                    <!--                                                                        class="fa-regular fa-calendar-days"></i>-->
+                                                    <!--                                                                Date of-->
+                                                    <!--                                                                paid</label>-->
+                                                    <!--                                                            <input type="text" th:field="*{dateOfPayed}"-->
+                                                    <!--                                                                   class="form-control date-picker"-->
+                                                    <!--                                                                   id="date-of-payed">-->
+                                                    <!--                                                        </div>-->
+
+                                                    <!--                                                    </div>-->
 
 
                                                     <div class="col-12"
@@ -490,7 +525,7 @@
                                                          id="notesSection">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="notes"
-                                                                   class="form-label pl-1 mb-1 d-block">Notes</label>
+                                                                   class="form-label pl-1 mb-1 d-block">Note</label>
                                                             <textarea type="text" th:field="*{notes}"
                                                                       class="form-control" id="notes">
 
