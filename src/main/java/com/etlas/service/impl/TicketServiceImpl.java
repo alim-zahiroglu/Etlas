@@ -32,7 +32,6 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository repository;
     private final CardService cardService;
     private final MapperUtil mapper;
-    private final BalanceService balanceService;
 
 
     @Override
@@ -72,10 +71,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveNewTicket(TicketDto newTicket) {
-        prepareToSave(newTicket);
+        prepareToSave(newTicket); // prepare to save new ticket
+        calculateCustomerBalance(newTicket);  // calculate customer balance and profit
+        calculateCreditCardLimit(newTicket);  // calculate credit card limit
+        newTicket.setProfit(newTicket.getSalesPrice().subtract(newTicket.getPerchesPrice())); // calculate profit
+
         Ticket savedTicket = repository.save(mapper.convert(newTicket, new Ticket()));
-        // save balance record
-        saveBalanceRecord(mapper.convert(savedTicket, new TicketDto()));
         return mapper.convert(savedTicket, new TicketDto());
     }
 
@@ -90,7 +91,8 @@ public class TicketServiceImpl implements TicketService {
         LocalDateTime returnDateTime = departureAndReturnDateTime[1];
 
         newTicket.setDepartureTime(departureDate);
-        setPassengers(newTicket);
+
+        setPassengers(newTicket); // set passengers from UI to DTO
 
         if (newTicket.isRoundTrip()) {
             newTicket.setTripType(TripType.ROUND);
@@ -101,10 +103,7 @@ public class TicketServiceImpl implements TicketService {
             newTicket.setTicketType(TicketType.MULTIPLE);
         } else newTicket.setTicketType(TicketType.SINGLE);
 
-        newTicket.setPayedCustomer(customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI())));
-
-        calculateCustomerBalanceAndProfit(newTicket);
-        calculateCreditCardLimit(newTicket);
+        newTicket.setPayedCustomer(customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI()))); // set paid customer
     }
 
     private void setPassengers(TicketDto newTicket) {
@@ -115,7 +114,7 @@ public class TicketServiceImpl implements TicketService {
 
     }
 
-    private void calculateCustomerBalanceAndProfit(TicketDto newTicket) {
+    private void calculateCustomerBalance(TicketDto newTicket) {
         long payedCustomerId = Long.parseLong(newTicket.getPayedCustomerUI());
         CustomerDto customer = customerService.findById(payedCustomerId);
         CurrencyUnits currencyUnits = newTicket.getCurrencyUnit();
@@ -167,25 +166,6 @@ public class TicketServiceImpl implements TicketService {
             BigDecimal newLimit = creditCard.getAvailableLimitEUR().subtract(newTicket.getPerchesPrice());
             creditCard.setAvailableLimitEUR(newLimit);
             cardService.saveCreditCard(creditCard);
-        }
-    }
-
-    private void saveBalanceRecord(TicketDto newTicket) {
-        if (newTicket.getPayedAmount().compareTo(BigDecimal.ZERO) > 0) {
-
-            BalanceRecordDto balanceRecord = BalanceRecordDto.builder()
-                    .paidType(newTicket.getPaidType())
-                    .giver(newTicket.getPayedCustomer())
-                    .receiver(newTicket.getReceivedUser())
-                    .receiverCard(newTicket.getReceivedCard())
-                    .amount(newTicket.getPayedAmount().doubleValue())
-                    .currencyUnit(newTicket.getCurrencyUnit())
-                    .date(newTicket.getDateOfPayed())
-                    .linkedTicketId(newTicket.getId())
-                    .description(newTicket.getFromWhere().getCity() + " -> " + newTicket.getToWhere().getCity() + ", PnrNo:" + newTicket.getPnrNo())
-                    .build();
-            balanceService.saveBalanceRecordFromTicket(balanceRecord);
-
         }
     }
 
@@ -300,11 +280,13 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
 
-        removeOldBalanceRecord(updatedTicket); // remove old balance record
         resetOldPaidCustomerBalance(updatedTicket); // reset old paid customer balance
         resetOldCreditCardLimit(updatedTicket); // reset old credit card limit
+
         prepareToSave(updatedTicket); // prepare to save updated ticket
-        saveBalanceRecord(updatedTicket); // save new balance record if it has paid amount
+        calculateCustomerBalance(updatedTicket);  // calculate customer balance
+        calculateCreditCardLimit(updatedTicket);  // calculate credit card limit
+        updatedTicket.setProfit(updatedTicket.getSalesPrice().subtract(updatedTicket.getPerchesPrice())); // calculate profit
 
         Ticket savedTicket = repository.save(mapper.convert(updatedTicket, new Ticket()));
 
@@ -359,13 +341,6 @@ public class TicketServiceImpl implements TicketService {
             BigDecimal newLimit = oldCreditCard.getAvailableLimitEUR().add(oldTicket.getPerchesPrice());
             oldCreditCard.setAvailableLimitEUR(newLimit);
             cardService.saveCreditCard(oldCreditCard);
-        }
-    }
-
-    private void removeOldBalanceRecord(TicketDto updatedTicket) {
-        long recordId = balanceService.findRecordIdByLinkedTicketId(updatedTicket.getId());
-        if (recordId != 0) {
-            balanceService.removeOldBalance(recordId);
         }
     }
 
