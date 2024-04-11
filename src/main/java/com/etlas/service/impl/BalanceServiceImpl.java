@@ -101,13 +101,6 @@ public class BalanceServiceImpl implements BalanceService {
         deleteBalanceRecord(updatedBalanceRecord.getId()); // delete the old record
         saveBalanceRecord(updatedBalanceRecord);         // save the updated record
 
-        TicketDto linkedTicket = ticketService.findById(updatedBalanceRecord.getLinkedTicketId());
-
-        if (linkedTicket != null) {
-            linkedTicket.setPayedAmount(BigDecimal.valueOf(updatedBalanceRecord.getAmount()));
-            ticketService.save(linkedTicket);
-        }
-
     }
 
     @Override

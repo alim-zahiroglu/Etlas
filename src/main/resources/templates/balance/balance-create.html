@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>user create</title>
+<title>new balance</title>
 <head th:replace="~{fragments/head :: header}"></head>
 
 <body>
@@ -199,6 +199,61 @@
                                                         <input type="text" th:field="*{date}"
                                                                class="form-control date-picker"
                                                                id="record-date">
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 col-lg-6"
+                                                         th:classappend="${#fields.hasErrors('linkedTicket')} ? 'error' : ''"
+                                                         style="padding: 0 8px ;margin-top: 17px">
+                                                        <label for="mySelectForLinkedTicket"
+                                                               class="form-label pl-1 mb-1 d-block">Ticket</label>
+                                                        <select id="mySelectForLinkedTicket"
+                                                                th:field="*{linkedTicket}"
+                                                                th:name="giverCustomer"
+                                                                class="form-control mb-0" style="width: 100%">
+                                                            <option th:value="0">Select Ticket</option> <!-- Default option -->
+                                                            <option th:each="ticket : ${ticketList}"
+                                                                    th:value="${ticket.id}"
+                                                                    th:text="${'Pnr: '+ticket.pnrNo + ', ' + ticket.fromWhere.city + ' -> ' + ticket.toWhere.city }">
+                                                            </option>
+                                                        </select>
+                                                        <div class="ticket-create-airline-select text-right">
+                                                            <i id="linked-ticket-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                        <div class="custom-invalid-feedback"
+                                                             th:if="${#fields.hasErrors('linkedTicket')}">
+                                                            <ul class="p-0 m-0">
+                                                                <li th:each="err : ${#fields.errors('linkedTicket')}"
+                                                                    th:text="${err}"></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 col-lg-6"
+                                                         th:classappend="${#fields.hasErrors('Receiver')} ? 'error' : ''"
+                                                         style="padding: 0 8px;margin-top: 17px">
+                                                        <label for="mySelectForLinkedVisa"
+                                                               class="form-label mb-1 pl-1 d-block">Visa</label>
+                                                        <select id="mySelectForLinkedVisa" th:field="*{linkedVisa}"
+                                                                th:name="receiverUser" class="form-select"
+                                                                style="width: 100%">
+                                                            <option th:value="0">Select Visa</option> <!-- Default option -->
+                                                            <option th:each="ticket : ${ticketList}"
+                                                                    th:value="${ticket.id}"
+                                                                    th:text="${'Pnr: '+ticket.pnrNo + ', ' + ticket.fromWhere.city + ' -> ' + ticket.toWhere.city }">
+                                                            </option>
+                                                        </select>
+                                                        <div class="ticket-create-airline-select text-right">
+                                                            <i id="linked-visa-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                        <div class="custom-invalid-feedback"
+                                                             th:if="${#fields.hasErrors('linkedVisa')}">
+                                                            <ul class="p-0 m-0">
+                                                                <li th:each="err : ${#fields.errors('linkedVisa')}"
+                                                                    th:text="${err}"></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
 
                                                     <div class="col-12"

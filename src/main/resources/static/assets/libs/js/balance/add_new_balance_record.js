@@ -25,9 +25,17 @@ $(document).ready(function () {
     const $selectedReceiverArrow = $('#receiver-selector-arrow');
     setupSelect2($selectedReceiver, $selectedReceiverArrow);
 
-    const $selectedCArd = $('#mySelectForCard');
+    const $selectedCard = $('#mySelectForCard');
     const $selectedCardArrow = $('#receiver-card-selector-arrow');
-    setupSelect2($selectedCArd, $selectedCardArrow);
+    setupSelect2($selectedCard, $selectedCardArrow);
+
+    const $selectedLinkedTicked = $('#mySelectForLinkedTicket');
+    const $selectedLinkedTicketArrow = $('#linked-ticket-selector-arrow');
+    setupSelect2($selectedLinkedTicked, $selectedLinkedTicketArrow);
+
+    const $selectedLinkedVisa= $('#mySelectForLinkedVisa');
+    const $selectedLinkedVisaArrow = $('#linked-visa-selector-arrow');
+    setupSelect2($selectedLinkedVisa, $selectedLinkedVisaArrow);
 
 });
 

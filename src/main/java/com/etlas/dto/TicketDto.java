@@ -1,6 +1,5 @@
 package com.etlas.dto;
 
-import com.etlas.entity.Card;
 import com.etlas.enums.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

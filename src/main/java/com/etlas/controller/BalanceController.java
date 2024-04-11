@@ -3,10 +3,7 @@ package com.etlas.controller;
 import com.etlas.dto.BalanceRecordDto;
 import com.etlas.dto.CardDto;
 import com.etlas.enums.CurrencyUnits;
-import com.etlas.service.BalanceService;
-import com.etlas.service.CardService;
-import com.etlas.service.CustomerService;
-import com.etlas.service.UserService;
+import com.etlas.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +21,8 @@ public class BalanceController {
     private final BalanceService balanceService;
     private final UserService userService;
     private final CardService cardService;
+    private final TicketService ticketService;
+    private final VisaTypeService visaTypeService;
 
     @GetMapping("/list")
     public String listBalance(Model model) {
@@ -36,6 +35,8 @@ public class BalanceController {
         model.addAttribute("newBalance", newBalance);
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("userList", userService.findAllUsers());
+        model.addAttribute("ticketList", ticketService.findAllTickets());
+        model.addAttribute("visaList", visaTypeService.getAllVisaTypes());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("cardList", cardService.getAllCards());
         model.addAttribute("currencySymbol", newBalance.getCurrencyUnit().getCurrencySymbol());
