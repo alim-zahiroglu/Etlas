@@ -1,6 +1,7 @@
 package com.etlas.dto;
 
 import com.etlas.enums.CountriesTr;
+import com.etlas.enums.CurrencyUnits;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ public class VisaDto {
     private LocalDate dateOfPerches;
     private BigDecimal perchesPrice;
     private BigDecimal salesPrice;
+    private CurrencyUnits currencyUnit;
     private BigDecimal profit;
     private CustomerDto paidCustomer;
     private String note;
