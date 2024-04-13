@@ -44,8 +44,8 @@
                                                       id="visaForm"
                                                       method="post" class="row g-3 ">
 
-                                                    <div class="col-12 col-md-6 col-lg-4 mb-0">
-                                                        <div class="form-group mb-0">
+                                                    <div class="col-12 col-md-6 col-lg-3 mb-0">
+                                                        <div class="form-group p-0 m-0">
                                                             <label for="mySelectForCountry"
                                                                    class="form-label d-block mb-1 pl-1">Country</label>
                                                             <select id="mySelectForCountry"
@@ -55,8 +55,7 @@
                                                                     style="width: 100%">
                                                                 <option th:each="visaCountry:${countriesTr}"
                                                                         th:value="${visaCountry}"
-                                                                        th:selected="${visaCountry.getAlpha3Code() == 'EAT'}"
-                                                                        th:text="${visaCountry.name()}"></option>
+                                                                        th:text="${visaCountry.getName()}"></option>
                                                             </select>
                                                             <div class="visa-create-country-select text-right">
                                                                 <i id="visa-country-selector"
@@ -65,12 +64,12 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-6 col-lg-4 mb-0"
+                                                    <div class="col-12 col-md-6 col-lg-3 mb-0"
                                                          th:classappend="${#fields.hasErrors('visaType')} ? 'error' : ''"
-                                                         id="pnrNo">
+                                                         id="visaType">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputVisaType"
-                                                                   class="form-label mb-1 pl-1">visaType</label>
+                                                                   class="form-label mb-1 pl-1 d-block">visaType</label>
                                                             <input type="text" th:field="*{visaType}" th:name="visaType"
                                                                    class="form-control" id="inputVisaType">
 
@@ -85,14 +84,14 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="row p-0 m-0">
-                                                        <div class="form-group col-12 mb-0"
+                                                    <div class="col-12 col-md-12 col-lg-6 mb-0">
+                                                        <div class="form-group p-0 m-0"
                                                              th:classappend="${#fields.hasErrors('customer')} ? 'error' : ''"
                                                              style="padding: 0 161px 0 8px; margin-top: 17px">
                                                             <label for="mySelectForCustomer"
                                                                    class="form-label pl-1 mb-1 ml-0 d-block">Select
                                                                 Customer</label>
-                                                            <select id="mySelectForCustomer" multiple
+                                                            <select id="mySelectForCustomer"
                                                                     th:field="*{customer}" th:name="passengers"
                                                                     class="form-control" style="width: 100%;">
                                                                 <option th:each="customer:${customerList}"
@@ -104,7 +103,7 @@
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
                                                             </div>
                                                             <div class="text-right">
-                                                                <button class="btn new-passenger-button" type="button"
+                                                                <button class="btn new-customer-button" type="button"
                                                                         id="showAddCustomerForm">
                                                                     <strong><i class="fa-solid fa-plus"></i> New
                                                                         Customer</strong>
@@ -603,7 +602,7 @@
 </div>
 <div th:replace="~{fragments/javascript :: js}"></div>
 <link rel="stylesheet" th:href="@{/assets/libs/css/select2-arrow-rotate.css}"/>
-<script th:src="@{/assets/libs/js/ticket/ticket-create-add-customer.js}"></script>
+<script th:src="@{/assets/libs/js/visa/visa-create-add-customer.js}"></script>
 <script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
 
 <script>

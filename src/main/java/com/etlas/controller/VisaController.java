@@ -8,6 +8,7 @@ import com.etlas.enums.Gender;
 import com.etlas.service.CardService;
 import com.etlas.service.CustomerService;
 import com.etlas.service.UserService;
+import com.etlas.service.VisaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +22,10 @@ public class VisaController {
     private final CustomerService customerService;
     private final UserService userService;
     private final CardService cardService;
+    private final VisaService visaService;
     @GetMapping("/create")
     public String visaCreate(Model model){
-        VisaDto newVisa = new VisaDto();
+        VisaDto newVisa = visaService.initializeVisa();
 
         model.addAttribute("newVisa", newVisa);
         model.addAttribute("countriesTr", CountriesTr.values());
