@@ -1,12 +1,10 @@
 package com.etlas.controller;
 
 import com.etlas.dto.CustomerDto;
-import com.etlas.dto.TicketDto;
 import com.etlas.dto.VisaDto;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.Gender;
-import com.etlas.enums.PaidType;
 import com.etlas.service.CardService;
 import com.etlas.service.CustomerService;
 import com.etlas.service.UserService;
@@ -55,11 +53,12 @@ public class VisaController {
         model.addAttribute("genders", Gender.values());
 
         isNewCustomerAdded = false; // set new customer added false
-        return "visa/visa-create";
+        return "/visa/visa-create";
     }
     @PostMapping("/create")
-    public String saveNewVisa(@ModelAttribute("newVisa") VisaDto newVisa, Model model,
-                                RedirectAttributes redirectAttributes) {
+    public String saveNewVisa(@Valid @ModelAttribute("newVisa") VisaDto newVisa,
+                              BindingResult bindingResult, Model model,
+                              RedirectAttributes redirectAttributes) {
         // check which button is clicked
         if (isNewCustomerAdded) {
             CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
@@ -72,6 +71,20 @@ public class VisaController {
             redirectAttributes.addFlashAttribute("currencySymbol",currencySymbol);
 
             return "redirect:/visa/create";
+        }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("countriesTr", CountriesTr.values());
+            model.addAttribute("customerList", customerService.getAllCustomers());
+            model.addAttribute("userList", userService.findAllUsers());
+            model.addAttribute("cardList", cardService.getAllCards());
+            model.addAttribute("currencyUnits", CurrencyUnits.values());
+
+            CustomerDto newCustomer = customerService.initializeNewCustomer();
+
+            model.addAttribute("newCustomer", newCustomer);
+            model.addAttribute("genders", Gender.values());
+
+            return "/visa/visa-create";
         }
 
         VisaDto savedVisa = visaService.saveNewVisa(newVisa);

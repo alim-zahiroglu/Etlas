@@ -12,6 +12,8 @@ import com.etlas.service.VisaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class VisaServiceImpl implements VisaService {
@@ -25,6 +27,8 @@ public class VisaServiceImpl implements VisaService {
                 .visaType("ömre vizasi")
                 .currencyUnit(CurrencyUnits.USD)
                 .country(CountriesTr.SAU)
+                .perchesPrice(BigDecimal.ZERO)
+                .salesPrice(BigDecimal.ZERO)
                 .build();
     }
 

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>new visa</title>
-<head th:replace="~{fragments/head :: header}"></head>
+<head th:replace="~{fragments/head :: header}">
+    <title>new visa</title>
+</head>
 <body>
 <div class="wrapper">
     <div th:replace="~{fragments/header :: header}"></div>
@@ -284,9 +285,7 @@
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
-
                                                         </div>
-
                                                     </div>
 
                                                     <input type="hidden" th:field="*{currencyUnit}"
@@ -474,7 +473,7 @@
                                                                     <div class="col-md-6"
                                                                          th:classappend="${#fields.hasErrors('customerUSDBalance')} ? 'error' : ''">
                                                                         <div class="form-group p-0 m-0">
-                                                                            <label for="customerTRYBalance"
+                                                                            <label for="customerUSDBalance"
                                                                                    class="form-label mb-1 pl-1">Customer
                                                                                 Balance</label>
                                                                             <div class="input-group">
@@ -482,7 +481,7 @@
                                                                                        class="form-control"
                                                                                        th:field="*{customerUSDBalance}"
                                                                                        id="customerUSDBalance"
-                                                                                       name="customerBalance">
+                                                                                       name="customerUSDBalance">
                                                                                 <span class="input-group-text"
                                                                                       id="currencyUSDSymbol">$</span>
                                                                                 <span class="input-group-text">0.00</span>
@@ -576,7 +575,7 @@
                                                 </div>
 
                                                 <div id="create_ticket_toast_up_layer"
-                                                     th:if="${isNewTicketSaved} == true">
+                                                     th:if="${isNewVisaSaved} == true">
                                                     <div id="create_ticket_toast_container"
                                                          class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                          data-autohide="true">
@@ -591,9 +590,8 @@
 
 
                                                             <div class="toast-body create_toast_body" th:inline="text">
-                                                                Ticket <strong style="color: green"
-                                                                               th:text="${savedTicketName}"></strong>
-                                                                successfully saved!
+                                                                <strong style="color: green"> new visa successfully saved! </strong>
+
                                                             </div>
 
                                                         </div>
