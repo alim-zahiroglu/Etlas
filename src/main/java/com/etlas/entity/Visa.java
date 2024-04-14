@@ -35,6 +35,8 @@ public class Visa extends BaseEntity{
 
     @ManyToOne
     private Card paidCard;
+
+    @Column(columnDefinition = "DATE")
     private LocalDate dateOfPerches;
     private BigDecimal perchesPrice;
     private BigDecimal salesPrice;

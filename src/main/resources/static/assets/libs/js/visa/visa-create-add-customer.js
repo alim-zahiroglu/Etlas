@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('showAddCustomerModal').addEventListener('click', function () {
+    document.getElementById('showAddCustomerForm').addEventListener('click', function () {
         // Show the modal
         const modal = new bootstrap.Modal(document.getElementById('add-new-customer-modal'));
         modal.show();
@@ -82,18 +82,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // If form is valid, submit the form
         if (isValidFirstName && isValidLastName && isValidPhone) {
-            const newTicketData = $('#ticketForm').serialize();
             const newCustomerData = $('#customerForm').serialize();
 
             $.ajax({
                 type: "POST",
-                url: "/ticket/create-add-customer",
+                url: "/visa/create-add-customer",
 
                 data: newCustomerData,
                 success: function (response) {
                     // Handle success response
                     console.log("Customer saved successfully");
-                    $('#ticketForm').submit();
+                    $('#visaForm').submit();
                     $('#add-new-customer-modal').modal('hide'); // Close the modal
                 },
                 error: function (error) {
