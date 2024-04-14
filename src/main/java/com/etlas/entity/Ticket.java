@@ -54,6 +54,7 @@ public class Ticket extends BaseEntity{
     @Column(columnDefinition = "TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime departureTime;
+
     @Column(columnDefinition = "TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime returnTime;
@@ -69,26 +70,17 @@ public class Ticket extends BaseEntity{
 
     private BigDecimal perchesPrice;
     private BigDecimal salesPrice;
-    private BigDecimal payedAmount;
     private BigDecimal profit;
 
     @Enumerated(EnumType.STRING)
     private CurrencyUnits currencyUnit;
 
     @ManyToOne
-    private User receivedUser;
-
-    @Enumerated(EnumType.STRING)
-    private PaidType paidType;
-
-    @ManyToOne
     private Card paidCard;
-    @ManyToOne
-    private Card receivedCard;
+
     @ManyToOne
     private Customer payedCustomer;
-    @Column(columnDefinition = "DATE")
-    private LocalDate dateOfPayed;
+
     private String notes;
     private String pdfTicket;
 }

@@ -45,12 +45,10 @@ public class TicketServiceImpl implements TicketService {
                 .oneWayTrip(true)
                 .perchesPrice(BigDecimal.ZERO)
                 .salesPrice(BigDecimal.ZERO)
-                .payedAmount(BigDecimal.ZERO)
                 .airLine(turkishAirline)
                 .fromWhere(fromWhere)
                 .toWhere(toWhere)
                 .boughtUser(currentUser)
-                .receivedUser(currentUser)
                 .currencyUnit(CurrencyUnits.TRY)
                 .build();
     }
@@ -121,26 +119,23 @@ public class TicketServiceImpl implements TicketService {
 
         if (newTicket.getPerchesPrice() == null) newTicket.setPerchesPrice(BigDecimal.ZERO);
         if (newTicket.getSalesPrice() == null) newTicket.setSalesPrice(BigDecimal.ZERO);
-        if (newTicket.getPayedAmount() == null) newTicket.setPayedAmount(BigDecimal.ZERO);
 
         BigDecimal perches = newTicket.getPerchesPrice();
         BigDecimal sales = newTicket.getSalesPrice();
-        BigDecimal payed = newTicket.getPayedAmount();
-        BigDecimal unPayed = sales.subtract(payed);
 
         newTicket.setProfit(sales.subtract(perches));
 
         if (currencyUnits.getDescription().equals("₺ TRY")) {
-            BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(unPayed);
+            BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(sales);
             customer.setCustomerTRYBalance(newBalance);
             customerService.saveNewCustomer(customer);
 
         } else if (currencyUnits.getDescription().equals("$ USD")) {
-            BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(unPayed);
+            BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(sales);
             customer.setCustomerUSDBalance(newBalance);
             customerService.saveNewCustomer(customer);
         } else {
-            BigDecimal newBalance = customer.getCustomerEURBalance().subtract(unPayed);
+            BigDecimal newBalance = customer.getCustomerEURBalance().subtract(sales);
             customer.setCustomerEURBalance(newBalance);
             customerService.saveNewCustomer(customer);
         }
@@ -301,20 +296,18 @@ public class TicketServiceImpl implements TicketService {
         CurrencyUnits oldCurrencyUnits = oldTicket.getCurrencyUnit();
 
         BigDecimal oldSales = oldTicket.getSalesPrice();
-        BigDecimal oldPaid = oldTicket.getPayedAmount();
-        BigDecimal unPaid = oldSales.subtract(oldPaid);
 
         if (oldCurrencyUnits.getDescription().equals("₺ TRY")) {
-            BigDecimal newBalance = oldPidCustomer.getCustomerTRYBalance().add(unPaid);
+            BigDecimal newBalance = oldPidCustomer.getCustomerTRYBalance().add(oldSales);
             oldPidCustomer.setCustomerTRYBalance(newBalance);
             customerService.saveNewCustomer(oldPidCustomer);
 
         } else if (oldCurrencyUnits.getDescription().equals("$ USD")) {
-            BigDecimal newBalance = oldPidCustomer.getCustomerUSDBalance().add(unPaid);
+            BigDecimal newBalance = oldPidCustomer.getCustomerUSDBalance().add(oldSales);
             oldPidCustomer.setCustomerUSDBalance(newBalance);
             customerService.saveNewCustomer(oldPidCustomer);
         } else {
-            BigDecimal newBalance = oldPidCustomer.getCustomerEURBalance().add(unPaid);
+            BigDecimal newBalance = oldPidCustomer.getCustomerEURBalance().add(oldSales);
             oldPidCustomer.setCustomerEURBalance(newBalance);
             customerService.saveNewCustomer(oldPidCustomer);
         }
@@ -351,7 +344,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public boolean isUserBoughtTicketOrReceiveMoney(String userName) {
-        return repository.existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(userName, userName, false);
+        return repository.existsByBoughtUser_UserNameAndIsDeleted(userName,  false);
     }
 
     @Override
@@ -375,6 +368,6 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public boolean isCardUsedInAnyTicket(String cardId) {
         long id = Long.parseLong(cardId);
-        return repository.existsByPayedCardIdOrReceivedCardIdAndIsDeleted(id, id, false);
+        return repository.existsByPayedCardIdAndIsDeleted(id, false);
     }
 }

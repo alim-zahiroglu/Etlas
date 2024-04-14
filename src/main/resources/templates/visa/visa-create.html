@@ -69,7 +69,7 @@
                                                          id="visaType">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputVisaType"
-                                                                   class="form-label mb-1 pl-1 d-block">visaType</label>
+                                                                   class="form-label mb-1 pl-1 d-block">VisaType</label>
                                                             <input type="text" th:field="*{visaType}" th:name="visaType"
                                                                    class="form-control" id="inputVisaType">
 
@@ -87,7 +87,7 @@
                                                     <div class="col-12 col-md-12 col-lg-6 mb-0">
                                                         <div class="form-group p-0 m-0"
                                                              th:classappend="${#fields.hasErrors('customer')} ? 'error' : ''"
-                                                             style="padding: 0 161px 0 8px; margin-top: 17px">
+                                                             style="padding: 0 161px 0 8px; margin-top: 16px">
                                                             <label for="mySelectForCustomer"
                                                                    class="form-label pl-1 mb-1 ml-0 d-block">Select
                                                                 Customer</label>
@@ -147,6 +147,7 @@
                                                             <select id="selected-credit-card" th:field="*{paidCard}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
+                                                                <option th:value="0">Select Paid Card</option> <!-- Default option -->
                                                                 <option th:each="paidCard : ${cardList}"
                                                                         th:value="${paidCard.id}"
                                                                         th:text="${paidCard.cardOwner + ' (' + paidCard.bankName + ')'}"></option>
@@ -197,7 +198,7 @@
                                                              th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"
                                                              style="padding: 0 8px;margin-top: 16px">
                                                             <label for="perchesPrice" class="form-label mb-1 pl-1">Perches
-                                                                price</label>
+                                                                Price</label>
                                                             <div class="input-group currency-input-group"
                                                                  id="perchesPrice">
                                                                 <span class="input-group-text currency-symbol">₺</span>
@@ -233,9 +234,10 @@
                                                         </div>
 
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             th:classappend="${#fields.hasErrors('salesPrice')} ? 'error' : ''"
                                                              style="padding: 0 8px;margin-top: 16px">
                                                             <label for="salesPrice" class="form-label mb-1 pl-1">Sales
-                                                                price</label>
+                                                                Price</label>
                                                             <div class="input-group currency-input-group"
                                                                  id="salesPrice">
                                                                 <span class="input-group-text currency-symbol">₺</span>
@@ -256,6 +258,7 @@
 
 
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
+                                                             th:classappend="${#fields.hasErrors('paidCustomer')} ? 'error' : ''"
                                                              style="padding: 0 8px;margin-top: 17px">
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
@@ -272,6 +275,16 @@
                                                                 <i id="payer-selector-arrow"
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
                                                             </div>
+
+                                                            <div class="custom-invalid-feedback"
+                                                                 style="position: absolute"
+                                                                 th:if="${#fields.hasErrors('paidCustomer')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('paidCustomer')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+
                                                         </div>
 
                                                     </div>

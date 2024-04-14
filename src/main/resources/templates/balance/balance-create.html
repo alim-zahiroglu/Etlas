@@ -130,6 +130,7 @@
                                                         <select id="mySelectForCard" th:field="*{receiverCard}"
                                                                 th:name="receiverCard" class="form-select"
                                                                 style="width: 100%">
+                                                            <option th:value="0">Select Received Card</option> <!-- Default option -->
                                                             <option th:each="receivedCard:${cardList}"
                                                                     th:value="${receivedCard.id}"
                                                                     th:text="${receivedCard.cardOwner + ' (' + receivedCard.bankName + ')'}"></option>

@@ -112,7 +112,6 @@ public class BalanceServiceImpl implements BalanceService {
     public void deleteBalanceRecord(long recordId) {
         BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
         resetCustomerBalance(record);         // undo the customer balance
-        deleteOldTicketPaidAmount(record);    // reset the ticket paid amount
         record.setDeleted(true);
         repository.save(record);
     }
@@ -129,14 +128,6 @@ public class BalanceServiceImpl implements BalanceService {
             giver.setCustomerEURBalance(giver.getCustomerEURBalance().subtract(BigDecimal.valueOf(record.getAmount())));
         }
         customerService.save(mapper.convert(giver, new CustomerDto()));
-    }
-
-    private void deleteOldTicketPaidAmount(BalanceRecord record) {
-        TicketDto linkedTicket = ticketService.findById(record.getLinkedTicketId());
-        if (linkedTicket != null) {
-            linkedTicket.setPayedAmount(BigDecimal.valueOf(record.getAmount()));
-            ticketService.save(linkedTicket);
-        }
     }
 
     @Override

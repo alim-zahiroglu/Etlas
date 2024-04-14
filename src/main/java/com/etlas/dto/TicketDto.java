@@ -53,23 +53,14 @@ public class TicketDto {
     @Min(value = 0, message = "Please enter a valid price")
     private BigDecimal salesPrice;
 
-    @Min(value = 0, message = "Please enter a valid price")
-    private BigDecimal payedAmount;
-
     @NotNull(message = "Please select a paid card")
     private CardDto paidCard;
 
     private BigDecimal profit;
     private CurrencyUnits currencyUnit;
-    private UserDto receivedUser;
 
-    private CardDto receivedCard;
     private CustomerDto payedCustomer;
 
-    private PaidType paidType;
-
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dateOfPayed;
     private String notes;
     private String pdfTicket;
 
