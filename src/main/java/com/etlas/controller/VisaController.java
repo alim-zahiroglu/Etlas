@@ -79,12 +79,15 @@ public class VisaController {
             return "redirect:/visa/create";
         }
         if (bindingResult.hasErrors()) {
+            String currencySymbol = newVisa.getCurrencyUnit().getCurrencySymbol();
+
             model.addAttribute("countriesTr", CountriesTr.values());
             model.addAttribute("visaTypes", visaTypeService.getAllVisaTypes());
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("userList", userService.findAllUsers());
             model.addAttribute("cardList", cardService.getAllCards());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("currencySymbol", currencySymbol);
 
             CustomerDto newCustomer = customerService.initializeNewCustomer();
 
@@ -94,9 +97,9 @@ public class VisaController {
             return "/visa/visa-create";
         }
 
-        VisaDto savedVisa = visaService.saveNewVisa(newVisa);
+        visaService.saveNewVisa(newVisa);
         redirectAttributes.addFlashAttribute("isNewVisaSaved",true);
-        return "redirect:/ticket/create";
+        return "redirect:/visa/create";
     }
 
 
