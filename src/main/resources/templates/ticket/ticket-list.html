@@ -126,8 +126,8 @@
                                                     <th scope="col">From-To</th>
                                                     <th scope="col">Departure Time</th>
                                                     <th scope="col">Passenger</th>
-<!--                                                    <th scope="col">Bought User</th>-->
-                                                    <th scope="col">Amount</th>
+                                                    <!--                                                    <th scope="col">Bought User</th>-->
+                                                    <th scope="col">Price</th>
                                                     <th scope="col">Paid Customer</th>
                                                     <th scope="col">Paid Card</th>
                                                     <th scope="col">Action</th>
@@ -170,19 +170,22 @@
                                                     <td>
                                                         <a th:href="@{/passenger/details/list/{ticketId}(ticketId=${ticket.id})}">
 
-                                                        <span th:if="${ticket.passengers.get(0).customerType.description == 'Company'}"
-                                                              th:text="${ticket.passengers.get(0).companyName}"></span>
+                                                            <span th:if="${ticket.passengers.get(0).customerType.description == 'Company'}"
+                                                                  th:utext="${ticket.passengers.size() > 1 ? '<i class=&quot;fa-solid fa-users&quot;></i> ' + ticket.passengers.get(0).companyName : ticket.passengers.get(0).companyName}">
+                                                            </span>
 
                                                             <span th:if="${ticket.passengers.get(0).customerType.description == 'Individual'}"
-                                                                  th:text="${ticket.passengers.get(0).firstName} + ' ' + ${ticket.passengers.get(0).lastName}">
-
+                                                                  th:utext="${ticket.passengers.size() > 1 ? '<i class=&quot;fa-solid fa-users&quot;></i> ' + ticket.passengers.get(0).firstName + ' ' + ticket.passengers.get(0).lastName : ticket.passengers.get(0).firstName + ' ' + ticket.passengers.get(0).lastName}">
                                                             </span>
                                                         </a>
                                                     </td>
 
-<!--                                                    <td th:text="${ticket.boughtUser.firstName} +' '+ ${ticket.boughtUser.lastName}"></td>-->
-
-                                                    <td th:text="${ticket.ticketAmount}"></td>
+                                                    <td th:if="${ticket.currencyUnit.description=='₺ TRY'}"
+                                                        th:text="${ticket.salesPrice} + ' ₺'"></td>
+                                                    <td th:if="${ticket.currencyUnit.description=='$ USD'}"
+                                                        th:text="${ticket.salesPrice} + ' $'"></td>
+                                                    <td th:if="${ticket.currencyUnit.description=='€ EUR'}"
+                                                        th:text="${ticket.salesPrice} + ' €'"></td>
 
                                                     <td>
                                                         <a th:href="@{/ticket/customer/details/{customerId}(customerId=${ticket.payedCustomer.id})}">
@@ -200,7 +203,8 @@
                                                         <a th:href="@{/card/details/{cardId}(cardId=${ticket.paidCard.id},from='ticket')}">
                                                             <span th:text="${ticket.paidCard.getCardOwner()}"></span><br/>
                                                         </a>
-                                                        <span class="ticket_table_second_line" th:text="${ticket.paidCard.getBankName()}"></span>
+                                                        <span class="ticket_table_second_line"
+                                                              th:text="${ticket.paidCard.getBankName()}"></span>
                                                     </td>
 
 
@@ -340,7 +344,7 @@
 
                                                     <div class="toast-body update_toast_body" th:inline="text">
                                                         Customer <strong style="color: #fa9803"
-                                                                       th:text="${updatedCustomerName}"></strong>
+                                                                         th:text="${updatedCustomerName}"></strong>
                                                         successfully updated!
                                                     </div>
 

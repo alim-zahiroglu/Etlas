@@ -20,7 +20,10 @@ public class VisaDto {
     long id;
     private CountriesTr country;
     private String visaType;
+
+    @NotNull(message = "Please select a customer")
     private CustomerDto customer;
+
     private UserDto boughtUser;
 
     @NotNull(message = "Please select a paid card")

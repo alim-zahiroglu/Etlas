@@ -138,9 +138,14 @@ $(document).ready(function () {
     const $payerSelectorArrow = $('#payer-selector-arrow');
     setupSelect2($mySelectForPayer, $payerSelectorArrow);
 
-    const $mySelectForCountry = $('#mySelectForCountry');
-    const $customerCountrySelector = $('#customer-country-selector');
-    setupSelect2($mySelectForCountry, $customerCountrySelector);
+    const $mySelectForVisaCountry = $('#mySelectForVisaCountry');
+    const $visaCountrySelector = $('#visa-country-selector');
+    setupSelect2($mySelectForVisaCountry, $visaCountrySelector);
+
+    const $mySelectForCustomerCountry = $('#mySelectForCustomerCountry');
+    const $CustomerCountrySelector = $('#customer-country-selector');
+    setupSelect2($mySelectForCustomerCountry, $CustomerCountrySelector);
+
 
     const $mySelectForCustomer = $('#mySelectForCustomer');
     const $customerSelectorArrow = $('#customer-selector-arrow');

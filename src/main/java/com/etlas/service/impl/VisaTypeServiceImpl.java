@@ -13,7 +13,7 @@ import java.util.List;
 public class VisaTypeServiceImpl implements VisaTypeService {
     private final VisaTypeRepository visaTypeRepository;
     @Override
-    public List<VisaType> getAllVisaTypes() {
-       return visaTypeRepository.findAll();
+    public List<String> getAllVisaTypes() {
+       return visaTypeRepository.findAllVisaTypes();
     }
 }

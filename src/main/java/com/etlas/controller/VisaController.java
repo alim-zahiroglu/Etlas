@@ -5,10 +5,7 @@ import com.etlas.dto.VisaDto;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.Gender;
-import com.etlas.service.CardService;
-import com.etlas.service.CustomerService;
-import com.etlas.service.UserService;
-import com.etlas.service.VisaService;
+import com.etlas.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +26,7 @@ public class VisaController {
     private final UserService userService;
     private final CardService cardService;
     private final VisaService visaService;
+    private final VisaTypeService visaTypeService;
 
     private boolean isNewCustomerAdded = false;
     private String addedCustomerId;
@@ -43,14 +41,15 @@ public class VisaController {
         }
         CustomerDto newCustomer = customerService.initializeNewCustomer();
 
+        model.addAttribute("newCustomer", newCustomer);
+        model.addAttribute("genders", Gender.values());
+
         model.addAttribute("countriesTr", CountriesTr.values());
+        model.addAttribute("visaTypes", visaTypeService.getAllVisaTypes());
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("cardList", cardService.getAllCards());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
-
-        model.addAttribute("newCustomer", newCustomer);
-        model.addAttribute("genders", Gender.values());
 
         isNewCustomerAdded = false; // set new customer added false
         return "/visa/visa-create";
@@ -74,6 +73,7 @@ public class VisaController {
         }
         if (bindingResult.hasErrors()) {
             model.addAttribute("countriesTr", CountriesTr.values());
+            model.addAttribute("visaTypes", visaTypeService.getAllVisaTypes());
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("userList", userService.findAllUsers());
             model.addAttribute("cardList", cardService.getAllCards());
