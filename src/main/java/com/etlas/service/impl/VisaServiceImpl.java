@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,13 @@ public class VisaServiceImpl implements VisaService {
                 .perchesPrice(BigDecimal.ZERO)
                 .salesPrice(BigDecimal.ZERO)
                 .build();
+    }
+
+    @Override
+    public List<VisaDto> getAllVisas() {
+        return  repository.findAllByIsDeletedFalse().stream()
+                .map(visa -> mapper.convert(visa, new VisaDto()))
+                .toList();
     }
 
     @Override

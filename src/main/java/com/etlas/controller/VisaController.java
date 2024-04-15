@@ -30,6 +30,13 @@ public class VisaController {
 
     private boolean isNewCustomerAdded = false;
     private String addedCustomerId;
+
+    @GetMapping("/list")
+    public String visaList(Model model){
+        model.addAttribute("visaList", visaService.getAllVisas());
+        return "/visa/visa-list";
+    }
+
     @GetMapping("/create")
     public String visaCreate(Model model){
         // check new customer added or not

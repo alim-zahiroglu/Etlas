@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>visa list</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body class="bg-light">
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+
+
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a href="#"><i
+                                        class="fa-solid fa-house"></i> Visas </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Visa list
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center pt-5">
+                            <h4 class="panel-title bold_font">Visas</h4>
+                        </header>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0 shadow-none bg-light justify-content-center align-items-center">
+                                    <div class="col-12">
+
+                                        <div class="row bg-white mr-0 ml-0 table_top_search_bar_column"
+                                             style="border-radius: 5px">
+                                            <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2 pl-1">
+                                                <div class="col-12 dropdown pl-0">
+                                                    <button class="btn list-page-drop-downs dropdown-toggle"
+                                                            type="button"
+                                                            id="more_actions" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa-solid fa-list"></i> More Actions
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-custom-css"
+                                                         aria-labelledby="more_actions">
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="more_actions_copy"
+                                                           style="display: flex; align-items: center;">
+                                                            <span>Copy</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/copy.png}"></span>
+                                                        </a>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="more_actions_print"
+                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                            <span>Print</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/print.png}"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0 mb-sm-2">
+                                                <input type="search" class="form-control mb-2 mb-md-0 mb-sm-2"
+                                                       id="myInput" placeholder="Search...">
+
+                                            </div>
+
+                                            <div class="col-12 col-md-12 col-lg-4 text-right pr-1">
+
+                                                <a th:href="@{/visa/create}">
+                                                    <button class="btn list-page-drop-downs mr-0" id="userCreate">
+                                                        <i class="fa-solid fa-user-plus"></i> New Visa
+                                                    </button>
+                                                </a>
+                                                <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
+                                                    <button class="btn list-page-drop-downs-export dropdown-toggle"
+                                                            type="button"
+                                                            id="export_buttons" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa-solid fa-file-export"></i> Export
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css"
+                                                         aria-labelledby="export_buttons">
+                                                        <div class="export_header" style="cursor: pointer"><span
+                                                                class="pr-4">Export As</span>
+                                                            <i class="fa-solid fa-download"></i></div>
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="export_pdf" style="display: flex; align-items: center;">
+                                                            <span>PDF</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/pdf.png}"></span>
+                                                        </a>
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="export_excel"
+                                                           style="display: flex; align-items: center;">
+                                                            <span>Excel</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/excel.png}"></span>
+                                                        </a>
+
+                                                        <a class="dropdown-item dropdown-menu-item-custom-css"
+                                                           id="export_csv"
+                                                           style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                            <span>CSV</span>
+                                                            <span style="margin-left: auto;"><img
+                                                                    th:src="@{/images/csv.png}"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <table id="example"
+                                                   class="table table-hover table-bordered bg-white users_table">
+                                                <thead class="custom_table_header">
+                                                <tr>
+                                                    <th scope="col">Customer</th>
+                                                    <th scope="col">Country</th>
+                                                    <th scope="col">Visa Type</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Paid Card</th>
+                                                    <th scope="col">Price</th>
+                                                    <th scope="col">Paid Customer</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr th:each="visa :${visaList}">
+                                                    <td>
+                                                        <a th:href="@{/visa/details/{visaId}(visaId=${visa.id})}">
+                                                            <span th:text="${visa.customer.firstName + ' ' + visa.customer.lastName}"></span>
+                                                        </a>
+                                                    </td>
+
+                                                    <td th:text="${visa.country.getName()}"></td>
+
+                                                    <td th:text="${visa.visaType}"></td>
+
+                                                    <td th:text="${#temporals.format(visa.dateOfPerches, 'dd/MM/yyyy')}"></td>
+
+                                                    <td>
+                                                        <a th:href="@{/card/details/{cardId}(cardId=${visa.paidCard.id},from='visa')}">
+                                                            <span th:text="${visa.paidCard.getCardOwner()}"></span><br/>
+                                                        </a>
+                                                        <span class="ticket_table_second_line"
+                                                              th:text="${visa.paidCard.getBankName()}"></span>
+                                                    </td>
+
+                                                    <td th:if="${visa.currencyUnit.description=='₺ TRY'}"
+                                                        th:text="${visa.salesPrice} + ' ₺'"></td>
+                                                    <td th:if="${visa.currencyUnit.description=='$ USD'}"
+                                                        th:text="${visa.salesPrice} + ' $'"></td>
+                                                    <td th:if="${visa.currencyUnit.description=='€ EUR'}"
+                                                        th:text="${visa.salesPrice} + ' €'"></td>
+
+                                                    <td>
+                                                        <a th:href="@{/customer/details/{customerId}(customerId=${visa.paidCustomer.id},from='visa')}">
+
+                                                            <span th:if="${visa.paidCustomer.customerType.description == 'Company'}"
+                                                                  th:text="${visa.paidCustomer.companyName}">
+                                                            </span>
+
+                                                            <span th:if="${visa.paidCustomer.customerType.description == 'Individual'}"
+                                                                  th:text="${visa.paidCustomer.firstName + ' ' + visa.paidCustomer.lastName}">
+                                                            </span>
+                                                        </a>
+                                                    </td>
+
+                                                    <td class="actions">
+                                                        <a th:href="@{/visa/update/{visaId}(visaId = ${visa.id})}">
+                                                            <button type="button" class="btn custom_update_button p-1">
+                                                                <i class="fa-solid fa-pen-to-square update-rotate-on-hover"></i>
+                                                            </button>
+                                                        </a>
+                                                        <a href="#" class="delete-row">
+                                                            <button type="button" id="delete-row"
+                                                                    class="btn custom_delete_button p-1"
+                                                                    th:data-visaId="${visa.id}">
+                                                                <i class="fa-solid fa-trash-can rotate-on-hover"></i>
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+
+                                        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content p-2">
+                                                    <div class=" delete_confirmation_popup justify-content-center">
+
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <img th:src="@{/images/delete_worning.png}" class="mt-4"/>
+                                                            <h5 class="modal-title mt-3 pb-2"
+                                                                id="confirmationModalLabel">Confirm Deletion</h5>
+                                                        </div>
+                                                        <!-- No close button here -->
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!-- Dynamic content to display message -->
+                                                        <p id="confirmationVisaDeletion"></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                onclick="closeConfirmationModal()">Cancel
+                                                        </button>
+
+                                                        <button type="button" class="btn btn-danger" id="confirmDelete">
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="delete_toast_up_layer" th:if="${visaIsDeleted} == true">
+                                            <div id="delete_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="deleteSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header delete_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                         <strong style="color: red">The is successfully deleted!</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="delete_toast_up_layer_false" th:if="${visaIsDeleted} == false">
+                                            <div id="delete_toast_container_false"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="deleteUnSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header delete_toast_header">
+                                                        <strong class="me-auto">Not Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body delete_toast_body" th:inline="text">
+                                                        <strong>This visa can not be deleted!</strong><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="update_toast_up_layer" th:if="${isVisaUpdated} == true">
+                                            <div id="update_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="updateSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header update_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                        <strong style="color: #fa9803">The visa successfully updated!</strong>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="customer_update_toast_up_layer" th:if="${customerIsUpdated} == true">
+                                            <div id="customer_update_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="customer_updateSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header update_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                        Customer <strong style="color: #fa9803"
+                                                                         th:text="${updatedCustomerName}"></strong>
+                                                        successfully updated!
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="card_update_toast_up_layer" th:if="${isCardUpdated} == true">
+                                            <div id="card_update_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="cardUpdateSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header update_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                        Card <strong style="color: #fa9803"
+                                                                     th:text="${updatedCardName}"></strong> successfully
+                                                        updated!
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<script th:src="@{/assets/libs/js/visa/delete_modal_confirmation.js}"></script>
+<script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
+</body>
+</html>
