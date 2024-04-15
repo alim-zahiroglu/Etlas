@@ -210,12 +210,59 @@ input:-webkit-autofill {
 .new-passenger-button:active{
   background: #117dc0 !important;
 }
-
+.visa-create-customer-select{
+  background: transparent;
+  padding: 0 5px 0 0;
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 175px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 12px;
+}
+.new-customer-button{
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 8px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  background: #117dc0 !important;
+  color: white !important;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0 !important;
+}
+.new-customer-button:hover{
+  background: #1288d2 !important;
+}
+.new-customer-button:active{
+  background: #117dc0 !important;
+}
 .first-element-of-drop-down{
   border-radius: 8px 8px 0 0 !important;
 }
 .last-element-of-drop-down{
   border-radius: 0 0 8px 8px;
+}
+
+.visa-create-customer-select{
+  background: transparent;
+  padding: 0 5px 0 0;
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 175px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.visa-create-country-select{
+  background: transparent;
+  padding: 0 5px 0 0;
+  position: absolute;
+  top: 70%; /* Adjust vertical positioning */
+  right: 15px; /* Adjust horizontal positioning */
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  font-size: 12px;
 }
 
 

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('showAddCustomerModal').addEventListener('click', function () {
+    document.getElementById('showAddCustomerForm').addEventListener('click', function () {
         // Show the modal
         const modal = new bootstrap.Modal(document.getElementById('add-new-customer-modal'));
         modal.show();
@@ -82,20 +82,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // If form is valid, submit the form
         if (isValidFirstName && isValidLastName && isValidPhone) {
-            const newTicketData = $('#ticketForm').serialize();
             const newCustomerData = $('#customerForm').serialize();
 
             $.ajax({
                 type: "POST",
-                url: "/ticket/create-add-customer",
-                // url: window.location.href,
-                // data: newTicketData + '&' + newCustomerData,
+                url: "/visa/create-add-customer",
 
                 data: newCustomerData,
                 success: function (response) {
                     // Handle success response
                     console.log("Customer saved successfully");
-                    $('#ticketForm').submit();
+                    $('#visaForm').submit();
                     $('#add-new-customer-modal').modal('hide'); // Close the modal
                 },
                 error: function (error) {
@@ -103,53 +100,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error("Error saving customer", error);
                 }
             });
-            // $('#ticketForm').submit();
         }
 
     });
 });
-
-
-
-    // Handle single ticket checkbox click
-    $('#ticket-type-single').on('change', function () {
-        if ($(this).prop('checked')) {
-            // If single ticket is checked, uncheck the multiple ticket
-            $('#ticket-type-multiple').prop('checked', false);
-            setTicketAmountOneAndReadOnly();
-            setSingleSelectMode();
-        } else {
-            $('#ticket-type-multiple').prop('checked', true);
-            removeReadOnly();
-            setMultipleSelectMode();
-            // $('#mySelectForPassenger').val(null).trigger('change');
-        }
-    });
-
-    // Handle multiple ticket checkbox click
-    $('#ticket-type-multiple').on('change', function () {
-        if ($(this).prop('checked')) {
-            // If multiple ticket is checked, uncheck the single ticket
-            $('#ticket-type-single').prop('checked', false);
-            removeReadOnly();
-            setMultipleSelectMode();
-            // $('#mySelectForPassenger').val(null).trigger('change');
-        } else {
-            $('#ticket-type-single').prop('checked', true);
-            setTicketAmountOneAndReadOnly();
-            setSingleSelectMode();
-        }
-    });
-
-    // Initial state
-    if ($('#ticket-type-single').prop('checked')) {
-        setTicketAmountOneAndReadOnly();
-        setSingleSelectMode();
-    } else if ($('#ticket-type-multiple').prop('checked')) {
-        removeReadOnly();
-        setMultipleSelectMode();
-        // $('#mySelectForPassenger').val(null).trigger('change');
-    }
 
 // setup select2 dropdowns
 $(document).ready(function () {
@@ -180,11 +134,6 @@ $(document).ready(function () {
     const $receivedCardSelectorArrow = $('#receiver-card-selector-arrow');
     setupSelect2($mySelectForReceivedCard, $receivedCardSelectorArrow);
 
-    const $mySelectForAirLine = $('#mySelectForAirline');
-    const $airlineSelectorArrow = $('#airline-selector-arrow');
-    setupSelect2($mySelectForAirLine, $airlineSelectorArrow);
-
-
     const $mySelectForPayer = $('#mySelectForPayer');
     const $payerSelectorArrow = $('#payer-selector-arrow');
     setupSelect2($mySelectForPayer, $payerSelectorArrow);
@@ -193,9 +142,9 @@ $(document).ready(function () {
     const $customerCountrySelector = $('#customer-country-selector');
     setupSelect2($mySelectForCountry, $customerCountrySelector);
 
-    const $mySelectForPassenger = $('#mySelectForPassenger');
-    const $passengerSelectorArrow = $('#passenger-selector-arrow');
-    setupSelect2($mySelectForPassenger, $passengerSelectorArrow);
+    const $mySelectForCustomer = $('#mySelectForCustomer');
+    const $customerSelectorArrow = $('#customer-selector-arrow');
+    setupSelect2($mySelectForCustomer, $customerSelectorArrow);
 
     const $selectedCreditCard = $('#selected-credit-card');
     const $selectedCardSelectorArrow = $('#selected-card-selector-arrow');

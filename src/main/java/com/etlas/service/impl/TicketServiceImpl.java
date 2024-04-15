@@ -45,12 +45,10 @@ public class TicketServiceImpl implements TicketService {
                 .oneWayTrip(true)
                 .perchesPrice(BigDecimal.ZERO)
                 .salesPrice(BigDecimal.ZERO)
-                .payedAmount(BigDecimal.ZERO)
                 .airLine(turkishAirline)
                 .fromWhere(fromWhere)
                 .toWhere(toWhere)
                 .boughtUser(currentUser)
-                .receivedUser(currentUser)
                 .currencyUnit(CurrencyUnits.TRY)
                 .build();
     }
@@ -60,9 +58,9 @@ public class TicketServiceImpl implements TicketService {
         int passengerSize = newTicket.getPassengersUI().size();
         int ticketAmount = newTicket.getTicketAmount();
 
-        if (passengerSize >=1 && passengerSize < ticketAmount){
+        if (passengerSize >= 1 && passengerSize < ticketAmount) {
             newTicket.getPassengersUI().add(addedCustomerId);  // add new customer to passenger list
-        }else if (passengerSize <= 1 && ticketAmount == 1){
+        } else if (passengerSize <= 1 && ticketAmount == 1) {
             newTicket.setPassengersUI(List.of(addedCustomerId)); // make list from new passenger
         }
         newTicket.setPayedCustomerUI(addedCustomerId); // set new customer to payer
@@ -71,9 +69,18 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveNewTicket(TicketDto newTicket) {
-        prepareToSave(newTicket);
+        prepareToSave(newTicket); // prepare to save new ticket
+        calculateCustomerBalance(newTicket);  // calculate customer balance and profit
+        calculateCreditCardLimit(newTicket);  // calculate credit card limit
+        newTicket.setProfit(newTicket.getSalesPrice().subtract(newTicket.getPerchesPrice())); // calculate profit
+
         Ticket savedTicket = repository.save(mapper.convert(newTicket, new Ticket()));
         return mapper.convert(savedTicket, new TicketDto());
+    }
+
+    @Override
+    public void save(TicketDto linkedTicket) {
+        repository.save(mapper.convert(linkedTicket, new Ticket()));
     }
 
     private void prepareToSave(TicketDto newTicket) {
@@ -82,58 +89,53 @@ public class TicketServiceImpl implements TicketService {
         LocalDateTime returnDateTime = departureAndReturnDateTime[1];
 
         newTicket.setDepartureTime(departureDate);
-        setPassengers(newTicket);
 
-        if (newTicket.isRoundTrip()){
+        setPassengers(newTicket); // set passengers from UI to DTO
+
+        if (newTicket.isRoundTrip()) {
             newTicket.setTripType(TripType.ROUND);
             newTicket.setReturnTime(returnDateTime);
-        }else newTicket.setTripType(TripType.ONEWAY);
+        } else newTicket.setTripType(TripType.ONEWAY);
 
-        if (newTicket.isMultipleTicket()){
+        if (newTicket.isMultipleTicket()) {
             newTicket.setTicketType(TicketType.MULTIPLE);
-        }else newTicket.setTicketType(TicketType.SINGLE);
+        } else newTicket.setTicketType(TicketType.SINGLE);
 
-        newTicket.setPayedCustomer(customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI())));
-
-        calculateCustomerBalanceAndProfit(newTicket);
-        calculateCreditCardLimit(newTicket);
-        saveBalanceRecord(newTicket);
+        newTicket.setPayedCustomer(customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI()))); // set paid customer
     }
 
-    private void setPassengers(TicketDto newTicket){
+    private void setPassengers(TicketDto newTicket) {
         List<CustomerDto> passengers = newTicket.getPassengersUI().stream()
                 .map(Long::parseLong).map(customerService::findById)
                 .toList();
         newTicket.setPassengers(passengers);
 
     }
-    private void calculateCustomerBalanceAndProfit(TicketDto newTicket) {
+
+    private void calculateCustomerBalance(TicketDto newTicket) {
         long payedCustomerId = Long.parseLong(newTicket.getPayedCustomerUI());
         CustomerDto customer = customerService.findById(payedCustomerId);
         CurrencyUnits currencyUnits = newTicket.getCurrencyUnit();
 
         if (newTicket.getPerchesPrice() == null) newTicket.setPerchesPrice(BigDecimal.ZERO);
         if (newTicket.getSalesPrice() == null) newTicket.setSalesPrice(BigDecimal.ZERO);
-        if (newTicket.getPayedAmount() == null) newTicket.setPayedAmount(BigDecimal.ZERO);
 
         BigDecimal perches = newTicket.getPerchesPrice();
         BigDecimal sales = newTicket.getSalesPrice();
-        BigDecimal payed = newTicket.getPayedAmount();
-        BigDecimal unPayed = sales.subtract(payed);
 
         newTicket.setProfit(sales.subtract(perches));
 
-        if (currencyUnits.getDescription().equals("₺ TRY")){
-            BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(unPayed);
+        if (currencyUnits.getDescription().equals("₺ TRY")) {
+            BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(sales);
             customer.setCustomerTRYBalance(newBalance);
             customerService.saveNewCustomer(customer);
 
         } else if (currencyUnits.getDescription().equals("$ USD")) {
-            BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(unPayed);
+            BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(sales);
             customer.setCustomerUSDBalance(newBalance);
             customerService.saveNewCustomer(customer);
-        }else {
-            BigDecimal newBalance = customer.getCustomerEURBalance().subtract(unPayed);
+        } else {
+            BigDecimal newBalance = customer.getCustomerEURBalance().subtract(sales);
             customer.setCustomerEURBalance(newBalance);
             customerService.saveNewCustomer(customer);
         }
@@ -162,14 +164,6 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-    private void saveBalanceRecord(TicketDto newTicket) {
-        if (newTicket.getPayedAmount().compareTo(BigDecimal.ZERO)>0){
-
-//          TODO  saveNewBalanceRecord();
-            System.out.println("********************** -> new balance record is saved");
-        }
-    }
-
     @Override
     public BindingResult validateTicket(TicketDto newTicket, BindingResult bindingResult) {
 
@@ -179,24 +173,26 @@ public class TicketServiceImpl implements TicketService {
         return validateNewAndUpdatedTicket(newTicket, bindingResult);
 
     }
+
     @Override
     public BindingResult validateUpdatedTicket(TicketDto updatedTicket, BindingResult bindingResult) {
 
-        if (repository.existsByPnrNoAndIdNot(updatedTicket.getPnrNo(),updatedTicket.getId())){
+        if (repository.existsByPnrNoAndIdNot(updatedTicket.getPnrNo(), updatedTicket.getId())) {
             bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + updatedTicket.getPnrNo() + " is already exist"));
         }
         return validateNewAndUpdatedTicket(updatedTicket, bindingResult);
 
     }
+
     private BindingResult validateNewAndUpdatedTicket(TicketDto ticket, BindingResult bindingResult) {
         LocalDateTime[] startEndDate = parseDateTimeRange(ticket.getDateRangeString());
         LocalDate departureDate = startEndDate[0].toLocalDate();
         LocalDate perchesDate = ticket.getDateOfPerches();
 
-        if (perchesDate.isAfter(departureDate)){
+        if (perchesDate.isAfter(departureDate)) {
             bindingResult.addError(new FieldError("ticket", "dateOfPerches", "Date of perches: '" + ticket.getDateOfPerches() + "' couldn't be after departure date"));
         }
-        if (ticket.getPassengersUI().size() > ticket.getTicketAmount()){
+        if (ticket.getPassengersUI().size() > ticket.getTicketAmount()) {
             bindingResult.addError(new FieldError("ticket", "passengersUI", "Passengers couldn't be more then ticket amount"));
         }
 
@@ -230,13 +226,13 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto findById(long ticketId) {
-        Ticket ticket = repository.findByIdAndIsDeleted(ticketId,false);
+        Ticket ticket = repository.findByIdAndIsDeleted(ticketId, false);
         return mapper.convert(ticket, new TicketDto());
     }
 
     @Override
     public TicketDto prepareTicketToUpdate(TicketDto ticketTobeUpdate) {
-        if (ticketTobeUpdate.getTripType().equals(TripType.ONEWAY)){
+        if (ticketTobeUpdate.getTripType().equals(TripType.ONEWAY)) {
             ticketTobeUpdate.setOneWayTrip(true);
             ticketTobeUpdate.setRoundTrip(false);
             // set departure time string
@@ -256,16 +252,16 @@ public class TicketServiceImpl implements TicketService {
 
             ticketTobeUpdate.setDateRangeString(departureTimeString + " - " + returnTimeString);
         }
-        if (ticketTobeUpdate.getTicketType().equals(TicketType.SINGLE)){
+        if (ticketTobeUpdate.getTicketType().equals(TicketType.SINGLE)) {
             ticketTobeUpdate.setSingleTicket(true);
             ticketTobeUpdate.setMultipleTicket(false);
-        }else {
+        } else {
             ticketTobeUpdate.setSingleTicket(false);
             ticketTobeUpdate.setMultipleTicket(true);
         }
         // set passengers
         List<String> passengersUI = ticketTobeUpdate.getPassengers().stream()
-                .map(ticket->String.valueOf(ticket.getId()))
+                .map(ticket -> String.valueOf(ticket.getId()))
                 .toList();
         ticketTobeUpdate.setPassengersUI(passengersUI);
 
@@ -278,44 +274,46 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
-        prepareToSaveUpdatedTicket(updatedTicket);
+
+        resetOldPaidCustomerBalance(updatedTicket); // reset old paid customer balance
+        resetOldCreditCardLimit(updatedTicket); // reset old credit card limit
+
+        prepareToSave(updatedTicket); // prepare to save updated ticket
+        calculateCustomerBalance(updatedTicket);  // calculate customer balance
+        calculateCreditCardLimit(updatedTicket);  // calculate credit card limit
+        updatedTicket.setProfit(updatedTicket.getSalesPrice().subtract(updatedTicket.getPerchesPrice())); // calculate profit
+
         Ticket savedTicket = repository.save(mapper.convert(updatedTicket, new Ticket()));
+
         return mapper.convert(savedTicket, new TicketDto());
     }
-    private void prepareToSaveUpdatedTicket(TicketDto updatedTicket) {
-        prepareToSave(updatedTicket);
-        adjustOldPaidCustomerBalanceAndBalanceRecord(updatedTicket);
-        adjustOldCreditCardLimit(updatedTicket);
-        removeOldBalanceRecord(updatedTicket);
-    }
 
-    private void adjustOldPaidCustomerBalanceAndBalanceRecord(TicketDto updatedTicket) {
+
+    private void resetOldPaidCustomerBalance(TicketDto updatedTicket) {
         TicketDto oldTicket = findById(updatedTicket.getId());
 
         CustomerDto oldPidCustomer = oldTicket.getPayedCustomer();
         CurrencyUnits oldCurrencyUnits = oldTicket.getCurrencyUnit();
 
         BigDecimal oldSales = oldTicket.getSalesPrice();
-        BigDecimal oldPaid = oldTicket.getPayedAmount();
-        BigDecimal unPaid = oldSales.subtract(oldPaid);
 
         if (oldCurrencyUnits.getDescription().equals("₺ TRY")) {
-            BigDecimal newBalance = oldPidCustomer.getCustomerTRYBalance().add(unPaid);
+            BigDecimal newBalance = oldPidCustomer.getCustomerTRYBalance().add(oldSales);
             oldPidCustomer.setCustomerTRYBalance(newBalance);
             customerService.saveNewCustomer(oldPidCustomer);
 
         } else if (oldCurrencyUnits.getDescription().equals("$ USD")) {
-            BigDecimal newBalance = oldPidCustomer.getCustomerUSDBalance().add(unPaid);
+            BigDecimal newBalance = oldPidCustomer.getCustomerUSDBalance().add(oldSales);
             oldPidCustomer.setCustomerUSDBalance(newBalance);
             customerService.saveNewCustomer(oldPidCustomer);
         } else {
-            BigDecimal newBalance = oldPidCustomer.getCustomerEURBalance().add(unPaid);
+            BigDecimal newBalance = oldPidCustomer.getCustomerEURBalance().add(oldSales);
             oldPidCustomer.setCustomerEURBalance(newBalance);
             customerService.saveNewCustomer(oldPidCustomer);
         }
     }
 
-    private void adjustOldCreditCardLimit(TicketDto updatedTicket) {
+    private void resetOldCreditCardLimit(TicketDto updatedTicket) {
 
         TicketDto oldTicket = findById(updatedTicket.getId());
         CardDto oldCreditCard = oldTicket.getPaidCard();
@@ -339,27 +337,20 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-    private void removeOldBalanceRecord(TicketDto updatedTicket) {
-        if (updatedTicket.getPayedAmount().compareTo(BigDecimal.ZERO) > 0) {
-            // TODO removeOldBalanceRecord();
-            System.out.println("********************** -> old balance record is removed");
-        }
-    }
-
     @Override
     public boolean isCustomerHasTickets(Customer customer) {
-        return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer,false);
+        return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer, false);
     }
 
     @Override
     public boolean isUserBoughtTicketOrReceiveMoney(String userName) {
-        return repository.existsByBoughtUser_UserNameOrReceivedUser_UserNameAndIsDeleted(userName, userName,false);
+        return repository.existsByBoughtUser_UserNameAndIsDeleted(userName,  false);
     }
 
     @Override
     public boolean isTicketDeletable(long ticketId) {
         TicketDto deletedTicket = findById(ticketId);
-        if (deletedTicket.isRoundTrip()){
+        if (deletedTicket.isRoundTrip()) {
             return deletedTicket.getReturnTime().isBefore(LocalDateTime.now());
         }
         return deletedTicket.getDepartureTime().isBefore(LocalDateTime.now());
@@ -377,6 +368,6 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public boolean isCardUsedInAnyTicket(String cardId) {
         long id = Long.parseLong(cardId);
-        return repository.existsByPayedCardIdOrReceivedCardIdAndIsDeleted(id, id, false);
+        return repository.existsByPayedCardIdAndIsDeleted(id, false);
     }
 }

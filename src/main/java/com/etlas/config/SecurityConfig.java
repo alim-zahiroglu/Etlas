@@ -37,13 +37,13 @@ public class SecurityConfig {
 //                            .loginProcessingUrl("/authentication") // The URL to which the login form should be submitted for authentication
 //                            .usernameParameter("username") // The parameter name in the login form for the username field
 //                            .passwordParameter("password") // The parameter name in the login form for the password field
-                        .defaultSuccessUrl("/card/create", true))
+                        .defaultSuccessUrl("/record/create", true))
                 .logout(logoutConfigurer -> logoutConfigurer
                         .logoutUrl("/logout")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login")
                 )
-                .rememberMe(token->token.tokenValiditySeconds(300).key("Etlas").userDetailsService(securityService)); // Redirects the user to "/home" after successful login
+                .rememberMe(token->token.tokenValiditySeconds(3600).key("Etlas").userDetailsService(securityService)); // Redirects the user to "/home" after successful login
 
         return http.build();
     }

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>record update</title>
+<head th:replace="~{fragments/head :: header}"></head>
+
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/record/list}"><i
+                                        class="fa-solid fa-house"></i> Balance Records </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Update Record
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center"></header>
+
+                        <div class="row justify-content-center align-items-center pt-4">
+
+                            <div class="col-12 col-md-12 col-lg-9">
+                                <div class="input-group justify-content-end">
+                                    <div class="col-auto pr-0">
+                                        <div class="col-12 col-sm-6 col-lg-3 pr-1 d-flex align-items-right">
+                                            <a id="staffListLink"
+                                               class="btn text-light list-page-drop-downs pr-4 pl-4 mb-2"
+                                               th:href="@{/record/list}"><i class="fa fa-list mr-1"></i>Record List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header text-center text-white bold_font"
+                                         style="font-size: x-large;background: #f8a526 !important;">update Record
+                                    </div>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12 col-md-12 col-lg-10">
+
+                                                <form th:object="${balanceRecord}"
+                                                      th:action="@{/record/update/{recordId}/{linkedTicketId}(recordId=${balanceRecord.id},
+                                                      linkedTicketId=${balanceRecord.getLinkedTicketId()})}" method="post"
+                                                      class="row g-3">
+
+                                                    <div class="row">
+                                                        <label>Transaction Type</label>
+                                                        <div class="col-12 col-md-6 col-lg-6">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" th:field="*{byHand}"
+                                                                       type="checkbox" id="type-byHand">
+                                                                <label class="form-check-label" for="type-byHand">
+                                                                    <i class="fa-solid fa-hand-holding-dollar"></i> By Hand
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 col-lg-6">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" th:field="*{byCard}"
+                                                                       type="checkbox" id="type-byCard">
+                                                                <label class="form-check-label" for="type-byCard">
+                                                                    <i class="fa-solid fa-credit-card"></i> By Card
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 col-lg-4"
+                                                         th:classappend="${#fields.hasErrors('giver')} ? 'error' : ''"
+                                                         style="padding: 0 8px ;margin-top: 17px">
+                                                        <label for="mySelectForGiver"
+                                                               class="form-label pl-1 mb-1 d-block">Giver</label>
+                                                        <select id="mySelectForGiver"
+                                                                th:field="*{giver}"
+                                                                th:name="giverCustomer"
+                                                                class="form-control mb-0" style="width: 100%">
+                                                            <option th:each="customer : ${customerList}"
+                                                                    th:value="${customer.id}"
+                                                                    th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">
+                                                            </option>
+                                                        </select>
+                                                        <div class="ticket-create-airline-select text-right">
+                                                            <i id="giver-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                        <div class="custom-invalid-feedback"
+                                                             th:if="${#fields.hasErrors('giver')}">
+                                                            <ul class="p-0 m-0">
+                                                                <li th:each="err : ${#fields.errors('giver')}"
+                                                                    th:text="${err}"></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 col-lg-4"
+                                                         th:classappend="${#fields.hasErrors('Receiver')} ? 'error' : ''"
+                                                         style="padding: 0 8px 0 8px;margin-top: 17px">
+                                                        <label for="mySelectForReceiver"
+                                                               class="form-label mb-1 pl-1 d-block">Receiver</label>
+                                                        <select id="mySelectForReceiver" th:field="*{receiver}"
+                                                                th:name="receiverUser" class="form-select"
+                                                                style="width: 100%">
+                                                            <option th:each="receiver:${userList}"
+                                                                    th:value="${receiver.id}"
+                                                                    th:text="${receiver.firstName + ' ' + receiver.lastName}"></option>
+                                                        </select>
+                                                        <div class="ticket-create-airline-select text-right">
+                                                            <i id="receiver-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                        <div class="custom-invalid-feedback"
+                                                             th:if="${#fields.hasErrors('receiver')}">
+                                                            <ul class="p-0 m-0">
+                                                                <li th:each="err : ${#fields.errors('receiver')}"
+                                                                    th:text="${err}"></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-12 col-lg-4"
+                                                         th:classappend="${#fields.hasErrors('receiverCard')} ? 'error' : ''"
+                                                         style="padding: 0 8px 0 8px;margin-top: 17px">
+                                                        <label for="mySelectForCard"
+                                                               class="form-label mb-1 pl-1 d-block">Received Card</label>
+                                                        <select id="mySelectForCard" th:field="*{receiverCard}"
+                                                                th:name="receiverCard" class="form-select"
+                                                                style="width: 100%">
+                                                            <option th:each="receivedCard:${cardList}"
+                                                                    th:value="${receivedCard.id}"
+                                                                    th:text="${receivedCard.cardOwner + ' (' + receivedCard.bankName + ')'}"></option>
+                                                        </select>
+                                                        <div class="ticket-create-airline-select text-right">
+                                                            <i id="receiver-card-selector-arrow"
+                                                               class="fa-solid fa-chevron-down rotate-down"></i>
+                                                        </div>
+                                                        <div class="custom-invalid-feedback"
+                                                             th:if="${#fields.hasErrors('receiverCard')}">
+                                                            <ul class="p-0 m-0">
+                                                                <li th:each="err : ${#fields.errors('receiverCard')}"
+                                                                    th:text="${err}"></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 mb-0"
+                                                         th:classappend="${#fields.hasErrors('amount')} ? 'error' : ''"
+                                                         style="padding: 0 8px ;margin-top: 17px">
+                                                        <label for="transactionAmount" class="form-label mb-1 pl-1 d-block">Amount</label>
+                                                        <div class="input-group currency-input-group"
+                                                             id="transactionAmount">
+                                                            <span class="input-group-text currency-symbol" th:text="${currencySymbol}"></span>
+                                                            <input type="number" th:field="*{amount}"
+                                                                   class="form-control"
+                                                                   aria-label="Perches price input">
+                                                            <span class="input-group-text">0.00</span>
+                                                            <button type="button" th:classappend="${balanceRecord.getLinkedTicketId() !=0 ? 'disabled' : ''}"
+                                                                    class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                                                    data-toggle="dropdown"
+                                                                    aria-expanded="false">
+                                                                <span class="visually-hidden">Toggle Dropdown</span>
+                                                            </button>
+                                                            <ul id="currencyDropdown"
+                                                                class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css">
+                                                                <li th:each="currency, status : ${currencyUnits}">
+                                                                    <a class="dropdown-item dropdown-menu-item-custom-css change-currency"
+                                                                       th:style="${status.first} ? 'border-radius: 8px 8px 0 0' : '' + (${status.last} ? 'border-radius: 0 0 8px 8px' : '')"
+                                                                       th:data-currency-symbol="${currency.currencySymbol}"
+                                                                       th:data-selected-currency="${currency}"
+                                                                       th:text="${currency.description}">
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="custom-invalid-feedback"
+                                                             th:if="${#fields.hasErrors('amount')}">
+                                                            <ul class="p-0 m-0">
+                                                                <li th:each="err : ${#fields.errors('amount')}"
+                                                                    th:text="${err}"></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" th:field="*{currencyUnit}"
+                                                           id="selectedCurrencyUnit">
+
+                                                    <input type="hidden" id="selectedCurrencySymbol"
+                                                           th:value="${currencySymbol}">
+
+
+                                                    <div class="form-group col-md-6"
+                                                         style="padding: 0 8px 0 8px;margin-top: 17px">
+                                                        <label for="record-date" class="form-label mb-1 pl-1 d-block">
+                                                            <i class="fa-regular fa-calendar-days"></i> Date</label>
+                                                        <input type="text" th:field="*{date}"
+                                                               class="form-control date-picker"
+                                                               id="record-date">
+                                                    </div>
+
+                                                    <div class="col-12"
+                                                         id="notesSection">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="notes"
+                                                                   class="form-label pl-1 mb-1 d-block">Description</label>
+                                                            <textarea type="text" th:field="*{description}"
+                                                                      class="form-control" id="notes">
+
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="row pt-4 m-0">
+                                                        <div class="col-12 col-md-12 col-lg-12 text-right">
+                                                            <button type="submit"
+                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<link rel="stylesheet" th:href="@{/assets/libs/css/select2-arrow-rotate.css}"/>
+<script th:src="@{/assets/libs/js/balance/add_new_balance_record.js}"></script>
+</body>
+</html>

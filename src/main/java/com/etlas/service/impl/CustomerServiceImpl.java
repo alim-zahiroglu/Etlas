@@ -62,6 +62,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public void save(CustomerDto customer) {
+        repository.save(mapper.convert(customer, new Customer()));
+    }
+
+    @Override
     public CustomerDto saveNewCustomer(CustomerDto newCustomer) {
         CustomerDto customerToBeSave;
         if (newCustomer.isCompany()) {

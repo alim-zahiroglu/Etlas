@@ -15,7 +15,7 @@ public class CardConverter implements Converter<String, CardDto> {
 
     @Override
     public CardDto convert(String cardId) {
-        if (cardId.equals("")) {
+        if (cardId.equals("") || cardId.equals("0")) {
             return null;
         }
         long id = Long.parseLong(cardId);
