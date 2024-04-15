@@ -146,6 +146,9 @@ input:-webkit-autofill {
   cursor: pointer;
   font-size: 12px;
 }
+.adjust-arrow{
+  top: 50%; /* Adjust vertical positioning */
+}
 
 .ticket-create-from-select{
   background: transparent;

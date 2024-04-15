@@ -2,6 +2,8 @@ package com.etlas.service;
 
 import com.etlas.dto.VisaDto;
 
+import java.util.List;
+
 public interface VisaService {
 
     VisaDto initializeVisa();

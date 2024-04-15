@@ -398,7 +398,8 @@
                                                                         th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">
                                                                 </option>
                                                             </select>
-                                                            <div class="ticket-create-airline-select text-right">
+                                                            <div class="ticket-create-airline-select text-right"
+                                                                 th:classappend="${#fields.hasErrors('perchesPrice')||#fields.hasErrors('salesPrice')} ? 'adjust-arrow' : ''">
                                                                 <i id="payer-selector-arrow"
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
                                                             </div>
