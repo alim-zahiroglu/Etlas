@@ -113,6 +113,7 @@ public class CustomerController {
         redirectAttributes.addFlashAttribute("updatedCustomer",updatedCustomer);
 
         if (from.equals("visa")) return "redirect:/visa/list";
+        if (from.equals("record")) return "redirect:/record/list";
         return "redirect:/customer/list";
     }
 
