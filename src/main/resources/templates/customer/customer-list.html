@@ -185,6 +185,13 @@
                                                                 <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                             </button>
                                                         </a>
+                                                        <a th:href="@{/record/customer-record/{customerId}(customerId = ${customer.id})}"
+                                                           class="download-ticket">
+                                                            <button type="button" id="download-ticket"
+                                                                    class="btn custom_download_button p-1">
+                                                                <i class="fa-regular fa-square-plus download-rotate-on-hover"></i>
+                                                            </button>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 </tbody>
