@@ -200,4 +200,11 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return bindingResult;
     }
+
+    @Override
+    public void saveNewCustomerIfAdded(long customerId) {
+        Customer customer = repository.findById(customerId).orElseThrow( () -> new IllegalArgumentException("Customer not found"));
+        customer.setDeleted(false);
+        repository.save(customer);
+    }
 }

@@ -17,4 +17,6 @@ public interface VisaService {
     VisaDto findById(long visa);
 
     VisaDto prepareVisaToUpdate(VisaDto visa);
+
+    void saveUpdatedVisa(VisaDto visaToBeUpdate);
 }

@@ -30,4 +30,6 @@ public interface CustomerService {
     boolean isCustomerDeletable(long customerId);
 
     void save(CustomerDto customer);
+
+    void saveNewCustomerIfAdded(long parseLong);
 }
