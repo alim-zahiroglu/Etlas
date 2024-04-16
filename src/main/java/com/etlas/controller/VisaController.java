@@ -8,6 +8,7 @@ import com.etlas.enums.Gender;
 import com.etlas.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,6 +77,9 @@ public class VisaController {
             return "redirect:/visa/create";
         }
         if (bindingResult.hasErrors()) {
+            // save new customer if new customer added
+            customerService.saveNewCustomerIfAdded(Long.parseLong(newVisa.getCustomerUI()));
+
             String currencySymbol = newVisa.getCurrencyUnit().getCurrencySymbol();
 
             model.addAttribute("countriesTr", CountriesTr.values());
@@ -139,5 +143,51 @@ public class VisaController {
 
         isNewCustomerAdded = false; // set new customer added false
         return "/visa/visa-update";
+    }
+    @PostMapping("/update/{id}")
+    public String saveUpdatedVisa(@Valid @ModelAttribute("visaToBeUpdate") VisaDto visaToBeUpdate,
+                                  BindingResult bindingResult, Model model,
+                                  RedirectAttributes redirectAttributes) {
+        // check which button is clicked
+        if (isNewCustomerAdded) {
+            CustomerDto addedCustomer = customerService.findById(Long.parseLong(addedCustomerId));
+            VisaDto visa = visaService.adjustNewVisa(visaToBeUpdate, addedCustomerId);
+            String currencySymbol = visa.getCurrencyUnit().getCurrencySymbol();
+
+            redirectAttributes.addFlashAttribute("visaToBeUpdate", visa);
+            redirectAttributes.addFlashAttribute("addedCustomer", addedCustomer);
+            redirectAttributes.addFlashAttribute("isNewCustomerAdded", true);
+            redirectAttributes.addFlashAttribute("currencySymbol", currencySymbol);
+
+            return "redirect:/visa/update/" + visaToBeUpdate.getId();
+        }
+        if (bindingResult.hasErrors()) {
+            // save new customer if new customer added
+            customerService.saveNewCustomerIfAdded(Long.parseLong(visaToBeUpdate.getCustomerUI()));
+
+            String currencySymbol = visaToBeUpdate.getCurrencyUnit().getCurrencySymbol();
+
+            model.addAttribute("countriesTr", CountriesTr.values());
+            model.addAttribute("visaTypes", visaTypeService.getAllVisaTypes());
+            model.addAttribute("customerList", customerService.getAllCustomers());
+            model.addAttribute("userList", userService.findAllUsers());
+            model.addAttribute("cardList", cardService.getAllCards());
+            model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("currencySymbol", currencySymbol);
+
+            CustomerDto newCustomer = customerService.initializeNewCustomer();
+
+            model.addAttribute("newCustomer", newCustomer);
+        }
+        visaService.saveUpdatedVisa(visaToBeUpdate);
+        redirectAttributes.addFlashAttribute("isVisaUpdated", true);
+        return "redirect:/visa/list";
+    }
+
+    @GetMapping("/delete")
+    public String deleteVisa(@Param("visaId") long visaId, RedirectAttributes redirectAttributes) {
+        visaService.deleteVisa(visaId);
+        redirectAttributes.addFlashAttribute("visaIsDeleted", true);
+        return "redirect:/visa/list";
     }
 }

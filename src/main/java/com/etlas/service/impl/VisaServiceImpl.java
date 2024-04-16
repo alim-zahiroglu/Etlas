@@ -56,14 +56,18 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public VisaDto adjustNewVisa(VisaDto newVisa, String addedCustomerId) {
-        CustomerDto customer = customerService.getCustomerById(Long.parseLong(addedCustomerId));
+       CustomerDto customer = customerService.getCustomerById(Long.parseLong(addedCustomerId));
        newVisa.setCustomer(customer);
        newVisa.setPaidCustomer(customer);
+       newVisa.setCustomerUI(addedCustomerId);
+       newVisa.setPaidCustomerUI(addedCustomerId);
        return newVisa;
     }
 
     @Override
     public VisaDto saveNewVisa(VisaDto newVisa) {
+        // save new customer if new customer added
+        customerService.saveNewCustomerIfAdded(Long.parseLong(newVisa.getCustomerUI()));
         //set customer and paid customer
         setCustomerAndPaidCustomer(newVisa);
 
@@ -103,7 +107,7 @@ public class VisaServiceImpl implements VisaService {
             newVisa.setSalesPrice(BigDecimal.ZERO);
         }
         // calculate customer debt
-        CustomerDto customer = customerService.findById(newVisa.getCustomer().getId()); // find customer
+        CustomerDto customer = customerService.findById(newVisa.getPaidCustomer().getId()); // find customer
 
         if (newVisa.getCurrencyUnit().equals(CurrencyUnits.TRY)) {
             customer.setCustomerTRYBalance(customer.getCustomerTRYBalance().subtract(newVisa.getSalesPrice()));
@@ -142,5 +146,78 @@ public class VisaServiceImpl implements VisaService {
         visa.setCustomerUI(String.valueOf(visa.getCustomer().getId()));
         visa.setPaidCustomerUI(String.valueOf(visa.getPaidCustomer().getId()));
         return visa;
+    }
+
+    @Override
+    public void saveUpdatedVisa(VisaDto visaToBeUpdate) {
+        // save new customer if new customer added
+        customerService.saveNewCustomerIfAdded(Long.parseLong(visaToBeUpdate.getCustomerUI()));
+
+        //set customer and paid customer
+        setCustomerAndPaidCustomer(visaToBeUpdate);
+
+        // calculate profit
+        calculateProfit(visaToBeUpdate);
+
+        // remove old customer debt
+        removeOldCustomerDebt(visaToBeUpdate.getId());
+
+        // calculate customer debt
+        calculateCustomerDebt(visaToBeUpdate);
+
+        // remove old credit card debt
+        removeOldCreditCardDebt(visaToBeUpdate.getId());
+
+        // calculate credit card debt
+        calculateCreditCardDebt(visaToBeUpdate);
+
+        // save updated visa
+        Visa savedVisa = repository.save(mapper.convert(visaToBeUpdate, new Visa()));
+    }
+
+    private void removeOldCustomerDebt(long oldVisaId) {
+        VisaDto oldVisa =  findById(oldVisaId);
+        CurrencyUnits currencyUnit = oldVisa.getCurrencyUnit();
+        BigDecimal salesPrice = oldVisa.getSalesPrice();
+        CustomerDto oldPaidCustomer = customerService.findById(oldVisa.getPaidCustomer().getId()); // find customer
+
+        // remove old customer debt
+
+        if (currencyUnit.equals(CurrencyUnits.TRY)) {
+            oldPaidCustomer.setCustomerTRYBalance(oldPaidCustomer.getCustomerTRYBalance().add(salesPrice));
+        } else if (currencyUnit.equals(CurrencyUnits.USD)) {
+            oldPaidCustomer.setCustomerUSDBalance(oldPaidCustomer.getCustomerUSDBalance().add(salesPrice));
+        }
+        if (currencyUnit.equals(CurrencyUnits.EUR)) {
+            oldPaidCustomer.setCustomerEURBalance(oldPaidCustomer.getCustomerEURBalance().add(salesPrice));
+        }
+        customerService.save(oldPaidCustomer); // save customer
+    }
+
+    private void removeOldCreditCardDebt(long oldVisaId) {
+        VisaDto oldVisa = findById(oldVisaId);
+        CurrencyUnits currencyUnit = oldVisa.getCurrencyUnit();
+        BigDecimal perchesPrice = oldVisa.getPerchesPrice();
+        CardDto oldCreditCard = cardService.findById(oldVisa.getPaidCard().getId()); // find credit card
+
+        // remove old credit card debt
+
+        if (currencyUnit.equals(CurrencyUnits.TRY)) {
+            oldCreditCard.setAvailableLimitTRY(oldCreditCard.getAvailableLimitTRY().add(perchesPrice));
+        } else if (currencyUnit.equals(CurrencyUnits.USD)) {
+            oldCreditCard.setAvailableLimitUSD(oldCreditCard.getAvailableLimitUSD().add(perchesPrice));
+        }
+        if (currencyUnit.equals(CurrencyUnits.EUR)) {
+            oldCreditCard.setAvailableLimitEUR(oldCreditCard.getAvailableLimitEUR().add(perchesPrice));
+        }
+        cardService.saveCreditCard(oldCreditCard); // save credit card
+    }
+
+    @Override
+    public void deleteVisa(long visaId) {
+        Visa visaToBeDelete = repository.findById(visaId)
+                .orElseThrow( () -> new IllegalArgumentException("Visa not found"));
+        visaToBeDelete.setDeleted(true);
+        repository.save(visaToBeDelete);
     }
 }

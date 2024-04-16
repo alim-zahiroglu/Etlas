@@ -41,7 +41,7 @@
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-11">
 
-                                                <form th:object="${visaToBeUpdate}" th:action="@{/visa/update}"
+                                                <form th:object="${visaToBeUpdate}" th:action="@{/visa/update/{visaId}(visaId=${visaToBeUpdate.id})}"
                                                       id="visaForm"
                                                       method="post" class="row g-3 ">
 
@@ -151,7 +151,6 @@
                                                             <select id="selected-credit-card" th:field="*{paidCard}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
-                                                                <option th:value="0">Select Paid Card</option> <!-- Default option -->
                                                                 <option th:each="paidCard : ${cardList}"
                                                                         th:value="${paidCard.id}"
                                                                         th:text="${paidCard.cardOwner + ' (' + paidCard.bankName + ')'}"></option>
