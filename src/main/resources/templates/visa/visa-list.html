@@ -294,15 +294,24 @@
                                                                 aria-label="Close"></button>
                                                     </div>
 
-                                                    <div class="toast-body update_toast_body" th:inline="text">
+                                                    <div th:if="${updatedCustomer.customerType.description} == 'Individual'"
+                                                         class="toast-body update_toast_body" th:inline="text">
                                                         Customer <strong style="color: #fa9803"
-                                                                         th:text="${updatedCustomerName}"></strong>
+                                                                         th:text="${updatedCustomer.firstName + ' ' + updatedCustomer.lastName}"></strong>
+                                                        successfully updated!
+                                                    </div>
+
+                                                    <div th:if="${updatedCustomer.customerType.description} == 'Company'"
+                                                         class="toast-body update_toast_body" th:inline="text">
+                                                        Customer <strong style="color: #fa9803"
+                                                                         th:text="${updatedCustomer.companyName}"></strong>
                                                         successfully updated!
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
+
 
                                         <div id="card_update_toast_up_layer" th:if="${isCardUpdated} == true">
                                             <div id="card_update_toast_container"

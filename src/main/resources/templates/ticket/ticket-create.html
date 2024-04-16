@@ -322,7 +322,7 @@
                                                     </div>
 
 
-                                                    <div class="row p-0 m-0">
+                                                    <div class="row p-0 m-0" th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
 
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
                                                              th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"

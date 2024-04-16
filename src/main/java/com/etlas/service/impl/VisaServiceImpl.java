@@ -53,6 +53,9 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public VisaDto saveNewVisa(VisaDto newVisa) {
+        //set customer and paid customer
+        setCustomerAndPaidCustomer(newVisa);
+
         // calculate profit
         calculateProfit(newVisa);
 
@@ -65,6 +68,11 @@ public class VisaServiceImpl implements VisaService {
         // save new visa
         Visa savedVisa = repository.save(mapper.convert(newVisa, new Visa()));
         return mapper.convert(savedVisa, new VisaDto());
+    }
+
+    private void setCustomerAndPaidCustomer(VisaDto newVisa) {
+        newVisa.setCustomer(customerService.getCustomerById(Long.parseLong(newVisa.getCustomerUI())));
+        newVisa.setPaidCustomer(customerService.getCustomerById(Long.parseLong(newVisa.getPaidCustomerUI())));
     }
     private void calculateProfit(VisaDto newVisa) {
         // check if the price is null

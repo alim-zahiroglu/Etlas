@@ -66,6 +66,8 @@ public class TicketDto {
 
     @NotEmpty(message = "Please select at least one passenger")
     private List<String> passengersUI;
+
+    @NotEmpty(message = "Please select paid customer")
     private String payedCustomerUI;
 
 }
