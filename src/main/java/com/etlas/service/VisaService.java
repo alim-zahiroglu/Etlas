@@ -13,4 +13,8 @@ public interface VisaService {
     VisaDto saveNewVisa(VisaDto newVisa);
 
     List<VisaDto> getAllVisas();
+
+    VisaDto findById(long visa);
+
+    VisaDto prepareVisaToUpdate(VisaDto visa);
 }

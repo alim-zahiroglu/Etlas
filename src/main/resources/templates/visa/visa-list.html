@@ -136,7 +136,13 @@
                                                 <tr th:each="visa :${visaList}">
                                                     <td>
                                                         <a th:href="@{/visa/details/{visaId}(visaId=${visa.id})}">
-                                                            <span th:text="${visa.customer.firstName + ' ' + visa.customer.lastName}"></span>
+                                                            <span th:if="${visa.paidCustomer.customerType.description == 'Company'}"
+                                                                  th:text="${visa.paidCustomer.companyName}">
+                                                            </span>
+
+                                                            <span th:if="${visa.paidCustomer.customerType.description == 'Individual'}"
+                                                                  th:text="${visa.paidCustomer.firstName + ' ' + visa.paidCustomer.lastName}">
+                                                            </span>
                                                         </a>
                                                     </td>
 

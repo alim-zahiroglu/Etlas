@@ -2,6 +2,7 @@ package com.etlas.service.impl;
 
 import com.etlas.dto.CardDto;
 import com.etlas.dto.CustomerDto;
+import com.etlas.dto.UserDto;
 import com.etlas.dto.VisaDto;
 import com.etlas.entity.Visa;
 import com.etlas.enums.CountriesTr;
@@ -10,6 +11,7 @@ import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.VisaRepository;
 import com.etlas.service.CardService;
 import com.etlas.service.CustomerService;
+import com.etlas.service.SecurityService;
 import com.etlas.service.VisaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,17 +24,20 @@ import java.util.List;
 public class VisaServiceImpl implements VisaService {
     private final CustomerService customerService;
     private final CardService cardService;
+    private final SecurityService securityService;
     private final VisaRepository repository;
     private final MapperUtil mapper;
 
     @Override
     public VisaDto initializeVisa() {
+        UserDto currentUser = securityService.getLoggedInUser();
         return VisaDto.builder()
                 .visaType("ömre vizasi")
                 .currencyUnit(CurrencyUnits.USD)
                 .country(CountriesTr.SAU)
                 .perchesPrice(BigDecimal.ZERO)
                 .salesPrice(BigDecimal.ZERO)
+                .boughtUser(currentUser)
                 .build();
     }
 
@@ -41,6 +46,12 @@ public class VisaServiceImpl implements VisaService {
         return  repository.findAllByIsDeletedFalse().stream()
                 .map(visa -> mapper.convert(visa, new VisaDto()))
                 .toList();
+    }
+
+    @Override
+    public VisaDto findById(long visaId) {
+        Visa visa = repository.findByIdAndIsDeletedFalse(visaId).orElseThrow( () -> new IllegalArgumentException("Visa not found"));
+        return mapper.convert(visa, new VisaDto());
     }
 
     @Override
@@ -126,4 +137,10 @@ public class VisaServiceImpl implements VisaService {
         cardService.saveCreditCard(creditCard); // save credit card
     }
 
+    @Override
+    public VisaDto prepareVisaToUpdate(VisaDto visa) {
+        visa.setCustomerUI(String.valueOf(visa.getCustomer().getId()));
+        visa.setPaidCustomerUI(String.valueOf(visa.getPaidCustomer().getId()));
+        return visa;
+    }
 }
