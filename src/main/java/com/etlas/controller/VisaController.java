@@ -8,6 +8,7 @@ import com.etlas.enums.Gender;
 import com.etlas.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,6 +181,13 @@ public class VisaController {
         }
         visaService.saveUpdatedVisa(visaToBeUpdate);
         redirectAttributes.addFlashAttribute("isVisaUpdated", true);
+        return "redirect:/visa/list";
+    }
+
+    @GetMapping("/delete")
+    public String deleteVisa(@Param("visaId") long visaId, RedirectAttributes redirectAttributes) {
+        visaService.deleteVisa(visaId);
+        redirectAttributes.addFlashAttribute("visaIsDeleted", true);
         return "redirect:/visa/list";
     }
 }

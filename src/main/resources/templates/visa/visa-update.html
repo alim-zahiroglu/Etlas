@@ -151,7 +151,6 @@
                                                             <select id="selected-credit-card" th:field="*{paidCard}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
-                                                                <option th:value="0">Select Paid Card</option> <!-- Default option -->
                                                                 <option th:each="paidCard : ${cardList}"
                                                                         th:value="${paidCard.id}"
                                                                         th:text="${paidCard.cardOwner + ' (' + paidCard.bankName + ')'}"></option>

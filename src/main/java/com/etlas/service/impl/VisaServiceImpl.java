@@ -107,7 +107,7 @@ public class VisaServiceImpl implements VisaService {
             newVisa.setSalesPrice(BigDecimal.ZERO);
         }
         // calculate customer debt
-        CustomerDto customer = customerService.findById(newVisa.getCustomer().getId()); // find customer
+        CustomerDto customer = customerService.findById(newVisa.getPaidCustomer().getId()); // find customer
 
         if (newVisa.getCurrencyUnit().equals(CurrencyUnits.TRY)) {
             customer.setCustomerTRYBalance(customer.getCustomerTRYBalance().subtract(newVisa.getSalesPrice()));
@@ -179,19 +179,19 @@ public class VisaServiceImpl implements VisaService {
         VisaDto oldVisa =  findById(oldVisaId);
         CurrencyUnits currencyUnit = oldVisa.getCurrencyUnit();
         BigDecimal salesPrice = oldVisa.getSalesPrice();
-        CustomerDto oldCustomer = customerService.findById(oldVisa.getCustomer().getId()); // find customer
+        CustomerDto oldPaidCustomer = customerService.findById(oldVisa.getPaidCustomer().getId()); // find customer
 
         // remove old customer debt
 
         if (currencyUnit.equals(CurrencyUnits.TRY)) {
-            oldCustomer.setCustomerTRYBalance(oldCustomer.getCustomerTRYBalance().add(salesPrice));
+            oldPaidCustomer.setCustomerTRYBalance(oldPaidCustomer.getCustomerTRYBalance().add(salesPrice));
         } else if (currencyUnit.equals(CurrencyUnits.USD)) {
-            oldCustomer.setCustomerUSDBalance(oldCustomer.getCustomerUSDBalance().add(salesPrice));
+            oldPaidCustomer.setCustomerUSDBalance(oldPaidCustomer.getCustomerUSDBalance().add(salesPrice));
         }
         if (currencyUnit.equals(CurrencyUnits.EUR)) {
-            oldCustomer.setCustomerEURBalance(oldCustomer.getCustomerEURBalance().add(salesPrice));
+            oldPaidCustomer.setCustomerEURBalance(oldPaidCustomer.getCustomerEURBalance().add(salesPrice));
         }
-        customerService.save(oldCustomer); // save customer
+        customerService.save(oldPaidCustomer); // save customer
     }
 
     private void removeOldCreditCardDebt(long oldVisaId) {
@@ -211,5 +211,13 @@ public class VisaServiceImpl implements VisaService {
             oldCreditCard.setAvailableLimitEUR(oldCreditCard.getAvailableLimitEUR().add(perchesPrice));
         }
         cardService.saveCreditCard(oldCreditCard); // save credit card
+    }
+
+    @Override
+    public void deleteVisa(long visaId) {
+        Visa visaToBeDelete = repository.findById(visaId)
+                .orElseThrow( () -> new IllegalArgumentException("Visa not found"));
+        visaToBeDelete.setDeleted(true);
+        repository.save(visaToBeDelete);
     }
 }

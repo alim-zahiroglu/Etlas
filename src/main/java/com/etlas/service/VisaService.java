@@ -19,4 +19,6 @@ public interface VisaService {
     VisaDto prepareVisaToUpdate(VisaDto visa);
 
     void saveUpdatedVisa(VisaDto visaToBeUpdate);
+
+    void deleteVisa(long visaId);
 }
