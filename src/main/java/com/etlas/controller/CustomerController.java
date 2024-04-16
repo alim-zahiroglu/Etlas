@@ -72,12 +72,14 @@ public class CustomerController {
     }
 
     @GetMapping("/update/{customerId}")
-    public String customerUpdate(@PathVariable("customerId") long customerId, Model model){
+    public String customerUpdate(@PathVariable("customerId") long customerId,
+                                 @Param("from") String from, Model model){
 
         CustomerDto customerToBeUpdate = customerService.getCustomerById(customerId);
 
         model.addAttribute("customerToBeUpdate",customerToBeUpdate);
         model.addAttribute("countries",CountriesTr.values());
+        model.addAttribute("from",from);
 
         if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
             return "/customer/customer-update-company";
@@ -89,14 +91,17 @@ public class CustomerController {
 
     @PostMapping("/update/{id}/{customerType}")
     public String saveUpdatedCustomer(@Valid @ModelAttribute("customerToBeUpdate") CustomerDto customerToBeUpdate,
-                                      BindingResult bindingResult,RedirectAttributes redirectAttributes, Model model){
-        bindingResult = customerService.validateUpdateCustomer(customerToBeUpdate,bindingResult);
-        if (bindingResult.hasErrors()){
+                                      BindingResult bindingResult, @Param("from") String from,
+                                      RedirectAttributes redirectAttributes, Model model){
+        BindingResult newbindingResult = customerService.validateUpdateCustomer(customerToBeUpdate,bindingResult);
+
+        model.addAttribute("countries",CountriesTr.values());
+        model.addAttribute("from",from);
+
+        if (newbindingResult.hasErrors()){
             if (customerToBeUpdate.getCustomerType().getDescription().equals("Company")){
-                model.addAttribute("countries",CountriesTr.values());
                 return "/customer/customer-update-company";
             }else {
-                model.addAttribute("countries",CountriesTr.values());
                 model.addAttribute("genders",Gender.values());
                 return "/customer/customer-update-individual";
             }
@@ -106,6 +111,8 @@ public class CustomerController {
         CustomerDto updatedCustomer = customerService.saveUpdatedCustomer(customerToBeUpdate);
         redirectAttributes.addFlashAttribute("customerIsUpdated",true);
         redirectAttributes.addFlashAttribute("updatedCustomer",updatedCustomer);
+
+        if (from.equals("visa")) return "redirect:/visa/list";
         return "redirect:/customer/list";
     }
 

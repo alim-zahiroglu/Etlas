@@ -80,6 +80,7 @@ public class VisaController {
         }
         if (bindingResult.hasErrors()) {
             String currencySymbol = newVisa.getCurrencyUnit().getCurrencySymbol();
+            System.out.println(newVisa.getPaidCustomer().getCompanyName());
 
             model.addAttribute("countriesTr", CountriesTr.values());
             model.addAttribute("visaTypes", visaTypeService.getAllVisaTypes());
