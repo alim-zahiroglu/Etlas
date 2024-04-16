@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>new balance</title>
-<head th:replace="~{fragments/head :: header}"></head>
+
+<head th:replace="~{fragments/head :: header}">
+    <title>new balance</title>
+</head>
 
 <body>
 <div class="wrapper">
@@ -13,7 +15,7 @@
                 <div class="container-fluid dashboard-content">
                     <div class="ecommerce-widget pt-4">
 
-                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/record/list}"><i
                                         class="fa-solid fa-house"></i> Balance Records </a></li>
@@ -84,7 +86,8 @@
                                                                     th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">
                                                             </option>
                                                         </select>
-                                                        <div class="ticket-create-airline-select text-right">
+                                                        <div class="ticket-create-airline-select text-right"
+                                                             th:classappend="${#fields.hasErrors('giver')||#fields.hasErrors('receiver')||#fields.hasErrors('receiverCard')} ? 'adjust-arrow' : ''">
                                                             <i id="giver-selector-arrow"
                                                                class="fa-solid fa-chevron-down rotate-down"></i>
                                                         </div>
@@ -109,7 +112,8 @@
                                                                     th:value="${receiver.id}"
                                                                     th:text="${receiver.firstName + ' ' + receiver.lastName}"></option>
                                                         </select>
-                                                        <div class="ticket-create-airline-select text-right">
+                                                        <div class="ticket-create-airline-select text-right"
+                                                             th:classappend="${#fields.hasErrors('giver')||#fields.hasErrors('receiver')||#fields.hasErrors('receiverCard')} ? 'adjust-arrow' : ''">
                                                             <i id="receiver-selector-arrow"
                                                                class="fa-solid fa-chevron-down rotate-down"></i>
                                                         </div>
@@ -135,7 +139,8 @@
                                                                     th:value="${receivedCard.id}"
                                                                     th:text="${receivedCard.cardOwner + ' (' + receivedCard.bankName + ')'}"></option>
                                                         </select>
-                                                        <div class="ticket-create-airline-select text-right">
+                                                        <div class="ticket-create-airline-select text-right"
+                                                             th:classappend="${#fields.hasErrors('giver')||#fields.hasErrors('receiver')||#fields.hasErrors('receiverCard')} ? 'adjust-arrow' : ''">
                                                             <i id="receiver-card-selector-arrow"
                                                                class="fa-solid fa-chevron-down rotate-down"></i>
                                                         </div>
@@ -209,11 +214,11 @@
                                                                class="form-label pl-1 mb-1 d-block">Ticket</label>
                                                         <select id="mySelectForLinkedTicket"
                                                                 th:field="*{linkedTicket}"
-                                                                th:name="giverCustomer"
+                                                                th:name="linkedTicket"
                                                                 class="form-control mb-0" style="width: 100%">
                                                             <option th:value="0">Select Ticket</option> <!-- Default option -->
                                                             <option th:each="ticket : ${ticketList}"
-                                                                    th:value="${ticket.id}"
+                                                                    th:value="${'Pnr: '+ticket.pnrNo + ', ' + ticket.fromWhere.city + ' -> ' + ticket.toWhere.city }"
                                                                     th:text="${'Pnr: '+ticket.pnrNo + ', ' + ticket.fromWhere.city + ' -> ' + ticket.toWhere.city }">
                                                             </option>
                                                         </select>
@@ -231,17 +236,17 @@
                                                     </div>
 
                                                     <div class="form-group col-md-6 col-lg-6"
-                                                         th:classappend="${#fields.hasErrors('Receiver')} ? 'error' : ''"
+                                                         th:classappend="${#fields.hasErrors('linkedVisa')} ? 'error' : ''"
                                                          style="padding: 0 8px;margin-top: 17px">
                                                         <label for="mySelectForLinkedVisa"
                                                                class="form-label mb-1 pl-1 d-block">Visa</label>
                                                         <select id="mySelectForLinkedVisa" th:field="*{linkedVisa}"
-                                                                th:name="receiverUser" class="form-select"
+                                                                th:name="linkedVisa" class="form-select"
                                                                 style="width: 100%">
                                                             <option th:value="0">Select Visa</option> <!-- Default option -->
-                                                            <option th:each="ticket : ${ticketList}"
-                                                                    th:value="${ticket.id}"
-                                                                    th:text="${'Pnr: '+ticket.pnrNo + ', ' + ticket.fromWhere.city + ' -> ' + ticket.toWhere.city }">
+                                                            <option th:each="visa : ${visaList}"
+                                                                    th:value="${visa.country.getName() +  ', ' + visa.visaType}"
+                                                                    th:text="${visa.country.getName() +  ', ' + visa.visaType}">
                                                             </option>
                                                         </select>
                                                         <div class="ticket-create-airline-select text-right">
@@ -261,8 +266,8 @@
                                                          id="notesSection">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="notes"
-                                                                   class="form-label pl-1 mb-1 d-block">Description</label>
-                                                            <textarea type="text" th:field="*{description}"
+                                                                   class="form-label pl-1 mb-1 d-block">Note</label>
+                                                            <textarea type="text" th:field="*{note}"
                                                                       class="form-control" id="notes">
 
                                                             </textarea>

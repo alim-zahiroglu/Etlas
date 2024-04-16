@@ -69,6 +69,8 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveNewTicket(TicketDto newTicket) {
+        // save new customer if added
+        customerService.saveNewCustomerIfAdded(Long.parseLong(newTicket.getPayedCustomerUI()));
         prepareToSave(newTicket); // prepare to save new ticket
         calculateCustomerBalance(newTicket);  // calculate customer balance and profit
         calculateCreditCardLimit(newTicket);  // calculate credit card limit
@@ -274,6 +276,8 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
+        // save new customer if added
+        customerService.saveNewCustomerIfAdded(Long.parseLong(updatedTicket.getPayedCustomerUI()));
 
         resetOldPaidCustomerBalance(updatedTicket); // reset old paid customer balance
         resetOldCreditCardLimit(updatedTicket); // reset old credit card limit

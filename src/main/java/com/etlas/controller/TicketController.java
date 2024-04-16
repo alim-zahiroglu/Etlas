@@ -86,6 +86,9 @@ public class TicketController {
         }
         bindingResult = ticketService.validateTicket(newTicket,bindingResult);
         if (bindingResult.hasErrors()){
+            // save new customer if new customer added
+            customerService.saveNewCustomerIfAdded(Long.parseLong(newTicket.getPayedCustomerUI()));
+
             String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
             CustomerDto newCustomer = customerService.initializeNewCustomer();
 
@@ -175,6 +178,9 @@ public class TicketController {
 
         ticketService.validateUpdatedTicket(updatedTicket, bindingResult);
         if (bindingResult.hasErrors()){
+            // save new customer if new customer added
+            customerService.saveNewCustomerIfAdded(Long.parseLong(updatedTicket.getPayedCustomerUI()));
+
             String currencySymbol = updatedTicket.getCurrencyUnit().getCurrencySymbol();
 
             CustomerDto newCustomer = customerService.initializeNewCustomer();

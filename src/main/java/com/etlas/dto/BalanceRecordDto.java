@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -26,7 +27,7 @@ public class BalanceRecordDto {
     private CustomerDto giver;
 
     @Min(value = 0, message = "amount must be greater than 0")
-    private double amount;
+    private BigDecimal amount;
     private CurrencyUnits currencyUnit;
 
     private CardDto receiverCard;
@@ -35,13 +36,14 @@ public class BalanceRecordDto {
     private LocalDate date;
 
     private PaidType paidType;
-    private String description;
+
+    private String note;
 
     private boolean byHand;
     private boolean byCard;
 
-    private TicketDto linkedTicket;
-    private long linkedVisa;
+    private String linkedTicket;
+    private String linkedVisa;
 
 
 }

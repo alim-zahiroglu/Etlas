@@ -5,6 +5,7 @@ import com.etlas.enums.PaidType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -25,7 +26,7 @@ public class BalanceRecord extends BaseEntity{
     @ManyToOne
     private Card receiverCard;
 
-    private double amount;
+    private BigDecimal amount;
 
     @Enumerated(value = EnumType.STRING)
     private CurrencyUnits currencyUnit;
@@ -35,9 +36,9 @@ public class BalanceRecord extends BaseEntity{
 
     @Enumerated(value = EnumType.STRING)
     private PaidType paidType;
-    private String description;
+    private String note;
 
-    private long linkedTicketId;
-    private long linkedVisaId;
+    private String linkedTicket;
+    private String linkedVisa;
 
 }
