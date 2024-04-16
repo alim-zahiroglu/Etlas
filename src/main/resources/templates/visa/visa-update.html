@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{fragments/head :: header}">
-    <title>new visa</title>
+    <title>visa update</title>
 </head>
 <body>
 <div class="wrapper">
@@ -17,7 +17,7 @@
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/visa/list}"><i
                                         class="fa-solid fa-house"></i> Vises </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i
-                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> New Visa
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Visa Update
                                 </li>
                             </ol>
                         </nav>
@@ -35,13 +35,13 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header text-center text-white bold_font"
-                                         style="font-size: x-large;background: #117dc0 !important;">New Visa
+                                         style="font-size: x-large;background: #f8a526 !important;">Visa Update
                                     </div>
                                     <div class="card-body pt-5 pb-5">
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-11">
 
-                                                <form th:object="${newVisa}" th:action="@{/visa/create}"
+                                                <form th:object="${visaToBeUpdate}" th:action="@{/visa/update}"
                                                       id="visaForm"
                                                       method="post" class="row g-3 ">
 
@@ -329,7 +329,7 @@
                                                     <div class="row justify-content-end pt-3 pr-0 pl-0">
                                                         <div class="col-12 col-md-6 col-lg-6 text-right p-0">
 
-                                                            <a th:href="@{/visa/create}"
+                                                            <a th:href="@{/visa/update/{visaId}(visaId=${visaToBeUpdate.id})}"
                                                                style="text-decoration: none">
                                                                 <button type="button" id="clearInputButton"
                                                                         class="btn btn-secondary pr-5 pl-5 mr-2">
@@ -338,8 +338,8 @@
                                                             </a>
 
                                                             <button type="submit" id="saveTicketButton"
-                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
-                                                                Save
+                                                                    class="btn update-page-update_button pr-5 pl-5">
+                                                                Update
                                                             </button>
 
 

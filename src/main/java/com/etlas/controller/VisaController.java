@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -30,6 +27,13 @@ public class VisaController {
 
     private boolean isNewCustomerAdded = false;
     private String addedCustomerId;
+
+    @GetMapping("/list")
+    public String visaList(Model model){
+        model.addAttribute("visaList", visaService.getAllVisas());
+        return "/visa/visa-list";
+    }
+
     @GetMapping("/create")
     public String visaCreate(Model model){
         // check new customer added or not
@@ -72,12 +76,15 @@ public class VisaController {
             return "redirect:/visa/create";
         }
         if (bindingResult.hasErrors()) {
+            String currencySymbol = newVisa.getCurrencyUnit().getCurrencySymbol();
+
             model.addAttribute("countriesTr", CountriesTr.values());
             model.addAttribute("visaTypes", visaTypeService.getAllVisaTypes());
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("userList", userService.findAllUsers());
             model.addAttribute("cardList", cardService.getAllCards());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("currencySymbol", currencySymbol);
 
             CustomerDto newCustomer = customerService.initializeNewCustomer();
 
@@ -87,9 +94,9 @@ public class VisaController {
             return "/visa/visa-create";
         }
 
-        VisaDto savedVisa = visaService.saveNewVisa(newVisa);
+        visaService.saveNewVisa(newVisa);
         redirectAttributes.addFlashAttribute("isNewVisaSaved",true);
-        return "redirect:/ticket/create";
+        return "redirect:/visa/create";
     }
 
 
@@ -104,5 +111,33 @@ public class VisaController {
 
         return ResponseEntity.ok("new customer added");
 
+    }
+
+    @GetMapping("/update/{visaId}")
+    public String visaUpdate(@PathVariable long visaId, Model model) {
+
+        if (!isNewCustomerAdded){
+            VisaDto visa = visaService.findById(visaId);
+            VisaDto visaToBeUpdate = visaService.prepareVisaToUpdate(visa);
+            model.addAttribute("visaToBeUpdate", visaToBeUpdate);
+
+            String currencySymbol = visa.getCurrencyUnit().getCurrencySymbol();
+            model.addAttribute("currencySymbol", currencySymbol);
+        }
+
+        CustomerDto newCustomer = customerService.initializeNewCustomer();
+
+        model.addAttribute("newCustomer", newCustomer);
+        model.addAttribute("genders", Gender.values());
+
+        model.addAttribute("countriesTr", CountriesTr.values());
+        model.addAttribute("visaTypes", visaTypeService.getAllVisaTypes());
+        model.addAttribute("customerList", customerService.getAllCustomers());
+        model.addAttribute("userList", userService.findAllUsers());
+        model.addAttribute("cardList", cardService.getAllCards());
+        model.addAttribute("currencyUnits", CurrencyUnits.values());
+
+        isNewCustomerAdded = false; // set new customer added false
+        return "/visa/visa-update";
     }
 }

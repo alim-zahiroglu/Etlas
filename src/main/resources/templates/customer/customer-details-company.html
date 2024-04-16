@@ -15,7 +15,8 @@
                         <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li th:if="${from == 'record'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/record/list}"><i class="fa-solid fa-house"></i> Balance Records </a></li>
-                                <li th:unless="${from == 'record'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
+                                <li th:if="${from == 'visa'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/visa/list}"><i class="fa-solid fa-house"></i> Visas </a></li>
+                                <li th:unless="${from == 'record' || from == 'visa'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Customer details</li>
                             </ol>
                         </nav>
@@ -31,11 +32,12 @@
 
                                         <div class="btn-group">
                                             <a href="#" class="btn btn-danger" id="delete-row"
+                                               th:classappend="${from == 'ticket' || from == 'visa' ? 'disabled' : ''}"
                                                th:data-customer="${customer.customerType.description eq 'Company' ? customer.companyName : (customer.firstName + ' ' + customer.lastName)}"
                                                th:data-customerId="${customer.id}">
                                                 <i class="fa-solid fa-trash-can"></i> Delete
                                             </a>
-                                            <a th:href="@{/customer/update/{customerId}(customerId=${customer.id})}" class="btn btn-warning">
+                                            <a th:href="@{/customer/update/{customerId}(customerId=${customer.id},from = ${from})}" class="btn btn-warning">
                                                 <i class="fa-solid fa-pen-to-square"></i> Update
                                             </a>
                                             <a th:href="@{/customer/create}" class="btn btn-success">

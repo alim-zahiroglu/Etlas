@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>card details</title>
-<head th:replace="~{fragments/head :: header}"></head>
+
+<head th:replace="~{fragments/head :: header}">
+    <title>card details</title>
+</head>
 <body>
 <div class="wrapper">
     <div th:replace="~{fragments/header :: header}"></div>
@@ -12,10 +14,11 @@
                 <div class="container-fluid dashboard-content">
                     <div class="ecommerce-widget pt-4">
 
-                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li th:if="${from == 'ticket'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/ticket/list}"><i class="fa-solid fa-house"></i> Tickets </a></li>
-                                <li th:unless="${from == 'ticket'}"class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i class="fa-solid fa-house"></i> Cards </a></li>
+                                <li th:if="${from == 'visa'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/visa/list}"><i class="fa-solid fa-house"></i> Visas </a></li>
+                                <li th:unless="${from == 'ticket' || from == 'visa'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/card/list}"><i class="fa-solid fa-house"></i> Cards </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Card details</li>
                             </ol>
                         </nav>
@@ -31,7 +34,7 @@
 
                                         <div class="btn-group">
                                             <a href="#" class="btn btn-danger delete-row" id="delete-row"
-                                               th:classappend="${from == 'ticket' ? 'disabled' : ''}"
+                                               th:classappend="${from == 'ticket' || from == 'visa' ? 'disabled' : ''}"
                                                th:data-card="${card.cardOwner + ' (' + card.bankName + ')'}"
                                                th:data-cardId="${card.id}"
                                                th:data-from="${from}">

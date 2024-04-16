@@ -12,9 +12,10 @@
                 <div class="container-fluid dashboard-content">
                     <div class="ecommerce-widget pt-4">
 
-                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
+                                <li th:if="${from == 'visa'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/visa/list}"><i class="fa-solid fa-house"></i> Visas </a></li>
+                                <li th:unless="${from == 'visa'}" class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/customer/list}"><i class="fa-solid fa-house"></i> Customers </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Customer update</li>
                             </ol>
                         </nav>
@@ -41,7 +42,7 @@
                                             <div class="col-12 col-md-12 col-lg-10">
 
                                                 <form th:object="${customerToBeUpdate}"
-                                                      th:action="@{/customer/update/{id}/{customerType}(id = ${customerToBeUpdate.id}, customerType = ${customerToBeUpdate.customerType})}" method="post" class="row g-3">
+                                                      th:action="@{/customer/update/{id}/{customerType}(id = ${customerToBeUpdate.id}, customerType = ${customerToBeUpdate.customerType},from=${from})}" method="post" class="row g-3">
 
                                                     <div class="col-md-6" th:classappend="${#fields.hasErrors('companyName')} ? 'error' : ''" id="companySection">
                                                         <div class="form-group p-0 m-0">

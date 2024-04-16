@@ -102,6 +102,7 @@ public class CardController {
 
         if (cardToBeUpdate.getFromForUpdateUI().equals("card")) return "redirect:/card/list/card";
         if (from.equals("ticket")) return "redirect:/ticket/list";
+        if (from.equals("visa")) return "redirect:/visa/list";
         return "redirect:/card/list";
     }
 
