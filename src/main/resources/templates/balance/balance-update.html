@@ -245,8 +245,8 @@
                                                                 style="width: 100%">
                                                             <option th:value="0">Select Visa</option> <!-- Default option -->
                                                             <option th:each="visa : ${visaList}"
-                                                                    th:value="${visa.country.getName() +  ', ' + visa.visaType}"
-                                                                    th:text="${visa.country.getName() +  ', ' + visa.visaType}">
+                                                                    th:value="${visa}"
+                                                                    th:text="${visa}">
                                                             </option>
                                                         </select>
                                                         <div class="ticket-create-airline-select text-right">

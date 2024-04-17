@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>record details</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/record/list}"><i class="fa-solid fa-house"></i> Records </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Record details</li>
+                            </ol>
+                        </nav>
+
+                        <header class="panel-heading text-center"></header>
+
+                        <div class="row justify-content-center align-items-center pt-4">
+
+                            <div class="col-12 col-md-12 col-lg-8">
+
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6 col-lg-6">
+
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-danger" id="delete-customer-row"
+                                               th:data-recordId="${balanceRecord.id}">
+                                                <i class="fa-solid fa-trash-can"></i> Delete
+                                            </a>
+                                            <a th:href="@{/record/update/{recordId}(recordId=${balanceRecord.id})}" class="btn btn-warning">
+                                                <i class="fa-solid fa-pen-to-square"></i> Update
+                                            </a>
+                                            <a th:href="@{/record/create}" class="btn btn-success">
+                                                <i class="fa-solid fa-plus"></i> Create
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-end">
+                                        <a id="staffListLink" class="btn text-light list-page-drop-downs pr-3 pl-3 mb-2"
+                                           th:href="@{/record/list}"><i class="fa fa-list mr-1"></i>Record List</a>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header text-center text-white bold_font"
+                                         style="font-size: x-large;background: #117dc0 !important;">Record Details
+                                    </div>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12 col-md-12 col-lg-10">
+
+                                                <form th:object="${balanceRecord}" class="row g-3">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Giver:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:value="${balanceRecord.giver.firstName + ' ' + balanceRecord.giver.lastName}" class="form-control customer-details-input" id="giver" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Receiver:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:value="${balanceRecord.receiver.firstName + ' ' + balanceRecord.receiver.lastName}" class="form-control customer-details-input" id="receiver" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Amount:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control customer-details-input" th:field="*{amount}" id="visaProfit"
+                                                                       name="customerBalance" readonly>
+                                                                <span th:if="${balanceRecord.currencyUnit.description=='₺ TRY'}" class="input-group-text" id="profitTRYSymbol">₺</span>
+                                                                <span th:if="${balanceRecord.currencyUnit.description=='$ USD'}" class="input-group-text" id="profitUSDSymbol">$</span>
+                                                                <span th:if="${balanceRecord.currencyUnit.description=='€ EUR'}" class="input-group-text" id="profitEURSymbol">€</span>
+                                                                <span class="input-group-text">0.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Date:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{date}" class="form-control customer-details-input" id="date" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Paid Type:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{paidType.description}" class="form-control customer-details-input" id="paidType" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Received Card:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:if="${balanceRecord.paidType.description == 'By Card'}" th:value="${balanceRecord.receiverCard.cardOwner + ' (' + balanceRecord.receiverCard.bankName + ')'}" class="form-control customer-details-input" id="receivedCard" readonly>
+                                                            <input type="text" th:unless="${balanceRecord.paidType.description == 'By Card'}" class="form-control customer-details-input" id="receivedCard1" readonly>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Paid for ticket:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{linkedTicket}" class="form-control customer-details-input" id="linkedTicket" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Paid for visa:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <input type="text" th:field="*{linkedVisa}" class="form-control customer-details-input" id="linkedVisa" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 pt-2 pb-1 pl-3">Note:</div>
+                                                        <div class="col-md-6 pt-1 pb-2">
+                                                            <textarea type="text" th:field="*{note}" class="form-control customer-details-input" id="note" readonly></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="customerConfirmationModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content p-2">
+                                        <div class=" delete_confirmation_popup justify-content-center">
+
+                                            <div class="d-flex flex-column align-items-center">
+                                                <img th:src="@{/images/delete_worning.png}" class="mt-4"/>
+                                                <h5 class="modal-title mt-3 pb-2"
+                                                    id="confirmationModalLabel">Confirm Deletion</h5>
+                                            </div>
+                                            <!-- No close button here -->
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Dynamic content to display username -->
+                                            <p id="confirmationRecord"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    onclick="closeConfirmationModal()">Cancel
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger" id="confirmDelete">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+<link rel="stylesheet" th:href="@{/assets/libs/css/select2-arrow-rotate.css}"/>
+<script th:src="@{/assets/libs/js/balance/delete_modal_confirmation.js}"></script>
+</body>
+</html>

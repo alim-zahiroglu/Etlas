@@ -53,7 +53,7 @@ public class BalanceController {
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("userList", userService.findAllUsers());
             model.addAttribute("ticketList", ticketService.findAllTickets());
-            model.addAttribute("visaList", visaService.getAllVisas());
+            model.addAttribute("visaList", visaService.getAllUniqueVisTypeWithCountry());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("cardList", cardService.getAllCards());
             model.addAttribute("currencySymbol", newRecord.getCurrencyUnit().getCurrencySymbol());
@@ -80,7 +80,7 @@ public class BalanceController {
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("ticketList", ticketService.findAllTickets());
-        model.addAttribute("visaList", visaService.getAllVisas());
+        model.addAttribute("visaList", visaService.getAllUniqueVisTypeWithCountry());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("cardList", cardService.getAllCards());
         model.addAttribute("currencySymbol", balanceRecord.getCurrencyUnit().getCurrencySymbol());
@@ -96,7 +96,7 @@ public class BalanceController {
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("userList", userService.findAllUsers());
             model.addAttribute("ticketList", ticketService.findAllTickets());
-            model.addAttribute("visaList", visaService.getAllVisas());
+            model.addAttribute("visaList", visaService.getAllUniqueVisTypeWithCountry());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("cardList", cardService.getAllCards());
             model.addAttribute("currencySymbol", updatedBalanceRecord.getCurrencyUnit().getCurrencySymbol());
@@ -105,6 +105,13 @@ public class BalanceController {
         balanceService.saveUpdatedBalanceRecord(updatedBalanceRecord);
         redirectAttributes.addFlashAttribute("isRecordUpdated", true);
         return "redirect:/record/list";
+    }
+
+    @GetMapping("/details/{recordId}")
+    public String getBalanceDetails(@PathVariable long recordId, Model model) {
+        BalanceRecordDto balanceRecord = balanceService.getBalanceRecordById(recordId);
+        model.addAttribute("balanceRecord", balanceRecord);
+        return "balance/record-details";
     }
 
 }

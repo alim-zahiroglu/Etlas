@@ -193,4 +193,10 @@ public class VisaController {
         redirectAttributes.addFlashAttribute("visaIsDeleted", true);
         return "redirect:/visa/list";
     }
+    @GetMapping("/details/{visaId}")
+    public String visaDetail(@PathVariable long visaId, Model model) {
+        VisaDto visa = visaService.findById(visaId);
+        model.addAttribute("visa", visa);
+        return "/visa/visa-details";
+    }
 }
