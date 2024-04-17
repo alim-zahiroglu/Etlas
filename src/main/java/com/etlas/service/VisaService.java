@@ -21,4 +21,6 @@ public interface VisaService {
     void saveUpdatedVisa(VisaDto visaToBeUpdate);
 
     void deleteVisa(long visaId);
+
+    List<String> getAllUniqueVisTypeWithCountry();
 }

@@ -35,7 +35,7 @@ public class BalanceController {
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("ticketList", ticketService.findAllTickets());
-        model.addAttribute("visaList", visaService.getAllVisas());
+        model.addAttribute("visaList", visaService.getAllUniqueVisTypeWithCountry());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("cardList", cardService.getAllCards());
         model.addAttribute("currencySymbol", newBalance.getCurrencyUnit().getCurrencySymbol());
@@ -56,6 +56,7 @@ public class BalanceController {
             model.addAttribute("visaList", visaService.getAllVisas());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("cardList", cardService.getAllCards());
+            model.addAttribute("currencySymbol", newRecord.getCurrencyUnit().getCurrencySymbol());
 
             return "balance/balance-create";
         }
@@ -72,23 +73,30 @@ public class BalanceController {
     }
 
     @GetMapping("/update/{recordId}")
-    public String updateBalance(@PathVariable String recordId, Model model) {
-        BalanceRecordDto balanceRecord = balanceService.initiateUpdateRecord(Long.parseLong(recordId));
+    public String updateBalance(@PathVariable long recordId, Model model) {
+
+        BalanceRecordDto balanceRecord = balanceService.initiateUpdateRecord(recordId);
         model.addAttribute("balanceRecord", balanceRecord);
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("userList", userService.findAllUsers());
+        model.addAttribute("ticketList", ticketService.findAllTickets());
+        model.addAttribute("visaList", visaService.getAllVisas());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("cardList", cardService.getAllCards());
         model.addAttribute("currencySymbol", balanceRecord.getCurrencyUnit().getCurrencySymbol());
         return "balance/balance-update";
     }
-    @PostMapping("/update/{id}/{linkedTicketId}")
+    @PostMapping("/update/{id}")
     public String saveUpdatedRecord(@Valid @ModelAttribute("balanceRecord") BalanceRecordDto updatedBalanceRecord,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes, Model model) {
+
+        bindingResult = balanceService.validateBalanceRecord(updatedBalanceRecord, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("userList", userService.findAllUsers());
+            model.addAttribute("ticketList", ticketService.findAllTickets());
+            model.addAttribute("visaList", visaService.getAllVisas());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("cardList", cardService.getAllCards());
             model.addAttribute("currencySymbol", updatedBalanceRecord.getCurrencyUnit().getCurrencySymbol());

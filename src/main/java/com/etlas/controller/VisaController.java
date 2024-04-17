@@ -178,6 +178,9 @@ public class VisaController {
             CustomerDto newCustomer = customerService.initializeNewCustomer();
 
             model.addAttribute("newCustomer", newCustomer);
+
+            return "/visa/visa-update";
+
         }
         visaService.saveUpdatedVisa(visaToBeUpdate);
         redirectAttributes.addFlashAttribute("isVisaUpdated", true);

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -219,5 +220,17 @@ public class VisaServiceImpl implements VisaService {
                 .orElseThrow( () -> new IllegalArgumentException("Visa not found"));
         visaToBeDelete.setDeleted(true);
         repository.save(visaToBeDelete);
+    }
+
+    @Override
+    public List<String> getAllUniqueVisTypeWithCountry() {
+        return repository.getAllUniqueVisaTypeAndCountry(false)
+                .stream()
+                .map(objects -> {
+                            CountriesTr country = CountriesTr.valueOf((String) objects[0]);
+                            return country.getName() + ", " + objects[1];
+                        }
+                )
+                .collect(Collectors.toList());
     }
 }
