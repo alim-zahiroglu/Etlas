@@ -42,10 +42,12 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public BalanceRecordDto initiateUpdateRecord(long recordId) {
         BalanceRecordDto recordDto = getBalanceRecordById(recordId);
+
         if (recordDto.getPaidType().equals(PaidType.BYHAND)){
             recordDto.setByHand(true);
             recordDto.setByCard(false);
-        } else if (recordDto.getPaidType().equals(PaidType.BYCARD)) {
+        }
+        if (recordDto.getPaidType().equals(PaidType.BYCARD)) {
             recordDto.setByCard(true);
             recordDto.setByHand(false);
         }
@@ -54,11 +56,8 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public BalanceRecordDto getBalanceRecordById(long recordId) {
-         BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
-         if (record != null) {
-             return mapper.convert(record, new BalanceRecordDto());
-         }
-            return null;
+         BalanceRecord record = repository.findByIdAndIsDeletedFalse(recordId).orElseThrow(NoSuchFieldError::new);
+         return mapper.convert(record, new BalanceRecordDto());
     }
 
     @Override
@@ -115,15 +114,15 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public void saveUpdatedBalanceRecord(BalanceRecordDto updatedBalanceRecord) {
-        deleteBalanceRecord(updatedBalanceRecord.getId()); // delete the old record
-        saveBalanceRecord(updatedBalanceRecord);         // save the updated record
+        BalanceRecord oldRecord = repository.findById(updatedBalanceRecord.getId()).orElseThrow(NoSuchFieldError::new);
+        resetCustomerBalance(oldRecord); // reset the customer balance
+        saveBalanceRecord(updatedBalanceRecord);  // save the updated record
 
     }
 
     @Override
     public void deleteBalanceRecord(long recordId) {
         BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
-        resetCustomerBalance(record);         // undo the customer balance
         record.setDeleted(true);
         repository.save(record);
     }

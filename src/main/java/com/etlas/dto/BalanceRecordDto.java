@@ -26,7 +26,6 @@ public class BalanceRecordDto {
     @NotNull(message = "please select a giver")
     private CustomerDto giver;
 
-    @Min(value = 0, message = "amount must be greater than 0")
     private BigDecimal amount;
     private CurrencyUnits currencyUnit;
 
