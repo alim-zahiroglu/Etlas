@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>record list</title>
 <head th:replace="~{fragments/head :: header}">
-    <title>record list</title>
 </head>
 <body class="bg-light">
 <div class="wrapper">
@@ -16,7 +16,7 @@
 
                     <div class="ecommerce-widget pt-4">
 
-                        <nav style="--bs-breadcrumb-divider: " aria-label="breadcrumb">
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a href="#"><i
                                         class="fa-solid fa-house"></i> Balance Records </a></li>
@@ -59,7 +59,7 @@
                                                            style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
                                                             <span>Print</span>
                                                             <span style="margin-left: auto;"><img
-                                                                    th:src="@{/images/print.png}"></span>
+                                                                    th:src="@{/images/print.png}" alt="print"></span>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -222,6 +222,48 @@
                                             </div>
                                         </div>
 
+                                        <div id="create_toast_up_layer" th:if="${isNewRecordSaved} == true">
+                                            <div id="create_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="createSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="toast-body create_toast_body" th:inline="text">
+                                                        <strong style="color: green"> new record successfully
+                                                            saved!</strong>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="update_toast_up_layer" th:if="${isRecordUpdated} == true">
+                                            <div id="update_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="updateSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="toast-body create_toast_body" th:inline="text">
+                                                        <strong style="color: green"> new record successfully
+                                                            saved!</strong>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div id="delete_toast_up_layer" th:if="${isRecordDeleted} == true">
                                             <div id="delete_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
@@ -266,33 +308,11 @@
                                             </div>
                                         </div>
 
-                                        <div id="create_toast_up_layer" th:if="${isNewRecordSaved} == true">
-                                            <div id="create_toast_container"
+                                        <div id="customer_update_toast_up_layer" th:if="${customerIsUpdated} == true">
+                                            <div id="customer_update_toast_container"
                                                  class="position-fixed top-0 start-50 translate-middle-x mt-3"
                                                  data-autohide="true">
-                                                <div id="createSuccessToast" class="toast" role="alert"
-                                                     aria-live="assertive" aria-atomic="true">
-                                                    <div class="toast-header create_toast_header">
-                                                        <strong class="me-auto">Success</strong>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                                                aria-label="Close"></button>
-                                                    </div>
-
-                                                    <div class="toast-body create_toast_body" th:inline="text">
-                                                        <strong style="color: green"> new record successfully
-                                                            saved!</strong>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div id="update_toast_up_layer" th:if="${customerIsUpdated} == true">
-                                            <div id="update_toast_container"
-                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
-                                                 data-autohide="true">
-                                                <div id="updateSuccessToast" class="toast" role="alert"
+                                                <div id="customer_updateSuccessToast" class="toast" role="alert"
                                                      aria-live="assertive" aria-atomic="true">
                                                     <div class="toast-header update_toast_header">
                                                         <strong class="me-auto">Success</strong>
