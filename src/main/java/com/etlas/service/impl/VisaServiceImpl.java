@@ -43,7 +43,7 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public List<VisaDto> getAllVisas() {
-        return  repository.findAllByIsDeletedFalse().stream()
+        return  repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false).stream()
                 .map(visa -> mapper.convert(visa, new VisaDto()))
                 .toList();
     }

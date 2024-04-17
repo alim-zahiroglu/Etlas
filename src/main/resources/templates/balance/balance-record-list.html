@@ -153,13 +153,14 @@
 
                                                     <td th:if="${record.paidType.description == 'By Card'}"
                                                         th:text="${record.receiverCard != null ? record.receiverCard.cardOwner + ' (' + record.receiverCard.bankName + ')' : 'None'}">
-
                                                     </td>
                                                     <td th:if="${record.paidType.description == 'By Hand'}"
                                                         th:text="None">
                                                     </td>
-
-                                                    <td th:text="${record.description}"></td>
+                                                    <td>
+                                                        <span th:text="${record.getLinkedTicket()}"></span><br>
+                                                        <span th:text="${record.getLinkedVisa()}"></span>
+                                                    </td>
 
                                                     <td class="actions">
                                                         <a th:href="@{/record/update/{recordId}(recordId = ${record.id})}">
@@ -174,6 +175,13 @@
                                                                 <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                             </button>
                                                         </a>
+                                                        <a th:href="@{/record/details/{recordId}(recordId = ${record.id})}"
+                                                           class="download-ticket">
+                                                            <button type="button" id="download-ticket"
+                                                                    class="btn custom_download_button p-1">
+                                                                <i class="fa-solid fa-eye download-rotate-on-hover"></i>
+                                                            </button>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -182,7 +190,8 @@
                                         </div>
 
 
-                                        <div class="modal fade" id="customerConfirmationModal" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="customerConfirmationModal" tabindex="-1"
+                                             role="dialog"
                                              aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content p-2">
@@ -225,8 +234,9 @@
                                                     </div>
 
                                                     <div
-                                                         class="toast-body delete_toast_body" th:inline="text">
-                                                        <strong style="color: red">Balance record is successfully deleted!</strong>
+                                                            class="toast-body delete_toast_body" th:inline="text">
+                                                        <strong style="color: red">Balance record is successfully
+                                                            deleted!</strong>
 
                                                     </div>
 
@@ -268,7 +278,8 @@
                                                     </div>
 
                                                     <div class="toast-body create_toast_body" th:inline="text">
-                                                        <strong style="color: green"> new record  successfully saved!</strong>
+                                                        <strong style="color: green"> new record successfully
+                                                            saved!</strong>
                                                     </div>
 
                                                 </div>

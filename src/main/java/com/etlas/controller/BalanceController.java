@@ -1,7 +1,6 @@
 package com.etlas.controller;
 
 import com.etlas.dto.BalanceRecordDto;
-import com.etlas.dto.CardDto;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.service.*;
 import jakarta.validation.Valid;
@@ -22,7 +21,7 @@ public class BalanceController {
     private final UserService userService;
     private final CardService cardService;
     private final TicketService ticketService;
-    private final VisaTypeService visaTypeService;
+    private final VisaService visaService;
 
     @GetMapping("/list")
     public String listBalance(Model model) {
@@ -36,7 +35,7 @@ public class BalanceController {
         model.addAttribute("customerList", customerService.getAllCustomers());
         model.addAttribute("userList", userService.findAllUsers());
         model.addAttribute("ticketList", ticketService.findAllTickets());
-        model.addAttribute("visaList", visaTypeService.getAllVisaTypes());
+        model.addAttribute("visaList", visaService.getAllVisas());
         model.addAttribute("currencyUnits", CurrencyUnits.values());
         model.addAttribute("cardList", cardService.getAllCards());
         model.addAttribute("currencySymbol", newBalance.getCurrencyUnit().getCurrencySymbol());
@@ -48,11 +47,16 @@ public class BalanceController {
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes, Model model) {
 
+        bindingResult = balanceService.validateBalanceRecord(newRecord, bindingResult);
         if (bindingResult.hasErrors()) {
+
             model.addAttribute("customerList", customerService.getAllCustomers());
             model.addAttribute("userList", userService.findAllUsers());
+            model.addAttribute("ticketList", ticketService.findAllTickets());
+            model.addAttribute("visaList", visaService.getAllVisas());
             model.addAttribute("currencyUnits", CurrencyUnits.values());
             model.addAttribute("cardList", cardService.getAllCards());
+
             return "balance/balance-create";
         }
         balanceService.saveBalanceRecord(newRecord);
