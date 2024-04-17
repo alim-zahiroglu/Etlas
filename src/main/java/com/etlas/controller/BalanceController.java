@@ -1,7 +1,6 @@
 package com.etlas.controller;
 
 import com.etlas.dto.BalanceRecordDto;
-import com.etlas.dto.CardDto;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.service.*;
 import jakarta.validation.Valid;

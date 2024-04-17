@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BalanceRecordRepository extends JpaRepository<BalanceRecord, Long> {
-    List<BalanceRecord> findAllByIsDeleted(boolean isDeleted);
+    List<BalanceRecord> findAllByIsDeletedOrderByLastUpdateDateTimeDesc(boolean isDeleted);
 }

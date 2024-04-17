@@ -63,12 +63,15 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public List<BalanceRecordDto> getAllBalanceRecords() {
-        List<BalanceRecord> records = repository.findAllByIsDeleted(false);
+        List<BalanceRecord> records = repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false);
         return records.stream().map(record -> mapper.convert(record, new BalanceRecordDto())).toList();
     }
 
     @Override
     public BindingResult validateBalanceRecord(BalanceRecordDto newRecord, BindingResult bindingResult) {
+        if (newRecord.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            bindingResult.rejectValue("amount", "error.amount", "Amount must be greater than zero");
+        }
         if (newRecord.isByCard() && newRecord.getReceiverCard() == null) {
             bindingResult.rejectValue("receiverCard", "error.receiverCard", "Please select a card");
         }
@@ -85,12 +88,14 @@ public class BalanceServiceImpl implements BalanceService {
     private void prepareRecordToSave(BalanceRecordDto newRecord) {
         if (Objects.equals(newRecord.getLinkedTicket(), "0")) {
             newRecord.setLinkedTicket("");
-        } else if (Objects.equals(newRecord.getLinkedVisa(), "0")) {
+        }
+        if (Objects.equals(newRecord.getLinkedVisa(), "0")) {
             newRecord.setLinkedVisa("");
         }
         if (newRecord.isByHand()) {
             newRecord.setPaidType(PaidType.BYHAND);
-        } else if (newRecord.isByCard()) {
+        }
+        if (newRecord.isByCard()) {
             newRecord.setPaidType(PaidType.BYCARD);
         }
     }
