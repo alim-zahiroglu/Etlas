@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,7 +104,8 @@ public class TicketServiceImpl implements TicketService {
             newTicket.setTicketType(TicketType.MULTIPLE);
         } else newTicket.setTicketType(TicketType.SINGLE);
 
-        newTicket.setPayedCustomer(customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI()))); // set paid customer
+        CustomerDto payedCustomer = customerService.findById(Long.parseLong(newTicket.getPayedCustomerUI()));
+        newTicket.setPayedCustomer(payedCustomer); // set paid customer
     }
 
     private void setPassengers(TicketDto newTicket) {
@@ -111,12 +113,10 @@ public class TicketServiceImpl implements TicketService {
                 .map(Long::parseLong).map(customerService::findById)
                 .toList();
         newTicket.setPassengers(passengers);
-
     }
 
     private void calculateCustomerBalance(TicketDto newTicket) {
-        long payedCustomerId = Long.parseLong(newTicket.getPayedCustomerUI());
-        CustomerDto customer = customerService.findById(payedCustomerId);
+        CustomerDto customer = newTicket.getPayedCustomer();
         CurrencyUnits currencyUnits = newTicket.getCurrencyUnit();
 
         if (newTicket.getPerchesPrice() == null) newTicket.setPerchesPrice(BigDecimal.ZERO);
@@ -130,16 +130,16 @@ public class TicketServiceImpl implements TicketService {
         if (currencyUnits.getDescription().equals("₺ TRY")) {
             BigDecimal newBalance = customer.getCustomerTRYBalance().subtract(sales);
             customer.setCustomerTRYBalance(newBalance);
-            customerService.saveNewCustomer(customer);
+            customerService.saveCustomer(customer);
 
         } else if (currencyUnits.getDescription().equals("$ USD")) {
             BigDecimal newBalance = customer.getCustomerUSDBalance().subtract(sales);
             customer.setCustomerUSDBalance(newBalance);
-            customerService.saveNewCustomer(customer);
+            customerService.saveCustomer(customer);
         } else {
             BigDecimal newBalance = customer.getCustomerEURBalance().subtract(sales);
             customer.setCustomerEURBalance(newBalance);
-            customerService.saveNewCustomer(customer);
+            customerService.saveCustomer(customer);
         }
     }
 
@@ -305,16 +305,16 @@ public class TicketServiceImpl implements TicketService {
         if (oldCurrencyUnits.getDescription().equals("₺ TRY")) {
             BigDecimal newBalance = oldPidCustomer.getCustomerTRYBalance().add(oldSales);
             oldPidCustomer.setCustomerTRYBalance(newBalance);
-            customerService.saveNewCustomer(oldPidCustomer);
+            customerService.saveCustomer(oldPidCustomer);
 
         } else if (oldCurrencyUnits.getDescription().equals("$ USD")) {
             BigDecimal newBalance = oldPidCustomer.getCustomerUSDBalance().add(oldSales);
             oldPidCustomer.setCustomerUSDBalance(newBalance);
-            customerService.saveNewCustomer(oldPidCustomer);
+            customerService.saveCustomer(oldPidCustomer);
         } else {
             BigDecimal newBalance = oldPidCustomer.getCustomerEURBalance().add(oldSales);
             oldPidCustomer.setCustomerEURBalance(newBalance);
-            customerService.saveNewCustomer(oldPidCustomer);
+            customerService.saveCustomer(oldPidCustomer);
         }
     }
 

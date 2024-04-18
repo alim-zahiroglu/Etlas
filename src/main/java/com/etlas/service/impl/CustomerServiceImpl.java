@@ -202,9 +202,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public void saveCustomer(CustomerDto customer) {
+        repository.save(mapper.convert(customer, new Customer()));
+
+    }
+
+    @Override
     public void saveNewCustomerIfAdded(long customerId) {
         Customer customer = repository.findById(customerId).orElseThrow( () -> new IllegalArgumentException("Customer not found"));
         customer.setDeleted(false);
         repository.save(customer);
     }
+
 }

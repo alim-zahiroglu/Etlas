@@ -32,4 +32,6 @@ public interface CustomerService {
     void save(CustomerDto customer);
 
     void saveNewCustomerIfAdded(long customerId);
+
+    void saveCustomer(CustomerDto customer);
 }

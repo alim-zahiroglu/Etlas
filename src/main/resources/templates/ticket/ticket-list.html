@@ -168,7 +168,7 @@
                                                     </td>
 
                                                     <td>
-                                                        <a th:href="@{/passenger/details/list/{ticketId}(ticketId=${ticket.id})}">
+                                                        <a th:href="@{/ticket/passenger/list/{ticketId}(ticketId=${ticket.id})}">
 
                                                             <span th:if="${ticket.passengers.get(0).customerType.description == 'Company'}"
                                                                   th:utext="${ticket.passengers.size() > 1 ? '<i class=&quot;fa-solid fa-users&quot;></i> ' + ticket.passengers.get(0).companyName : ticket.passengers.get(0).companyName}">
