@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<title>record update</title>
+<title>new record</title>
 <head th:replace="~{fragments/head :: header}">
 </head>
 
@@ -19,7 +19,7 @@
                                 <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/record/list}"><i
                                         class="fa-solid fa-house"></i> Balance Records </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><i
-                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> Update Record
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> New Record
                                 </li>
                             </ol>
                         </nav>
@@ -40,14 +40,13 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header text-center text-white bold_font"
-                                         style="font-size: x-large;background: #f8a526 !important;">update Record
+                                         style="font-size: x-large;background: #117dc0 !important;">New Record
                                     </div>
                                     <div class="card-body pt-5 pb-5">
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form th:object="${balanceRecord}"
-                                                      th:action="@{/record/update/{recordId}(recordId=${balanceRecord.id})}" method="post"
+                                                <form th:object="${newBalance}" th:action="@{/record/customer-record/{customerId}(customerId = ${newBalance.giver.id})}" method="post"
                                                       class="row g-3">
 
                                                     <div class="row">
@@ -77,7 +76,7 @@
                                                          style="padding: 0 8px ;margin-top: 17px">
                                                         <label for="mySelectForGiver"
                                                                class="form-label pl-1 mb-1 d-block">Giver</label>
-                                                        <select id="mySelectForGiver"
+                                                        <select id="mySelectForGiver" disabled
                                                                 th:field="*{giver}"
                                                                 th:name="giverCustomer"
                                                                 class="form-control mb-0" style="width: 100%">
@@ -197,7 +196,6 @@
                                                     <input type="hidden" id="selectedCurrencySymbol"
                                                            th:value="${currencySymbol}">
 
-
                                                     <div class="form-group col-md-6"
                                                          style="padding: 0 8px 0 8px;margin-top: 17px">
                                                         <label for="record-date" class="form-label mb-1 pl-1 d-block">
@@ -244,9 +242,9 @@
                                                                 th:name="linkedVisa" class="form-select"
                                                                 style="width: 100%">
                                                             <option th:value="0">Select Visa</option> <!-- Default option -->
-                                                            <option th:each="visa : ${visaList}"
-                                                                    th:value="${visa.country.getName() +  ', ' + visa.visaType}"
-                                                                    th:text="${visa.country.getName() +  ', ' + visa.visaType}">
+                                                            <option th:if="${!visaList.isEmpty()}" th:each="visa : ${visaList}"
+                                                                    th:value="${visa}"
+                                                                    th:text="${visa}">
                                                             </option>
                                                         </select>
                                                         <div class="ticket-create-airline-select text-right">
@@ -275,23 +273,13 @@
                                                     </div>
 
 
-                                                    <div class="row justify-content-end pt-3 pr-0 pl-0">
-                                                        <div class="col-12 col-md-6 col-lg-6 text-right p-0">
 
-                                                            <a th:href="@{/record/update/{balanceId}(balanceId=${balanceRecord.id})}"
-                                                               style="text-decoration: none">
-                                                                <button type="button" id="clearInputButton"
-                                                                        class="btn btn-secondary pr-5 pl-5 mr-2">
-                                                                    Reset
-                                                                </button>
-                                                            </a>
-
-                                                            <button type="submit" id="saveTicketButton"
-                                                                    class="btn update-page-update_button pr-5 pl-5">
-                                                                Update
+                                                    <div class="row pt-4 m-0">
+                                                        <div class="col-12 col-md-12 col-lg-12 text-right">
+                                                            <button type="submit"
+                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                Save
                                                             </button>
-
-
                                                         </div>
                                                     </div>
 
@@ -322,6 +310,7 @@
         $('#transactionAmount .currency-symbol').text(currencySymbol);
     });
 </script>
+
 
 </body>
 </html>

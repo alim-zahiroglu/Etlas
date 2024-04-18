@@ -25,4 +25,5 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
   boolean existsByPayedCardIdAndIsDeleted(@Param("payedCardId") long payedCardId, @Param("isDeleted") boolean isDeleted);
 
 
+    List<Ticket> findAllByPayedCustomer_IdAndIsDeleted(long customerId, boolean IsDeleted);
 }

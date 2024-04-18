@@ -19,4 +19,7 @@ public interface VisaRepository extends JpaRepository<Visa, Long> {
     List<Visa> findAllByIsDeletedOrderByLastUpdateDateTimeDesc(boolean isDeleted);
     @Query(value = "SELECT DISTINCT country, visa_type FROM visas WHERE is_deleted = :isDeleted", nativeQuery = true)
     List<Object[]> getAllUniqueVisaTypeAndCountry(boolean isDeleted);
+
+    @Query(value = "SELECT DISTINCT country, visa_type FROM visas WHERE paid_customer_id = :customerId AND is_deleted = :isDeleted",nativeQuery = true)
+    List<Object[]> getAllUniqueVisaTypeAndCountryFromCustomer(long customerId, boolean isDeleted);
 }
