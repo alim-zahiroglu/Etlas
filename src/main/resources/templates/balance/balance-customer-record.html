@@ -46,7 +46,9 @@
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-12 col-md-12 col-lg-10">
 
-                                                <form th:object="${newBalance}" th:action="@{/record/customer-record/{customerId}(customerId = ${newBalance.giver.id})}" method="post"
+                                                <form th:object="${newBalance}"
+                                                      th:action="@{/record/customer-record/{customerId}(customerId = ${newBalance.giver.id})}"
+                                                      method="post"
                                                       class="row g-3">
 
                                                     <div class="row">
@@ -56,7 +58,8 @@
                                                                 <input class="form-check-input" th:field="*{byHand}"
                                                                        type="checkbox" id="type-byHand">
                                                                 <label class="form-check-label" for="type-byHand">
-                                                                    <i class="fa-solid fa-hand-holding-dollar"></i> By Hand
+                                                                    <i class="fa-solid fa-hand-holding-dollar"></i> By
+                                                                    Hand
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -72,30 +75,20 @@
                                                     </div>
 
                                                     <div class="form-group col-md-6 col-lg-4"
-                                                         th:classappend="${#fields.hasErrors('giver')} ? 'error' : ''"
-                                                         style="padding: 0 8px ;margin-top: 17px">
-                                                        <label for="mySelectForGiver"
-                                                               class="form-label pl-1 mb-1 d-block">Giver</label>
-                                                        <select id="mySelectForGiver" disabled
-                                                                th:field="*{giver}"
-                                                                th:name="giverCustomer"
-                                                                class="form-control mb-0" style="width: 100%">
-                                                            <option th:each="customer : ${customerList}"
-                                                                    th:value="${customer.id}"
-                                                                    th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">
-                                                            </option>
-                                                        </select>
-                                                        <div class="ticket-create-airline-select text-right"
-                                                             th:classappend="${#fields.hasErrors('giver')||#fields.hasErrors('receiver')||#fields.hasErrors('receiverCard')} ? 'adjust-arrow' : ''">
-                                                            <i id="giver-selector-arrow"
-                                                               class="fa-solid fa-chevron-down rotate-down"></i>
-                                                        </div>
-                                                        <div class="custom-invalid-feedback"
-                                                             th:if="${#fields.hasErrors('giver')}">
-                                                            <ul class="p-0 m-0">
-                                                                <li th:each="err : ${#fields.errors('giver')}"
-                                                                    th:text="${err}"></li>
-                                                            </ul>
+                                                         th:classappend="${#fields.hasErrors('giver')} ? 'error' : ''">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputGiver"
+                                                                   class="form-label pl-1 mb-1 d-block">Giver</label>
+                                                            <input type="text" class="form-control customer-details-input"
+                                                                   th:value="${newBalance.giver.firstName + ' ' + newBalance.giver.lastName}"
+                                                                   id="inputGiver" readonly>
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('giver')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('giver')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -129,11 +122,13 @@
                                                          th:classappend="${#fields.hasErrors('receiverCard')} ? 'error' : ''"
                                                          style="padding: 0 8px 0 8px;margin-top: 17px">
                                                         <label for="mySelectForCard"
-                                                               class="form-label mb-1 pl-1 d-block">Received Card</label>
+                                                               class="form-label mb-1 pl-1 d-block">Received
+                                                            Card</label>
                                                         <select id="mySelectForCard" th:field="*{receiverCard}"
                                                                 th:name="receiverCard" class="form-select"
                                                                 style="width: 100%">
-                                                            <option th:value="0">Select Received Card</option> <!-- Default option -->
+                                                            <option th:value="0">Select Received Card</option>
+                                                            <!-- Default option -->
                                                             <option th:each="receivedCard:${cardList}"
                                                                     th:value="${receivedCard.id}"
                                                                     th:text="${receivedCard.cardOwner + ' (' + receivedCard.bankName + ')'}"></option>
@@ -155,7 +150,8 @@
                                                     <div class="form-group col-md-6 mb-0"
                                                          th:classappend="${#fields.hasErrors('amount')} ? 'error' : ''"
                                                          style="padding: 0 8px ;margin-top: 17px">
-                                                        <label for="transactionAmount" class="form-label mb-1 pl-1 d-block">Amount</label>
+                                                        <label for="transactionAmount"
+                                                               class="form-label mb-1 pl-1 d-block">Amount</label>
                                                         <div class="input-group currency-input-group"
                                                              id="transactionAmount">
                                                             <span class="input-group-text currency-symbol">₺</span>
@@ -214,7 +210,8 @@
                                                                 th:field="*{linkedTicket}"
                                                                 th:name="linkedTicket"
                                                                 class="form-control mb-0" style="width: 100%">
-                                                            <option th:value="0">Select Ticket</option> <!-- Default option -->
+                                                            <option th:value="0">Select Ticket</option>
+                                                            <!-- Default option -->
                                                             <option th:each="ticket : ${ticketList}"
                                                                     th:value="${'Pnr: '+ticket.pnrNo + ', ' + ticket.fromWhere.city + ' -> ' + ticket.toWhere.city }"
                                                                     th:text="${'Pnr: '+ticket.pnrNo + ', ' + ticket.fromWhere.city + ' -> ' + ticket.toWhere.city }">
@@ -241,8 +238,10 @@
                                                         <select id="mySelectForLinkedVisa" th:field="*{linkedVisa}"
                                                                 th:name="linkedVisa" class="form-select"
                                                                 style="width: 100%">
-                                                            <option th:value="0">Select Visa</option> <!-- Default option -->
-                                                            <option th:if="${!visaList.isEmpty()}" th:each="visa : ${visaList}"
+                                                            <option th:value="0">Select Visa</option>
+                                                            <!-- Default option -->
+                                                            <option th:if="${!visaList.isEmpty()}"
+                                                                    th:each="visa : ${visaList}"
                                                                     th:value="${visa}"
                                                                     th:text="${visa}">
                                                             </option>
@@ -271,7 +270,6 @@
                                                             </textarea>
                                                         </div>
                                                     </div>
-
 
 
                                                     <div class="row pt-4 m-0">
