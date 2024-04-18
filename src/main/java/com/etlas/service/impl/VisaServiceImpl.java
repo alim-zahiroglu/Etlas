@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,9 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public List<VisaDto> getAllVisas() {
-        return  repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false).stream()
+        List<Visa> visaList = repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false);
+        if (visaList.isEmpty()) return List.of();
+        return visaList.stream()
                 .map(visa -> mapper.convert(visa, new VisaDto()))
                 .toList();
     }
@@ -224,13 +227,35 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public List<String> getAllUniqueVisTypeWithCountry() {
-        return repository.getAllUniqueVisaTypeAndCountry(false)
-                .stream()
-                .map(objects -> {
-                            CountriesTr country = CountriesTr.valueOf((String) objects[0]);
-                            return country.getName() + ", " + objects[1];
-                        }
-                )
-                .collect(Collectors.toList());
+        List<Object[]> visaList =  repository.getAllUniqueVisaTypeAndCountry(false);
+        if (!visaList.isEmpty()) {
+                return  visaList.stream()
+                    .map(objects -> {
+                                CountriesTr country = CountriesTr.valueOf((String) objects[0]);
+                                return country.getName() + ", " + objects[1];
+                            }
+                    )
+                    .collect(Collectors.toList());
+        }
+        return List.of();
+    }
+
+    @Override
+    public List<String> getAllUniqueVisTypeWithCountryFromCustomer(long customerId) {
+        List<Object[]> visaList = repository.getAllUniqueVisaTypeAndCountryFromCustomer(customerId, false);
+        if (!visaList.isEmpty()) {
+            return visaList.stream()
+                    .map(objects -> {
+                        System.out.println("objects: " + objects[0] + " " + objects[1]);
+                        CountriesTr country1 = CountriesTr.valueOf("SAU");
+                        System.out.println(country1.getName() + " " + country1);
+                                CountriesTr country = CountriesTr.valueOf((String) objects[0]);
+                        System.out.println("country: " + country);
+                                return country.getName() + ", " + objects[1];
+                            }
+                    )
+                    .collect(Collectors.toList());
+        }
+        return List.of();
     }
 }

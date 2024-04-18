@@ -36,4 +36,6 @@ public interface TicketService {
     boolean isCardUsedInAnyTicket(String cardId);
 
     void save(TicketDto linkedTicket);
+
+    List<TicketDto> findTicketsByCustomerId(long customerId);
 }

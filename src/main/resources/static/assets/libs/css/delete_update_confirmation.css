@@ -7,6 +7,11 @@
 }
 
 /* delete alert */
+#customer_record_saved_toast_container{
+    z-index: 9999;
+    border: none;
+    background: transparent;
+}
 
 #delete_toast_container{
     z-index: 9999;

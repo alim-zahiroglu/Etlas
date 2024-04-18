@@ -342,6 +342,27 @@
                                             </div>
                                         </div>
 
+                                        <div id="customer_record_saved_toast_up_layer" th:if="${isNewRecordSaved} == true">
+                                            <div id="customer_record_saved_toast_container"
+                                                 class="position-fixed top-0 start-50 translate-middle-x mt-3"
+                                                 data-autohide="true">
+                                                <div id="customerRecordSuccessToast" class="toast" role="alert"
+                                                     aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header create_toast_header">
+                                                        <strong class="me-auto">Success</strong>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="toast-body create_toast_body" th:inline="text">
+                                                        <strong style="color: green"> new record successfully
+                                                            saved!</strong>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
