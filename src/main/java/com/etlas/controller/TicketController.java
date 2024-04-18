@@ -273,4 +273,10 @@ public class TicketController {
         redirectAttributes.addFlashAttribute("updatedCustomerName",updatedCustomer.getFirstName() + " " + updatedCustomer.getLastName());
         return "redirect:/ticket/list";
     }
+    @GetMapping("/passenger/list/{ticketId}")
+    public String showPassengerList(@PathVariable("ticketId") long ticketId, Model model) {
+        TicketDto ticket = ticketService.findById(ticketId);
+        model.addAttribute("ticket", ticket);
+        return "/ticket/ticket-passenger-list";
+    }
 }
