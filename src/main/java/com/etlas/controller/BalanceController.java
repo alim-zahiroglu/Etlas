@@ -112,6 +112,54 @@ public class BalanceController {
         BalanceRecordDto balanceRecord = balanceService.getBalanceRecordById(recordId);
         model.addAttribute("balanceRecord", balanceRecord);
         return "balance/record-details";
+    @GetMapping("/details/{recordId}")
+    public String getBalanceDetails(@PathVariable long recordId, Model model) {
+        BalanceRecordDto balanceRecord = balanceService.getBalanceRecordById(recordId);
+        model.addAttribute("balanceRecord", balanceRecord);
+        return "balance/record-details";
+    }
+
+    @GetMapping("/customer-record/{customerId}")
+    public String getCustomerBalance(@PathVariable long customerId, Model model) {
+        CustomerDto giver = customerService.getCustomerById(customerId);
+        BalanceRecordDto newBalance = balanceService.initiateNewBalance();
+
+        newBalance.setGiver(giver); // set the giver to the record
+
+        model.addAttribute("newBalance", newBalance);
+        model.addAttribute("customerList", customerService.getAllCustomers());
+        model.addAttribute("userList", userService.findAllUsers());
+        model.addAttribute("ticketList", ticketService.findTicketsByCustomerId(customerId));
+        model.addAttribute("visaList", visaService.getAllUniqueVisTypeWithCountryFromCustomer(customerId));
+        model.addAttribute("currencyUnits", CurrencyUnits.values());
+        model.addAttribute("cardList", cardService.getAllCards());
+        model.addAttribute("currencySymbol", newBalance.getCurrencyUnit().getCurrencySymbol());
+        return "balance/balance-customer-record";
+    }
+
+    @PostMapping("/customer-record/{customerId}")
+    public String saveCustomerBalance(@Valid @ModelAttribute("newBalance") BalanceRecordDto newRecord,
+                                      BindingResult bindingResult,  @PathVariable long customerId,
+                                      RedirectAttributes redirectAttributes, Model model) {
+
+        CustomerDto giver = customerService.getCustomerById(customerId);
+        newRecord.setGiver(giver); // set the giver to the record
+        bindingResult = balanceService.validateBalanceRecord(newRecord, bindingResult);
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("customerList", customerService.getAllCustomers());
+            model.addAttribute("userList", userService.findAllUsers());
+            model.addAttribute("ticketList", ticketService.findTicketsByCustomerId(customerId));
+            model.addAttribute("visaList", visaService.getAllUniqueVisTypeWithCountryFromCustomer(customerId));
+            model.addAttribute("currencyUnits", CurrencyUnits.values());
+            model.addAttribute("cardList", cardService.getAllCards());
+            model.addAttribute("currencySymbol", newRecord.getCurrencyUnit().getCurrencySymbol());
+
+            return "balance/balance-customer-record";
+        }
+        balanceService.saveBalanceRecord(newRecord);
+        redirectAttributes.addFlashAttribute("isNewRecordSaved", true);
+        return "redirect:/customer/list";
     }
 
 }
