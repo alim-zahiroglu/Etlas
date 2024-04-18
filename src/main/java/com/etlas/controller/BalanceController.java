@@ -1,6 +1,7 @@
 package com.etlas.controller;
 
 import com.etlas.dto.BalanceRecordDto;
+import com.etlas.dto.CustomerDto;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.service.*;
 import jakarta.validation.Valid;
@@ -107,11 +108,6 @@ public class BalanceController {
         return "redirect:/record/list";
     }
 
-    @GetMapping("/details/{recordId}")
-    public String getBalanceDetails(@PathVariable long recordId, Model model) {
-        BalanceRecordDto balanceRecord = balanceService.getBalanceRecordById(recordId);
-        model.addAttribute("balanceRecord", balanceRecord);
-        return "balance/record-details";
     @GetMapping("/details/{recordId}")
     public String getBalanceDetails(@PathVariable long recordId, Model model) {
         BalanceRecordDto balanceRecord = balanceService.getBalanceRecordById(recordId);
