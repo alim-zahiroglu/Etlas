@@ -23,4 +23,6 @@ public interface VisaService {
     void deleteVisa(long visaId);
 
     List<String> getAllUniqueVisTypeWithCountry();
+
+    List<String> getAllUniqueVisTypeWithCountryFromCustomer(long customerId);
 }

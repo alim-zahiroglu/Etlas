@@ -23,7 +23,6 @@ public class BalanceRecordDto {
     @NotNull(message = "please select a receiver")
     private UserDto receiver;
 
-    @NotNull(message = "please select a giver")
     private CustomerDto giver;
 
     private BigDecimal amount;

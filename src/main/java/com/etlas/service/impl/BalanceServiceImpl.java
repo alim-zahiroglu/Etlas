@@ -68,6 +68,9 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public BindingResult validateBalanceRecord(BalanceRecordDto newRecord, BindingResult bindingResult) {
+        if (newRecord.getReceiver() == null) {
+            bindingResult.rejectValue("receiver", "error.receiver", "Please select a receiver");
+        }
         if (newRecord.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             bindingResult.rejectValue("amount", "error.amount", "Amount must be greater than zero");
         }

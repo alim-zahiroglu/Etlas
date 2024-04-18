@@ -221,6 +221,7 @@ public class TicketServiceImpl implements TicketService {
     public List<TicketDto> findAllTickets() {
         List<Ticket> tickets = repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false);
 
+        if (tickets.isEmpty()) return List.of();
         return tickets.stream()
                 .map(ticket -> mapper.convert(ticket, new TicketDto()))
                 .collect(Collectors.toList());
@@ -373,5 +374,16 @@ public class TicketServiceImpl implements TicketService {
     public boolean isCardUsedInAnyTicket(String cardId) {
         long id = Long.parseLong(cardId);
         return repository.existsByPayedCardIdAndIsDeleted(id, false);
+    }
+
+    @Override
+    public List<TicketDto> findTicketsByCustomerId(long customerId) {
+        List<Ticket> ticketList =  repository.findAllByPayedCustomer_IdAndIsDeleted(customerId, false);
+        if (!ticketList.isEmpty()) {
+            return ticketList.stream()
+                .map(ticket -> mapper.convert(ticket, new TicketDto()))
+                .toList();
+        }
+        return List.of();
     }
 }
