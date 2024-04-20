@@ -37,7 +37,7 @@ public class SecurityConfig {
 //                            .loginProcessingUrl("/authentication") // The URL to which the login form should be submitted for authentication
 //                            .usernameParameter("username") // The parameter name in the login form for the username field
 //                            .passwordParameter("password") // The parameter name in the login form for the password field
-                        .defaultSuccessUrl("/report", true))
+                        .defaultSuccessUrl("/welcome", true))
                 .logout(logoutConfigurer -> logoutConfigurer
                         .logoutUrl("/logout")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
