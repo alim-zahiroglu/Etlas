@@ -1,4 +1,4 @@
-INSERT INTO visa_types (visa_type)
+INSERT INTO visa_types (name)
 VALUES
     ('ömre vizasi'),
     ('hac vizasi'),

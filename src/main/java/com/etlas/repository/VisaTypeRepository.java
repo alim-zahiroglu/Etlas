@@ -9,8 +9,9 @@ import java.util.List;
 
 @Repository
 public interface VisaTypeRepository extends JpaRepository<VisaType, Long> {
-    List<VisaType> findByVisaType(String visaType);
 
-    @Query("SELECT v.visaType FROM VisaType v")
+    @Query("SELECT v.name FROM VisaType v")
     List<String> findAllVisaTypes();
+
+    VisaType findByName(String visaType);
 }

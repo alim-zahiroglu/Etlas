@@ -149,6 +149,9 @@ input:-webkit-autofill {
 .adjust-arrow{
   top: 50%; /* Adjust vertical positioning */
 }
+.adjust-arrow1{
+  top: 50%; !important; /* Adjust vertical positioning */
+}
 
 .ticket-create-from-select{
   background: transparent;

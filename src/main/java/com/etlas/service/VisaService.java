@@ -1,6 +1,7 @@
 package com.etlas.service;
 
 import com.etlas.dto.VisaDto;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface VisaService {
     List<String> getAllUniqueVisTypeWithCountry();
 
     List<String> getAllUniqueVisTypeWithCountryFromCustomer(long customerId);
+
+    BindingResult validateNewVisa(VisaDto newVisa, BindingResult bindingResult);
 }

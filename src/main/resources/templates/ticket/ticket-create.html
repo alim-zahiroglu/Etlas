@@ -240,7 +240,9 @@
                                                             <select id="mySelectForPassenger" multiple
                                                                     th:field="*{passengersUI}" th:name="passengers"
                                                                     class="form-control" style="width: 100%;">
-                                                                <option th:if="${customerList.isEmpty()}" th:value= "null">Select Customer</option>
+                                                                <option th:if="${customerList.isEmpty()}"
+                                                                        th:value="null">Select Customer
+                                                                </option>
                                                                 <option th:each="passenger:${customerList}"
                                                                         th:value="${passenger.id}"
                                                                         th:text="${passenger.customerType.description == 'Company' ? passenger.companyName : (passenger.customerType.description == 'Individual' ? passenger.firstName + ' ' + passenger.lastName : 'Unknown')}">
@@ -315,7 +317,6 @@
                                                             </div>
 
 
-
                                                         </div>
 
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
@@ -343,7 +344,8 @@
                                                     </div>
 
 
-                                                    <div class="row p-0 m-0" th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
+                                                    <div class="row p-0 m-0"
+                                                         th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
 
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
                                                              th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"
@@ -416,7 +418,9 @@
                                                                     th:field="*{payedCustomerUI}"
                                                                     th:name="payerCustomer"
                                                                     class="form-control mb-0" style="width: 100%">
-                                                                <option th:if="${customerList.isEmpty()}" th:value="0">Select Paid Customer</option>
+                                                                <option th:if="${customerList.isEmpty()}" th:value="0">
+                                                                    Select Paid Customer
+                                                                </option>
                                                                 <option th:each="payerCustomer : ${customerList}"
                                                                         th:value="${payerCustomer.id}"
                                                                         th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">
@@ -433,63 +437,63 @@
                                                                     <li th:each="err : ${#fields.errors('payedCustomerUI')}"
                                                                         th:text="${err}"></li>
                                                                 </ul>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    <input type="hidden" th:field="*{currencyUnit}"
-                                                           id="selectedCurrencyUnitInput">
+                                                        <input type="hidden" th:field="*{currencyUnit}"
+                                                               id="selectedCurrencyUnitInput">
 
-                                                    <input type="hidden" id="selectedCurrencySymbolInput"
-                                                           th:value="${currencySymbol}">
+                                                        <input type="hidden" id="selectedCurrencySymbolInput"
+                                                               th:value="${currencySymbol}">
 
 
-                                                    <div class="col-12"
-                                                         th:classappend="${#fields.hasErrors('notes')} ? 'error' : ''"
-                                                         id="notesSection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="notes"
-                                                                   class="form-label pl-1 mb-1 d-block">Note</label>
-                                                            <textarea type="text" th:field="*{notes}"
-                                                                      class="form-control" id="notes">
+                                                        <div class="col-12"
+                                                             th:classappend="${#fields.hasErrors('notes')} ? 'error' : ''"
+                                                             id="notesSection">
+                                                            <div class="form-group p-0 m-0">
+                                                                <label for="notes"
+                                                                       class="form-label pl-1 mb-1 d-block">Note</label>
+                                                                <textarea type="text" th:field="*{notes}"
+                                                                          class="form-control" id="notes">
 
                                                             </textarea>
-                                                            <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('notes')}">
-                                                                <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('notes')}"
-                                                                        th:text="${err}"></li>
-                                                                </ul>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('notes')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('notes')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="uploadTickets" class="form-label pl-1">Upload
+                                                                tickets</label>
+                                                            <input class="form-control" type="file" id="uploadTickets">
+                                                        </div>
+
+
+                                                        <div class="row justify-content-end pt-3 pr-0 pl-0">
+                                                            <div class="col-12 col-md-6 col-lg-6 text-right p-0">
+
+                                                                <a th:href="@{/ticket/create}"
+                                                                   style="text-decoration: none">
+                                                                    <button type="button" id="clearInputButton"
+                                                                            class="btn btn-secondary pr-5 pl-5 mr-2">
+                                                                        Reset
+                                                                    </button>
+                                                                </a>
+
+                                                                <button type="submit" id="saveTicketButton"
+                                                                        class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                    Save
+                                                                </button>
+
+
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="uploadTickets" class="form-label pl-1">Upload
-                                                            tickets</label>
-                                                        <input class="form-control" type="file" id="uploadTickets">
-                                                    </div>
-
-
-                                                    <div class="row justify-content-end pt-3 pr-0 pl-0">
-                                                        <div class="col-12 col-md-6 col-lg-6 text-right p-0">
-
-                                                            <a th:href="@{/ticket/create}"
-                                                               style="text-decoration: none">
-                                                                <button type="button" id="clearInputButton"
-                                                                        class="btn btn-secondary pr-5 pl-5 mr-2">
-                                                                    Reset
-                                                                </button>
-                                                            </a>
-
-                                                            <button type="submit" id="saveTicketButton"
-                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
-                                                                Save
-                                                            </button>
-
-
-                                                        </div>
-                                                    </div>
-
                                                 </form>
                                                 <div class="modal fade" id="add-new-customer-modal"
                                                      data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -644,7 +648,7 @@
                                                                     <div class="col-md-6"
                                                                          th:classappend="${#fields.hasErrors('customerUSDBalance')} ? 'error' : ''">
                                                                         <div class="form-group p-0 m-0">
-                                                                            <label for="customerTRYBalance"
+                                                                            <label for="customerUSDBalance"
                                                                                    class="form-label mb-1 pl-1">Customer
                                                                                 Balance</label>
                                                                             <div class="input-group">

@@ -11,9 +11,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class VisaTypeServiceImpl implements VisaTypeService {
-    private final VisaTypeRepository visaTypeRepository;
+    private final VisaTypeRepository repository;
     @Override
     public List<String> getAllVisaTypes() {
-       return visaTypeRepository.findAllVisaTypes();
+       return repository.findAllVisaTypes();
+    }
+
+    @Override
+    public VisaType findByName(String visaType) {
+        return repository.findByName(visaType);
+    }
+
+    @Override
+    public void save(VisaType newType) {
+        repository.save(newType);
     }
 }
