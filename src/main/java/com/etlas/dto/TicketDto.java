@@ -31,6 +31,7 @@ public class TicketDto {
 
     @NotBlank(message = "Please enter PNR")
     private String pnrNo;
+    private String ticketNo;
     private AirLineDto airLine;
     private int ticketAmount;
     private AirportDto fromWhere;

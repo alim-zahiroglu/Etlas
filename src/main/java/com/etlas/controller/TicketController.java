@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -86,8 +87,6 @@ public class TicketController {
         }
         bindingResult = ticketService.validateTicket(newTicket,bindingResult);
         if (bindingResult.hasErrors()){
-            // save new customer if new customer added
-            customerService.saveNewCustomerIfAdded(Long.parseLong(newTicket.getPayedCustomerUI()));
 
             String currencySymbol = newTicket.getCurrencyUnit().getCurrencySymbol();
             CustomerDto newCustomer = customerService.initializeNewCustomer();

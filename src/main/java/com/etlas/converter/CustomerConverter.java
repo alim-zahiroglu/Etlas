@@ -13,7 +13,7 @@ public class CustomerConverter implements Converter<String, CustomerDto> {
     }
     @Override
     public CustomerDto convert(String customerId) {
-        if (customerId.equals("")) {
+        if (customerId.equals("") || customerId.equals("0")) {
             return null;
         }
         long id = Long.parseLong(customerId);
