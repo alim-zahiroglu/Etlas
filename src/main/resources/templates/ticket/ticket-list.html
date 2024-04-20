@@ -122,11 +122,10 @@
                                                 <thead class="custom_table_header">
                                                 <tr>
                                                     <th scope="col">PNR</th>
-                                                    <th scope="col">Airline</th>
+                                                    <th scope="col">Ticket No</th>
                                                     <th scope="col">From-To</th>
                                                     <th scope="col">Departure Time</th>
                                                     <th scope="col">Passenger</th>
-                                                    <!--                                                    <th scope="col">Bought User</th>-->
                                                     <th scope="col">Price</th>
                                                     <th scope="col">Paid Customer</th>
                                                     <th scope="col">Paid Card</th>
@@ -134,8 +133,6 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-
-                                                <!--                                                th:class="${customer.customerType.description eq 'Company'} ? 'company-row' : 'individual-row'"-->
 
                                                 <tr th:each="ticket :${ticketList}">
                                                     <td>
@@ -145,9 +142,11 @@
                                                     </td>
 
                                                     <td>
-                                                        <!-- Check customer type and display appropriate name -->
-                                                        <span th:text="${ticket.airLine.name}"></span>
+                                                        <a th:href="@{/ticket/details/{ticketId}(ticketId=${ticket.id})}">
+                                                            <span th:utext="${ticket.ticketNo}"></span>
+                                                        </a>
                                                     </td>
+
 
                                                     <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
                                                         <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span><br/>
