@@ -80,7 +80,7 @@
                                                                 th:field="*{giver}"
                                                                 th:name="giverCustomer"
                                                                 class="form-control mb-0" style="width: 100%">
-                                                            <option th:if="${customerList.isEmpty()}">select giver</option> <!-- Default option -->
+                                                            <option th:if="${customerList.isEmpty()}" th:value="0">select giver</option> <!-- Default option -->
                                                             <option th:each="customer : ${customerList}"
                                                                     th:value="${customer.id}"
                                                                     th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">

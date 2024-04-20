@@ -68,6 +68,9 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public BindingResult validateBalanceRecord(BalanceRecordDto newRecord, BindingResult bindingResult) {
+        if (newRecord.getGiver() == null) {
+            bindingResult.rejectValue("giver", "error.giver", "Please select a giver");
+        }
         if (newRecord.getReceiver() == null) {
             bindingResult.rejectValue("receiver", "error.receiver", "Please select a receiver");
         }

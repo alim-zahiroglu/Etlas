@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>new visa</title>
 <head th:replace="~{fragments/head :: header}">
-    <title>new visa</title>
 </head>
 <body>
 <div class="wrapper">
@@ -45,81 +45,97 @@
                                                       id="visaForm"
                                                       method="post" class="row g-3 ">
 
-                                                    <div class="col-12 col-md-6 col-lg-3 mb-0">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="mySelectForVisaCountry"
-                                                                   class="form-label d-block mb-1 pl-1">Country</label>
-                                                            <select id="mySelectForVisaCountry"
-                                                                    th:field="*{country}"
-                                                                    name="visaCountry"
-                                                                    class="form-control"
-                                                                    style="width: 100%">
-                                                                <option th:each="visaCountry:${countriesTr}"
-                                                                        th:value="${visaCountry}"
-                                                                        th:text="${visaCountry.getName()}"></option>
-                                                            </select>
-                                                            <div class="visa-create-country-select text-right">
-                                                                <i id="visa-country-selector"
-                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                    <div class="row p-0 m-0">
+                                                        <div class="col-12 col-md-6 col-lg-3 mb-0"
+                                                             style="padding: 0 8px;margin-top: 16px">
+                                                            <div class="form-group p-0 m-0">
+                                                                <label for="mySelectForVisaCountry"
+                                                                       class="form-label d-block mb-1 pl-1">Country</label>
+                                                                <select id="mySelectForVisaCountry"
+                                                                        th:field="*{country}"
+                                                                        name="visaCountry"
+                                                                        class="form-control"
+                                                                        style="width: 100%">
+                                                                    <option th:each="visaCountry:${countriesTr}"
+                                                                            th:value="${visaCountry}"
+                                                                            th:text="${visaCountry.getName()}"></option>
+                                                                </select>
+                                                                <div class="visa-create-country-select text-right"
+                                                                     th:classappend="${#fields.hasErrors('customerUI')} ? 'adjust-arrow1' : ''">
+                                                                    <i id="visa-country-selector"
+                                                                       class="fa-solid fa-chevron-down rotate-down"></i>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
+                                                        <div class="col-12 col-md-6 col-lg-3 mb-0"
+                                                             style="padding: 0 8px;margin-top: 16px"
+                                                             th:classappend="${#fields.hasErrors('visaType')} ? 'error' : ''"
+                                                             id="visaType">
+                                                            <div class="form-group p-0 m-0">
+                                                                <label for="inputVisaType"
+                                                                       class="form-label d-block mb-1 pl-1">Visa
+                                                                    Type</label>
+                                                                <input type="text" th:field="*{visaType}"
+                                                                       list="visaTypeListOptions"
+                                                                       class="form-control" id="inputVisaType">
 
-                                                    <div class="col-12 col-md-6 col-lg-3 mb-0"
-                                                         th:classappend="${#fields.hasErrors('visaType')} ? 'error' : ''"
-                                                         id="visaType">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="inputVisaType" class="form-label d-block mb-1 pl-1">Visa Type</label>
-                                                            <input type="text" th:field="*{visaType}" list="visaTypeListOptions"
-                                                                   class="form-control" id="inputVisaType">
+                                                                <datalist id="visaTypeListOptions">
+                                                                    <option th:each="type : ${visaTypes}"
+                                                                            th:text="${type}" th:value="${type}">
+                                                                </datalist>
 
-                                                            <datalist id="visaTypeListOptions">
-                                                                <option th:each="type : ${visaTypes}" th:text="${type}" th:value="${type}">
-                                                            </datalist>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('visaType')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('visaType')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
+                                                        <div class="col-12 col-md-12 col-lg-6 mb-0"
+                                                             style="padding: 0 8px;margin-top: 16px">
+                                                            <div class="form-group p-0 m-0"
+                                                                 th:classappend="${#fields.hasErrors('customerUI')} ? 'error' : ''"
+                                                                 style="padding: 0 161px 0 8px; margin-top: 16px">
+                                                                <label for="mySelectForCustomer"
+                                                                       class="form-label pl-1 mb-1 ml-0 d-block">Select
+                                                                    Customer</label>
+                                                                <select id="mySelectForCustomer"
+                                                                        th:field="*{customerUI}" th:name="customer"
+                                                                        class="form-control" style="width: 100%;">
+                                                                    <option th:if="${customerList.isEmpty()}"
+                                                                            th:value="0">Select Customer
+                                                                    </option>
+                                                                    <option th:each="customer:${customerList}"
+                                                                            th:value="${customer.id}"
+                                                                            th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">
+                                                                </select>
+                                                                <div class="visa-create-customer-select text-right"
+                                                                     th:classappend="${#fields.hasErrors('customerUI')} ? 'adjust-arrow1' : ''">
+                                                                    <i id="customer-selector-arrow"
+                                                                       class="fa-solid fa-chevron-down rotate-down"></i>
+                                                                </div>
+                                                                <div class="text-right">
+                                                                    <button class="btn new-customer-button"
+                                                                            type="button"
+                                                                            th:classappend="${#fields.hasErrors('customerUI')} ? 'adjust-arrow1' : ''"
+                                                                            id="showAddCustomerForm">
+                                                                        <strong><i class="fa-solid fa-plus"></i> New
+                                                                            Customer</strong>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                             <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('visaType')}">
+                                                                 style="position: absolute"
+                                                                 th:if="${#fields.hasErrors('customerUI')}">
                                                                 <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('visaType')}"
+                                                                    <li th:each="err : ${#fields.errors('customerUI')}"
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 col-md-12 col-lg-6 mb-0">
-                                                        <div class="form-group p-0 m-0"
-                                                             th:classappend="${#fields.hasErrors('customer')} ? 'error' : ''"
-                                                             style="padding: 0 161px 0 8px; margin-top: 16px">
-                                                            <label for="mySelectForCustomer"
-                                                                   class="form-label pl-1 mb-1 ml-0 d-block">Select
-                                                                Customer</label>
-                                                            <select id="mySelectForCustomer"
-                                                                    th:field="*{customerUI}" th:name="customer"
-                                                                    class="form-control" style="width: 100%;">
-                                                                <option th:each="customer:${customerList}"
-                                                                        th:value="${customer.id}"
-                                                                        th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">
-                                                            </select>
-                                                            <div class="visa-create-customer-select text-right">
-                                                                <i id="customer-selector-arrow"
-                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
-                                                            </div>
-                                                            <div class="text-right">
-                                                                <button class="btn new-customer-button" type="button"
-                                                                        id="showAddCustomerForm">
-                                                                    <strong><i class="fa-solid fa-plus"></i> New
-                                                                        Customer</strong>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="custom-invalid-feedback"
-                                                             th:if="${#fields.hasErrors('customer')}">
-                                                            <ul class="p-0 m-0">
-                                                                <li th:each="err : ${#fields.errors('customer')}"
-                                                                    th:text="${err}"></li>
-                                                            </ul>
                                                         </div>
                                                     </div>
 
@@ -151,7 +167,8 @@
                                                             <select id="selected-credit-card" th:field="*{paidCard}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
-                                                                <option th:value="0">Select Paid Card</option> <!-- Default option -->
+                                                                <option th:value="0">Select Paid Card</option>
+                                                                <!-- Default option -->
                                                                 <option th:each="paidCard : ${cardList}"
                                                                         th:value="${paidCard.id}"
                                                                         th:text="${paidCard.cardOwner + ' (' + paidCard.bankName + ')'}"></option>
@@ -196,7 +213,8 @@
                                                     </div>
 
 
-                                                    <div class="row p-0 m-0" th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
+                                                    <div class="row p-0 m-0"
+                                                         th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
 
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
                                                              th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"
@@ -262,7 +280,7 @@
 
 
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
-                                                             th:classappend="${#fields.hasErrors('paidCustomer')} ? 'error' : ''"
+                                                             th:classappend="${#fields.hasErrors('paidCustomerUI')} ? 'error' : ''"
                                                              style="padding: 0 8px;margin-top: 17px">
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
@@ -270,6 +288,9 @@
                                                                     th:field="*{paidCustomerUI}"
                                                                     th:name="paidCustomer"
                                                                     class="form-control mb-0" style="width: 100%">
+                                                                <option th:if="${customerList.isEmpty()}" th:value="0">
+                                                                    Select Payer
+                                                                </option>
                                                                 <option th:each="payerCustomer : ${customerList}"
                                                                         th:value="${payerCustomer.id}"
                                                                         th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">
@@ -283,9 +304,9 @@
 
                                                             <div class="custom-invalid-feedback"
                                                                  style="position: absolute"
-                                                                 th:if="${#fields.hasErrors('paidCustomer')}">
+                                                                 th:if="${#fields.hasErrors('paidCustomerUI')}">
                                                                 <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('paidCustomer')}"
+                                                                    <li th:each="err : ${#fields.errors('paidCustomerUI')}"
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
@@ -614,7 +635,8 @@
 
 
                                                             <div class="toast-body create_toast_body" th:inline="text">
-                                                                <strong style="color: green"> new visa successfully saved! </strong>
+                                                                <strong style="color: green"> new visa successfully
+                                                                    saved! </strong>
 
                                                             </div>
 

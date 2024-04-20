@@ -76,6 +76,8 @@ public class VisaController {
 
             return "redirect:/visa/create";
         }
+        bindingResult = visaService.validateNewVisa(newVisa, bindingResult);
+
         if (bindingResult.hasErrors()) {
             // save new customer if new customer added
             customerService.saveNewCustomerIfAdded(Long.parseLong(newVisa.getCustomerUI()));

@@ -168,6 +168,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public BindingResult validateTicket(TicketDto newTicket, BindingResult bindingResult) {
+        if (Objects.equals(newTicket.getPayedCustomerUI(), "") || Objects.equals(newTicket.getPayedCustomerUI(), "0")) {
+            bindingResult.addError(new FieldError("newTicket", "payedCustomerUI", "Please select paid customer"));
+        }
+        if (newTicket.getPassengersUI().equals(null)){
+            bindingResult.addError(new FieldError("newTicket", "passengersUI", "Please select at least one passenger"));
+        }
 
         if (repository.existsByPnrNo(newTicket.getPnrNo())) {
             bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + newTicket.getPnrNo() + " is already exist"));

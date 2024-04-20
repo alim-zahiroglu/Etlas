@@ -38,10 +38,11 @@ public class VisaDto {
     private BigDecimal salesPrice;
     private CurrencyUnits currencyUnit;
     private BigDecimal profit;
+
     private CustomerDto paidCustomer;
+
     private String note;
     private String uploadedFile;
-
 
     @NotEmpty(message = "Please select customer")
     private String customerUI;

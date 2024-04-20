@@ -92,7 +92,7 @@
 
                                                     <hr class="mb-1 mt-3 row pl-0 pr-0 mr-0 ml-0">
 
-                                                    <div class="col-12 col-md-6 col-lg-4 mb-0"
+                                                    <div class="col-12 col-md-6 col-lg-3 mb-0"
                                                          th:classappend="${#fields.hasErrors('pnrNo')} ? 'error' : ''"
                                                          id="pnrNo">
                                                         <div class="form-group p-0 m-0">
@@ -106,6 +106,26 @@
                                                                  th:if="${#fields.hasErrors('pnrNo')}">
                                                                 <ul class="p-0 mb-2">
                                                                     <li th:each="err : ${#fields.errors('pnrNo')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-3 mb-0"
+                                                         th:classappend="${#fields.hasErrors('ticketNo')} ? 'error' : ''"
+                                                         id="ticketNo">
+                                                        <div class="form-group p-0 m-0">
+                                                            <label for="inputTicketNo"
+                                                                   class="form-label mb-1 pl-1">Ticket Number</label>
+                                                            <input type="text" th:field="*{ticketNo}" th:name="ticketNo"
+                                                                   class="form-control" id="inputTicketNo">
+
+                                                            <div class="custom-invalid-feedback"
+                                                                 style="position: absolute"
+                                                                 th:if="${#fields.hasErrors('ticketNo')}">
+                                                                <ul class="p-0 mb-2">
+                                                                    <li th:each="err : ${#fields.errors('ticketNo')}"
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
@@ -131,7 +151,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-12 col-lg-4"
+                                                    <div class="col-12 col-md-6 col-lg-2 mb-0"
                                                          id="ticketAmount">
                                                         <div class="form-group p-0 m-0">
                                                             <label for="inputTicketAmount"
@@ -220,6 +240,9 @@
                                                             <select id="mySelectForPassenger" multiple
                                                                     th:field="*{passengersUI}" th:name="passengers"
                                                                     class="form-control" style="width: 100%;">
+                                                                <option th:if="${customerList.isEmpty()}"
+                                                                        th:value="null">Select Customer
+                                                                </option>
                                                                 <option th:each="passenger:${customerList}"
                                                                         th:value="${passenger.id}"
                                                                         th:text="${passenger.customerType.description == 'Company' ? passenger.companyName : (passenger.customerType.description == 'Individual' ? passenger.firstName + ' ' + passenger.lastName : 'Unknown')}">
@@ -274,7 +297,7 @@
                                                             <select id="selected-credit-card" th:field="*{paidCard}"
                                                                     name="selectedCard"
                                                                     class="form-select" style="width: 100%">
-                                                                <option th:value="0">Select Paid Card</option> <!-- Default option -->
+                                                                <option th:value="0" th:if="${cardList.isEmpty()}">Select Paid Card</option> <!-- Default option -->
                                                                 <option th:each="paidCard : ${cardList}"
                                                                         th:value="${paidCard.id}"
                                                                         th:text="${paidCard.cardOwner + ' (' + paidCard.bankName + ')'}"></option>
@@ -292,7 +315,6 @@
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
-
 
 
                                                         </div>
@@ -322,7 +344,8 @@
                                                     </div>
 
 
-                                                    <div class="row p-0 m-0" th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
+                                                    <div class="row p-0 m-0"
+                                                         th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
 
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
                                                              th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"
@@ -387,6 +410,7 @@
 
 
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
+                                                             th:classappend="${#fields.hasErrors('payedCustomerUI')} ? 'error' : ''"
                                                              style="padding: 0 8px;margin-top: 17px">
                                                             <label for="mySelectForPayer"
                                                                    class="form-label pl-1 mb-1 d-block">Payer</label>
@@ -394,110 +418,82 @@
                                                                     th:field="*{payedCustomerUI}"
                                                                     th:name="payerCustomer"
                                                                     class="form-control mb-0" style="width: 100%">
+                                                                <option th:if="${customerList.isEmpty()}" th:value="0">
+                                                                    Select Paid Customer
+                                                                </option>
                                                                 <option th:each="payerCustomer : ${customerList}"
                                                                         th:value="${payerCustomer.id}"
                                                                         th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">
                                                                 </option>
                                                             </select>
                                                             <div class="ticket-create-airline-select text-right"
-                                                                 th:classappend="${#fields.hasErrors('perchesPrice')||#fields.hasErrors('salesPrice')} ? 'adjust-arrow' : ''">
+                                                                 th:classappend="${#fields.hasErrors('perchesPrice')||#fields.hasErrors('salesPrice') || #fields.hasErrors('payedCustomerUI') ? 'adjust-arrow' : ''}">
                                                                 <i id="payer-selector-arrow"
                                                                    class="fa-solid fa-chevron-down rotate-down"></i>
                                                             </div>
-                                                        </div>
-
-                                                        <!-- Payed amount -->
-<!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
-<!--                                                             style="padding: 0 8px 0 8px;margin-top: 16px">-->
-<!--                                                            <label for="payedAmount" class="form-label mb-1 pl-1">Paid-->
-<!--                                                                amount</label>-->
-<!--                                                            <div class="input-group currency-input-group"-->
-<!--                                                                 id="payedAmount">-->
-<!--                                                                <span class="input-group-text currency-symbol">₺</span>-->
-<!--                                                                <input type="number" th:field="*{payedAmount}"-->
-<!--                                                                       class="form-control"-->
-<!--                                                                       aria-label="Payed amount input">-->
-<!--                                                                <span class="input-group-text">0.00</span>-->
-<!--                                                            </div>-->
-<!--                                                            <div class="custom-invalid-feedback"-->
-<!--                                                                 th:if="${#fields.hasErrors('payedAmount')}">-->
-<!--                                                                <ul class="p-0 m-0">-->
-<!--                                                                    <li th:each="err : ${#fields.errors('payedAmount')}"-->
-<!--                                                                        th:text="${err}"></li>-->
-<!--                                                                </ul>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-
-<!--                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"-->
-<!--                                                             style="padding: 0 8px 0 8px;margin-top: 17px">-->
-<!--                                                            <label for="selected-paid-type"-->
-<!--                                                                   class="form-label pl-1 mb-1 d-block">Paid-->
-<!--                                                                Type</label>-->
-<!--                                                            <select id="selected-paid-type" th:field="*{paidType}"-->
-<!--                                                                    name="selectedCard"-->
-<!--                                                                    class="form-select" style="width: 100%">-->
-<!--                                                                <option th:each="type:${paidTypes}"-->
-<!--                                                                        th:value="${type}"-->
-<!--                                                                        th:text="${type.description}"></option>-->
-<!--                                                            </select>-->
-<!--                                                        </div>-->
-
-                                                    </div>
-
-                                                    <input type="hidden" th:field="*{currencyUnit}"
-                                                           id="selectedCurrencyUnitInput">
-
-                                                    <input type="hidden" id="selectedCurrencySymbolInput"
-                                                           th:value="${currencySymbol}">
-
-
-                                                    <div class="col-12"
-                                                         th:classappend="${#fields.hasErrors('notes')} ? 'error' : ''"
-                                                         id="notesSection">
-                                                        <div class="form-group p-0 m-0">
-                                                            <label for="notes"
-                                                                   class="form-label pl-1 mb-1 d-block">Note</label>
-                                                            <textarea type="text" th:field="*{notes}"
-                                                                      class="form-control" id="notes">
-
-                                                            </textarea>
                                                             <div class="custom-invalid-feedback"
-                                                                 th:if="${#fields.hasErrors('notes')}">
+                                                                 th:if="${#fields.hasErrors('payedCustomerUI')}">
                                                                 <ul class="p-0 m-0">
-                                                                    <li th:each="err : ${#fields.errors('notes')}"
+                                                                    <li th:each="err : ${#fields.errors('payedCustomerUI')}"
                                                                         th:text="${err}"></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="uploadTickets" class="form-label pl-1">Upload
-                                                            tickets</label>
-                                                        <input class="form-control" type="file" id="uploadTickets">
-                                                    </div>
+                                                        <input type="hidden" th:field="*{currencyUnit}"
+                                                               id="selectedCurrencyUnitInput">
+
+                                                        <input type="hidden" id="selectedCurrencySymbolInput"
+                                                               th:value="${currencySymbol}">
 
 
-                                                    <div class="row justify-content-end pt-3 pr-0 pl-0">
-                                                        <div class="col-12 col-md-6 col-lg-6 text-right p-0">
+                                                        <div class="col-12"
+                                                             th:classappend="${#fields.hasErrors('notes')} ? 'error' : ''"
+                                                             id="notesSection">
+                                                            <div class="form-group p-0 m-0">
+                                                                <label for="notes"
+                                                                       class="form-label pl-1 mb-1 d-block">Note</label>
+                                                                <textarea type="text" th:field="*{notes}"
+                                                                          class="form-control" id="notes">
 
-                                                            <a th:href="@{/ticket/create}"
-                                                               style="text-decoration: none">
-                                                                <button type="button" id="clearInputButton"
-                                                                        class="btn btn-secondary pr-5 pl-5 mr-2">
-                                                                    Reset
+                                                            </textarea>
+                                                                <div class="custom-invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('notes')}">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li th:each="err : ${#fields.errors('notes')}"
+                                                                            th:text="${err}"></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="uploadTickets" class="form-label pl-1">Upload
+                                                                tickets</label>
+                                                            <input class="form-control" type="file" id="uploadTickets">
+                                                        </div>
+
+
+                                                        <div class="row justify-content-end pt-3 pr-0 pl-0">
+                                                            <div class="col-12 col-md-6 col-lg-6 text-right p-0">
+
+                                                                <a th:href="@{/ticket/create}"
+                                                                   style="text-decoration: none">
+                                                                    <button type="button" id="clearInputButton"
+                                                                            class="btn btn-secondary pr-5 pl-5 mr-2">
+                                                                        Reset
+                                                                    </button>
+                                                                </a>
+
+                                                                <button type="submit" id="saveTicketButton"
+                                                                        class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                    Save
                                                                 </button>
-                                                            </a>
-
-                                                            <button type="submit" id="saveTicketButton"
-                                                                    class="btn list-page-drop-downs-export pr-5 pl-5">
-                                                                Save
-                                                            </button>
 
 
+                                                            </div>
                                                         </div>
                                                     </div>
-
                                                 </form>
                                                 <div class="modal fade" id="add-new-customer-modal"
                                                      data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -652,7 +648,7 @@
                                                                     <div class="col-md-6"
                                                                          th:classappend="${#fields.hasErrors('customerUSDBalance')} ? 'error' : ''">
                                                                         <div class="form-group p-0 m-0">
-                                                                            <label for="customerTRYBalance"
+                                                                            <label for="customerUSDBalance"
                                                                                    class="form-label mb-1 pl-1">Customer
                                                                                 Balance</label>
                                                                             <div class="input-group">

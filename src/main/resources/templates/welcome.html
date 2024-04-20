@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>welcome</title>
+<head th:replace="~{fragments/head :: header}"></head>
+
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/welcome}"><i
+                                        class="fa-solid fa-house"></i> Welcome </a></li>
+                            </ol>
+                        </nav>
+
+                        <div class="row justify-content-center align-items-center pt-4">
+
+                            <div class="col-12 col-md-12 col-lg-8">
+
+                                <div>
+                                    <h3 class="text-center font-weight-bold">Welcome</h3>
+                                    <div class="card-body pt-5 pb-5">
+                                        <div class="row justify-content-center align-items-center">
+
+                                            <img th:src="@{/images/etlas_black.svg}" height="150 px" width="auto">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+</body>
+</html>

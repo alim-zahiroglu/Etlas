@@ -5,16 +5,15 @@ import com.etlas.dto.CustomerDto;
 import com.etlas.dto.UserDto;
 import com.etlas.dto.VisaDto;
 import com.etlas.entity.Visa;
+import com.etlas.entity.VisaType;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.VisaRepository;
-import com.etlas.service.CardService;
-import com.etlas.service.CustomerService;
-import com.etlas.service.SecurityService;
-import com.etlas.service.VisaService;
+import com.etlas.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -27,6 +26,7 @@ public class VisaServiceImpl implements VisaService {
     private final CustomerService customerService;
     private final CardService cardService;
     private final SecurityService securityService;
+    private final VisaTypeService visaTypeService;
     private final VisaRepository repository;
     private final MapperUtil mapper;
 
@@ -69,7 +69,19 @@ public class VisaServiceImpl implements VisaService {
     }
 
     @Override
+    public BindingResult validateNewVisa(VisaDto newVisa, BindingResult bindingResult) {
+        if (newVisa.getCustomerUI().equals("0")){
+            bindingResult.rejectValue("customerUI", "error.visa", "Please select a customer");
+        }
+        if (newVisa.getPaidCustomerUI().equals("0")){
+            bindingResult.rejectValue("paidCustomerUI", "error.visa", "Please select a paid customer");
+        }
+        return bindingResult;
+    }
+
+    @Override
     public VisaDto saveNewVisa(VisaDto newVisa) {
+        saveNewVisaTypeIfAdded(newVisa);
         // save new customer if new customer added
         customerService.saveNewCustomerIfAdded(Long.parseLong(newVisa.getCustomerUI()));
         //set customer and paid customer
@@ -87,6 +99,15 @@ public class VisaServiceImpl implements VisaService {
         // save new visa
         Visa savedVisa = repository.save(mapper.convert(newVisa, new Visa()));
         return mapper.convert(savedVisa, new VisaDto());
+    }
+
+    private void saveNewVisaTypeIfAdded(VisaDto newVisa) {
+        String newVisaType = newVisa.getVisaType();
+        VisaType visaType = visaTypeService.findByName(newVisaType);
+        if (visaType == null){
+            VisaType newType = VisaType.builder().name(newVisaType).build();
+            visaTypeService.save(newType);
+        }
     }
 
     private void setCustomerAndPaidCustomer(VisaDto newVisa) {
@@ -154,6 +175,7 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public void saveUpdatedVisa(VisaDto visaToBeUpdate) {
+        saveNewVisaTypeIfAdded(visaToBeUpdate);
         // save new customer if new customer added
         customerService.saveNewCustomerIfAdded(Long.parseLong(visaToBeUpdate.getCustomerUI()));
 
@@ -246,11 +268,7 @@ public class VisaServiceImpl implements VisaService {
         if (!visaList.isEmpty()) {
             return visaList.stream()
                     .map(objects -> {
-                        System.out.println("objects: " + objects[0] + " " + objects[1]);
-                        CountriesTr country1 = CountriesTr.valueOf("SAU");
-                        System.out.println(country1.getName() + " " + country1);
                                 CountriesTr country = CountriesTr.valueOf((String) objects[0]);
-                        System.out.println("country: " + country);
                                 return country.getName() + ", " + objects[1];
                             }
                     )

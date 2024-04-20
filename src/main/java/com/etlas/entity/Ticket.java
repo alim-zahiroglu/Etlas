@@ -42,6 +42,8 @@ public class Ticket extends BaseEntity{
     @Column(unique = true)
     private String pnrNo;
 
+    private String ticketNo;
+
     @ManyToOne
     private AirLine airLine;
     private int ticketAmount;
