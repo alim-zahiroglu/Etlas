@@ -28,8 +28,8 @@ public class SecurityConfig {
         http
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login","/user/reset-password", "/assets/**",
-                                "/data-table-assets/**", "/images/**").permitAll()
+                        .requestMatchers("/","/login","/user/reset-password", "/assets/**",
+                                "/data-table-assets/**", "/images/**","/home/assets/**").permitAll()
                         .anyRequest().authenticated())
 
                 .formLogin(form -> form
