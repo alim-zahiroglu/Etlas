@@ -109,7 +109,7 @@ public class CardController {
     @GetMapping("/addBalance")
     public String cardAddBalance(Model model){
 
-        model.addAttribute("balance", cardService.initiateFordBalance());
+        model.addAttribute("balance", cardService.initiateForBalance());
         model.addAttribute("cardList", cardService.getAllCards());
         return "card/add-balance";
     }

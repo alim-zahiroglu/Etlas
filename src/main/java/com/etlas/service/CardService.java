@@ -23,7 +23,7 @@ public interface CardService {
 
     CardDto updateCard(CardDto cardToBeUpdate);
 
-    CardBalanceDto initiateFordBalance();
+    CardBalanceDto initiateForBalance();
 
     CardDto addBalance(CardBalanceDto cardBalanceDto);
 

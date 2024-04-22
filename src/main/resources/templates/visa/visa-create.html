@@ -114,7 +114,7 @@
                                                                             th:text="${customer.customerType.description == 'Company' ? customer.companyName : (customer.customerType.description == 'Individual' ? customer.firstName + ' ' + customer.lastName : 'Unknown')}">
                                                                 </select>
                                                                 <div class="visa-create-customer-select text-right"
-                                                                     th:classappend="${#fields.hasErrors('customerUI')} ? 'adjust-arrow1' : ''">
+                                                                     th:classappend="${#fields.hasErrors('customerUI')} ? 'adjust-arrow' : ''">
                                                                     <i id="customer-selector-arrow"
                                                                        class="fa-solid fa-chevron-down rotate-down"></i>
                                                                 </div>

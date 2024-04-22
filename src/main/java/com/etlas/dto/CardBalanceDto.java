@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class CardBalanceDto {
-    @NotNull(message = "Card cannot be null")
+    @NotNull(message = "Card can not be empty, Select a card")
     private CardDto card;
     private BigDecimal tryBalance;
     private BigDecimal usdBalance;
