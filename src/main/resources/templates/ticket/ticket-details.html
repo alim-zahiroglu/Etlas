@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>ticket details</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body class="bg-light">
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+
+
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/ticket/list}"><i
+                                        class="fa-solid fa-house"></i> Tickers </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><i
+                                        class="fa-solid fa-chevron-right" style="font-size: 12px"></i> ticket details
+                                </li>
+                            </ol>
+                        </nav>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card shadow-none bg-light justify-content-center align-items-center pt-5">
+                                    <div class="row col-12">
+
+                                        <div class="col-12 col-md-12 col-lg-9 pb-3">
+                                            <div class="col-12 pb-2 p-0">
+                                                <div id="leftTopDiv"
+                                                     class="border shadow rounded overflow-visible pt-3 pb-0 p-3"
+                                                     style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);">
+                                                    <div class="table-responsive">
+                                                        <table id="ticket" class="table bg-white table-borderless users_table">
+                                                            <thead class="ticket_details_table_header">
+                                                            <tr>
+                                                                <th scope="col">PNR</th>
+                                                                <th scope="col">Ticket No</th>
+                                                                <th scope="col">Airline</th>
+                                                                <th scope="col">From-To</th>
+                                                                <th scope="col">Departure Time</th>
+                                                                <th scope="col">Ticket Amount</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody class="table-group-divider">
+                                                            <tr>
+                                                                <td th:text="${ticket.pnrNo}"></td>
+                                                                <td th:text="${ticket.ticketNo}"></td>
+                                                                <td th:text="${ticket.airLine.getName()}"></td>
+
+                                                                <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
+                                                                    <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span><br/>
+                                                                    <span th:utext="${ticket.toWhere.city}+' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.fromWhere.city}"></span>
+                                                                </td>
+                                                                <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
+                                                                    <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span>
+                                                                </td>
+
+                                                                <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
+                                                                    <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span><br/>
+                                                                    <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.returnTime, 'dd-MM-yyyy, HH:mm')}"></span>
+                                                                </td>
+
+                                                                <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
+                                                                    <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span>
+
+                                                                </td>
+                                                                <td th:text="${ticket.ticketAmount}"></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 p-0">
+                                                <div id="leftBottomDiv"
+                                                     class="border shadow rounded overflow-visible pt-3 pb-0 p-3"
+                                                     style="background-color: rgb(255, 255, 255); color: #2a303d; border-color: rgb(247, 247, 247);">
+                                                    <div class="table-responsive">
+                                                        <table id="user" class="table bg-white table-borderless users_table">
+                                                            <thead class="ticket_details_table_header">
+                                                            <tr>
+                                                                <th scope="col">PNR</th>
+                                                                <th scope="col">Ticket No</th>
+                                                                <th scope="col">Airline</th>
+                                                                <th scope="col">From-To</th>
+                                                                <th scope="col">Departure Time</th>
+                                                                <th scope="col">Ticket Amount</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody class="table-group-divider">
+                                                            <tr>
+                                                                <td th:text="${ticket.pnrNo}"></td>
+                                                                <td th:text="${ticket.ticketNo}"></td>
+                                                                <td th:text="${ticket.airLine.getName()}"></td>
+
+                                                                <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
+                                                                    <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span><br/>
+                                                                    <span th:utext="${ticket.toWhere.city}+' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.fromWhere.city}"></span>
+                                                                </td>
+                                                                <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
+                                                                    <span th:utext="${ticket.fromWhere.city} +' <i class=\'fa-solid fa-arrow-right-long departure-css\'></i> ' + ${ticket.toWhere.city}"></span>
+                                                                </td>
+
+                                                                <td th:if="${ticket.tripType.getDescription() == 'Round trip'}">
+                                                                    <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span><br/>
+                                                                    <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.returnTime, 'dd-MM-yyyy, HH:mm')}"></span>
+                                                                </td>
+
+                                                                <td th:if="${ticket.tripType.getDescription() == 'One way trip'}">
+                                                                    <span th:utext="'<i class=\'fa-solid fa-plane-departure departure-css\'></i>  ' + ${#temporals.format(ticket.departureTime, 'dd-MM-yyyy, HH:mm')}"></span>
+
+                                                                </td>
+                                                                <td th:text="${ticket.ticketAmount}"></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="rightDiv" class="col-12 col-md-12 col-lg-3 pb-3">
+                                            <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
+                                                 style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);">
+                                                <div class="border-bottom">
+                                                    <h4 class="font-medium">Ticket prices</h4>
+                                                </div>
+                                                <div class="row justify-content-between border-bottom py-3">
+                                                    <span class="col-6" style="width: auto">Perches Price</span>
+                                                    <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          style="background-color: #2696be;">L 0,00</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row justify-content-between border-bottom py-3">
+                                                    <span class="col-6" style="width: auto">Sales Price</span>
+                                                    <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          style="background-color: #55b435;">L 0,00</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row justify-content-between border-bottom py-3" style="margin-bottom: 29px">
+                                                    <span class="col-6" style="width: auto">Profit</span>
+                                                    <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          style="background-color: #bf4d25;">L 0,00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+</body>
+</html>
