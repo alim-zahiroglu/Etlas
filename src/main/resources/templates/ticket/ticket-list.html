@@ -221,11 +221,9 @@
                                                                 <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                             </button>
                                                         </a>
-                                                        <a href="#" class="download-ticket">
+                                                        <a th:href="@{/ticket/download/{ticketId}(ticketId=${ticket.id})}" class="download-ticket">
                                                             <button type="button" id="download-ticket"
-                                                                    class="btn custom_download_button p-1"
-                                                                    th:data-customer="${ticket.pnrNo}"
-                                                                    th:data-customerId="${ticket.id}">
+                                                                    class="btn custom_download_button p-1">
                                                                 <i class="fa-solid fa-download download-rotate-on-hover"></i>
                                                             </button>
                                                         </a>

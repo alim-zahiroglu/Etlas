@@ -284,5 +284,10 @@ public class TicketController {
         model.addAttribute("ticket", ticket);
         return "ticket/ticket-details";
     }
+    @GetMapping("/download/{ticketId}")
+    public String downloadTicket(@PathVariable long ticketId, Model model){
+        model.addAttribute("ticket", ticketService.findById(ticketId));
+        return "ticket/e-ticket";
+    }
 
 }

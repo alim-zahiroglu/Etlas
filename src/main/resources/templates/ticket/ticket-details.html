@@ -118,6 +118,7 @@
                                                     <span class="col-6" style="width: auto">Perches Price</span>
                                                     <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${ticket.perchesPrice + ' ' +  ticket.currencyUnit.currencySymbol}"
                                                           style="background-color: #2696be;">L 0,00</span>
                                                     </div>
                                                 </div>
@@ -126,6 +127,7 @@
                                                     <span class="col-6" style="width: auto">Sales Price</span>
                                                     <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${ticket.salesPrice + ' ' +  ticket.currencyUnit.currencySymbol}"
                                                           style="background-color: #55b435;">L 0,00</span>
                                                     </div>
                                                 </div>
@@ -135,6 +137,7 @@
                                                     <span class="col-6" style="width: auto">Profit</span>
                                                     <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${ticket.profit + ' ' +  ticket.currencyUnit.currencySymbol}"
                                                           style="background-color: #bf4d25;">L 0,00</span>
                                                     </div>
                                                 </div>

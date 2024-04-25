@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- BEGIN : Head-->
+
+<head>
+    <title>pdf ticker</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/etlas_black_title.svg}">
+    <link rel="stylesheet" th:href="@{/assets/libs/css/pdf_ticket.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/fontawesome-all.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_fontawesome_all.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_fontawesome.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_regular.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_solid.min.css}"/>
+
+    <!-- CSS for A4 printing -->
+    <style type="text/css" media="print">
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<div class="card shadow-none">
+    <div class="card-body p-0 pt-1 pb-1">
+        <div class="row p-0 m-0 justify-content-center">
+            <a href="#" type="button" class="btn btn-primary mr-2"><i
+                    class="fa fa-paper-plane mr-1"></i>Send Via Email</a>
+            <a href="#" type="button" class="btn btn-success mr-2"><i
+                    class="fa-regular fa-file-pdf"></i> Save As PDF</a>
+        </div>
+    </div>
+</div>
+<div class="card shadow-none">
+    <div class="card-body">
+        <div id="ticket">
+            <div class="ticket overflow-auto mr-4 ml-4 mt-3 mb-2">
+                <div style="min-width: 600px">
+                    <div class="header">
+                        <div class="row">
+                            <div class="sidebar-logo">
+                                <a href="#">
+                                    <img th:src="@{/images/etlas_black.svg}" width="120px" height="auto"
+                                         class="company-logo" alt="etlas">
+                                </a>
+                            </div>
+                            <div class="col company-details">
+                                <h2 class="name">YOLCULUK BELGESİ</h2>
+                                <div class="editable-div-container">
+                                    <span class="align-content-center">Sipariş numarası: </span>
+                                    <div class="editable-div" contenteditable="true" th:text="1003-701-794"></div>
+                                </div>
+                                <div class="editable-div-container">
+                                    <span class="align-content-center">Verildi: </span>
+                                    <div class="editable-div" contenteditable="true" th:text="2024-03-18"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="height:4px; margin: 10px 0; background-color: #aaaaaa">
+                    <div class="row align-content-center p-0 m-0">
+                        <img th:src="@{/images/plane.svg}" width="40px" height="auto" class="pl-2" alt="etlas">
+                        <span class="name" style="font-size: 22px; margin-left: 15px;"
+                              th:text="${ticket.fromWhere.getCity() + '-' + ticket.toWhere.getCity()}"></span>
+                    </div>
+                    <hr style="height:2px; margin: 10px 0; background-color: #aaaaaa">
+
+                    <div class="row align-content-center p-0 m-0">
+                        <span class="name pl-2" style="font-size: 22px; margin-left: 5px;">1</span>
+                        <span style="font-size: 22px; margin-left: 15px;">Havayolu şirketi check-in referanslarınız</span>
+                        <span style="font-size: 24px; margin-left: 130px;" contenteditable="true">MEPUGY(EY)</span>
+                    </div>
+                    <hr style="height:2px; margin: 10px 0; background-color: #aaaaaa">
+
+                    <footer>Invoice was created on a computer and is valid without the signature and seal.</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BEGIN PAGE LEVEL JS-->
+<script th:src="@{/js/dashboard2.js}"></script>
+<script th:src="@{/assets/js/scripts.js}"></script>
+</body>
+<!-- END : Body-->
+</html>
