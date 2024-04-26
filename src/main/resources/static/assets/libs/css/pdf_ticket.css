@@ -62,6 +62,17 @@ body{
     padding: 5px 2px;
     width: auto; /* Set a minimum width for the div */
 }
+.terminal{
+    margin-top: -4px;
+}
+.duration{
+    font-size: 12px;
+}
+.airline_picture{
+    position: absolute;
+    margin-top: -4px;
+    right: 0;
+}
 
 .card {
     position: relative;
