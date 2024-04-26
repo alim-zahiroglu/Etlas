@@ -45,9 +45,12 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardBalanceDto initiateFordBalance() {
+    public CardBalanceDto initiateForBalance() {
         List<Card> cardList =repository.findAllNonDeletedOrderByAvailableLimitTRY();
-        CardDto minTryCardDto = mapper.convert(cardList.get(0), new CardDto());
+        CardDto minTryCardDto = new CardDto();
+        if (!cardList.isEmpty()) {
+            minTryCardDto = mapper.convert(cardList.get(0), new CardDto());
+        }
         return CardBalanceDto.builder()
                 .card(minTryCardDto)
                 .tryBalance(BigDecimal.ZERO)

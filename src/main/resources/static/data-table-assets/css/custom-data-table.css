@@ -199,6 +199,13 @@
     white-space: nowrap !important;
 }
 
+.ticket_details_table_header th {
+    /* prevent the header text into two lines when the window is resized */
+    font-weight: bolder;
+    white-space: nowrap !important;
+}
+
+
 /* Add any other styles you need for the table */
 #example {
     background: white !important;

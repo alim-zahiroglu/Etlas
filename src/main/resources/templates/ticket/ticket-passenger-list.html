@@ -34,11 +34,12 @@
                                     <div class="col-12 col-md-12 col-lg-11">
 
                                         <div class="table-responsive">
-                                            <table id="passengers" class="table table-hover bg-white">
+                                            <table id="passengers" class="table table-hover bg-white users_table">
                                                 <thead class="custom_table_header">
                                                 <tr>
                                                     <th scope="col">#</th> <!-- New column for numbering -->
                                                     <th scope="col">Name</th>
+                                                    <th scope="col">Gender</th>
                                                     <th scope="col">Customer Type</th>
                                                     <th scope="col">Phone</th>
                                                     <th scope="col">Email</th>
@@ -50,7 +51,12 @@
                                                     <td th:text="${iterStat.index + 1}"></td> <!-- Use iterStat.index to get the current index -->
                                                     <td th:if="${passenger.customerType.description == 'Individual'}" th:text="${passenger.firstName + ' ' + passenger.lastName}"></td>
                                                     <td th:if="${passenger.customerType.description == 'Company'}" th:text="${passenger.companyName}"></td>
+
+                                                    <td th:if="${passenger.customerType.description == 'Individual'}" th:text="${passenger.gender.name()}"></td>
+                                                    <td th:unless="${passenger.customerType.description == 'Individual'}" th:text="None"></td>
+
                                                     <td th:text="${passenger.customerType.description}"></td>
+
                                                     <td th:if="${passenger.customerType.description == 'Individual'}" th:text="${passenger.phoneNumber}"></td>
                                                     <td th:if="${passenger.customerType.description == 'Company'}">
                                                         <span th:text="${passenger.phoneNumber}"></span><br th:if="${passenger.phoneNumber != ''}">

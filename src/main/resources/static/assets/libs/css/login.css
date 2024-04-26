@@ -147,10 +147,10 @@ input:-webkit-autofill {
   font-size: 12px;
 }
 .adjust-arrow{
-  top: 50%; /* Adjust vertical positioning */
+  top: 53%; /* Adjust vertical positioning */
 }
 .adjust-arrow1{
-  top: 50%; !important; /* Adjust vertical positioning */
+  top: 53%; !important; /* Adjust vertical positioning */
 }
 
 .ticket-create-from-select{

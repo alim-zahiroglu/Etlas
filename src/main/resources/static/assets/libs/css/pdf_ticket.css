@@ -1,0 +1,129 @@
+
+body{
+    margin:20px 145px 0 145px;
+    background-color: #b3b3b6;
+    min-width: 1200px; /* Set a minimum width for the body */
+    overflow-x: auto; /* Allow horizontal overflow */
+}
+#ticket {
+    padding: 0px;
+}
+
+.ticket {
+    position: relative;
+    background-color: #FFF;
+    min-height: 680px;
+    padding: 15px
+}
+.name{
+    font-weight: bold;
+    align-content: center;
+}
+.big_font{
+    font-size: 18px;
+}
+.vertical-line {
+    border: none; /* Remove default border */
+    border-left: 1px solid #ccc; /* Apply left border */
+    height: auto; /* Reset height */
+    margin: 0 10px 0 0; /* Adjust margin as needed */
+    padding: 0;
+}
+
+
+
+.ticket header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #0d6efd
+}
+
+.ticket .company-details {
+    text-align: right
+}
+.company-logo{
+    margin-top: -20px;
+    margin-left: 45px;
+}
+.editable-div-container {
+    display: flex;
+    justify-content: right;
+    align-content: center;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.editable-div-container span {
+    margin-right: 5px; /* Add some space between the span and the div */
+}
+
+.editable-div {
+    border: none;
+    padding: 5px 2px;
+    width: auto; /* Set a minimum width for the div */
+}
+.terminal{
+    margin-top: -4px;
+}
+.duration{
+    font-size: 12px;
+}
+.airline_picture{
+    position: absolute;
+    margin-top: -4px;
+    right: 0;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0px solid rgba(0, 0, 0, 0);
+    border-radius: .25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px 0 rgb(218 218 253), 0 2px 6px 0 rgb(206 206 238);
+}
+
+.ticket footer {
+    width: 100%;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid #aaa;
+    padding: 8px 0
+}
+
+@media print {
+    .exclude-from-print {
+        display: none;
+    }
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh; /* Set body height to fill entire viewport */
+    }
+
+    .ticket {
+        font-size: 11px !important;
+        height: calc(100vh - 65px); /* Adjust height to fill remaining space (subtracting footer height) */
+        overflow: hidden !important;
+    }
+
+    .ticket footer {
+        position: absolute;
+        /*bottom: 10px;*/
+        page-break-after: always;
+    }
+
+    .ticket > div:last-child {
+        page-break-before: always;
+    }
+}

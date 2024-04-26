@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -278,4 +277,17 @@ public class TicketController {
         model.addAttribute("ticket", ticket);
         return "/ticket/ticket-passenger-list";
     }
+
+    @GetMapping("/details/{ticketId}")
+    public String getTicketDetails(@PathVariable long ticketId, Model model){
+        TicketDto ticket = ticketService.findById(ticketId);
+        model.addAttribute("ticket", ticket);
+        return "ticket/ticket-details";
+    }
+    @GetMapping("/download/{ticketId}")
+    public String downloadTicket(@PathVariable long ticketId, Model model){
+        model.addAttribute("ticket", ticketService.findById(ticketId));
+        return "ticket/e-ticket";
+    }
+
 }
