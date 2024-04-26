@@ -19,6 +19,18 @@ body{
     font-weight: bold;
     align-content: center;
 }
+.big_font{
+    font-size: 18px;
+}
+.vertical-line {
+    border: none; /* Remove default border */
+    border-left: 1px solid #ccc; /* Apply left border */
+    height: auto; /* Reset height */
+    margin: 0 10px 0 0; /* Adjust margin as needed */
+    padding: 0;
+}
+
+
 
 .ticket header {
     padding: 10px 0;
@@ -51,120 +63,6 @@ body{
     width: auto; /* Set a minimum width for the div */
 }
 
-.ticket .company-details .name {
-    margin-top: 0;
-    margin-bottom: 0
-}
-
-.ticket .contacts {
-    margin-bottom: 20px
-}
-
-.ticket .invoice-to {
-    text-align: left
-}
-
-.ticket .invoice-to .to {
-    margin-top: 0;
-    margin-bottom: 0
-}
-
-.ticket .invoice-details {
-    text-align: right
-}
-
-.ticket .invoice-details .invoice-id {
-    margin-top: 0;
-    color: #0d6efd
-}
-
-.ticket main {
-    padding-bottom: 50px
-}
-
-.ticket main .thanks {
-    margin-top: -100px;
-    font-size: 2em;
-    margin-bottom: 50px
-}
-
-.ticket main .notices {
-    padding-left: 6px;
-    border-left: 6px solid #0d6efd;
-    background: #e7f2ff;
-    padding: 10px;
-}
-
-.ticket main .notices .notice {
-    font-size: 1.2em
-}
-
-.ticket table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin-bottom: 20px
-}
-
-.ticket table td,
-.ticket table th {
-    padding: 15px;
-    background: #eee;
-    border-bottom: 1px solid #fff
-}
-
-.ticket table th {
-    white-space: nowrap;
-    font-weight: 400;
-    font-size: 16px
-}
-
-.ticket table td h3 {
-    margin: 0;
-    font-weight: 400;
-    color: #0d6efd;
-    font-size: 1.2em
-}
-
-.ticket table .qty,
-.ticket table .total,
-.ticket table .unit {
-    text-align: right;
-    font-size: 1.2em
-}
-
-.ticket table .no {
-    color: #fff;
-    font-size: 1.6em;
-    background: #0d6efd
-}
-
-.ticket table .unit {
-    background: #ddd
-}
-
-.ticket table .total {
-    background: #0d6efd;
-    color: #fff
-}
-
-.ticket table tbody tr:last-child td {
-    border: none
-}
-
-.ticket table tfoot td {
-    background: 0 0;
-    border-bottom: none;
-    white-space: nowrap;
-    text-align: right;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    border-top: 1px solid #aaa
-}
-
-.ticket table tfoot tr:first-child td {
-    border-top: none
-}
 .card {
     position: relative;
     display: flex;
@@ -179,16 +77,6 @@ body{
     box-shadow: 0 2px 6px 0 rgb(218 218 253), 0 2px 6px 0 rgb(206 206 238);
 }
 
-.ticket table tfoot tr:last-child td {
-    color: #0d6efd;
-    font-size: 1.4em;
-    border-top: 1px solid #0d6efd
-}
-
-.ticket table tfoot tr td:first-child {
-    border: none
-}
-
 .ticket footer {
     width: 100%;
     text-align: center;
@@ -198,23 +86,33 @@ body{
 }
 
 @media print {
+    .exclude-from-print {
+        display: none;
+    }
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh; /* Set body height to fill entire viewport */
+    }
+
     .ticket {
         font-size: 11px !important;
-        overflow: hidden !important
+        height: calc(100vh - 65px); /* Adjust height to fill remaining space (subtracting footer height) */
+        overflow: hidden !important;
     }
+
     .ticket footer {
         position: absolute;
-        bottom: 10px;
-        page-break-after: always
+        /*bottom: 10px;*/
+        page-break-after: always;
     }
-    .ticket>div:last-child {
-        page-break-before: always
-    }
-}
 
-.ticket main .notices {
-    padding-left: 6px;
-    border-left: 6px solid #0d6efd;
-    background: #e7f2ff;
-    padding: 10px;
+    .ticket > div:last-child {
+        page-break-before: always;
+    }
 }

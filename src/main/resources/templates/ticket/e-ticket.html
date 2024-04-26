@@ -14,20 +14,9 @@
     <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_fontawesome.css}"/>
     <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_regular.min.css}"/>
     <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_solid.min.css}"/>
-
-    <!-- CSS for A4 printing -->
-    <style type="text/css" media="print">
-        @page {
-            size: A4;
-            margin: 0;
-        }
-        body {
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 </head>
-<div class="card shadow-none">
+<body>
+<div class="card shadow-none exclude-from-print">
     <div class="card-body p-0 pt-1 pb-1">
         <div class="row p-0 m-0 justify-content-center">
             <a href="#" type="button" class="btn btn-primary mr-2"><i
@@ -60,7 +49,6 @@
                                     <span class="align-content-center">Verildi: </span>
                                     <div class="editable-div" contenteditable="true" th:text="2024-03-18"></div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -72,22 +60,258 @@
                     </div>
                     <hr style="height:2px; margin: 10px 0; background-color: #aaaaaa">
 
-                    <div class="row align-content-center p-0 m-0">
-                        <span class="name pl-2" style="font-size: 22px; margin-left: 5px;">1</span>
-                        <span style="font-size: 22px; margin-left: 15px;">Havayolu şirketi check-in referanslarınız</span>
-                        <span style="font-size: 24px; margin-left: 130px;" contenteditable="true">MEPUGY(EY)</span>
+                    <div class="row p-0 m-0">
+                        <div class="col-6 pl-1">
+                            <span class="name align-content-center" style="font-size: 20px;">1</span>
+                            <span class="align-content-center" style="font-size: 16px; margin-left: 7px;">Havayolu şirketi check-in referanslarınız</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="align-content-center" style="font-size: 22px;"
+                                  contenteditable="true">MEPUGY(EY)</span>
+                        </div>
                     </div>
                     <hr style="height:2px; margin: 10px 0; background-color: #aaaaaa">
 
-                    <footer>Invoice was created on a computer and is valid without the signature and seal.</footer>
+                    <div class="row p-0 m-0">
+                        <div class="col-6 pl-1">
+                            <span class="name align-content-center" style="font-size: 20px;">2</span>
+                            <span class="align-content-center" style="font-size: 16px; margin-left: 7px;">Rezervasyon numaranız</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="align-content-center" style="font-size: 22px;"
+                                  contenteditable="true">MEPUGY</span>
+                        </div>
+                    </div>
+                    <hr style="height:4px; margin: 10px 0; background-color: #aaaaaa">
+
+                    <div class="row p-0 m-0">
+                        <div class="col-12 pl-1 text-center">
+                            <span class="name align-content-center" style="font-size: 20px;">ÖNEMLİ:</span>
+                            <span class="align-content-center" style="font-size: 16px; margin-left: 3px;">LÜTFEN BU SEYAHAT BELGENİZİ YAZDIRIN VE GEÇERLİ PASAPORTUNUZLA BİRLİKTE TAŞIYIN.</span>
+                        </div>
+                    </div>
+                    <hr style="height:4px; margin: 10px 0; background-color: #aaaaaa">
+
+                    <!--     flight information     -->
+                    <div class="row p-0 m-0 pt-2 pb-2">
+                        <div class="row col-3 p-0 m-0">
+                            <!--     FLİGHT     -->
+                            <div class="col-11 pl-1 pr-0">
+                                <div class="pb-2">
+                                    <span class="align-content-center big_font">FLİGHT</span>
+                                </div>
+
+                                <div class="pb-2">
+                                    <div class="name align-content-center big_font" contenteditable="true"
+                                         style="margin-bottom: -4px;">EY 96
+                                    </div>
+                                    <div class="align-content-center" th:text="${ticket.airLine.getName()}"
+                                         style="font-size: 14px; margin-top: -4px;"></div>
+                                </div>
+
+                                <div>
+                                    <span class="align-content-center" style="font-size: 14px; margin-bottom: -4px;">Operated by:</span>
+                                    <div class="align-content-center" th:text="${ticket.airLine.getName()}"
+                                         style="font-size: 14px; margin-top: -4px;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Vertical line -->
+                            <div class="row col-1 p-0 m-0 justify-content-end text-right">
+                                <hr class="vertical-line">
+                            </div>
+                        </div>
+
+                        <!--     DEPARTURE     -->
+                        <div class="col-4 pl-1">
+                            <div class="pb-1">
+                                <span class="align-content-center big_font">DEPARTURE</span>
+                            </div>
+
+                            <div class="pb-2">
+                                <div class="align-content-center" th:text="${ticket.fromWhere.getIataCode()}"
+                                     style="font-size: 14px;margin-bottom: -4px;"></div>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.fromWhere.getCity()}"></div>
+                                <div class="align-content-center" th:text="${ticket.fromWhere.getAirportName()}"
+                                     style="font-size: 14px; margin-top: -4px;"></div>
+                            </div>
+
+                            <div class="pb-2">
+                                <span class="align-content-center"
+                                      th:text="${#temporals.format(ticket.departureTime, 'EEE dd MMM', #locale)}"
+                                      style="font-size: 14px; margin-bottom: -4px;"></span>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.departureTime.getHour() + ':' + ticket.departureTime.getMinute()}"
+                                     style="margin-top: -4px;"></div>
+                            </div>
+
+                            <div>
+                                <div class="align-content-center" style="font-size: 14px; margin-bottom: -4px;">
+                                    Terminal:
+                                </div>
+                                <span class="align-content-center" contenteditable="true"
+                                      style="margin-top: -4px;">A</span>
+                            </div>
+                        </div>
+
+                        <!--     plane     -->
+                        <div class="col-1 pl-1 pr-1 text-center">
+                            <br><br>
+                            <img th:src="@{/images/plane.svg}" width="40px" height="auto" alt="etlas">
+                            <div class="pb-1 text-center">
+                                <span class="align-content-center">Duration</span>
+                            </div>
+                        </div>
+
+                        <!--     ARRİVAL     -->
+                        <div class="col-4 pl-1 text-right">
+                            <div class="pb-1">
+                                <span class="align-content-center big_font">ARRİVAL</span>
+                            </div>
+
+                            <div class="pb-2">
+                                <div class="align-content-center" th:text="${ticket.toWhere.getIataCode()}"
+                                     style="font-size: 14px;margin-bottom: -4px;"></div>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.toWhere.getCity()}"></div>
+                                <div class="align-content-center" th:text="${ticket.toWhere.getAirportName()}"
+                                     style="font-size: 14px; margin-top: -4px;"></div>
+                            </div>
+
+                            <div class="pb-2">
+                                <span class="align-content-center"
+                                      th:text="${#temporals.format(ticket.departureTime, 'EEE dd MMM', #locale)}"
+                                      style="font-size: 14px; margin-bottom: -4px;"></span>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.departureTime.getHour() + ':' + ticket.departureTime.getMinute()}"
+                                     style="margin-top: -4px;"></div>
+                            </div>
+
+                            <div>
+                                <div class="align-content-center" style="font-size: 14px; margin-bottom: -4px;">
+                                    Terminal:
+                                </div>
+                                <span class="align-content-center" contenteditable="true"
+                                      style="margin-top: -4px;">A</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr style="height:2px; margin: 10px 0; background-color: #aaaaaa">
+
+                    <div class="row p-0 m-0 pt-2 pb-2">
+                        <div class="row col-3 p-0 m-0">
+                            <!--     FLİGHT     -->
+                            <div class="col-11 pl-1 pr-0">
+                                <div class="pb-2">
+                                    <span class="align-content-center big_font">FLİGHT</span>
+                                </div>
+
+                                <div class="pb-2">
+                                    <div class="name align-content-center big_font" contenteditable="true"
+                                         style="margin-bottom: -4px;">EY 96
+                                    </div>
+                                    <div class="align-content-center" th:text="${ticket.airLine.getName()}"
+                                         style="font-size: 14px; margin-top: -4px;"></div>
+                                </div>
+
+                                <div>
+                                    <span class="align-content-center" style="font-size: 14px; margin-bottom: -4px;">Operated by:</span>
+                                    <div class="align-content-center" th:text="${ticket.airLine.getName()}"
+                                         style="font-size: 14px; margin-top: -4px;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Vertical line -->
+                            <div class="row col-1 p-0 m-0 justify-content-end text-right">
+                                <hr class="vertical-line">
+                            </div>
+                        </div>
+
+                        <!--     DEPARTURE     -->
+                        <div class="col-4 pl-1">
+                            <div class="pb-1">
+                                <span class="align-content-center big_font">DEPARTURE</span>
+                            </div>
+
+                            <div class="pb-2">
+                                <div class="align-content-center" th:text="${ticket.fromWhere.getIataCode()}"
+                                     style="font-size: 14px;margin-bottom: -4px;"></div>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.fromWhere.getCity()}"></div>
+                                <div class="align-content-center" th:text="${ticket.fromWhere.getAirportName()}"
+                                     style="font-size: 14px; margin-top: -4px;"></div>
+                            </div>
+
+                            <div class="pb-2">
+                                <span class="align-content-center"
+                                      th:text="${#temporals.format(ticket.departureTime, 'EEE dd MMM', #locale)}"
+                                      style="font-size: 14px; margin-bottom: -4px;"></span>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.departureTime.getHour() + ':' + ticket.departureTime.getMinute()}"
+                                     style="margin-top: -4px;"></div>
+                            </div>
+
+                            <div>
+                                <div class="align-content-center" style="font-size: 14px; margin-bottom: -4px;">
+                                    Terminal:
+                                </div>
+                                <span class="align-content-center" contenteditable="true"
+                                      style="margin-top: -4px;">A</span>
+                            </div>
+                        </div>
+
+                        <!--     plane     -->
+                        <div class="col-1 pl-1 pr-1 text-center">
+                            <br><br>
+                            <img th:src="@{/images/plane.svg}" width="40px" height="auto" alt="etlas">
+                            <div class="pb-1 text-center">
+                                <span class="align-content-center">Duration</span>
+                            </div>
+                        </div>
+
+                        <!--     ARRİVAL     -->
+                        <div class="col-4 pl-1 text-right">
+                            <div class="pb-1">
+                                <span class="align-content-center big_font">ARRİVAL</span>
+                            </div>
+
+                            <div class="pb-2">
+                                <div class="align-content-center" th:text="${ticket.toWhere.getIataCode()}"
+                                     style="font-size: 14px;margin-bottom: -4px;"></div>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.toWhere.getCity()}"></div>
+                                <div class="align-content-center" th:text="${ticket.toWhere.getAirportName()}"
+                                     style="font-size: 14px; margin-top: -4px;"></div>
+                            </div>
+
+                            <div class="pb-2">
+                                <span class="align-content-center"
+                                      th:text="${#temporals.format(ticket.departureTime, 'EEE dd MMM', #locale)}"
+                                      style="font-size: 14px; margin-bottom: -4px;"></span>
+                                <div class="name align-content-center big_font"
+                                     th:text="${ticket.departureTime.getHour() + ':' + ticket.departureTime.getMinute()}"
+                                     style="margin-top: -4px;"></div>
+                            </div>
+
+                            <div>
+                                <div class="align-content-center" style="font-size: 14px; margin-bottom: -4px;">
+                                    Terminal:
+                                </div>
+                                <span class="align-content-center" contenteditable="true"
+                                      style="margin-top: -4px;">A</span>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- BEGIN PAGE LEVEL JS-->
-<script th:src="@{/js/dashboard2.js}"></script>
-<script th:src="@{/assets/js/scripts.js}"></script>
 </body>
 <!-- END : Body-->
 </html>
