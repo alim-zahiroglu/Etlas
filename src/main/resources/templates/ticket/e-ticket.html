@@ -14,6 +14,7 @@
     <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_fontawesome.css}"/>
     <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_regular.min.css}"/>
     <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/new_solid.min.css}"/>
+    <script th:src="@{/assets/libs/js/jspdf/jsPdf.js}"></script>
 </head>
 <body>
 <div class="card shadow-none exclude-from-print">
@@ -21,12 +22,12 @@
         <div class="row p-0 m-0 justify-content-center">
             <a href="#" type="button" class="btn btn-primary mr-2"><i
                     class="fa fa-paper-plane mr-1"></i>Send Via Email</a>
-            <a href="#" type="button" class="btn btn-success mr-2"><i
+            <a href="#" type="button" id="saveAsPdfBtn" class="btn btn-success mr-2"><i
                     class="fa-regular fa-file-pdf"></i> Save As PDF</a>
         </div>
     </div>
 </div>
-<div class="card shadow-none">
+<div id="pdfContent" class="card shadow-none">
     <div class="card-body">
         <div id="ticket">
             <div class="ticket overflow-auto mr-4 ml-4 mt-3 mb-2">
@@ -218,9 +219,15 @@
 
                                 <div class="pb-2">
                                     <div class="align-content-center big_font"
+                                         th:if="${ticket.passengers[0].customerType.getDescription() == 'Individual'}"
                                          th:text="${ticket.passengers[0].firstName + ' ' + ticket.passengers[0].lastName}"
                                          style="margin-top: -4px;"></div>
                                 </div>
+
+                                <div class="align-content-center big_font"
+                                     th:if="${ticket.passengers[0].customerType.getDescription() == 'Company'}"
+                                     th:text="${ticket.passengers[0].companyName}"
+                                     style="margin-top: -4px;"></div>
                             </div>
                         </div>
 
@@ -240,7 +247,7 @@
                         </div>
 
                         <!--     luggage     -->
-                        <div class="row col-3 p-0 m-0">
+                        <div class="row col-4 p-0 m-0">
                             <div class="col-12 pl-1 pr-0">
                                 <div class="pb-2">
                                     <span class="align-content-center" style="font-size: 14px;">Check-in'de verilen bagaj izni:</span>
@@ -264,7 +271,8 @@
                         <div class="row col-3 p-0 m-0">
                             <div class="col-12 pl-1 pr-0">
                                 <div class="pb-2">
-                                    <span class="align-content-center" style="font-size: 14px;">e-Bilet makbuzları:</span>
+                                    <span class="align-content-center"
+                                          style="font-size: 14px;">e-Bilet makbuzları:</span>
                                 </div>
 
                                 <div class="pb-2">
@@ -279,12 +287,30 @@
                     <hr style="height:2px; margin: 10px 0; background-color: #aaaaaa">
 
 
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('saveAsPdfBtn').addEventListener('click', function () {
+        // Get the element by its ID
+        const content = document.getElementById('pdfContent');
+
+        // Create a new jsPDF instance
+        const pdf = new jsPDF();
+
+        // Add HTML content to PDF
+        pdf.html(content, {
+            callback: function (pdf) {
+                // Save or download the PDF
+                pdf.save('document.pdf');
+            }
+        });
+    });
+</script>
+
 </body>
 <!-- END : Body-->
 </html>
