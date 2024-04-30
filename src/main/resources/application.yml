@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    #    url: jdbc:postgresql://mydbinstance.clq8wogyshd2.eu-central-1.rds.amazonaws.com:5432/ticketing_app_db
-    url: jdbc:postgresql://localhost:5432/etlas_db
+    url: jdbc:postgresql://etlas-db.c7u4u22ysmqt.eu-central-1.rds.amazonaws.com/etlas_db
+#    url: jdbc:postgresql://localhost:5432/etlas_db
     username: etlas
-    password: Etlas123
+    password: Etlas#281
     driver-class-name: org.postgresql.Driver
 
   jpa:
