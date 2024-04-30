@@ -1,43 +1,51 @@
-# This config was automatically generated from your source code
-# Stacks detected: cicd:github-actions:.github/workflows,deps:java:.
-version: 2.1
+version: 2
 jobs:
-  test-java:
+  build:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: circleci/openjdk:latest
+    working_directory: /tmp/workspace
     steps:
       - checkout
-      - run:
-          name: Calculate cache key
-          command: |-
-            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
-                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
+      - run: mkdir -p /tmp/workspace
       - restore_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-      - run:
-          command: mvn verify
-      - store_test_results:
-          path: target/surefire-reports
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+      - run: mvn clean install -DskipTests
       - save_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
-            - ~/.m2/repository
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths: .
+  docker-image-and-publish:
+    machine: true
     steps:
-      # Replace this with steps to deploy to users
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: ls -a /tmp/workspace
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          name: Create Docker image and push to ECR
+          command: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 714140379706.dkr.ecr.eu-central-1.amazonaws.com && docker build -t ticketing_app /tmp/workspace && docker tag ticketing_app:latest 714140379706.dkr.ecr.eu-central-1.amazonaws.com/ticketing_app:latest && docker push 714140379706.dkr.ecr.eu-central-1.amazonaws.com/ticketing_app:latest
+  deploy:
+    machine: true
+    steps:
       - run:
-          name: found github actions config
-          command: ':'
+          name: Execute Deployment script
+          command: |
+            ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-3-126-153-218.eu-central-1.compute.amazonaws.com <<'ENDSSH'
+            /bin/bash bin/deploy_image.sh
+            ENDSSH
+
+
 workflows:
-  build-and-test:
+  version: 2
+  build_and_test:
     jobs:
-      - test-java
-    # - deploy:
-    #     requires:
-    #       - test-java
+      - build
+      - docker-image-and-publish:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - docker-image-and-publish
+
