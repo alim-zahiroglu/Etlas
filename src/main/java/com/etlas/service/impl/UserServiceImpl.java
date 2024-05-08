@@ -4,8 +4,10 @@ import com.etlas.dto.UserDto;
 import com.etlas.entity.User;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.UserRepository;
+import com.etlas.service.BalanceService;
 import com.etlas.service.TicketService;
 import com.etlas.service.UserService;
+import com.etlas.service.VisaService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,12 +26,16 @@ public class UserServiceImpl implements UserService {
     private final MapperUtil mapper;
     private final PasswordEncoder passwordEncoder;
     private final TicketService ticketService;
+    private final VisaService visaService;
+    private final BalanceService balanceService;
 
-    public UserServiceImpl(UserRepository repository, MapperUtil mapper, PasswordEncoder passwordEncoder, @Lazy TicketService ticketService) {
+    public UserServiceImpl(UserRepository repository, MapperUtil mapper, PasswordEncoder passwordEncoder, @Lazy TicketService ticketService, VisaService visaService, BalanceService balanceService) {
         this.repository = repository;
         this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
         this.ticketService = ticketService;
+        this.visaService = visaService;
+        this.balanceService = balanceService;
     }
 
     @Override
@@ -140,12 +146,11 @@ public class UserServiceImpl implements UserService {
                 List<User> users = repository.findAllByRoleAndIsDeleted(userToBeDelete.getRole(),false);
                 isOnlyAdmin = users.size() == 1;
             }
-           boolean isUserUsedInTicket = ticketService.isUserBoughtTicketOrReceiveMoney(userToBeDelete.getUserName());
+            boolean isUserUsedInTicket = ticketService.isUserBoughtTicket(userToBeDelete.getUserName());
+            boolean isUserUsedInVisa = visaService.isUserBoughtTicket(userToBeDelete.getUserName());
+            boolean isUserUsedInBalanceRecord = balanceService.isUserReceivedMoney(userToBeDelete.getUserName());
 
-            // TODO check if user used in transaction
-            // TODO check if user used in visa
-
-            return !isUserUsedInTicket && !isOnlyAdmin;
+            return !isUserUsedInTicket && !isOnlyAdmin && !isUserUsedInVisa && !isUserUsedInBalanceRecord;
         }
         return false;
     }

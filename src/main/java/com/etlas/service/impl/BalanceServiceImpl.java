@@ -147,4 +147,8 @@ public class BalanceServiceImpl implements BalanceService {
         customerService.save(mapper.convert(giver, new CustomerDto()));
     }
 
+    @Override
+    public boolean isUserReceivedMoney(String userName) {
+        return repository.existsByReceiver_UserNameAndIsDeleted(userName,false);
+    }
 }

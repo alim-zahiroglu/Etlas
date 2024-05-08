@@ -12,4 +12,6 @@ public interface BalanceRecordRepository extends JpaRepository<BalanceRecord, Lo
     List<BalanceRecord> findAllByIsDeletedOrderByLastUpdateDateTimeDesc(boolean isDeleted);
 
     Optional<BalanceRecord> findByIdAndIsDeletedFalse(long recordId);
+
+    boolean existsByReceiver_UserNameAndIsDeleted(String userName, boolean isDeleted);
 }

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,6 +76,11 @@ public class VisaServiceImpl implements VisaService {
             bindingResult.rejectValue("paidCustomerUI", "error.visa", "Please select a paid customer");
         }
         return bindingResult;
+    }
+
+    @Override
+    public boolean isUserBoughtTicket(String userName) {
+        return repository.existsByBoughtUser_UserNameAndIsDeleted(userName,false);
     }
 
     @Override

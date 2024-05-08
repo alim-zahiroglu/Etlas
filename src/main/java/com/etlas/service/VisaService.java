@@ -28,4 +28,6 @@ public interface VisaService {
     List<String> getAllUniqueVisTypeWithCountryFromCustomer(long customerId);
 
     BindingResult validateNewVisa(VisaDto newVisa, BindingResult bindingResult);
+
+    boolean isUserBoughtTicket(String userName);
 }

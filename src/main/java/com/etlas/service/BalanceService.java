@@ -21,4 +21,6 @@ public interface BalanceService {
     void saveUpdatedBalanceRecord(BalanceRecordDto updatedBalanceRecord);
 
     BindingResult validateBalanceRecord(BalanceRecordDto newRecord, BindingResult bindingResult);
+
+    boolean isUserReceivedMoney(String userName);
 }
