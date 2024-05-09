@@ -172,6 +172,10 @@ $(document).ready(function () {
     const $boughtUserSelectorArrow = $('#bought-user-selector-arrow');
     setupSelect2($mySelectForBoughtUser, $boughtUserSelectorArrow);
 
+    const $mySelectForBoughtUser1 = $('#mySelectForBoughtUser1');
+    const $boughtUserSelectorArrow1 = $('#bought-user-selector-arrow1');
+    setupSelect2($mySelectForBoughtUser1, $boughtUserSelectorArrow1);
+
     const $mySelectForReceiver = $('#received-user');
     const $receiverSelectorArrow = $('#receiver-selector-arrow');
     setupSelect2($mySelectForReceiver, $receiverSelectorArrow);
@@ -189,6 +193,10 @@ $(document).ready(function () {
     const $payerSelectorArrow = $('#payer-selector-arrow');
     setupSelect2($mySelectForPayer, $payerSelectorArrow);
 
+    const $mySelectForPayer1 = $('#mySelectForPayer1');
+    const $payerSelectorArrow1 = $('#payer-selector-arrow1');
+    setupSelect2($mySelectForPayer1, $payerSelectorArrow1);
+
     const $mySelectForCountry = $('#mySelectForCountry');
     const $customerCountrySelector = $('#customer-country-selector');
     setupSelect2($mySelectForCountry, $customerCountrySelector);
@@ -200,6 +208,10 @@ $(document).ready(function () {
     const $selectedCreditCard = $('#selected-credit-card');
     const $selectedCardSelectorArrow = $('#selected-card-selector-arrow');
     setupSelect2($selectedCreditCard, $selectedCardSelectorArrow);
+
+    const $selectedCreditCard1 = $('#selected-credit-card1');
+    const $selectedCardSelectorArrow1 = $('#selected-card-selector-arrow1');
+    setupSelect2($selectedCreditCard1, $selectedCardSelectorArrow1);
 
 });
 

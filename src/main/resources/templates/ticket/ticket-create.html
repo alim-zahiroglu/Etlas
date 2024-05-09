@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <title>new ticket</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body>
@@ -269,7 +270,109 @@
                                                     </div>
 
 
-                                                    <div class="row p-0 m-0">
+                                                    <div class="row p-0 m-0" sec:authorize="hasAnyAuthority('Employee')">
+                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
+                                                             style="padding: 0 8px;margin-top: 16px">
+                                                            <label for="mySelectForBoughtUser"
+                                                                   class="form-label mb-1 pl-1">Bought
+                                                                User</label>
+                                                            <select id="mySelectForBoughtUser1" th:field="*{boughtUser}"
+                                                                    th:name="boughtUser" class="form-select"
+                                                                    style="width: 100%">
+                                                                <option th:each="boughtUser:${userList}"
+                                                                        th:value="${boughtUser.id}"
+                                                                        th:text="${boughtUser.firstName + ' ' + boughtUser.lastName}"></option>
+                                                            </select>
+                                                            <div class="ticket-create-airline-select text-right">
+                                                                <i id="bought-user-selector-arrow1"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-6 col-lg-3 mb-0"
+                                                             th:classappend="${#fields.hasErrors('paidCard')} ? 'error' : ''"
+                                                             style="padding: 0 8px;margin-top: 17px">
+                                                            <label for="selected-credit-card"
+                                                                   class="form-label pl-1 mb-1 d-block">Paid
+                                                                Card</label>
+                                                            <select id="selected-credit-card1" th:field="*{paidCard}"
+                                                                    name="selectedCard"
+                                                                    class="form-select" style="width: 100%">
+                                                                <option th:value="0" th:if="${cardList.isEmpty()}">Select Paid Card</option> <!-- Default option -->
+                                                                <option th:each="paidCard : ${cardList}"
+                                                                        th:value="${paidCard.id}"
+                                                                        th:text="${paidCard.cardOwner + ' (' + paidCard.bankName + ')'}"></option>
+                                                            </select>
+                                                            <div class="ticket-create-airline-select text-right">
+                                                                <i id="selected-card-selector-arrow1"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+
+                                                            <div class="custom-invalid-feedback"
+                                                                 style="position: absolute"
+                                                                 th:if="${#fields.hasErrors('paidCard')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('paidCard')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-12 col-lg-3 mb-0"
+                                                             th:classappend="${#fields.hasErrors('dateOfPerches')} ? 'error' : ''"
+                                                             style="padding: 0 8px;margin-top: 16px">
+                                                            <label for="date-of-perches" class="form-label mb-1 pl-1">
+                                                                <i class="fa-regular fa-calendar-days"></i> Date of
+                                                                perches</label>
+                                                            <input type="text" th:field="*{dateOfPerches}"
+                                                                   class="form-control date-picker"
+                                                                   id="date-of-perches1">
+                                                            <div class="custom-invalid-feedback"
+                                                                 style="position: absolute"
+                                                                 th:if="${#fields.hasErrors('dateOfPerches')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('dateOfPerches')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-12 col-md-12 col-lg-3 mb-0"
+                                                             th:classappend="${#fields.hasErrors('payedCustomerUI')} ? 'error' : ''"
+                                                             style="padding: 0 8px;margin-top: 17px">
+                                                            <label for="mySelectForPayer"
+                                                                   class="form-label pl-1 mb-1 d-block">Payer</label>
+                                                            <select id="mySelectForPayer1"
+                                                                    th:field="*{payedCustomerUI}"
+                                                                    th:name="payerCustomer"
+                                                                    class="form-control mb-0" style="width: 100%">
+                                                                <option th:if="${customerList.isEmpty()}" th:value="0">
+                                                                    Select Paid Customer
+                                                                </option>
+                                                                <option th:each="payerCustomer : ${customerList}"
+                                                                        th:value="${payerCustomer.id}"
+                                                                        th:text="${payerCustomer.customerType.description == 'Company' ? payerCustomer.companyName : (payerCustomer.customerType.description == 'Individual' ? payerCustomer.firstName + ' ' + payerCustomer.lastName : 'Unknown')}">
+                                                                </option>
+                                                            </select>
+                                                            <div class="ticket-create-airline-select text-right"
+                                                                 th:classappend="${#fields.hasErrors('perchesPrice')||#fields.hasErrors('salesPrice') || #fields.hasErrors('payedCustomerUI') ? 'adjust-arrow' : ''}">
+                                                                <i id="payer-selector-arrow1"
+                                                                   class="fa-solid fa-chevron-down rotate-down"></i>
+                                                            </div>
+                                                            <div class="custom-invalid-feedback"
+                                                                 th:if="${#fields.hasErrors('payedCustomerUI')}">
+                                                                <ul class="p-0 m-0">
+                                                                    <li th:each="err : ${#fields.errors('payedCustomerUI')}"
+                                                                        th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row p-0 m-0" sec:authorize="hasAnyAuthority('Admin, Manager')">
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
                                                              style="padding: 0 8px;margin-top: 16px">
                                                             <label for="mySelectForBoughtUser"
@@ -337,6 +440,8 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
+
+
                                                     </div>
 
                                                     <div class="custom-invalid-feedback"
@@ -348,6 +453,7 @@
                                                          th:classappend="${#fields.hasErrors('paidCard')} ? 'pt-3' : ''">
 
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             sec:authorize="hasAnyAuthority('Manager','Admin')"
                                                              th:classappend="${#fields.hasErrors('perchesPrice')} ? 'error' : ''"
                                                              style="padding: 0 8px;margin-top: 16px">
                                                             <label for="perchesPrice" class="form-label mb-1 pl-1">Perches
@@ -387,6 +493,7 @@
                                                         </div>
 
                                                         <div class="form-group col-12 col-md-6 col-lg-4 mb-0"
+                                                             sec:authorize="hasAnyAuthority('Manager','Admin')"
                                                              style="padding: 0 8px;margin-top: 16px">
                                                             <label for="salesPrice" class="form-label mb-1 pl-1">Sales
                                                                 price</label>
@@ -410,6 +517,7 @@
 
 
                                                         <div class="form-group col-12 col-md-12 col-lg-4 mb-0"
+                                                             sec:authorize="hasAnyAuthority('Manager','Admin')"
                                                              th:classappend="${#fields.hasErrors('payedCustomerUI')} ? 'error' : ''"
                                                              style="padding: 0 8px;margin-top: 17px">
                                                             <label for="mySelectForPayer"
