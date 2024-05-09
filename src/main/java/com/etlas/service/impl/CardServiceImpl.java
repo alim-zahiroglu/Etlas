@@ -6,9 +6,7 @@ import com.etlas.entity.Bank;
 import com.etlas.entity.Card;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CardRepository;
-import com.etlas.service.BankService;
-import com.etlas.service.CardService;
-import com.etlas.service.TicketService;
+import com.etlas.service.*;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +24,16 @@ public class CardServiceImpl implements CardService {
     private final MapperUtil mapper;
     private final BankService bankService;
     private final TicketService ticketService;
+    private final BalanceService balanceService;
+    private final VisaService visaService;
 
-    public CardServiceImpl(CardRepository repository, MapperUtil mapper, BankService bankService, @Lazy TicketService ticketService) {
+    public CardServiceImpl(CardRepository repository, MapperUtil mapper, BankService bankService, @Lazy TicketService ticketService, BalanceService balanceService, @Lazy VisaService visaService) {
         this.repository = repository;
         this.mapper = mapper;
         this.bankService = bankService;
         this.ticketService = ticketService;
+        this.balanceService = balanceService;
+        this.visaService = visaService;
     }
 
 
@@ -175,7 +177,10 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public boolean isCardDeletable(String cardId) {
-       return !ticketService.isCardUsedInAnyTicket(cardId);
+       boolean isCardUsedInTicket = ticketService.isCardUsedInAnyTicket(cardId);
+       boolean isCardUsedInVisa = visaService.isCardUsedInAnyVisa(cardId);
+       boolean isCardUsedInRecord = balanceService.isCardUsedInAnyRecord(cardId);
+       return !isCardUsedInTicket && !isCardUsedInVisa && !isCardUsedInRecord;
     }
 
     @Override

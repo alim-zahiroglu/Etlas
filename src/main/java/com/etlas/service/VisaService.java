@@ -33,4 +33,6 @@ public interface VisaService {
     boolean isUserBoughtTicket(String userName);
 
     boolean isCustomerHasVisa(Customer customer);
+
+    boolean isCardUsedInAnyVisa(String cardId);
 }

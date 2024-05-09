@@ -17,4 +17,6 @@ public interface BalanceRecordRepository extends JpaRepository<BalanceRecord, Lo
     boolean existsByReceiver_UserNameAndIsDeleted(String userName, boolean isDeleted);
 
     boolean existsByGiverAndIsDeleted(Customer customer, boolean b);
+
+    boolean existsByReceiverCardIdAndIsDeleted(long cardId, boolean isDeleted);
 }

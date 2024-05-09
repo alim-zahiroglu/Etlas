@@ -34,4 +34,6 @@ public interface VisaRepository extends JpaRepository<Visa, Long> {
     boolean existsByCustomerIdOrPaidCustomerIdAndIsDeleted(@Param("customerId") long customerId,
                                                            @Param("paidCustomerId") long paidCustomerId,
                                                            @Param("isDeleted") boolean isDeleted);
+
+    boolean existsByPaidCardIdAndIsDeleted(long curdId, boolean isDeleted);
 }

@@ -26,4 +26,6 @@ public interface BalanceService {
     boolean isUserReceivedMoney(String userName);
 
     boolean isCustomerHasBalanceRecord(Customer customer);
+
+    boolean isCardUsedInAnyRecord(String cardId);
 }

@@ -286,4 +286,9 @@ public class VisaServiceImpl implements VisaService {
     public boolean isCustomerHasVisa(Customer customer) {
         return repository.existsByCustomerIdOrPaidCustomerIdAndIsDeleted(customer.getId(),customer.getId(),false);
     }
+
+    @Override
+    public boolean isCardUsedInAnyVisa(String cardId) {
+        return repository.existsByPaidCardIdAndIsDeleted(Long.parseLong(cardId),false);
+    }
 }
