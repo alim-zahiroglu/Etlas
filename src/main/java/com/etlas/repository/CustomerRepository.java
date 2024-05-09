@@ -10,9 +10,15 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     List<Customer> findAllByIsDeletedOrderByLastUpdateDateTimeDesc(boolean isDeleted);
+
     List<Customer> findAllByIsDeletedAndCustomerType(boolean isDeleted, String customerType);
+
     List<Customer> findAllByCustomerTypeAndIsDeleted(CustomerType customerType, boolean isDeleted);
+
     boolean existsByCompanyName(String companyName);
+
     boolean existsByCompanyNameAndIdNot(String companyName, long id);
+
+    Customer findByIdAndIsDeleted(long customerId, boolean isDeleted);
 
 }

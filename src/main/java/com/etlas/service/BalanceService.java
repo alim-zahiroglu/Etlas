@@ -1,6 +1,7 @@
 package com.etlas.service;
 
 import com.etlas.dto.BalanceRecordDto;
+import com.etlas.entity.Customer;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface BalanceService {
     void saveUpdatedBalanceRecord(BalanceRecordDto updatedBalanceRecord);
 
     BindingResult validateBalanceRecord(BalanceRecordDto newRecord, BindingResult bindingResult);
+
+    boolean isUserReceivedMoney(String userName);
+
+    boolean isCustomerHasBalanceRecord(Customer customer);
 }

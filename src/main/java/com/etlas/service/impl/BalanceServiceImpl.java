@@ -68,6 +68,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public BindingResult validateBalanceRecord(BalanceRecordDto newRecord, BindingResult bindingResult) {
+        if (newRecord.getAmount() ==null) newRecord.setAmount(BigDecimal.ZERO);
         if (newRecord.getGiver() == null) {
             bindingResult.rejectValue("giver", "error.giver", "Please select a giver");
         }
@@ -147,4 +148,13 @@ public class BalanceServiceImpl implements BalanceService {
         customerService.save(mapper.convert(giver, new CustomerDto()));
     }
 
+    @Override
+    public boolean isUserReceivedMoney(String userName) {
+        return repository.existsByReceiver_UserNameAndIsDeleted(userName,false);
+    }
+
+    @Override
+    public boolean isCustomerHasBalanceRecord(Customer customer) {
+        return repository.existsByGiverAndIsDeleted(customer,false);
+    }
 }

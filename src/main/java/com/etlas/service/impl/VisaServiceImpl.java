@@ -4,6 +4,7 @@ import com.etlas.dto.CardDto;
 import com.etlas.dto.CustomerDto;
 import com.etlas.dto.UserDto;
 import com.etlas.dto.VisaDto;
+import com.etlas.entity.Customer;
 import com.etlas.entity.Visa;
 import com.etlas.entity.VisaType;
 import com.etlas.enums.CountriesTr;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,6 +77,11 @@ public class VisaServiceImpl implements VisaService {
             bindingResult.rejectValue("paidCustomerUI", "error.visa", "Please select a paid customer");
         }
         return bindingResult;
+    }
+
+    @Override
+    public boolean isUserBoughtTicket(String userName) {
+        return repository.existsByBoughtUser_UserNameAndIsDeleted(userName,false);
     }
 
     @Override
@@ -275,5 +280,10 @@ public class VisaServiceImpl implements VisaService {
                     .collect(Collectors.toList());
         }
         return List.of();
+    }
+
+    @Override
+    public boolean isCustomerHasVisa(Customer customer) {
+        return repository.existsByCustomerIdOrPaidCustomerIdAndIsDeleted(customer.getId(),customer.getId(),false);
     }
 }

@@ -350,11 +350,11 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public boolean isCustomerHasTickets(Customer customer) {
-        return repository.existsByPayedCustomerOrPassengersAndIsDeleted(customer, customer, false);
+        return repository.existsByPayedCustomerOrPassengersContainingAndIsDeleted(customer.getId(), customer.getId(), false);
     }
 
     @Override
-    public boolean isUserBoughtTicketOrReceiveMoney(String userName) {
+    public boolean isUserBoughtTicket(String userName) {
         return repository.existsByBoughtUser_UserNameAndIsDeleted(userName,  false);
     }
 

@@ -6,8 +6,10 @@ import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
+import com.etlas.service.BalanceService;
 import com.etlas.service.CustomerService;
 import com.etlas.service.TicketService;
+import com.etlas.service.VisaService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -24,11 +26,15 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
     private final TicketService ticketService;
     private final MapperUtil mapper;
+    private final VisaService visaService;
+    private final BalanceService balanceService;
 
-    public CustomerServiceImpl(CustomerRepository repository, @Lazy TicketService ticketService, MapperUtil mapper) {
+    public CustomerServiceImpl(CustomerRepository repository, @Lazy TicketService ticketService, MapperUtil mapper, @Lazy VisaService visaService, @Lazy BalanceService balanceService) {
         this.repository = repository;
         this.ticketService = ticketService;
         this.mapper = mapper;
+        this.visaService = visaService;
+        this.balanceService = balanceService;
     }
 
     @Override
@@ -115,14 +121,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean isCustomerDeletable(long customerId) {
-        Customer customer = repository.findById(customerId)
-                .orElseThrow(NoSuchElementException::new);
+        Customer customer = repository.findByIdAndIsDeleted(customerId,false);
         if (customer != null) {
             boolean isCustomerHasTicket = ticketService.isCustomerHasTickets(customer);
-            // TODO check if customer has visa
+            boolean isCustomerHasVisa = visaService.isCustomerHasVisa(customer);
+            boolean isCustomerHasBalanceRecord = balanceService.isCustomerHasBalanceRecord(customer);
             return customer.getCustomerUSDBalance().compareTo(BigDecimal.ZERO) >= 0 &&
                     customer.getCustomerTRYBalance().compareTo(BigDecimal.ZERO) >= 0 &&
-                    customer.getCustomerEURBalance().compareTo(BigDecimal.ZERO) >= 0 && !isCustomerHasTicket;
+                    customer.getCustomerEURBalance().compareTo(BigDecimal.ZERO) >= 0 && !isCustomerHasTicket
+                    && !isCustomerHasVisa && !isCustomerHasBalanceRecord;
         }
         return true;
     }
