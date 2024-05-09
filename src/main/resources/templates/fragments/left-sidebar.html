@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
 <div th:fragment="left-sidebar">
@@ -72,7 +73,7 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" sec:authorize="hasAnyAuthority('Manager','Admin')">
                             <a href="#" class="sidebar-link collapsed" data-target="#cards" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-credit-card pe-2"></i>
                                 Card
@@ -90,7 +91,7 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" sec:authorize="hasAnyAuthority('Manager','Admin')">
                             <a href="#" class="sidebar-link collapsed" data-target="#users" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-user-group pe-2"></i>
                                 User
