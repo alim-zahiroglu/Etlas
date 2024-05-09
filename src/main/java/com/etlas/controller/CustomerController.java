@@ -59,8 +59,6 @@ public class CustomerController {
     public String deleteCustomer(@RequestParam("customerId") long customerId,
                                  RedirectAttributes redirectAttributes){
         boolean isCustomerDeletable = customerService.isCustomerDeletable(customerId);
-        System.out.println(isCustomerDeletable + "--------------*************");
-
         if (!isCustomerDeletable) {
             redirectAttributes.addFlashAttribute("customerIsDeleted", false);
             redirectAttributes.addFlashAttribute("deleteMessage", "because the customer is used in a ticket or has debt to pay.");

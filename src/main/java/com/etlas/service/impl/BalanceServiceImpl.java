@@ -157,4 +157,9 @@ public class BalanceServiceImpl implements BalanceService {
     public boolean isCustomerHasBalanceRecord(Customer customer) {
         return repository.existsByGiverAndIsDeleted(customer,false);
     }
+
+    @Override
+    public boolean isCardUsedInAnyRecord(String cardId) {
+        return repository.existsByReceiverCardIdAndIsDeleted(Long.parseLong(cardId), false);
+    }
 }

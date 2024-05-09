@@ -199,7 +199,6 @@ public class TicketController {
         }
 
         TicketDto savedTicket = ticketService.saveUpdatedTicket(updatedTicket);
-
         redirectAttributes.addFlashAttribute("savedTicket",savedTicket.getPnrNo());
         redirectAttributes.addFlashAttribute("isTicketUpdated",true);
         redirectAttributes.addFlashAttribute("updatedTicket",savedTicket);
@@ -210,16 +209,10 @@ public class TicketController {
     @GetMapping("/delete")
     public String deleteTicket(@RequestParam("ticketId") long ticketId, RedirectAttributes redirectAttributes) {
         String deletedTicketName = ticketService.findById(ticketId).getPnrNo();
-        if (ticketService.isTicketDeletable(ticketId)) {
             boolean ticketIsDeleted =ticketService.deleteTicket(ticketId);
             redirectAttributes.addFlashAttribute("ticketIsDeleted", ticketIsDeleted);
             redirectAttributes.addFlashAttribute("deletedTicketName", deletedTicketName);
             return "redirect:/ticket/list";
-        }
-
-        redirectAttributes.addFlashAttribute("ticketIsDeleted", false);
-        redirectAttributes.addFlashAttribute("deleteMessage", "because the ticket didn't used in any flight yet.");
-        return "redirect:/ticket/list";
     }
 
 
