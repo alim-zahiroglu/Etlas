@@ -29,8 +29,6 @@ public interface TicketService {
 
     boolean isUserBoughtTicket(String userName);
 
-    boolean isTicketDeletable(long ticketId);
-
     boolean deleteTicket(long ticketId);
 
     boolean isCardUsedInAnyTicket(String cardId);

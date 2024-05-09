@@ -359,15 +359,6 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public boolean isTicketDeletable(long ticketId) {
-        TicketDto deletedTicket = findById(ticketId);
-        if (deletedTicket.isRoundTrip()) {
-            return deletedTicket.getReturnTime().isBefore(LocalDateTime.now());
-        }
-        return deletedTicket.getDepartureTime().isBefore(LocalDateTime.now());
-    }
-
-    @Override
     public boolean deleteTicket(long ticketId) {
         Ticket ticketToBeDeleted = repository.findById(ticketId).orElseThrow(NoSuchElementException::new);
         ticketToBeDeleted.setPnrNo(ticketToBeDeleted.getPnrNo() + "_" + LocalDateTime.now());
