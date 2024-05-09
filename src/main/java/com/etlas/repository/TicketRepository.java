@@ -17,13 +17,28 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
   boolean existsByPnrNoAndIdNot(String pnrNo,long id);
 
-  boolean existsByPayedCustomerOrPassengersAndIsDeleted(Customer customer,Customer passenger, boolean isDeleted);
+  boolean existsByPayedCustomerOrPassengersContainingAndIsDeleted(Customer customer,Customer passenger, boolean isDeleted);
 
-    boolean existsByBoughtUser_UserNameAndIsDeleted(String userName, boolean isDeleted);
+  boolean existsByBoughtUser_UserNameAndIsDeleted(String userName, boolean isDeleted);
 
   @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM Ticket t WHERE (t.paidCard.id = :payedCardId) AND t.isDeleted = :isDeleted")
   boolean existsByPayedCardIdAndIsDeleted(@Param("payedCardId") long payedCardId, @Param("isDeleted") boolean isDeleted);
 
 
     List<Ticket> findAllByPayedCustomer_IdAndIsDeleted(long customerId, boolean IsDeleted);
+
+  @Query(value = "SELECT CASE WHEN EXISTS ( " +
+          "    SELECT 1 " +
+          "    FROM tickets t " +
+          "    WHERE (t.payed_customer_id = :customerId OR :passengerId IN ( " +
+          "              SELECT p.id " +
+          "              FROM tickets t2 " +
+          "              JOIN tickets_passengers tp ON t2.id = tp.ticket_id " +
+          "              JOIN customers p ON tp.passengers_id = p.id " +
+          "          )) " +
+          "    AND t.is_deleted = :isDeleted " +
+          ") THEN true ELSE false END", nativeQuery = true)
+  boolean existsByPayedCustomerOrPassengersContainingAndIsDeleted(@Param("customerId") Long customerId,
+                                                                  @Param("passengerId") Long passengerId,
+                                                                  @Param("isDeleted") boolean isDeleted);
 }
