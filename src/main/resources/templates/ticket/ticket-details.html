@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <title>ticket details</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body class="bg-light">
@@ -114,7 +115,8 @@
                                                 <div class="border-bottom">
                                                     <h4 class="font-medium">Ticket prices</h4>
                                                 </div>
-                                                <div class="row justify-content-between border-bottom py-3">
+                                                <div class="row justify-content-between border-bottom py-3"
+                                                     sec:authorize="hasAnyAuthority('Manager','Admin')">
                                                     <span class="col-6" style="width: auto">Perches Price</span>
                                                     <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
@@ -133,6 +135,7 @@
                                                 </div>
 
                                                 <div class="row justify-content-between border-bottom py-3"
+                                                     sec:authorize="hasAnyAuthority('Manager','Admin')"
                                                      style="margin-bottom: 37px">
                                                     <span class="col-6" style="width: auto">Profit</span>
                                                     <div class="col-6 text-right" style="width: auto">
