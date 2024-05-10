@@ -162,6 +162,13 @@
     width: auto !important;
 }
 
+.avatar-holder{
+    background-color: green;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+}
+
 .profile-menu-custom-css {
     top: 48px !important;
     background: whitesmoke !important;

@@ -35,6 +35,14 @@ public class CustomUserDetails implements UserDetails {
         return this.user.getUserName();
     }
 
+    public String getFirstName(){
+        return this.user.getFirstName();
+    }
+
+    public char getNameLetter(){
+        return this.user.getFirstName().toUpperCase().charAt(0);
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

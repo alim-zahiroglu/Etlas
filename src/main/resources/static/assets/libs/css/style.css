@@ -6289,13 +6289,63 @@ Vertical Timeline - by CodyHouse.co
     position: relative;
 }
 
+/*.avatar-container {*/
+/*    width: 2.5rem;*/
+/*    height: 2.5rem;*/
+/*    border-radius: 50%;*/
+/*    overflow: hidden;*/
+/*    margin: 8px;*/
+/*}*/
+
+/*.avatar {*/
+/*    width: 100%; !* Ensure the image takes up 100% of the container *!*/
+/*    height: 100%; !* Ensure the image takes up 100% of the container *!*/
+/*}*/
+.navbar-nav {
+    display: flex;
+    justify-content: flex-end; /* Align navbar items to the right */
+    align-items: center; /* Center items vertically */
+}
+
+.nav-item {
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
 .avatar {
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 50%;
-    /*border: 2px solid #F7F9FA;*/
-    /*background: #F7F9FA;*/
-    /*color: #fff;*/
+    display: flex; /* Use flexbox */
+    align-items: center; /* Center items vertically */
+}
+
+.avatar-text {
+    margin: 0; /* Remove default margin */
+    width: 2.45rem; /* Set width */
+    height: 2.45rem; /* Set height */
+    border-radius: 50%; /* Make it circular */
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+}
+.avatar-a-tag{
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+}
+.avatar-a-tag:hover{
+    color: white;
+}
+.avatar-bg-color-admin{
+    background-color: #ef4863;
+}
+.avatar-bg-color-manager{
+    background-color: #59c5cb;
+}
+.avatar-bg-color-employee{
+    background-color: #f8a526;
+}
+
+.user-image{
+    /*object-fit: cover; !* Add this line *!*/
 }
 
 .media-attachment {
