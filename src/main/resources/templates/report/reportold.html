@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<title>report</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body class="bg-light">
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+
+
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/report}"><i
+                                        class="fa-solid fa-house"></i> Reports </a></li>
+                            </ol>
+                        </nav>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card shadow-none bg-light justify-content-center border-0 align-items-center pt-5">
+                                    <div class="row col-12">
+
+                                        <div class="row">
+                                            <div class="col-12 col-md-12 col-lg-3 grid-margin grid-margin-sm-0 pb-sm-3">
+                                                <div class="card border shadow rounded overflow-visible"
+                                                     style="background-color: #c04d26">
+                                                    <div class="card-body px-4 py-4">
+                                                        <div class="d-flex justify-content-between align-items-start">
+                                                            <div class="color-card">
+                                                                <div class="text-white h5">Total Perches</div>
+                                                                <h3 class="text-white">₺ 8,753</h3>
+                                                                <h3 class="text-white">$ 8,753</h3>
+                                                                <h3 class="text-white">€ 8,753</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-12 col-lg-3 grid-margin grid-margin-sm-0 pb-sm-3">
+                                                <div class="card border shadow rounded overflow-visible"
+                                                     style="background-color: #2696be">
+                                                    <div class="card-body px-4 py-4">
+                                                        <div class="d-flex justify-content-between align-items-start">
+                                                            <div class="color-card">
+                                                                <div class="text-white h5">Total Sales</div>
+                                                                <h3 class="text-white">₺ 8,753</h3>
+                                                                <h3 class="text-white">$ 8,753</h3>
+                                                                <h3 class="text-white">€ 8,753</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-12 col-lg-3 grid-margin grid-margin-sm-0 pb-sm-3">
+                                                <div class="card border shadow rounded overflow-visible"
+                                                     style="background-color: #55b435">
+                                                    <div class="card-body px-4 py-4">
+                                                        <div class="d-flex justify-content-between align-items-start">
+                                                            <div class="color-card text-center">
+                                                                <div class="col-12 w-100 text-white h5 pb-1">Total Profit</div>
+                                                                <div>
+                                                                    <h3 class="text-white">₺ 8,753</h3>
+                                                                    <h3 class="text-white">$ 8,753</h3>
+                                                                    <h3 class="text-white">€ 8,753</h3>
+                                                                </div>
+                                                                <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="rightPricesDiv" class="col-12 col-md-12 col-lg-3 pb-3">
+                                                <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
+                                                     style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);">
+                                                    <div class="border-bottom">
+                                                        <h4 class="font-medium">Ticket prices</h4>
+                                                    </div>
+                                                    <div class="row justify-content-between border-bottom py-3"
+                                                         sec:authorize="hasAnyAuthority('Manager','Admin')">
+                                                        <span class="col-6" style="width: auto">Perches Price</span>
+                                                        <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          style="background-color: #2696be;">L 0,00</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row justify-content-between border-bottom py-3">
+                                                        <span class="col-6" style="width: auto">Sales Price</span>
+                                                        <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          style="background-color: #55b435;">L 0,00</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row justify-content-between border-bottom py-3"
+                                                         sec:authorize="hasAnyAuthority('Manager','Admin')"
+                                                         style="margin-bottom: 37px">
+                                                        <span class="col-6" style="width: auto">Profit</span>
+                                                        <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          style="background-color: #bf4d25;">L 0,00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="~{fragments/footer :: footer}"></div>
+        </div>
+    </div>
+    <div th:replace="~{fragments/javascript :: js}"></div>
+</div>
+</body>
+</html>

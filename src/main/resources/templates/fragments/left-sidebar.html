@@ -92,6 +92,23 @@
                         </li>
 
                         <li class="sidebar-item" sec:authorize="hasAnyAuthority('Manager','Admin')">
+                            <a th:href="@{/reports}" class="sidebar-link" ><i class="fa-solid fa-credit-card pe-2"></i>
+                                Reports
+                            </a>
+<!--                            <ul id="reports" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">-->
+<!--                                <li class="sidebar-item">-->
+<!--                                    <a th:href="@{/card/create}" class="sidebar-link">New Card</a>-->
+<!--                                </li>-->
+<!--                                <li class="sidebar-item">-->
+<!--                                    <a th:href="@{/card/list}" class="sidebar-link">Card List</a>-->
+<!--                                </li>-->
+<!--                                <li class="sidebar-item">-->
+<!--                                    <a th:href="@{/card/addBalance}" class="sidebar-link">Add Balance</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+                        </li>
+
+                        <li class="sidebar-item" sec:authorize="hasAnyAuthority('Manager','Admin')">
                             <a href="#" class="sidebar-link collapsed" data-target="#users" data-toggle="collapse"
                                aria-expanded="false"><i class="fa-solid fa-user-group pe-2"></i>
                                 User

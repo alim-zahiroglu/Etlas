@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<title>reports</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body class="bg-light">
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+
+
+                    <div class="ecommerce-widget pt-4">
+
+                        <nav style="--bs-breadcrumb-divider:- " aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item custom-breadcrumb-item"><a th:href="@{/reports}"><i
+                                        class="fa-solid fa-house"></i> Reports </a></li>
+                            </ol>
+                        </nav>
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="row col-12">
+                                    <div class="row col-12 mb-3"
+                                         style="border-radius: 5px">
+                                        <div class="col-12 col-md-12 col-lg-4">
+
+                                            <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
+                                                <button class="btn dropdown-toggle mx-2"
+                                                        style="border: solid 1px #d1d5dc; background-color: white"
+                                                        type="button"
+                                                        id="export_buttons" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa-regular fa-calendar"></i> This Month
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left dropdown-menu-custom-css"
+                                                     aria-labelledby="export_buttons">
+
+                                                    <a class="dropdown-item dropdown-menu-item-report-css"
+                                                       id="export_pdf"
+                                                       style="display: flex; align-items: center; border-radius: 8px 8px 0 0 ">
+                                                        <span>PDF</span>
+                                                    </a>
+                                                    <a class="dropdown-item dropdown-menu-item-report-css"
+                                                       id="export_excel"
+                                                       style="display: flex; align-items: center;">
+                                                        <span>Excel</span>
+                                                    </a>
+
+                                                    <a class="dropdown-item dropdown-menu-item-report-css"
+                                                       id="export_csv"
+                                                       style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                        <span>CSV</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row col-12">
+
+                                    <div class="col-12 col-md-12 col-lg-3 pb-sm-3">
+                                        <div class="card border shadow rounded overflow-visible"
+                                             style="background-color: #c04d26">
+                                            <div class="card-body px-4 py-4">
+                                                <div class="color-card">
+                                                    <div class="color-card-title pb-1"><h5 class="text-white">Total
+                                                        Perches</h5></div>
+                                                    <div>
+                                                        <h3 class="text-white">₺ 8,753</h3>
+                                                        <h3 class="text-white">$ 8,753</h3>
+                                                        <h3 class="text-white">€ 8,753</h3>
+                                                    </div>
+                                                    <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-3 pb-sm-3">
+                                        <div class="card border shadow rounded overflow-visible"
+                                             style="background-color: #2696be">
+                                            <div class="card-body px-4 py-4">
+                                                <div class="color-card">
+                                                    <div class="color-card-title pb-1"><h5 class="text-white">Total
+                                                        Sales</h5></div>
+                                                    <div>
+                                                        <h3 class="text-white">₺ 8,753</h3>
+                                                        <h3 class="text-white">$ 8,753</h3>
+                                                        <h3 class="text-white">€ 8,753</h3>
+                                                    </div>
+                                                    <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-3 pb-sm-3">
+                                        <div class="card border shadow rounded overflow-visible"
+                                             style="background-color: #55b435">
+                                            <div class="card-body px-4 py-4">
+                                                <div class="color-card">
+                                                    <div class="color-card-title pb-1"><h5 class="text-white">Total
+                                                        Profit</h5></div>
+                                                    <div>
+                                                        <h3 class="text-white">₺ 8,753</h3>
+                                                        <h3 class="text-white">$ 8,753</h3>
+                                                        <h3 class="text-white">€ 8,753</h3>
+                                                    </div>
+                                                    <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-3 pb-sm-3">
+                                        <div class="card border shadow rounded overflow-visible"
+                                             style="background-color: #dc3545">
+                                            <div class="card-body px-4 py-4">
+                                                <div class="color-card">
+                                                    <div class="color-card-title pb-1"><h5 class="text-white">Total
+                                                        Unpaid</h5></div>
+                                                    <div>
+                                                        <h3 class="text-white">₺ 8,753</h3>
+                                                        <h3 class="text-white">$ 8,753</h3>
+                                                        <h3 class="text-white">€ 8,753</h3>
+                                                    </div>
+                                                    <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row col-12 pb-2">
+                                    <div class="col-12 col-md-12 col-lg-3 pb-3">
+                                        <div class="border shadow rounded overflow-visible py-4 px-3"
+                                             style="background-color:#ffab2d">
+                                            <div class="justify-content-center mx-2">
+                                                <h5 class="text-white text-center">Ticket Total
+                                                    Perches</h5>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                        </div>
+                                        <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                    </div>
+
+
+                                    <div class="col-12 col-md-12 col-lg-3 pb-3">
+                                        <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
+                                             style="background-color:#ffab2d">
+                                            <div class="justify-content-center mx-2">
+                                                <h5 class="text-white text-center">Ticket Total
+                                                    Sales</h5>
+                                            </div>
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                        </div>
+                                        <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-3 pb-3">
+                                        <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
+                                             style="background-color:#ffab2d">
+                                            <div class="justify-content-center mx-2">
+                                                <h5 class="text-white text-center">Ticket Total
+                                                    Profit</h5>
+                                            </div>
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                        </div>
+                                        <i class="fa-solid fa-chart-column statistic-icon"></i>
+
+                                    </div>
+                                </div>
+
+                                <div class="row col-12 pb-2">
+                                    <div class="col-12 col-md-12 col-lg-3 pb-3">
+                                        <div class="border shadow rounded overflow-visible py-4 px-3"
+                                             style="background-color:#00ccce">
+                                            <div class="justify-content-center mx-2">
+                                                <h5 class="text-white text-center">Visa Total
+                                                    Perches</h5>
+                                            </div>
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                        </div>
+                                        <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                    </div>
+
+
+                                    <div class="col-12 col-md-12 col-lg-3 pb-3">
+                                        <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
+                                             style="background-color:#00ccce">
+                                            <div class="justify-content-center mx-2">
+                                                <h5 class="text-white text-center">Visa Total Sales</h5>
+                                            </div>
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                        </div>
+                                        <i class="fa-solid fa-chart-column statistic-icon"></i>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-3 pb-3">
+                                        <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
+                                             style="background-color:#00ccce">
+                                            <div class="justify-content-center mx-2">
+                                                <h5 class="text-white text-center">Visa Total
+                                                    Profit</h5>
+                                            </div>
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                            <div class="row pt-3 pl-3">
+                                                <span class="text-white">L 0,00</span>
+                                            </div>
+
+                                        </div>
+                                        <i class="fa-solid fa-chart-column statistic-icon"></i>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+</body>
+</html>
