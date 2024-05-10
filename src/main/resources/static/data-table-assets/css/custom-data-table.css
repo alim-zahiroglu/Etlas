@@ -156,6 +156,21 @@
     font-size: 18px; /* Adjust font size on hover */
 }
 
+.dropdown-menu-item-report-css {
+    vertical-align: center !important;
+    padding: 10px 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: all 0.3s ease; /* Add smooth transition */
+
+}
+
+
+.dropdown-menu-item-report-css:hover {
+    background-color: white !important; /* Change to the desired hover background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important; /* Add box shadow on hover */
+    font-size: 18px; /* Adjust font size on hover */
+}
 
 .dropdown-menu-item-custom-css:hover img {
     max-height: 33px !important; /* Adjust the max height of the image on hover */
