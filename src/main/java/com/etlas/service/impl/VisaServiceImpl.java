@@ -297,16 +297,16 @@ public class VisaServiceImpl implements VisaService {
     public BigDecimal getVisaTRYTotalPerches(String time) {
         BigDecimal result;
         if (Objects.equals(time, "LastMonth")) {
-            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue());
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
         } else if (Objects.equals(time, "thisYear")) {
 
-            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear());
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
         } else if (Objects.equals(time, "lastYear")) {
-            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear() - 1);
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear() - 1,false);
         } else if (Objects.equals(time, "all")) {
-            result = repository.getTicketTRYTotalPerches(CurrencyUnits.TRY);
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.TRY,false);
         } else {
-            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue());
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue(),false);
         }
         return result == null ? BigDecimal.ZERO : result;
     }
@@ -315,16 +315,16 @@ public class VisaServiceImpl implements VisaService {
     public BigDecimal getVisaUSDTotalPerches(String time) {
         BigDecimal result;
         if (Objects.equals(time, "LastMonth")) {
-            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue());
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
         } else if (Objects.equals(time, "thisYear")) {
 
-            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear());
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear(),false);
         } else if (Objects.equals(time, "lastYear")) {
-            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear() - 1);
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear() - 1,false);
         } else if (Objects.equals(time, "all")) {
-            result = repository.getTicketTRYTotalPerches(CurrencyUnits.USD);
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.USD,false);
         } else {
-            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonthValue());
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonthValue(),false);
         }
         return result == null ? BigDecimal.ZERO : result;
     }
@@ -333,16 +333,16 @@ public class VisaServiceImpl implements VisaService {
     public BigDecimal getVisaEURTotalPerches(String time) {
         BigDecimal result;
         if (Objects.equals(time, "LastMonth")) {
-            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue());
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
         } else if (Objects.equals(time, "thisYear")) {
 
-            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear());
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear(),false);
         } else if (Objects.equals(time, "lastYear")) {
-            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear() - 1);
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear() - 1,false);
         } else if (Objects.equals(time, "all")) {
-            result = repository.getTicketTRYTotalPerches(CurrencyUnits.EUR);
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.EUR,false);
         } else {
-            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonthValue());
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonthValue(),false);
         }
         return result == null ? BigDecimal.ZERO : result;
     }

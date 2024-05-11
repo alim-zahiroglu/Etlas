@@ -39,12 +39,12 @@ public interface VisaRepository extends JpaRepository<Visa, Long> {
 
     boolean existsByPaidCardIdAndIsDeleted(long curdId, boolean isDeleted);
 
-    @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND MONTH(v.dateOfPerches) =:month")
-    BigDecimal getTicketTRYTotalPerchesByMonth(CurrencyUnits currencyUnit, int month);
+    @Query(value = "SELECT SUM(v.perchesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND MONTH(v.dateOfPerches) =:month AND v.isDeleted =:isDeleted")
+    BigDecimal getTicketTRYTotalPerchesByMonth(CurrencyUnits currencyUnit, int month,boolean isDeleted);
 
-    @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND YEAR (v.dateOfPerches) =:year")
-    BigDecimal getTicketTRYTotalPerchesByYear(CurrencyUnits currencyUnit, int year);
+    @Query(value = "SELECT SUM(v.perchesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND YEAR (v.dateOfPerches) =:year AND v.isDeleted =:isDeleted")
+    BigDecimal getTicketTRYTotalPerchesByYear(CurrencyUnits currencyUnit, int year,boolean isDeleted);
 
-    @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit")
-    BigDecimal getTicketTRYTotalPerches(CurrencyUnits currencyUnit);
+    @Query(value = "SELECT SUM(v.perchesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND v.isDeleted =:isDeleted")
+    BigDecimal getTicketTRYTotalPerches(CurrencyUnits currencyUnit,boolean isDeleted);
 }

@@ -20,7 +20,9 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<Map<String, BigDecimal>> getReports(String time) {
 
-        Map<String,BigDecimal> total = new HashMap<>();
+        Map<String,BigDecimal> totalPerches = new HashMap<>();
+        Map<String,BigDecimal> ticketTotalPerches = new HashMap<>();
+        Map<String,BigDecimal> visaTotalPerches = new HashMap<>();
 
         BigDecimal totalTicketTRYPerches = ticketService.getTicketTRYTotalPerches(time);
         BigDecimal totalTicketUSDPerches = ticketService.getTicketUSDTotalPerches(time);
@@ -34,13 +36,21 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal totalUSDPerches = totalTicketUSDPerches.add(totalVisaUSDPerches);
         BigDecimal totalEURPerches = totalTicketEURPerches.add(totalVisaEURPerches);
 
-        total.put("totalTRYPerches",totalTRYPerches);
-        total.put("totalUSDPerches",totalUSDPerches);
-        total.put("totalEURPerches",totalEURPerches);
+        totalPerches.put("totalTRYPerches",totalTRYPerches);
+        totalPerches.put("totalUSDPerches",totalUSDPerches);
+        totalPerches.put("totalEURPerches",totalEURPerches);
+
+        ticketTotalPerches.put("totalTicketTRYPerches",totalTicketTRYPerches);
+        ticketTotalPerches.put("totalTicketUSDPerches",totalTicketUSDPerches);
+        ticketTotalPerches.put("totalTicketEURPerches",totalTicketEURPerches);
+
+        visaTotalPerches.put("totalVisaTRYPerches",totalVisaTRYPerches);
+        visaTotalPerches.put("totalVisaUSDPerches",totalVisaUSDPerches);
+        visaTotalPerches.put("totalVisaEURPerches",totalVisaEURPerches);
 
 
         return List.of(
-                total
+                totalPerches,ticketTotalPerches,visaTotalPerches
         );
     }
 }
