@@ -383,4 +383,22 @@ public class TicketServiceImpl implements TicketService {
         }
         return List.of();
     }
+
+    @Override
+    public BigDecimal getTicketTRYTotalPerches() {
+        return BigDecimal.ZERO;
+//        return repository.getTicketTRYTotalPerches();
+    }
+
+    @Override
+    public BigDecimal getTicketUSDTotalPerches() {
+        return BigDecimal.ZERO;
+//        return repository.getTicketUSDTotalPerches();
+    }
+
+    @Override
+    public BigDecimal getTicketEURTotalPerches() {
+        return BigDecimal.ZERO;
+//        return repository.getTicketEURTotalPerches();
+    }
 }

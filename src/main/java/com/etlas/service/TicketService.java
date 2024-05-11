@@ -4,6 +4,7 @@ import com.etlas.dto.TicketDto;
 import com.etlas.entity.Customer;
 import org.springframework.validation.BindingResult;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface TicketService {
@@ -36,4 +37,10 @@ public interface TicketService {
     void save(TicketDto linkedTicket);
 
     List<TicketDto> findTicketsByCustomerId(long customerId);
+
+    BigDecimal getTicketTRYTotalPerches();
+
+    BigDecimal getTicketUSDTotalPerches();
+
+    BigDecimal getTicketEURTotalPerches();
 }
