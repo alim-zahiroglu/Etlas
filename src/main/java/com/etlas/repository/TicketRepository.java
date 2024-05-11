@@ -2,6 +2,7 @@ package com.etlas.repository;
 
 import com.etlas.entity.Customer;
 import com.etlas.entity.Ticket;
+import com.etlas.enums.CurrencyUnits;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -43,12 +44,13 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
                                                                   @Param("passengerId") Long passengerId,
                                                                   @Param("isDeleted") boolean isDeleted);
 
+  @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND MONTH(t.dateOfPerches) =:month")
+  BigDecimal getTicketTRYTotalPerchesByMonth(CurrencyUnits currencyUnit, int month);
 
+  @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND YEAR (t.dateOfPerches) =:year")
+  BigDecimal getTicketTRYTotalPerchesByYear(CurrencyUnits currencyUnit, int year);
 
-//
-//    BigDecimal getTicketTRYTotalPerches();
-//
-//  BigDecimal getTicketUSDTotalPerches();
-//
-//  BigDecimal getTicketEURTotalPerches();
+  @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit")
+  BigDecimal getTicketTRYTotalPerches(CurrencyUnits currencyUnit);
+
 }

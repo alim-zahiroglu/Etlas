@@ -4,6 +4,7 @@ import com.etlas.dto.VisaDto;
 import com.etlas.entity.Customer;
 import org.springframework.validation.BindingResult;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface VisaService {
@@ -35,4 +36,10 @@ public interface VisaService {
     boolean isCustomerHasVisa(Customer customer);
 
     boolean isCardUsedInAnyVisa(String cardId);
+
+    BigDecimal getVisaTRYTotalPerches(String time);
+
+    BigDecimal getVisaUSDTotalPerches(String time);
+
+    BigDecimal getVisaEURTotalPerches(String time);
 }

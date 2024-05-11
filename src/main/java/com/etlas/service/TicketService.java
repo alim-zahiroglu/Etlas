@@ -38,9 +38,9 @@ public interface TicketService {
 
     List<TicketDto> findTicketsByCustomerId(long customerId);
 
-    BigDecimal getTicketTRYTotalPerches();
+    BigDecimal getTicketTRYTotalPerches(String time);
 
-    BigDecimal getTicketUSDTotalPerches();
+    BigDecimal getTicketUSDTotalPerches(String time);
 
-    BigDecimal getTicketEURTotalPerches();
+    BigDecimal getTicketEURTotalPerches(String time);
 }

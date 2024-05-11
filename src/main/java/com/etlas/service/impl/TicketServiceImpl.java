@@ -17,6 +17,7 @@ import org.springframework.validation.FieldError;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -385,20 +386,62 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public BigDecimal getTicketTRYTotalPerches() {
-        return BigDecimal.ZERO;
-//        return repository.getTicketTRYTotalPerches();
+    public BigDecimal getTicketTRYTotalPerches(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue());
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear());
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            return repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.TRY);
+        }
+        else {result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue());}
+
+        return result == null ? BigDecimal.ZERO : result;
     }
 
     @Override
-    public BigDecimal getTicketUSDTotalPerches() {
-        return BigDecimal.ZERO;
-//        return repository.getTicketUSDTotalPerches();
+    public BigDecimal getTicketUSDTotalPerches(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue());
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear());
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear()-1);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.USD);
+        }
+        else {result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonthValue());}
+
+        return result == null ? BigDecimal.ZERO : result;
     }
 
     @Override
-    public BigDecimal getTicketEURTotalPerches() {
-        return BigDecimal.ZERO;
-//        return repository.getTicketEURTotalPerches();
+    public BigDecimal getTicketEURTotalPerches(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue());
+        } else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear());
+        } else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear() - 1);
+        } else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.EUR);
+        }
+        else {result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonthValue());}
+
+        return result == null ? BigDecimal.ZERO : result;
     }
 }

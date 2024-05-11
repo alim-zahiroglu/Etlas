@@ -86,9 +86,9 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Perches</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h3 class="text-white" th:text="${'₺ ' + reportData[0].get('totalTRYPerches')}">₺ 8,753</h3>
+                                                        <h3 class="text-white" th:text="${'$ ' + reportData[0].get('totalUSDPerches')}">$ 8,753</h3>
+                                                        <h3 class="text-white" th:text="${'€ ' + reportData[0].get('totalEURPerches')}">€ 8,753</h3>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>

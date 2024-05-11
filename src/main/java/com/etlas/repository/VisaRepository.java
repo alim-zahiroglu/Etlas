@@ -1,11 +1,13 @@
 package com.etlas.repository;
 
 import com.etlas.entity.Visa;
+import com.etlas.enums.CurrencyUnits;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,4 +38,13 @@ public interface VisaRepository extends JpaRepository<Visa, Long> {
                                                            @Param("isDeleted") boolean isDeleted);
 
     boolean existsByPaidCardIdAndIsDeleted(long curdId, boolean isDeleted);
+
+    @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND MONTH(v.dateOfPerches) =:month")
+    BigDecimal getTicketTRYTotalPerchesByMonth(CurrencyUnits currencyUnit, int month);
+
+    @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND YEAR (v.dateOfPerches) =:year")
+    BigDecimal getTicketTRYTotalPerchesByYear(CurrencyUnits currencyUnit, int year);
+
+    @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit")
+    BigDecimal getTicketTRYTotalPerches(CurrencyUnits currencyUnit);
 }

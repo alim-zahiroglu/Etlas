@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,26 +56,26 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public VisaDto findById(long visaId) {
-        Visa visa = repository.findByIdAndIsDeletedFalse(visaId).orElseThrow( () -> new IllegalArgumentException("Visa not found"));
+        Visa visa = repository.findByIdAndIsDeletedFalse(visaId).orElseThrow(() -> new IllegalArgumentException("Visa not found"));
         return mapper.convert(visa, new VisaDto());
     }
 
     @Override
     public VisaDto adjustNewVisa(VisaDto newVisa, String addedCustomerId) {
-       CustomerDto customer = customerService.getCustomerById(Long.parseLong(addedCustomerId));
-       newVisa.setCustomer(customer);
-       newVisa.setPaidCustomer(customer);
-       newVisa.setCustomerUI(addedCustomerId);
-       newVisa.setPaidCustomerUI(addedCustomerId);
-       return newVisa;
+        CustomerDto customer = customerService.getCustomerById(Long.parseLong(addedCustomerId));
+        newVisa.setCustomer(customer);
+        newVisa.setPaidCustomer(customer);
+        newVisa.setCustomerUI(addedCustomerId);
+        newVisa.setPaidCustomerUI(addedCustomerId);
+        return newVisa;
     }
 
     @Override
     public BindingResult validateNewVisa(VisaDto newVisa, BindingResult bindingResult) {
-        if (newVisa.getCustomerUI().equals("0")){
+        if (newVisa.getCustomerUI().equals("0")) {
             bindingResult.rejectValue("customerUI", "error.visa", "Please select a customer");
         }
-        if (newVisa.getPaidCustomerUI().equals("0")){
+        if (newVisa.getPaidCustomerUI().equals("0")) {
             bindingResult.rejectValue("paidCustomerUI", "error.visa", "Please select a paid customer");
         }
         return bindingResult;
@@ -81,7 +83,7 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public boolean isUserBoughtTicket(String userName) {
-        return repository.existsByBoughtUser_UserNameAndIsDeleted(userName,false);
+        return repository.existsByBoughtUser_UserNameAndIsDeleted(userName, false);
     }
 
     @Override
@@ -109,7 +111,7 @@ public class VisaServiceImpl implements VisaService {
     private void saveNewVisaTypeIfAdded(VisaDto newVisa) {
         String newVisaType = newVisa.getVisaType();
         VisaType visaType = visaTypeService.findByName(newVisaType);
-        if (visaType == null){
+        if (visaType == null) {
             VisaType newType = VisaType.builder().name(newVisaType).build();
             visaTypeService.save(newType);
         }
@@ -119,6 +121,7 @@ public class VisaServiceImpl implements VisaService {
         newVisa.setCustomer(customerService.getCustomerById(Long.parseLong(newVisa.getCustomerUI())));
         newVisa.setPaidCustomer(customerService.getCustomerById(Long.parseLong(newVisa.getPaidCustomerUI())));
     }
+
     private void calculateProfit(VisaDto newVisa) {
         // check if the price is null
         if (newVisa.getPerchesPrice() == null) {
@@ -141,8 +144,7 @@ public class VisaServiceImpl implements VisaService {
 
         if (newVisa.getCurrencyUnit().equals(CurrencyUnits.TRY)) {
             customer.setCustomerTRYBalance(customer.getCustomerTRYBalance().subtract(newVisa.getSalesPrice()));
-        }
-        else if (newVisa.getCurrencyUnit().equals(CurrencyUnits.USD)) {
+        } else if (newVisa.getCurrencyUnit().equals(CurrencyUnits.USD)) {
             customer.setCustomerUSDBalance(customer.getCustomerUSDBalance().subtract(newVisa.getSalesPrice()));
         }
         if (newVisa.getCurrencyUnit().equals(CurrencyUnits.EUR)) {
@@ -161,8 +163,7 @@ public class VisaServiceImpl implements VisaService {
 
         if (newVisa.getCurrencyUnit().equals(CurrencyUnits.TRY)) {
             creditCard.setAvailableLimitTRY(creditCard.getAvailableLimitTRY().subtract(newVisa.getPerchesPrice()));
-        }
-        else if (newVisa.getCurrencyUnit().equals(CurrencyUnits.USD)) {
+        } else if (newVisa.getCurrencyUnit().equals(CurrencyUnits.USD)) {
             creditCard.setAvailableLimitUSD(creditCard.getAvailableLimitUSD().subtract(newVisa.getPerchesPrice()));
         }
         if (newVisa.getCurrencyUnit().equals(CurrencyUnits.EUR)) {
@@ -207,7 +208,7 @@ public class VisaServiceImpl implements VisaService {
     }
 
     private void removeOldCustomerDebt(long oldVisaId) {
-        VisaDto oldVisa =  findById(oldVisaId);
+        VisaDto oldVisa = findById(oldVisaId);
         CurrencyUnits currencyUnit = oldVisa.getCurrencyUnit();
         BigDecimal salesPrice = oldVisa.getSalesPrice();
         CustomerDto oldPaidCustomer = customerService.findById(oldVisa.getPaidCustomer().getId()); // find customer
@@ -247,16 +248,16 @@ public class VisaServiceImpl implements VisaService {
     @Override
     public void deleteVisa(long visaId) {
         Visa visaToBeDelete = repository.findById(visaId)
-                .orElseThrow( () -> new IllegalArgumentException("Visa not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Visa not found"));
         visaToBeDelete.setDeleted(true);
         repository.save(visaToBeDelete);
     }
 
     @Override
     public List<String> getAllUniqueVisTypeWithCountry() {
-        List<Object[]> visaList =  repository.getAllUniqueVisaTypeAndCountry(false);
+        List<Object[]> visaList = repository.getAllUniqueVisaTypeAndCountry(false);
         if (!visaList.isEmpty()) {
-                return  visaList.stream()
+            return visaList.stream()
                     .map(objects -> {
                                 CountriesTr country = CountriesTr.valueOf((String) objects[0]);
                                 return country.getName() + ", " + objects[1];
@@ -284,11 +285,66 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public boolean isCustomerHasVisa(Customer customer) {
-        return repository.existsByCustomerIdOrPaidCustomerIdAndIsDeleted(customer.getId(),customer.getId(),false);
+        return repository.existsByCustomerIdOrPaidCustomerIdAndIsDeleted(customer.getId(), customer.getId(), false);
     }
 
     @Override
     public boolean isCardUsedInAnyVisa(String cardId) {
-        return repository.existsByPaidCardIdAndIsDeleted(Long.parseLong(cardId),false);
+        return repository.existsByPaidCardIdAndIsDeleted(Long.parseLong(cardId), false);
+    }
+
+    @Override
+    public BigDecimal getVisaTRYTotalPerches(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue());
+        } else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear());
+        } else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear() - 1);
+        } else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.TRY);
+        } else {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue());
+        }
+        return result == null ? BigDecimal.ZERO : result;
+    }
+
+    @Override
+    public BigDecimal getVisaUSDTotalPerches(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue());
+        } else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear());
+        } else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.USD, LocalDate.now().getYear() - 1);
+        } else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.USD);
+        } else {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonthValue());
+        }
+        return result == null ? BigDecimal.ZERO : result;
+    }
+
+    @Override
+    public BigDecimal getVisaEURTotalPerches(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue());
+        } else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear());
+        } else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalPerchesByYear(CurrencyUnits.EUR, LocalDate.now().getYear() - 1);
+        } else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalPerches(CurrencyUnits.EUR);
+        } else {
+            result = repository.getTicketTRYTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonthValue());
+        }
+        return result == null ? BigDecimal.ZERO : result;
     }
 }
+
