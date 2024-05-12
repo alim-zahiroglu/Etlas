@@ -53,4 +53,14 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
   @Query(value = "SELECT SUM(t.perchesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND t.isDeleted =:isDeleted")
   BigDecimal getTicketTRYTotalPerches(CurrencyUnits currencyUnit,boolean isDeleted);
 
+
+
+  @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND MONTH(t.dateOfPerches) =:month AND t.isDeleted =:isDeleted")
+  BigDecimal getTicketTRYTotalSalesByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
+
+  @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND YEAR (t.dateOfPerches) =:year AND t.isDeleted =:isDeleted")
+  BigDecimal getTicketTRYTotalSalesByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
+
+  @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND t.isDeleted =:isDeleted")
+  BigDecimal getTicketTRYTotalSales(CurrencyUnits currencyUnits, boolean isDeleted);
 }

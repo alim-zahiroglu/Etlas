@@ -43,4 +43,10 @@ public interface TicketService {
     BigDecimal getTicketUSDTotalPerches(String time);
 
     BigDecimal getTicketEURTotalPerches(String time);
+
+    BigDecimal getTicketTRYTotalSales(String time);
+
+    BigDecimal getTicketUSDTotalSales(String time);
+
+    BigDecimal getTicketEURTotalSales(String time);
 }

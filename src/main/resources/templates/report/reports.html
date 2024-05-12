@@ -26,55 +26,55 @@
                             <div class="col-12">
 
                                 <div class="row col-12">
-                                    <div class="row col-12 mb-3"
-                                         style="border-radius: 5px">
-                                        <div class="col-12 col-md-12 col-lg-4">
-
-                                            <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
+                                    <div class="row col-12 mb-3" style="border-radius: 5px;">
+                                        <div class="col-12 col-md-12">
+                                            <div class="col-12 dropdown pr-1 pl-1">
                                                 <button class="btn dropdown-toggle mx-2"
                                                         style="border: solid 1px #d1d5dc; background-color: white"
-                                                        type="button"
-                                                        id="export_buttons" data-toggle="dropdown"
+                                                        type="button" id="export_buttons" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                     <i class="fa-regular fa-calendar"></i> This Month
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-left dropdown-menu-custom-css"
                                                      aria-labelledby="export_buttons">
-
                                                     <a class="dropdown-item dropdown-menu-item-report-css"
                                                        id="export_pdf"
                                                        style="display: flex; align-items: center; border-radius: 8px 8px 0 0 ">
                                                         <span>This Month</span>
                                                     </a>
                                                     <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="lastMonth"
-                                                       style="display: flex; align-items: center;">
+                                                       id="lastMonth" style="display: flex; align-items: center;">
                                                         <span>Last Month</span>
                                                     </a>
-
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="thisYear"
+                                                    <a class="dropdown-item dropdown-menu-item-report-css" id="thisYear"
                                                        style="display: flex; align-items: center;">
                                                         <span>This Year</span>
                                                     </a>
-
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="lastYear"
+                                                    <a class="dropdown-item dropdown-menu-item-report-css" id="lastYear"
                                                        style="display: flex; align-items: center;">
                                                         <span>Last Year</span>
                                                     </a>
-
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="All"
-                                                       style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
+                                                    <a class="dropdown-item dropdown-menu-item-report-css" id="All"
+                                                       style="display: flex; align-items: center; border-radius: 0 0 8px 8px">
                                                         <span>All</span>
                                                     </a>
                                                 </div>
-                                            </div>
 
+                                                <div class="btn mx-2"
+                                                        style="border: solid 1px #d1d5dc; background-color: white" type="button">
+                                                     Total Ticket: 5
+                                                </div>
+
+                                                <div class="btn mx-1"
+                                                     style="border: solid 1px #d1d5dc; background-color: white" type="button">
+                                                    Total Visa: 5
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
 
                                 <div class="row col-12">
 
@@ -86,9 +86,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Perches</h5></div>
                                                     <div>
-                                                        <h4 class="text-white" th:text="${'₺ ' + reportData[0].get('totalTRYPerches')}">₺ 8,753</h4>
-                                                        <h4 class="text-white" th:text="${'$ ' + reportData[0].get('totalUSDPerches')}">$ 8,753</h4>
-                                                        <h4 class="text-white" th:text="${'€ ' + reportData[0].get('totalEURPerches')}">€ 8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[0].get('totalTRYPerches')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[0].get('totalUSDPerches')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[0].get('totalEURPerches')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -165,15 +171,21 @@
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <h5 class="text-white" th:text="${'₺ ' + reportData[1].get('totalTicketTRYPerches')}">L 0,00</h5>
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[1].get('totalTicketTRYPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <h5 class="text-white" th:text="${'$ ' + reportData[1].get('totalTicketUSDPerches')}">L 0,00</h5>
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[1].get('totalTicketUSDPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <h5 class="text-white" th:text="${'€ ' + reportData[1].get('totalTicketEURPerches')}">L 0,00</h5>
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[1].get('totalTicketEURPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>
@@ -228,11 +240,11 @@
 
                                     </div>
 
-                                    <div id="rightPricesDiv" class="col-12 col-md-12 col-lg-3">
+                                    <div id="numberOfTickets" class="col-12 col-md-12 col-lg-3">
                                         <div class="border shadow rounded overflow-visible py-4 px-2"
                                              style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);">
                                             <div class="border-bottom justify-content-center">
-                                                <h5 class="font-medium text-center">Total Number Of Tickets</h5>
+                                                <h5 class="font-medium text-center">Total Number Of Visa</h5>
                                             </div>
                                             <div class="row justify-content-between border-bottom py-2 px-3">
                                                 <span class="col-6" style="width: auto">TRY</span>
@@ -270,16 +282,22 @@
                                                     Perches</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <h5 class="text-white" th:text="${'₺ ' + reportData[2].get('totalVisaTRYPerches')}">L 0,00</h5>
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[2].get('totalVisaTRYPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
 
                                             <div class="row pt-3 pl-3">
-                                                <h5 class="text-white" th:text="${'$ ' + reportData[2].get('totalVisaUSDPerches')}">L 0,00</h5>
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[2].get('totalVisaUSDPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <h5 class="text-white" th:text="${'€ ' + reportData[2].get('totalVisaEURPerches')}">L 0,00</h5>
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[2].get('totalVisaEURPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>

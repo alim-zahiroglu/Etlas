@@ -48,9 +48,39 @@ public class ReportServiceImpl implements ReportService {
         visaTotalPerches.put("totalVisaUSDPerches",totalVisaUSDPerches);
         visaTotalPerches.put("totalVisaEURPerches",totalVisaEURPerches);
 
+        // total sales
+
+        Map<String,BigDecimal> totalSales = new HashMap<>();
+        Map<String,BigDecimal> ticketTotalSales = new HashMap<>();
+        Map<String,BigDecimal> visaTotalSales = new HashMap<>();
+
+        BigDecimal totalTicketTRYSales = ticketService.getTicketTRYTotalSales(time);
+        BigDecimal totalTicketUSDSales = ticketService.getTicketUSDTotalSales(time);
+        BigDecimal totalTicketEURSales = ticketService.getTicketEURTotalSales(time);
+
+        BigDecimal totalVisaTRYSales = visaService.getVisaTRYTotalSales(time);
+        BigDecimal totalVisaUSDSales = visaService.getVisaUSDTotalSales(time);
+        BigDecimal totalVisaEURSales = visaService.getVisaEURTotalSales(time);
+
+        BigDecimal totalTRYSales = totalTicketTRYSales.add(totalVisaTRYSales);
+        BigDecimal totalUSDSales = totalTicketUSDSales.add(totalVisaUSDSales);
+        BigDecimal totalEURSales = totalTicketEURSales.add(totalVisaEURSales);
+
+        totalSales.put("totalTRYSales",totalTRYSales);
+        totalSales.put("totalUSDSales",totalUSDSales);
+        totalSales.put("totalEURSales",totalEURSales);
+
+        ticketTotalSales.put("totalTicketTRYSales",totalTicketTRYSales);
+        ticketTotalSales.put("totalTicketUSDSales",totalTicketUSDSales);
+        ticketTotalSales.put("totalTicketEURSales",totalTicketEURSales);
+
+        visaTotalSales.put("totalVisaTRYSales",totalVisaTRYSales);
+        visaTotalSales.put("totalVisaUSDSales",totalVisaUSDSales);
+        visaTotalSales.put("totalVisaEURSales",totalVisaEURSales);
 
         return List.of(
-                totalPerches,ticketTotalPerches,visaTotalPerches
+                totalPerches, ticketTotalPerches, visaTotalSales,
+                totalSales, ticketTotalSales, visaTotalSales
         );
     }
 }

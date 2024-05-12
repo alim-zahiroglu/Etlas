@@ -346,5 +346,33 @@ public class VisaServiceImpl implements VisaService {
         }
         return result == null ? BigDecimal.ZERO : result;
     }
+
+    @Override
+    public BigDecimal getVisaTRYTotalSales(String time) {
+        return null;
+    }
+
+    @Override
+    public BigDecimal getVisaUSDTotalSales(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
+        } else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalSalesByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
+        } else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalSalesByYear(CurrencyUnits.TRY, LocalDate.now().getYear() - 1,false);
+        } else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalSales(CurrencyUnits.TRY,false);
+        } else {
+            result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue(),false);
+        }
+        return result == null ? BigDecimal.ZERO : result;
+    }
+
+    @Override
+    public BigDecimal getVisaEURTotalSales(String time) {
+        return null;
+    }
 }
 

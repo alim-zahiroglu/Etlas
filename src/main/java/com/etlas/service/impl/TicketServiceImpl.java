@@ -444,4 +444,64 @@ public class TicketServiceImpl implements TicketService {
 
         return result == null ? BigDecimal.ZERO : result;
     }
+
+    @Override
+    public BigDecimal getTicketTRYTotalSales(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalSalesByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            return repository.getTicketTRYTotalSalesByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalSales(CurrencyUnits.TRY,false);
+        }
+        else {result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? BigDecimal.ZERO : result;
+    }
+
+    @Override
+    public BigDecimal getTicketUSDTotalSales(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalSalesByYear(CurrencyUnits.USD, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalSalesByYear(CurrencyUnits.USD, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalSales(CurrencyUnits.USD,false);
+        }
+        else {result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.USD, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? BigDecimal.ZERO : result;
+    }
+
+    @Override
+    public BigDecimal getTicketEURTotalSales(String time) {
+        BigDecimal result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
+        } else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTicketTRYTotalSalesByYear(CurrencyUnits.EUR, LocalDate.now().getYear(),false);
+        } else if (Objects.equals(time, "lastYear")) {
+            result = repository.getTicketTRYTotalSalesByYear(CurrencyUnits.EUR, LocalDate.now().getYear() - 1,false);
+        } else if (Objects.equals(time, "all")) {
+            result = repository.getTicketTRYTotalSales(CurrencyUnits.EUR,false);
+        }
+        else {result = repository.getTicketTRYTotalSalesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? BigDecimal.ZERO : result;
+    }
 }
