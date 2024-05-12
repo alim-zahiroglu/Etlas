@@ -112,8 +112,14 @@ public class ReportServiceImpl implements ReportService {
 
         // total unpaid
         Map<String,BigDecimal> totalUnpaid = new HashMap<>();
-        BigDecimal totalTRYUnpaid = customerService.getTotalTRYUnpaid(time);
 
+        BigDecimal totalTRYUnpaid = customerService.getTotalTRYUnpaid();
+        BigDecimal totalUSDUnpaid = customerService.getTotalUSDUnpaid();
+        BigDecimal totalEURUnpaid = customerService.getTotalEURUnpaid();
+
+        totalUnpaid.put("totalTRYUnpaid",totalTRYUnpaid);
+        totalUnpaid.put("totalUSDUnpaid",totalUSDUnpaid);
+        totalUnpaid.put("totalEURUnpaid",totalEURUnpaid);
 
         // total ticket
         Map<String,BigDecimal> totalNumberOfTicket = new HashMap<>();
