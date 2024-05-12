@@ -45,22 +45,32 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
                                                                   @Param("isDeleted") boolean isDeleted);
 
   @Query(value = "SELECT SUM(t.perchesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND MONTH(t.dateOfPerches) =:month AND t.isDeleted =:isDeleted")
-  BigDecimal getTicketTRYTotalPerchesByMonth(CurrencyUnits currencyUnit, int month, boolean isDeleted);
+  BigDecimal getTicketTotalPerchesByMonth(CurrencyUnits currencyUnit, int month, boolean isDeleted);
 
   @Query(value = "SELECT SUM(t.perchesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND YEAR (t.dateOfPerches) =:year AND t.isDeleted =:isDeleted")
-  BigDecimal getTicketTRYTotalPerchesByYear(CurrencyUnits currencyUnit, int year, boolean isDeleted);
+  BigDecimal getTicketTotalPerchesByYear(CurrencyUnits currencyUnit, int year, boolean isDeleted);
 
   @Query(value = "SELECT SUM(t.perchesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND t.isDeleted =:isDeleted")
-  BigDecimal getTicketTRYTotalPerches(CurrencyUnits currencyUnit,boolean isDeleted);
+  BigDecimal getTicketTotalPerches(CurrencyUnits currencyUnit, boolean isDeleted);
 
 
 
   @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND MONTH(t.dateOfPerches) =:month AND t.isDeleted =:isDeleted")
-  BigDecimal getTicketTRYTotalSalesByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
+  BigDecimal getTicketTotalSalesByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
 
   @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND YEAR (t.dateOfPerches) =:year AND t.isDeleted =:isDeleted")
-  BigDecimal getTicketTRYTotalSalesByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
+  BigDecimal getTicketTotalSalesByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
 
   @Query(value = "SELECT SUM(t.salesPrice) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND t.isDeleted =:isDeleted")
-  BigDecimal getTicketTRYTotalSales(CurrencyUnits currencyUnits, boolean isDeleted);
+  BigDecimal getTicketTotalSales(CurrencyUnits currencyUnits, boolean isDeleted);
+
+
+  @Query(value = "SELECT SUM(t.profit) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND MONTH(t.dateOfPerches) =:month AND t.isDeleted =:isDeleted")
+  BigDecimal getTicketTotalProfitByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
+
+  @Query(value = "SELECT SUM(t.profit) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND YEAR (t.dateOfPerches) =:year AND t.isDeleted =:isDeleted")
+  BigDecimal getTicketTotalProfitByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
+
+  @Query(value = "SELECT SUM(t.profit) FROM Ticket t WHERE t.currencyUnit =:currencyUnit AND t.isDeleted =:isDeleted")
+  BigDecimal getTicketTotalProfit(CurrencyUnits currencyUnits, boolean isDeleted);
 }

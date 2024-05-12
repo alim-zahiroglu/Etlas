@@ -49,4 +49,10 @@ public interface TicketService {
     BigDecimal getTicketUSDTotalSales(String time);
 
     BigDecimal getTicketEURTotalSales(String time);
+
+    BigDecimal getTicketTRYTotalProfit(String time);
+
+    BigDecimal getTicketUSDTotalProfit(String time);
+
+    BigDecimal getTicketEURTotalProfit(String time);
 }

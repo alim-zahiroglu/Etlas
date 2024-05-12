@@ -1,5 +1,6 @@
 package com.etlas.service.impl;
 
+import com.etlas.service.CustomerService;
 import com.etlas.service.ReportService;
 import com.etlas.service.TicketService;
 import com.etlas.service.VisaService;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class ReportServiceImpl implements ReportService {
     private final TicketService ticketService;
     private final VisaService visaService;
+    private final CustomerService customerService;
 
     @Override
     public List<Map<String, BigDecimal>> getReports(String time) {
@@ -77,6 +79,47 @@ public class ReportServiceImpl implements ReportService {
         visaTotalSales.put("totalVisaTRYSales",totalVisaTRYSales);
         visaTotalSales.put("totalVisaUSDSales",totalVisaUSDSales);
         visaTotalSales.put("totalVisaEURSales",totalVisaEURSales);
+
+        // total profit
+        Map<String,BigDecimal> totalProfit = new HashMap<>();
+        Map<String,BigDecimal> ticketTotalProfit = new HashMap<>();
+        Map<String,BigDecimal> visaTotalProfit = new HashMap<>();
+
+        BigDecimal totalTicketTRYProfit = ticketService.getTicketTRYTotalProfit(time);
+        BigDecimal totalTicketUSDProfit = ticketService.getTicketUSDTotalProfit(time);
+        BigDecimal totalTicketEURProfit = ticketService.getTicketEURTotalProfit(time);
+
+        BigDecimal totalVisaTRYProfit = visaService.getVisaTRYTotalProfit(time);
+        BigDecimal totalVisaUSDProfit = visaService.getVisaUSDTotalProfit(time);
+        BigDecimal totalVisaEURProfit = visaService.getVisaEURTotalProfit(time);
+
+        BigDecimal totalTRYProfit = totalTicketTRYProfit.add(totalVisaTRYProfit);
+        BigDecimal totalUSDProfit = totalTicketUSDSales.add(totalVisaUSDProfit);
+        BigDecimal totalEURProfit = totalTicketEURSales.add(totalVisaEURProfit);
+
+        totalProfit.put("totalTRYSales",totalTRYProfit);
+        totalProfit.put("totalUSDSales",totalUSDProfit);
+        totalProfit.put("totalEURSales",totalEURProfit);
+
+        ticketTotalProfit.put("totalTicketTRYSales",totalTicketTRYProfit);
+        ticketTotalProfit.put("totalTicketUSDProfit",totalTicketUSDProfit);
+        ticketTotalProfit.put("totalTicketEURProfit",totalTicketEURProfit);
+
+        visaTotalProfit.put("totalVisaTRYProfit",totalVisaTRYProfit);
+        visaTotalProfit.put("totalVisaUSDProfit",totalVisaUSDProfit);
+        visaTotalProfit.put("totalVisaEURProfit",totalVisaEURProfit);
+
+
+        // total unpaid
+        Map<String,BigDecimal> totalUnpaid = new HashMap<>();
+        BigDecimal totalTRYUnpaid = customerService.getTotalTRYUnpaid(time);
+
+
+        // total ticket
+        Map<String,BigDecimal> totalNumberOfTicket = new HashMap<>();
+
+        // total visa
+        Map<String,BigDecimal> totalNumberOfVisa = new HashMap<>();
 
         return List.of(
                 totalPerches, ticketTotalPerches, visaTotalSales,

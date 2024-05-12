@@ -40,22 +40,33 @@ public interface VisaRepository extends JpaRepository<Visa, Long> {
     boolean existsByPaidCardIdAndIsDeleted(long curdId, boolean isDeleted);
 
     @Query(value = "SELECT SUM(v.perchesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND MONTH(v.dateOfPerches) =:month AND v.isDeleted =:isDeleted")
-    BigDecimal getTicketTRYTotalPerchesByMonth(CurrencyUnits currencyUnit, int month,boolean isDeleted);
+    BigDecimal getTicketTotalPerchesByMonth(CurrencyUnits currencyUnit, int month, boolean isDeleted);
 
     @Query(value = "SELECT SUM(v.perchesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND YEAR (v.dateOfPerches) =:year AND v.isDeleted =:isDeleted")
-    BigDecimal getTicketTRYTotalPerchesByYear(CurrencyUnits currencyUnit, int year,boolean isDeleted);
+    BigDecimal getTicketTotalPerchesByYear(CurrencyUnits currencyUnit, int year, boolean isDeleted);
 
     @Query(value = "SELECT SUM(v.perchesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND v.isDeleted =:isDeleted")
-    BigDecimal getTicketTRYTotalPerches(CurrencyUnits currencyUnit,boolean isDeleted);
+    BigDecimal getTicketTotalPerches(CurrencyUnits currencyUnit, boolean isDeleted);
 
 
 
     @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND MONTH(v.dateOfPerches) =:month AND v.isDeleted =:isDeleted")
-    BigDecimal getTicketTRYTotalSalesByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
+    BigDecimal getTicketTotalSalesByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
 
     @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND YEAR (v.dateOfPerches) =:year AND v.isDeleted =:isDeleted")
-    BigDecimal getTicketTRYTotalSalesByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
+    BigDecimal getTicketTotalSalesByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
 
     @Query(value = "SELECT SUM(v.salesPrice) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND v.isDeleted =:isDeleted")
-    BigDecimal getTicketTRYTotalSales(CurrencyUnits currencyUnits, boolean isDeleted);
+    BigDecimal getTicketTotalSales(CurrencyUnits currencyUnits, boolean isDeleted);
+
+
+
+    @Query(value = "SELECT SUM(v.profit) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND MONTH(v.dateOfPerches) =:month AND v.isDeleted =:isDeleted")
+    BigDecimal getTicketTotalProfitByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
+
+    @Query(value = "SELECT SUM(v.profit) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND YEAR (v.dateOfPerches) =:year AND v.isDeleted =:isDeleted")
+    BigDecimal getTicketTotalProfitByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
+
+    @Query(value = "SELECT SUM(v.profit) FROM Visa v WHERE v.currencyUnit =:currencyUnit AND v.isDeleted =:isDeleted")
+    BigDecimal getTicketTotalProfit(CurrencyUnits currencyUnits, boolean isDeleted);
 }
