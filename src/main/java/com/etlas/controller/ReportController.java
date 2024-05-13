@@ -26,6 +26,8 @@ public class ReportController {
 
         List<Map<String,BigDecimal>> reportingData = reportService.getReports(time);
         List<Map<String,Integer>> totalNumberInfo = reportService.getTotalNumbers(time);
+        String atTime = reportService.getTime(time);
+        model.addAttribute("atTime",atTime);
         model.addAttribute("reportData",reportingData);
         model.addAttribute("totalNumberInfo",totalNumberInfo);
         return "report/reports";

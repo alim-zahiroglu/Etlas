@@ -387,7 +387,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketTRYTotalPerches(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalPerchesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -395,7 +395,7 @@ public class TicketServiceImpl implements TicketService {
             result = repository.getTicketTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
         }
         else if (Objects.equals(time, "lastYear")) {
-            return repository.getTicketTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
+            result = repository.getTicketTotalPerchesByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
         }
         else if (Objects.equals(time, "all")) {
             result = repository.getTicketTotalPerches(CurrencyUnits.TRY,false);
@@ -408,7 +408,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketUSDTotalPerches(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalPerchesByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -429,7 +429,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketEURTotalPerches(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalPerchesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
         } else if (Objects.equals(time, "thisYear")) {
 
@@ -447,7 +447,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketTRYTotalSales(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalSalesByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -455,7 +455,7 @@ public class TicketServiceImpl implements TicketService {
             result = repository.getTicketTotalSalesByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
         }
         else if (Objects.equals(time, "lastYear")) {
-            return repository.getTicketTotalSalesByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
+            result = repository.getTicketTotalSalesByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
         }
         else if (Objects.equals(time, "all")) {
             result = repository.getTicketTotalSales(CurrencyUnits.TRY,false);
@@ -468,7 +468,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketUSDTotalSales(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalSalesByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -489,7 +489,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketEURTotalSales(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalSalesByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
         } else if (Objects.equals(time, "thisYear")) {
 
@@ -508,7 +508,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketTRYTotalProfit(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalProfitByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -516,7 +516,7 @@ public class TicketServiceImpl implements TicketService {
             result = repository.getTicketTotalProfitByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
         }
         else if (Objects.equals(time, "lastYear")) {
-            return repository.getTicketTotalProfitByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
+            result = repository.getTicketTotalProfitByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
         }
         else if (Objects.equals(time, "all")) {
             result = repository.getTicketTotalProfit(CurrencyUnits.TRY,false);
@@ -529,7 +529,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketUSDTotalProfit(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalProfitByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -550,7 +550,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public BigDecimal getTicketEURTotalProfit(String time) {
         BigDecimal result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTicketTotalProfitByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
         } else if (Objects.equals(time, "thisYear")) {
 
@@ -568,7 +568,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public int getTotalTRYPerchesTicket(String time) {
         Integer result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -589,7 +589,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public int getTotalUSDPerchesTicket(String time) {
         Integer result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {
@@ -610,7 +610,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public int getTotalEURPerchesTicket(String time) {
         Integer result;
-        if (Objects.equals(time, "LastMonth")) {
+        if (Objects.equals(time, "lastMonth")) {
             result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
         }
         else if (Objects.equals(time, "thisYear")) {

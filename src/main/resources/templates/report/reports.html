@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <title>reports</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body class="bg-light">
@@ -29,32 +29,26 @@
                                     <div class="row col-12 mb-3" style="border-radius: 5px;">
                                         <div class="col-12 col-md-12">
                                             <div class="col-12 dropdown pr-1 pl-1">
-                                                <button class="btn dropdown-toggle mx-2"
-                                                        style="border: solid 1px #d1d5dc; background-color: white"
-                                                        type="button" id="export_buttons" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa-regular fa-calendar"></i> This Month
+                                                <button class="btn dropdown-toggle mx-2" style="border: solid 1px #d1d5dc; background-color: white" type="button" id="export_buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                <span th:utext="'<i class=\'fa-regular fa-calendar\'></i> ' + ${atTime}"></span>
                                                 </button>
-                                                <div class="dropdown-menu dropdown-menu-left dropdown-menu-custom-css"
-                                                     aria-labelledby="export_buttons">
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="export_pdf"
-                                                       style="display: flex; align-items: center; border-radius: 8px 8px 0 0 ">
+                                                <div class="dropdown-menu dropdown-menu-left dropdown-menu-custom-css" aria-labelledby="export_buttons">
+                                                    <a th:href="@{/reports(time='thisMonth')}" class="dropdown-item dropdown-menu-item-report-css" id="export_pdf" style="display: flex; align-items: center; border-radius: 8px 8px 0 0 ">
                                                         <span>This Month</span>
                                                     </a>
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
+                                                    <a th:href="@{/reports(time='lastMonth')}" class="dropdown-item dropdown-menu-item-report-css"
                                                        id="lastMonth" style="display: flex; align-items: center;">
                                                         <span>Last Month</span>
                                                     </a>
-                                                    <a class="dropdown-item dropdown-menu-item-report-css" id="thisYear"
+                                                    <a th:href="@{/reports(time='thisYear')}" class="dropdown-item dropdown-menu-item-report-css" id="thisYear"
                                                        style="display: flex; align-items: center;">
                                                         <span>This Year</span>
                                                     </a>
-                                                    <a class="dropdown-item dropdown-menu-item-report-css" id="lastYear"
+                                                    <a th:href="@{/reports(time='lastYear')}" class="dropdown-item dropdown-menu-item-report-css" id="lastYear"
                                                        style="display: flex; align-items: center;">
                                                         <span>Last Year</span>
                                                     </a>
-                                                    <a class="dropdown-item dropdown-menu-item-report-css" id="All"
+                                                    <a th:href="@{/reports(time='all')}" class="dropdown-item dropdown-menu-item-report-css" id="All"
                                                        style="display: flex; align-items: center; border-radius: 0 0 8px 8px">
                                                         <span>All</span>
                                                     </a>
@@ -275,7 +269,7 @@
                                     <div id="numberOfTickets" class="col-12 col-md-12 col-lg-3">
                                         <div class="border shadow rounded overflow-visible py-4 px-2"
                                              style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);">
-                                            <div class="border-bottom justify-content-center">
+                                            <div class="border-bottom justify-content-center pb-3">
                                                 <h5 class="font-medium text-center">Total Number Of Ticket</h5>
                                             </div>
                                             <div class="row justify-content-between border-bottom py-2 px-3">
@@ -347,18 +341,18 @@
                                                 <h5 class="text-white text-center">Visa Total Sales</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white"
-                                                      th:text="${'₺ ' + reportData[8].get('totalVisaTRYSales')}">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'₺ ' + reportData[8].get('totalVisaTRYSales')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white"
-                                                      th:text="${'$ ' + reportData[8].get('totalVisaUSDSales')}">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'$ ' + reportData[8].get('totalVisaUSDSales')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white"
-                                                      th:text="${'€ ' + reportData[8].get('totalVisaEURSales')}">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'€ ' + reportData[8].get('totalVisaEURSales')}">L 0,00</h5>
                                             </div>
 
                                         </div>
@@ -373,18 +367,18 @@
                                                     Profit</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white"
-                                                      th:text="${'₺ ' + reportData[9].get('totalVisaTRYProfit')}">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'₺ ' + reportData[9].get('totalVisaTRYProfit')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white"
-                                                      th:text="${'$ ' + reportData[9].get('totalVisaUSDProfit')}">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'$ ' + reportData[9].get('totalVisaUSDProfit')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white"
-                                                      th:text="${'€ ' + reportData[9].get('totalVisaEURProfit')}">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'€ ' + reportData[9].get('totalVisaEURProfit')}">L 0,00</h5>
                                             </div>
 
                                         </div>
@@ -396,7 +390,7 @@
                                         <div class="border shadow rounded overflow-visible py-4 px-2"
                                              style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);">
                                             <div class="border-bottom justify-content-center">
-                                                <h5 class="font-medium text-center">Total Number Of Visa</h5>
+                                                <h5 class="font-medium text-center pb-3">Total Number Of Visa</h5>
                                             </div>
                                             <div class="row justify-content-between border-bottom py-2 px-3">
                                                 <span class="col-6" style="width: auto">TRY</span>

@@ -162,4 +162,15 @@ public class ReportServiceImpl implements ReportService {
 
         return List.of(totalNumber,totalNumberOfTicket,totalNumberOfVisa);
     }
+
+    @Override
+    public String getTime(String time) {
+        return switch (time) {
+            case "lastMonth" -> "Last Month";
+            case "thisYear" -> "This Year";
+            case "lastYear" -> "Last Year";
+            case "all" -> "All";
+            default -> "This Month";
+        };
+    }
 }
