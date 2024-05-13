@@ -70,4 +70,14 @@ public interface VisaRepository extends JpaRepository<Visa, Long> {
 
     @Query(value = "SELECT SUM(v.profit) FROM Visa v WHERE v.currencyUnit =:currencyUnits AND v.isDeleted =:isDeleted")
     BigDecimal getVisaTotalProfit(CurrencyUnits currencyUnits, boolean isDeleted);
+
+
+    @Query(value = "SELECT COUNT (*) FROM Visa v WHERE v.currencyUnit =:currencyUnits AND MONTH(v.dateOfPerches) =:month AND v.isDeleted =:isDeleted")
+    Integer getTotalPerchesVisaByMonth(CurrencyUnits currencyUnits, int month, boolean isDeleted);
+
+    @Query(value = "SELECT COUNT (*) FROM Visa v WHERE v.currencyUnit =:currencyUnits AND YEAR (v.dateOfPerches) =:year AND v.isDeleted =:isDeleted")
+    Integer getTotalPerchesVisaByYear(CurrencyUnits currencyUnits, int year, boolean isDeleted);
+
+    @Query(value = "SELECT COUNT(*) FROM Visa v WHERE v.currencyUnit =:currencyUnits AND v.isDeleted =:isDeleted")
+    Integer getTotalPerchesVisa(CurrencyUnits currencyUnits, boolean isDeleted);
 }

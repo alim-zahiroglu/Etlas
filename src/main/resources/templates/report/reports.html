@@ -61,12 +61,14 @@
                                                 </div>
 
                                                 <div class="btn mx-2"
-                                                        style="border: solid 1px #d1d5dc; background-color: white" type="button">
-                                                     Total Ticket: 5
+                                                     style="border: solid 1px #d1d5dc; background-color: white"
+                                                     type="button" th:text="${'Total Ticket: '+totalNumberInfo[0].get('totalTicket')}">
+                                                    Total Ticket: 5
                                                 </div>
 
                                                 <div class="btn mx-1"
-                                                     style="border: solid 1px #d1d5dc; background-color: white" type="button">
+                                                     style="border: solid 1px #d1d5dc; background-color: white"
+                                                     type="button" th:text="${'Total Visa: '+totalNumberInfo[0].get('totalVisa')}">
                                                     Total Visa: 5
                                                 </div>
 
@@ -110,9 +112,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Sales</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[1].get('totalTRYSales')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[1].get('totalUSDSales')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[1].get('totalEURSales')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -129,9 +137,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Profit</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[2].get('totalTRYProfit')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[2].get('totalUSDProfit')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[2].get('totalEURProfit')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -148,9 +162,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Unpaid</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[3].get('totalTRYUnpaid')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[3].get('totalUSDUnpaid')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[3].get('totalEURUnpaid')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -172,19 +192,19 @@
 
                                             <div class="row pt-3 pl-3">
                                                 <h5 class="text-white"
-                                                    th:text="${'₺ ' + reportData[1].get('totalTicketTRYPerches')}">L
+                                                    th:text="${'₺ ' + reportData[4].get('totalTicketTRYPerches')}">L
                                                     0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
                                                 <h5 class="text-white"
-                                                    th:text="${'$ ' + reportData[1].get('totalTicketUSDPerches')}">L
+                                                    th:text="${'$ ' + reportData[4].get('totalTicketUSDPerches')}">L
                                                     0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
                                                 <h5 class="text-white"
-                                                    th:text="${'€ ' + reportData[1].get('totalTicketEURPerches')}">L
+                                                    th:text="${'€ ' + reportData[4].get('totalTicketEURPerches')}">L
                                                     0,00</h5>
                                             </div>
 
@@ -201,15 +221,21 @@
                                                     Sales</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[5].get('totalTicketTRYSales')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[5].get('totalTicketUSDSales')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[5].get('totalTicketEURSales')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>
@@ -223,16 +249,22 @@
                                                 <h5 class="text-white text-center">Ticket Total
                                                     Profit</h5>
                                             </div>
-                                            <div class="row py-2 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                            <div class="row pt-3 pl-3">
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[6].get('totalTicketTRYProfit')}">L
+                                                    0,00</h5>
                                             </div>
 
-                                            <div class="row py-2 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                            <div class="row pt-3 pl-3">
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[6].get('totalTicketUSDProfit')}">L
+                                                    0,00</h5>
                                             </div>
 
-                                            <div class="row py-2 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                            <div class="row pt-3 pl-3">
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[6].get('totalTicketEURProfit')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>
@@ -244,12 +276,13 @@
                                         <div class="border shadow rounded overflow-visible py-4 px-2"
                                              style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);">
                                             <div class="border-bottom justify-content-center">
-                                                <h5 class="font-medium text-center">Total Number Of Visa</h5>
+                                                <h5 class="font-medium text-center">Total Number Of Ticket</h5>
                                             </div>
                                             <div class="row justify-content-between border-bottom py-2 px-3">
                                                 <span class="col-6" style="width: auto">TRY</span>
                                                 <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[1].get('totalTRYPerchesTicket')}"
                                                           style="background-color: #2696be;">L 0,00</span>
                                                 </div>
                                             </div>
@@ -257,6 +290,7 @@
                                                 <span class="col-6" style="width: auto">USD</span>
                                                 <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[1].get('totalUSDPerchesTicket')}"
                                                           style="background-color: #55b435;">L 0,00</span>
                                                 </div>
                                             </div>
@@ -265,6 +299,7 @@
                                                 <span class="col-6" style="width: auto">EUR</span>
                                                 <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[1].get('totalEURPerchesTicket')}"
                                                           style="background-color: #bf4d25;">L 0,00</span>
                                                 </div>
                                             </div>
@@ -283,20 +318,20 @@
                                             </div>
                                             <div class="row pt-3 pl-3">
                                                 <h5 class="text-white"
-                                                    th:text="${'₺ ' + reportData[2].get('totalVisaTRYPerches')}">L
+                                                    th:text="${'₺ ' + reportData[7].get('totalVisaTRYPerches')}">L
                                                     0,00</h5>
                                             </div>
 
 
                                             <div class="row pt-3 pl-3">
                                                 <h5 class="text-white"
-                                                    th:text="${'$ ' + reportData[2].get('totalVisaUSDPerches')}">L
+                                                    th:text="${'$ ' + reportData[7].get('totalVisaUSDPerches')}">L
                                                     0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
                                                 <h5 class="text-white"
-                                                    th:text="${'€ ' + reportData[2].get('totalVisaEURPerches')}">L
+                                                    th:text="${'€ ' + reportData[7].get('totalVisaEURPerches')}">L
                                                     0,00</h5>
                                             </div>
 
@@ -312,15 +347,18 @@
                                                 <h5 class="text-white text-center">Visa Total Sales</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <span class="text-white"
+                                                      th:text="${'₺ ' + reportData[8].get('totalVisaTRYSales')}">L 0,00</span>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <span class="text-white"
+                                                      th:text="${'$ ' + reportData[8].get('totalVisaUSDSales')}">L 0,00</span>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <span class="text-white"
+                                                      th:text="${'€ ' + reportData[8].get('totalVisaEURSales')}">L 0,00</span>
                                             </div>
 
                                         </div>
@@ -335,15 +373,18 @@
                                                     Profit</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <span class="text-white"
+                                                      th:text="${'₺ ' + reportData[9].get('totalVisaTRYProfit')}">L 0,00</span>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <span class="text-white"
+                                                      th:text="${'$ ' + reportData[9].get('totalVisaUSDProfit')}">L 0,00</span>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <span class="text-white"
+                                                      th:text="${'€ ' + reportData[9].get('totalVisaEURProfit')}">L 0,00</span>
                                             </div>
 
                                         </div>
@@ -361,6 +402,7 @@
                                                 <span class="col-6" style="width: auto">TRY</span>
                                                 <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[2].get('totalTRYPerchesVisa')}"
                                                           style="background-color: #2696be;">L 0,00</span>
                                                 </div>
                                             </div>
@@ -368,6 +410,7 @@
                                                 <span class="col-6" style="width: auto">USD</span>
                                                 <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[2].get('totalUSDPerchesVisa')}"
                                                           style="background-color: #55b435;">L 0,00</span>
                                                 </div>
                                             </div>
@@ -376,6 +419,7 @@
                                                 <span class="col-6" style="width: auto">EUR</span>
                                                 <div class="col-6 text-right" style="width: auto">
                                                     <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[2].get('totalEURPerchesVisa')}"
                                                           style="background-color: #bf4d25;">L 0,00</span>
                                                 </div>
                                             </div>

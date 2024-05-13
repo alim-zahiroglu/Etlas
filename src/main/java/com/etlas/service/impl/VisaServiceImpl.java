@@ -455,5 +455,69 @@ public class VisaServiceImpl implements VisaService {
         }
         return result == null ? BigDecimal.ZERO : result;
     }
+
+
+    @Override
+    public int getTotalTRYPerchesVisa(String time) {
+        Integer result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTotalPerchesVisaByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTotalPerchesVisaByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result =  repository.getTotalPerchesVisaByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTotalPerchesVisa(CurrencyUnits.TRY,false);
+        }
+        else {result = repository.getTotalPerchesVisaByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? 0 : result;
+    }
+
+    @Override
+    public int getTotalUSDPerchesVisa(String time) {
+        Integer result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTotalPerchesVisaByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTotalPerchesVisaByYear(CurrencyUnits.USD, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result =  repository.getTotalPerchesVisaByYear(CurrencyUnits.USD, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTotalPerchesVisa(CurrencyUnits.USD,false);
+        }
+        else {result = repository.getTotalPerchesVisaByMonth(CurrencyUnits.USD, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? 0 : result;
+    }
+
+    @Override
+    public int getTotalEURPerchesVisa(String time) {
+        Integer result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTotalPerchesVisaByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTotalPerchesVisaByYear(CurrencyUnits.EUR, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result =  repository.getTotalPerchesVisaByYear(CurrencyUnits.EUR, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTotalPerchesVisa(CurrencyUnits.EUR,false);
+        }
+        else {result = repository.getTotalPerchesVisaByMonth(CurrencyUnits.EUR, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? 0 : result;
+    }
 }
 

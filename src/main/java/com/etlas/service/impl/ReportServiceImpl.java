@@ -94,14 +94,14 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal totalVisaEURProfit = visaService.getVisaEURTotalProfit(time);
 
         BigDecimal totalTRYProfit = totalTicketTRYProfit.add(totalVisaTRYProfit);
-        BigDecimal totalUSDProfit = totalTicketUSDSales.add(totalVisaUSDProfit);
-        BigDecimal totalEURProfit = totalTicketEURSales.add(totalVisaEURProfit);
+        BigDecimal totalUSDProfit = totalTicketUSDProfit.add(totalVisaUSDProfit);
+        BigDecimal totalEURProfit = totalTicketEURProfit.add(totalVisaEURProfit);
 
-        totalProfit.put("totalTRYSales",totalTRYProfit);
-        totalProfit.put("totalUSDSales",totalUSDProfit);
-        totalProfit.put("totalEURSales",totalEURProfit);
+        totalProfit.put("totalTRYProfit",totalTRYProfit);
+        totalProfit.put("totalUSDProfit",totalUSDProfit);
+        totalProfit.put("totalEURProfit",totalEURProfit);
 
-        ticketTotalProfit.put("totalTicketTRYSales",totalTicketTRYProfit);
+        ticketTotalProfit.put("totalTicketTRYProfit",totalTicketTRYProfit);
         ticketTotalProfit.put("totalTicketUSDProfit",totalTicketUSDProfit);
         ticketTotalProfit.put("totalTicketEURProfit",totalTicketEURProfit);
 
@@ -121,15 +121,45 @@ public class ReportServiceImpl implements ReportService {
         totalUnpaid.put("totalUSDUnpaid",totalUSDUnpaid);
         totalUnpaid.put("totalEURUnpaid",totalEURUnpaid);
 
-        // total ticket
-        Map<String,BigDecimal> totalNumberOfTicket = new HashMap<>();
-
-        // total visa
-        Map<String,BigDecimal> totalNumberOfVisa = new HashMap<>();
-
         return List.of(
-                totalPerches, ticketTotalPerches, visaTotalSales,
-                totalSales, ticketTotalSales, visaTotalSales
+                totalPerches, totalSales, totalProfit, totalUnpaid,
+                ticketTotalPerches, ticketTotalSales, ticketTotalProfit,
+                visaTotalPerches, visaTotalSales, visaTotalProfit
         );
+    }
+
+    @Override
+    public List<Map<String, Integer>> getTotalNumbers(String time) {
+
+        Map<String, Integer> totalNumberOfTicket = new HashMap<>();
+        Map<String, Integer> totalNumberOfVisa = new HashMap<>();
+        Map<String, Integer> totalNumber = new HashMap<>();
+
+
+        // total number of ticket
+        int totalTRYPerchesTicket = ticketService.getTotalTRYPerchesTicket(time);
+        int totalUSDPerchesTicket = ticketService.getTotalUSDPerchesTicket(time);
+        int totalEURPerchesTicket = ticketService.getTotalEURPerchesTicket(time);
+
+        totalNumberOfTicket.put("totalTRYPerchesTicket",totalTRYPerchesTicket);
+        totalNumberOfTicket.put("totalUSDPerchesTicket",totalUSDPerchesTicket);
+        totalNumberOfTicket.put("totalEURPerchesTicket",totalEURPerchesTicket);
+
+
+        // total number of visa
+        int totalTRYPerchesVisa = visaService.getTotalTRYPerchesVisa(time);
+        int totalUSDPerchesVisa = visaService.getTotalUSDPerchesVisa(time);
+        int totalEURPerchesVisa = visaService.getTotalEURPerchesVisa(time);
+
+        totalNumberOfVisa.put("totalTRYPerchesVisa",totalTRYPerchesVisa);
+        totalNumberOfVisa.put("totalUSDPerchesVisa",totalUSDPerchesVisa);
+        totalNumberOfVisa.put("totalEURPerchesVisa",totalEURPerchesVisa);
+
+        Integer totalTicket = totalTRYPerchesTicket + totalUSDPerchesTicket + totalEURPerchesTicket;
+        Integer totalVisa = totalTRYPerchesVisa + totalUSDPerchesVisa + totalEURPerchesVisa;
+        totalNumber.put("totalTicket",totalTicket);
+        totalNumber.put("totalVisa",totalVisa);
+
+        return List.of(totalNumber,totalNumberOfTicket,totalNumberOfVisa);
     }
 }

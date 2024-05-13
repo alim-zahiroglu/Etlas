@@ -564,4 +564,67 @@ public class TicketServiceImpl implements TicketService {
 
         return result == null ? BigDecimal.ZERO : result;
     }
+
+    @Override
+    public int getTotalTRYPerchesTicket(String time) {
+        Integer result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.TRY, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTotalPerchesTicketByYear(CurrencyUnits.TRY, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result =  repository.getTotalPerchesTicketByYear(CurrencyUnits.TRY, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTotalPerchesTicket(CurrencyUnits.TRY,false);
+        }
+        else {result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.TRY, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? 0 : result;
+    }
+
+    @Override
+    public int getTotalUSDPerchesTicket(String time) {
+        Integer result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.USD, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTotalPerchesTicketByYear(CurrencyUnits.USD, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result =  repository.getTotalPerchesTicketByYear(CurrencyUnits.USD, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTotalPerchesTicket(CurrencyUnits.USD,false);
+        }
+        else {result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.USD, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? 0 : result;
+    }
+
+    @Override
+    public int getTotalEURPerchesTicket(String time) {
+        Integer result;
+        if (Objects.equals(time, "LastMonth")) {
+            result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.EUR, LocalDate.now().getMonth().minus(1).getValue(),false);
+        }
+        else if (Objects.equals(time, "thisYear")) {
+
+            result = repository.getTotalPerchesTicketByYear(CurrencyUnits.EUR, LocalDate.now().getYear(),false);
+        }
+        else if (Objects.equals(time, "lastYear")) {
+            result =  repository.getTotalPerchesTicketByYear(CurrencyUnits.EUR, LocalDate.now().getYear()-1,false);
+        }
+        else if (Objects.equals(time, "all")) {
+            result = repository.getTotalPerchesTicket(CurrencyUnits.EUR,false);
+        }
+        else {result = repository.getTotalPerchesTicketByMonth(CurrencyUnits.EUR, LocalDate.now().getMonthValue(),false);}
+
+        return result == null ? 0 : result;
+    }
 }

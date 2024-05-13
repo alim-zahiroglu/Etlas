@@ -54,4 +54,10 @@ public interface VisaService {
     BigDecimal getVisaUSDTotalProfit(String time);
 
     BigDecimal getVisaEURTotalProfit(String time);
+
+    int getTotalTRYPerchesVisa(String time);
+
+    int getTotalUSDPerchesVisa(String time);
+
+    int getTotalEURPerchesVisa(String time);
 }

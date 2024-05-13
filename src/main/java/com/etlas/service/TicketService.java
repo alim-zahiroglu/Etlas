@@ -55,4 +55,10 @@ public interface TicketService {
     BigDecimal getTicketUSDTotalProfit(String time);
 
     BigDecimal getTicketEURTotalProfit(String time);
+
+    int getTotalTRYPerchesTicket(String time);
+
+    int getTotalUSDPerchesTicket(String time);
+
+    int getTotalEURPerchesTicket(String time);
 }

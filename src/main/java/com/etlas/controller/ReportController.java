@@ -25,7 +25,9 @@ public class ReportController {
     public String getReports(@RequestParam(value = "time",required = false, defaultValue = "thisMonth") String time, Model model){
 
         List<Map<String,BigDecimal>> reportingData = reportService.getReports(time);
+        List<Map<String,Integer>> totalNumberInfo = reportService.getTotalNumbers(time);
         model.addAttribute("reportData",reportingData);
+        model.addAttribute("totalNumberInfo",totalNumberInfo);
         return "report/reports";
     }
 }
