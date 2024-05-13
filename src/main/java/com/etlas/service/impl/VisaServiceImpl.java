@@ -9,6 +9,7 @@ import com.etlas.entity.Visa;
 import com.etlas.entity.VisaType;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CurrencyUnits;
+import com.etlas.exception.VisaNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.VisaRepository;
 import com.etlas.service.*;
@@ -56,7 +57,7 @@ public class VisaServiceImpl implements VisaService {
 
     @Override
     public VisaDto findById(long visaId) {
-        Visa visa = repository.findByIdAndIsDeletedFalse(visaId).orElseThrow(() -> new IllegalArgumentException("Visa not found"));
+        Visa visa = repository.findByIdAndIsDeletedFalse(visaId).orElseThrow(() -> new VisaNotFoundException("No visa found with id: " + visaId));
         return mapper.convert(visa, new VisaDto());
     }
 
@@ -248,7 +249,7 @@ public class VisaServiceImpl implements VisaService {
     @Override
     public void deleteVisa(long visaId) {
         Visa visaToBeDelete = repository.findById(visaId)
-                .orElseThrow(() -> new IllegalArgumentException("Visa not found"));
+                .orElseThrow(() -> new VisaNotFoundException("No visa found with id: " + visaId));
         visaToBeDelete.setDeleted(true);
         repository.save(visaToBeDelete);
     }

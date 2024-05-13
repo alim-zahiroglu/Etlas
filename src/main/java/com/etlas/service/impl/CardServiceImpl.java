@@ -4,6 +4,7 @@ import com.etlas.dto.CardBalanceDto;
 import com.etlas.dto.CardDto;
 import com.etlas.entity.Bank;
 import com.etlas.entity.Card;
+import com.etlas.exception.CardNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CardRepository;
 import com.etlas.service.*;
@@ -63,7 +64,7 @@ public class CardServiceImpl implements CardService {
     }
     @Override
     public CardBalanceDto singleCardInitiateFordBalance(String cardId) {
-        Card oldCard = repository.findById(Long.parseLong(cardId)).orElseThrow(NoSuchElementException::new);
+        Card oldCard = repository.findById(Long.parseLong(cardId)).orElseThrow(()-> new CardNotFoundException("No card found with id: " + cardId));
         return CardBalanceDto.builder()
                 .card(mapper.convert(oldCard, new CardDto()))
                 .tryBalance(BigDecimal.ZERO)
@@ -74,7 +75,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardDto findById(long paidCardId) {
-       Card card = repository.findById(paidCardId).orElseThrow(NoSuchElementException::new);
+       Card card = repository.findById(paidCardId).orElseThrow(()-> new CardNotFoundException("No card found with id: " + paidCardId));
        return mapper.convert(card, new CardDto());
     }
 
@@ -114,7 +115,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardDto getCardById(long cardId) {
-        Card foundCard = repository.findById(cardId).orElseThrow(NoSuchElementException::new);
+        Card foundCard = repository.findById(cardId).orElseThrow(()-> new CardNotFoundException("No card found with id: " + cardId));
         CardDto card = mapper.convert(foundCard, new CardDto());
         return prepareToUI(card);
     }
@@ -185,7 +186,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardDto deleteCard(String cardId) {
-        Card card = repository.findById(Long.parseLong(cardId)).orElseThrow(NoSuchElementException::new);
+        Card card = repository.findById(Long.parseLong(cardId)).orElseThrow(()-> new CardNotFoundException("No card found with id: " + cardId));
         card.setDeleted(true);
         Card deletedCard = repository.save(card);
         return mapper.convert(deletedCard, new CardDto());
@@ -193,7 +194,8 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardDto addBalance(CardBalanceDto cardBalanceDto) {
-        Card oldCard = repository.findById(cardBalanceDto.getCard().getId()).orElseThrow(NoSuchElementException::new);
+        long cardId = cardBalanceDto.getCard().getId();
+        Card oldCard = repository.findById(cardId).orElseThrow(()-> new CardNotFoundException("No card found with id: " + cardId));
 
         if(cardBalanceDto.getTryBalance() == null) cardBalanceDto.setTryBalance(BigDecimal.ZERO);
         if(cardBalanceDto.getUsdBalance() == null) cardBalanceDto.setUsdBalance(BigDecimal.ZERO);

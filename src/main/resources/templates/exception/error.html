@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<title>error</title>
+<head th:replace="~{fragments/head :: header}"></head>
+<body>
+<style>
+    * {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    #notfound {
+        height: 100vh;
+    }
+
+    #notfound .notfound {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .notfound {
+        max-width: 710px;
+        width: 100%;
+        padding-left: 190px;
+        line-height: 1.4;
+    }
+
+    .notfound .notfound-404 {
+        position: absolute;
+        left: 0;
+        top: 40px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .notfound .notfound-404 h1 {
+        font-family: 'Passion One', cursive;
+        color: #00b5c3;
+        font-size: 150px;
+        letter-spacing: 15.5px;
+        margin: 0px;
+        font-weight: 900;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .notfound h2 {
+        font-family: 'Raleway', sans-serif;
+        color: #292929;
+        font-size: 28px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        margin-top: 0;
+    }
+
+    .notfound p {
+        /*font-family: 'Raleway', sans-serif;*/
+        font-size: 14px;
+        font-weight: 400;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .notfound a {
+        font-family: 'Raleway', sans-serif;
+        font-size: 14px;
+        text-decoration: none;
+        text-transform: uppercase;
+        background: #fff;
+        display: inline-block;
+        padding: 15px 30px;
+        border-radius: 40px;
+        color: #292929;
+        font-weight: 700;
+        -webkit-box-shadow: 0px 4px 15px -5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 4px 15px -5px rgba(0, 0, 0, 0.3);
+        -webkit-transition: 0.2s all;
+        transition: 0.2s all;
+    }
+
+    .notfound a:hover {
+        color: #fff;
+        background-color: #00b5c3;
+    }
+
+    @media only screen and (max-width: 480px) {
+        .notfound {
+            text-align: center;
+        }
+        .notfound .notfound-404 {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .notfound {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+
+</style>
+<div class="wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+    <div class="dashboard-main-wrapper pt-3">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content">
+                    <div class="ecommerce-widget pt-4">
+
+                        <div class="row justify-content-center align-items-center pt-4">
+
+                            <div class="col-12 col-md-12 col-lg-8">
+
+                                <div id="notfound">
+                                    <div class="notfound">
+                                        <div class="notfound-404">
+                                            <h1>:(</h1>
+                                        </div>
+                                        <h2>404 - Page not found</h2>
+                                        <p>Application has encountered an error.</p>
+                                        <p>The page you are looking for might have been removed had its name changed or
+                                            is temporarily unavailable.</p>
+
+                                        <p th:if="${url}">
+                                            <b>Page:</b> <span th:text="${url}"></span>
+                                        </p>
+
+                                        <p th:if="${timestamp}">
+                                            <b>Occurred:</b> <span th:text="${timestamp}"></span>
+                                        </p>
+
+                                        <p th:if="${status}">
+                                            <b>Response Status:</b> <span th:text="${status}"></span> <span
+                                                th:if="${error}" th:text="' (' + ${error} + ')'"></span>
+                                        </p>
+
+                                        <p th:if="${exception}">
+                                            <b>Exception:</b> <span th:text="${exception.message}"></span>
+                                        </p>
+
+                                        <a th:href="@{/welcome}">home page</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div th:replace="~{fragments/javascript :: js}"></div>
+</body>
+</html>

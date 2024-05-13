@@ -6,6 +6,7 @@ import com.etlas.entity.Ticket;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.TicketType;
 import com.etlas.enums.TripType;
+import com.etlas.exception.TicketNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.TicketRepository;
 import com.etlas.service.*;
@@ -171,9 +172,6 @@ public class TicketServiceImpl implements TicketService {
         if (Objects.equals(newTicket.getPayedCustomerUI(), "") || Objects.equals(newTicket.getPayedCustomerUI(), "0")) {
             bindingResult.addError(new FieldError("newTicket", "payedCustomerUI", "Please select paid customer"));
         }
-        if (newTicket.getPassengersUI().equals(null)){
-            bindingResult.addError(new FieldError("newTicket", "passengersUI", "Please select at least one passenger"));
-        }
 
         if (repository.existsByPnrNo(newTicket.getPnrNo())) {
             bindingResult.addError(new FieldError("updatedTicket", "pnrNo", "PNR: " + newTicket.getPnrNo() + " is already exist"));
@@ -235,7 +233,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDto findById(long ticketId) {
-        Ticket ticket = repository.findByIdAndIsDeleted(ticketId, false);
+        Ticket ticket = repository.findByIdAndIsDeleted(ticketId, false).orElseThrow(()->new TicketNotFoundException("No ticket found with id: " + ticketId));
         return mapper.convert(ticket, new TicketDto());
     }
 
@@ -360,7 +358,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public boolean deleteTicket(long ticketId) {
-        Ticket ticketToBeDeleted = repository.findById(ticketId).orElseThrow(NoSuchElementException::new);
+        Ticket ticketToBeDeleted = repository.findById(ticketId).orElseThrow(()->new TicketNotFoundException("No ticket found with id: " + ticketId));
         ticketToBeDeleted.setPnrNo(ticketToBeDeleted.getPnrNo() + "_" + LocalDateTime.now());
         ticketToBeDeleted.setDeleted(true);
         repository.save(ticketToBeDeleted);
