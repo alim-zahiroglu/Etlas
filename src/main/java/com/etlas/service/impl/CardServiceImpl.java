@@ -8,6 +8,7 @@ import com.etlas.exception.CardNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CardRepository;
 import com.etlas.service.*;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +63,7 @@ public class CardServiceImpl implements CardService {
                 .build();
 
     }
+
     @Override
     public CardBalanceDto singleCardInitiateFordBalance(String cardId) {
         Card oldCard = repository.findById(Long.parseLong(cardId)).orElseThrow(()-> new CardNotFoundException("No card found with id: " + cardId));
@@ -79,6 +81,7 @@ public class CardServiceImpl implements CardService {
        return mapper.convert(card, new CardDto());
     }
 
+    @Transactional
     @Override
     public CardDto saveNewCard(CardDto newCard) {
         CardDto card = prepareCardToSave(newCard);
@@ -99,6 +102,7 @@ public class CardServiceImpl implements CardService {
         return newCard;
     }
 
+    @Transactional
     @Override
     public CardDto updateCard(CardDto cardToBeUpdate) {
         return saveNewCard(cardToBeUpdate);
@@ -163,6 +167,7 @@ public class CardServiceImpl implements CardService {
         return cardDto;
     }
 
+    @Transactional
     @Override
     public void saveCreditCard(CardDto creditCard) {
         repository.save(mapper.convert(creditCard, new Card()));
@@ -184,6 +189,7 @@ public class CardServiceImpl implements CardService {
        return !isCardUsedInTicket && !isCardUsedInVisa && !isCardUsedInRecord;
     }
 
+    @Transactional
     @Override
     public CardDto deleteCard(String cardId) {
         Card card = repository.findById(Long.parseLong(cardId)).orElseThrow(()-> new CardNotFoundException("No card found with id: " + cardId));
@@ -192,6 +198,7 @@ public class CardServiceImpl implements CardService {
         return mapper.convert(deletedCard, new CardDto());
     }
 
+    @Transactional
     @Override
     public CardDto addBalance(CardBalanceDto cardBalanceDto) {
         long cardId = cardBalanceDto.getCard().getId();

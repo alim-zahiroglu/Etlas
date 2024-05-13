@@ -1,51 +1,51 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/openjdk:latest
-    working_directory: /tmp/workspace
-    steps:
-      - checkout
-      - run: mkdir -p /tmp/workspace
-      - restore_cache:
-          key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn clean install -DskipTests
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths: .
-  docker-image-and-publish:
-    machine: true
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - run: ls -a /tmp/workspace
-      - run:
-          name: Create Docker image and push to ECR
-          command: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 714140379706.dkr.ecr.eu-central-1.amazonaws.com && docker build -t ticketing_app /tmp/workspace && docker tag ticketing_app:latest 714140379706.dkr.ecr.eu-central-1.amazonaws.com/ticketing_app:latest && docker push 714140379706.dkr.ecr.eu-central-1.amazonaws.com/ticketing_app:latest
-  deploy:
-    machine: true
-    steps:
-      - run:
-          name: Execute Deployment script
-          command: |
-            ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-3-126-153-218.eu-central-1.compute.amazonaws.com <<'ENDSSH'
-            /bin/bash bin/deploy_image.sh
-            ENDSSH
-
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
-      - docker-image-and-publish:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - docker-image-and-publish
-
+#version: 2
+#jobs:
+#  build:
+#    docker:
+#      - image: circleci/openjdk:latest
+#    working_directory: /tmp/workspace
+#    steps:
+#      - checkout
+#      - run: mkdir -p /tmp/workspace
+#      - restore_cache:
+#          key: v1-dependencies-{{ checksum "pom.xml" }}
+#      - run: mvn clean install -DskipTests
+#      - save_cache:
+#          paths:
+#            - ~/.m2
+#          key: v1-dependencies-{{ checksum "pom.xml" }}
+#      - persist_to_workspace:
+#          root: /tmp/workspace
+#          paths: .
+#  docker-image-and-publish:
+#    machine: true
+#    steps:
+#      - attach_workspace:
+#          at: /tmp/workspace
+#      - run: ls -a /tmp/workspace
+#      - run:
+#          name: Create Docker image and push to ECR
+#          command: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 714140379706.dkr.ecr.eu-central-1.amazonaws.com && docker build -t ticketing_app /tmp/workspace && docker tag ticketing_app:latest 714140379706.dkr.ecr.eu-central-1.amazonaws.com/ticketing_app:latest && docker push 714140379706.dkr.ecr.eu-central-1.amazonaws.com/ticketing_app:latest
+#  deploy:
+#    machine: true
+#    steps:
+#      - run:
+#          name: Execute Deployment script
+#          command: |
+#            ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-3-126-153-218.eu-central-1.compute.amazonaws.com <<'ENDSSH'
+#            /bin/bash bin/deploy_image.sh
+#            ENDSSH
+#
+#
+#workflows:
+#  version: 2
+#  build_and_test:
+#    jobs:
+#      - build
+#      - docker-image-and-publish:
+#          requires:
+#            - build
+#      - deploy:
+#          requires:
+#            - docker-image-and-publish
+#
