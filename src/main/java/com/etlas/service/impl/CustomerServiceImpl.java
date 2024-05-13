@@ -5,6 +5,7 @@ import com.etlas.entity.Customer;
 import com.etlas.enums.CountriesTr;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.CustomerType;
+import com.etlas.exception.CustomerNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
 import com.etlas.service.BalanceService;
@@ -58,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto findById(long id) {
-        Customer customer =  repository.findById(id).orElseThrow(NoSuchElementException::new);
+        Customer customer =  repository.findById(id).orElseThrow(()-> new CustomerNotFoundException("No customer found with id: " + id));
         return mapper.convert(customer,new CustomerDto());
     };
 
@@ -113,7 +114,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto deleteCustomer(long customerId) {
         Customer customerToBeDelete = repository.findById(customerId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(()-> new CustomerNotFoundException("No customer found with id: " + customerId));
         if (customerToBeDelete != null) {
             customerToBeDelete.setDeleted(true);
             repository.save(customerToBeDelete);
@@ -140,7 +141,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto getCustomerById(long customerId) {
         Customer foundCustomer = repository.findById(customerId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(()-> new CustomerNotFoundException("No customer found with id: " + customerId));
         return mapper.convert(foundCustomer, new CustomerDto());
     }
 
@@ -220,7 +221,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void saveNewCustomerIfAdded(long customerId) {
         if (customerId == 0) return;
-        Customer customer = repository.findById(customerId).orElseThrow( () -> new IllegalArgumentException("Customer not found"));
+        Customer customer = repository.findById(customerId).orElseThrow( ()-> new CustomerNotFoundException("No customer found with id: " + customerId));
         if (customer == null) return;
         customer.setDeleted(false);
         repository.save(customer);

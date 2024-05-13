@@ -7,6 +7,7 @@ import com.etlas.entity.BalanceRecord;
 import com.etlas.entity.Customer;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.PaidType;
+import com.etlas.exception.BalanceRecordNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.BalanceRecordRepository;
 import com.etlas.service.BalanceService;
@@ -56,7 +57,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public BalanceRecordDto getBalanceRecordById(long recordId) {
-         BalanceRecord record = repository.findByIdAndIsDeletedFalse(recordId).orElseThrow(NoSuchFieldError::new);
+         BalanceRecord record = repository.findByIdAndIsDeletedFalse(recordId).orElseThrow(()->new BalanceRecordNotFoundException("No balance record found with id: " + recordId));
          return mapper.convert(record, new BalanceRecordDto());
     }
 
@@ -121,7 +122,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public void saveUpdatedBalanceRecord(BalanceRecordDto updatedBalanceRecord) {
-        BalanceRecord oldRecord = repository.findById(updatedBalanceRecord.getId()).orElseThrow(NoSuchFieldError::new);
+        BalanceRecord oldRecord = repository.findById(updatedBalanceRecord.getId()).orElseThrow(()->new BalanceRecordNotFoundException("No balance record found with id: " + updatedBalanceRecord));
         resetCustomerBalance(oldRecord); // reset the customer balance
         saveBalanceRecord(updatedBalanceRecord);  // save the updated record
 
@@ -129,7 +130,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public void deleteBalanceRecord(long recordId) {
-        BalanceRecord record = repository.findById(recordId).orElseThrow(NoSuchFieldError::new);
+        BalanceRecord record = repository.findById(recordId).orElseThrow(()->new BalanceRecordNotFoundException("No balance record found with id: " + recordId));
         record.setDeleted(true);
         repository.save(record);
     }

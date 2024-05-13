@@ -2,6 +2,7 @@ package com.etlas.service.impl;
 
 import com.etlas.dto.UserDto;
 import com.etlas.entity.User;
+import com.etlas.exception.UserNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.UserRepository;
 import com.etlas.service.BalanceService;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(long id) {
-        User user =  repository.findById(id).orElseThrow(NoSuchElementException::new);
+        User user =  repository.findById(id).orElseThrow(()-> new UserNotFoundException("No user found with id: " + id));
         return mapper.convert(user,new UserDto());
     }
 
@@ -64,6 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findByUsername(String username) {
         User foundUser  = repository.findByUserNameAndIsDeleted(username,false);
+        if (foundUser == null) throw new UserNotFoundException("No user found with name: " + username);
         return mapper.convert(foundUser,new UserDto());
     }
 
@@ -86,7 +88,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByUserName(String userName) {
         User user = repository.findByUserNameAndIsDeleted(userName,false);
-        if (user == null) throw new NoSuchElementException();
+        if (user == null) throw new UserNotFoundException("No user found with name: " + userName);
         return mapper.convert(user, new UserDto());
     }
 
