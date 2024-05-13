@@ -10,6 +10,7 @@ import com.etlas.exception.TicketNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.TicketRepository;
 import com.etlas.service.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -69,6 +70,7 @@ public class TicketServiceImpl implements TicketService {
         return newTicket;
     }
 
+    @Transactional
     @Override
     public TicketDto saveNewTicket(TicketDto newTicket) {
         // save new customer if added
@@ -82,6 +84,7 @@ public class TicketServiceImpl implements TicketService {
         return mapper.convert(savedTicket, new TicketDto());
     }
 
+    @Transactional
     @Override
     public void save(TicketDto linkedTicket) {
         repository.save(mapper.convert(linkedTicket, new Ticket()));
@@ -279,6 +282,7 @@ public class TicketServiceImpl implements TicketService {
         return ticketTobeUpdate;
     }
 
+    @Transactional
     @Override
     public TicketDto saveUpdatedTicket(TicketDto updatedTicket) {
         // save new customer if added
@@ -356,6 +360,7 @@ public class TicketServiceImpl implements TicketService {
         return repository.existsByBoughtUser_UserNameAndIsDeleted(userName,  false);
     }
 
+    @Transactional
     @Override
     public boolean deleteTicket(long ticketId) {
         Ticket ticketToBeDeleted = repository.findById(ticketId).orElseThrow(()->new TicketNotFoundException("No ticket found with id: " + ticketId));

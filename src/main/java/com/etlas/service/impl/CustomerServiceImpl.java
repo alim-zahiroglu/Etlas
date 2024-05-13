@@ -12,6 +12,7 @@ import com.etlas.service.BalanceService;
 import com.etlas.service.CustomerService;
 import com.etlas.service.TicketService;
 import com.etlas.service.VisaService;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -71,11 +72,13 @@ public class CustomerServiceImpl implements CustomerService {
                 .toList();
     }
 
+    @Transactional
     @Override
     public void save(CustomerDto customer) {
         repository.save(mapper.convert(customer, new Customer()));
     }
 
+    @Transactional
     @Override
     public CustomerDto saveNewCustomer(CustomerDto newCustomer) {
         CustomerDto customerToBeSave;
@@ -111,6 +114,7 @@ public class CustomerServiceImpl implements CustomerService {
         return newCompany;
     }
 
+    @Transactional
     @Override
     public CustomerDto deleteCustomer(long customerId) {
         Customer customerToBeDelete = repository.findById(customerId)
@@ -145,6 +149,7 @@ public class CustomerServiceImpl implements CustomerService {
         return mapper.convert(foundCustomer, new CustomerDto());
     }
 
+    @Transactional
     @Override
     public CustomerDto saveUpdatedCustomer(CustomerDto customerToBeUpdate) {
         CustomerDto customerToUpdate = adjustBalances(customerToBeUpdate);
@@ -212,12 +217,14 @@ public class CustomerServiceImpl implements CustomerService {
         return bindingResult;
     }
 
+    @Transactional
     @Override
     public void saveCustomer(CustomerDto customer) {
         repository.save(mapper.convert(customer, new Customer()));
 
     }
 
+    @Transactional
     @Override
     public void saveNewCustomerIfAdded(long customerId) {
         if (customerId == 0) return;

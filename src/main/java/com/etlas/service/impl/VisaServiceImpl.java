@@ -13,6 +13,7 @@ import com.etlas.exception.VisaNotFoundException;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.VisaRepository;
 import com.etlas.service.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -87,6 +88,7 @@ public class VisaServiceImpl implements VisaService {
         return repository.existsByBoughtUser_UserNameAndIsDeleted(userName, false);
     }
 
+    @Transactional
     @Override
     public VisaDto saveNewVisa(VisaDto newVisa) {
         saveNewVisaTypeIfAdded(newVisa);
@@ -180,6 +182,7 @@ public class VisaServiceImpl implements VisaService {
         return visa;
     }
 
+    @Transactional
     @Override
     public void saveUpdatedVisa(VisaDto visaToBeUpdate) {
         saveNewVisaTypeIfAdded(visaToBeUpdate);
@@ -246,6 +249,7 @@ public class VisaServiceImpl implements VisaService {
         cardService.saveCreditCard(oldCreditCard); // save credit card
     }
 
+    @Transactional
     @Override
     public void deleteVisa(long visaId) {
         Visa visaToBeDelete = repository.findById(visaId)

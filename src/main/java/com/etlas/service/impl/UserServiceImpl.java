@@ -9,6 +9,7 @@ import com.etlas.service.BalanceService;
 import com.etlas.service.TicketService;
 import com.etlas.service.UserService;
 import com.etlas.service.VisaService;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
         this.balanceService = balanceService;
     }
 
+    @Transactional
     @Override
     public UserDto createUser(UserDto userDto) {
         userDto.setPassWord(passwordEncoder.encode(userDto.getPassWord()));
@@ -69,6 +71,7 @@ public class UserServiceImpl implements UserService {
         return mapper.convert(foundUser,new UserDto());
     }
 
+    @Transactional
     @Override
     public UserDto deleteUser(String username) {
         User user = repository.findByUserNameAndIsDeleted(username,false);
@@ -92,6 +95,7 @@ public class UserServiceImpl implements UserService {
         return mapper.convert(user, new UserDto());
     }
 
+    @Transactional
     @Override
     public UserDto saveUpdatedUser(UserDto userToUpdate) {
         UserDto oldUser = findById(userToUpdate.getId());

@@ -13,6 +13,7 @@ import com.etlas.repository.BalanceRecordRepository;
 import com.etlas.service.BalanceService;
 import com.etlas.service.CustomerService;
 import com.etlas.service.SecurityService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -85,6 +86,7 @@ public class BalanceServiceImpl implements BalanceService {
         return bindingResult;
     }
 
+    @Transactional
     @Override
     public BalanceRecordDto saveBalanceRecord(BalanceRecordDto newRecord) {
         prepareRecordToSave(newRecord);
@@ -120,6 +122,7 @@ public class BalanceServiceImpl implements BalanceService {
         customerService.save(giver);
     }
 
+    @Transactional
     @Override
     public void saveUpdatedBalanceRecord(BalanceRecordDto updatedBalanceRecord) {
         BalanceRecord oldRecord = repository.findById(updatedBalanceRecord.getId()).orElseThrow(()->new BalanceRecordNotFoundException("No balance record found with id: " + updatedBalanceRecord));
@@ -128,6 +131,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     }
 
+    @Transactional
     @Override
     public void deleteBalanceRecord(long recordId) {
         BalanceRecord record = repository.findById(recordId).orElseThrow(()->new BalanceRecordNotFoundException("No balance record found with id: " + recordId));
