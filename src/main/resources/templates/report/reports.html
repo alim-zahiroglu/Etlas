@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <title>reports</title>
 <head th:replace="~{fragments/head :: header}"></head>
 <body class="bg-light">
@@ -26,43 +26,51 @@
                             <div class="col-12">
 
                                 <div class="row col-12">
-                                    <div class="row col-12 mb-3"
-                                         style="border-radius: 5px">
-                                        <div class="col-12 col-md-12 col-lg-4">
-
-                                            <div class="col-12 dropdown pr-1 pl-1" style="display: inline;">
-                                                <button class="btn dropdown-toggle mx-2"
-                                                        style="border: solid 1px #d1d5dc; background-color: white"
-                                                        type="button"
-                                                        id="export_buttons" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa-regular fa-calendar"></i> This Month
+                                    <div class="row col-12 mb-3" style="border-radius: 5px;">
+                                        <div class="col-12 col-md-12">
+                                            <div class="col-12 dropdown pr-1 pl-1">
+                                                <button class="btn dropdown-toggle mx-2" style="border: solid 1px #d1d5dc; background-color: white" type="button" id="export_buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                <span th:utext="'<i class=\'fa-regular fa-calendar\'></i> ' + ${atTime}"></span>
                                                 </button>
-                                                <div class="dropdown-menu dropdown-menu-left dropdown-menu-custom-css"
-                                                     aria-labelledby="export_buttons">
-
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="export_pdf"
-                                                       style="display: flex; align-items: center; border-radius: 8px 8px 0 0 ">
-                                                        <span>PDF</span>
+                                                <div class="dropdown-menu dropdown-menu-left dropdown-menu-custom-css" aria-labelledby="export_buttons">
+                                                    <a th:href="@{/reports(time='thisMonth')}" class="dropdown-item dropdown-menu-item-report-css" id="export_pdf" style="display: flex; align-items: center; border-radius: 8px 8px 0 0 ">
+                                                        <span>This Month</span>
                                                     </a>
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="export_excel"
+                                                    <a th:href="@{/reports(time='lastMonth')}" class="dropdown-item dropdown-menu-item-report-css"
+                                                       id="lastMonth" style="display: flex; align-items: center;">
+                                                        <span>Last Month</span>
+                                                    </a>
+                                                    <a th:href="@{/reports(time='thisYear')}" class="dropdown-item dropdown-menu-item-report-css" id="thisYear"
                                                        style="display: flex; align-items: center;">
-                                                        <span>Excel</span>
+                                                        <span>This Year</span>
                                                     </a>
-
-                                                    <a class="dropdown-item dropdown-menu-item-report-css"
-                                                       id="export_csv"
-                                                       style="display: flex; align-items: center;border-radius: 0 0 8px 8px">
-                                                        <span>CSV</span>
+                                                    <a th:href="@{/reports(time='lastYear')}" class="dropdown-item dropdown-menu-item-report-css" id="lastYear"
+                                                       style="display: flex; align-items: center;">
+                                                        <span>Last Year</span>
+                                                    </a>
+                                                    <a th:href="@{/reports(time='all')}" class="dropdown-item dropdown-menu-item-report-css" id="All"
+                                                       style="display: flex; align-items: center; border-radius: 0 0 8px 8px">
+                                                        <span>All</span>
                                                     </a>
                                                 </div>
-                                            </div>
 
+                                                <div class="btn mx-2"
+                                                     style="border: solid 1px #d1d5dc; background-color: white"
+                                                     type="button" th:text="${'Total Ticket: '+totalNumberInfo[0].get('totalTicket')}">
+                                                    Total Ticket: 5
+                                                </div>
+
+                                                <div class="btn mx-1"
+                                                     style="border: solid 1px #d1d5dc; background-color: white"
+                                                     type="button" th:text="${'Total Visa: '+totalNumberInfo[0].get('totalVisa')}">
+                                                    Total Visa: 5
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
 
                                 <div class="row col-12">
 
@@ -74,9 +82,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Perches</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[0].get('totalTRYPerches')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[0].get('totalUSDPerches')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[0].get('totalEURPerches')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -92,9 +106,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Sales</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[1].get('totalTRYSales')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[1].get('totalUSDSales')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[1].get('totalEURSales')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -102,6 +122,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-md-12 col-lg-3 pb-sm-3">
                                         <div class="card border shadow rounded overflow-visible"
                                              style="background-color: #55b435">
@@ -110,9 +131,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Profit</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[2].get('totalTRYProfit')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[2].get('totalUSDProfit')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[2].get('totalEURProfit')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -129,9 +156,15 @@
                                                     <div class="color-card-title pb-1"><h5 class="text-white">Total
                                                         Unpaid</h5></div>
                                                     <div>
-                                                        <h3 class="text-white">₺ 8,753</h3>
-                                                        <h3 class="text-white">$ 8,753</h3>
-                                                        <h3 class="text-white">€ 8,753</h3>
+                                                        <h4 class="text-white"
+                                                            th:text="${'₺ ' + reportData[3].get('totalTRYUnpaid')}">₺
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'$ ' + reportData[3].get('totalUSDUnpaid')}">$
+                                                            8,753</h4>
+                                                        <h4 class="text-white"
+                                                            th:text="${'€ ' + reportData[3].get('totalEURUnpaid')}">€
+                                                            8,753</h4>
                                                     </div>
                                                     <i class="fa-solid fa-chart-column statistic-icon"></i>
                                                 </div>
@@ -145,22 +178,28 @@
                                 <div class="row col-12 pb-2">
                                     <div class="col-12 col-md-12 col-lg-3 pb-3">
                                         <div class="border shadow rounded overflow-visible py-4 px-3"
-                                             style="background-color:#ffab2d">
+                                             style="background-color:#f69402">
                                             <div class="justify-content-center mx-2">
                                                 <h5 class="text-white text-center">Ticket Total
                                                     Perches</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[4].get('totalTicketTRYPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[4].get('totalTicketUSDPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[4].get('totalTicketEURPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>
@@ -170,21 +209,27 @@
 
                                     <div class="col-12 col-md-12 col-lg-3 pb-3">
                                         <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
-                                             style="background-color:#ffab2d">
+                                             style="background-color:#f69402">
                                             <div class="justify-content-center mx-2">
                                                 <h5 class="text-white text-center">Ticket Total
                                                     Sales</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[5].get('totalTicketTRYSales')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[5].get('totalTicketUSDSales')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[5].get('totalTicketEURSales')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>
@@ -193,27 +238,68 @@
 
                                     <div class="col-12 col-md-12 col-lg-3 pb-3">
                                         <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
-                                             style="background-color:#ffab2d">
+                                             style="background-color:#f69402">
                                             <div class="justify-content-center mx-2">
                                                 <h5 class="text-white text-center">Ticket Total
                                                     Profit</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[6].get('totalTicketTRYProfit')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[6].get('totalTicketUSDProfit')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[6].get('totalTicketEURProfit')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>
                                         <i class="fa-solid fa-chart-column statistic-icon"></i>
 
                                     </div>
+
+                                    <div id="numberOfTickets" class="col-12 col-md-12 col-lg-3">
+                                        <div class="border shadow rounded overflow-visible pt-4 px-2"
+                                             style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247); padding-bottom: 30px">
+                                            <div class="border-bottom justify-content-center pb-3">
+                                                <h5 class="font-medium text-center">Total Number Of Ticket</h5>
+                                            </div>
+                                            <div class="row justify-content-between border-bottom py-2 px-3">
+                                                <span class="col-6" style="width: auto">TRY</span>
+                                                <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[1].get('totalTRYPerchesTicket')}"
+                                                          style="background-color: #2696be;">L 0,00</span>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-between border-bottom py-2 px-3">
+                                                <span class="col-6" style="width: auto">USD</span>
+                                                <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[1].get('totalUSDPerchesTicket')}"
+                                                          style="background-color: #55b435;">L 0,00</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row justify-content-between pt-2 pb-1 px-3">
+                                                <span class="col-6" style="width: auto">EUR</span>
+                                                <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[1].get('totalEURPerchesTicket')}"
+                                                          style="background-color: #bf4d25;">L 0,00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="row col-12 pb-2">
@@ -225,15 +311,22 @@
                                                     Perches</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'₺ ' + reportData[7].get('totalVisaTRYPerches')}">L
+                                                    0,00</h5>
+                                            </div>
+
+
+                                            <div class="row pt-3 pl-3">
+                                                <h5 class="text-white"
+                                                    th:text="${'$ ' + reportData[7].get('totalVisaUSDPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
-                                            </div>
-
-                                            <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                    th:text="${'€ ' + reportData[7].get('totalVisaEURPerches')}">L
+                                                    0,00</h5>
                                             </div>
 
                                         </div>
@@ -242,21 +335,24 @@
 
 
                                     <div class="col-12 col-md-12 col-lg-3 pb-3">
-                                        <div class="border shadow rounded overflow-visible pt-4 pb-4 p-3"
+                                        <div class="border shadow rounded overflow-visible py-4 p-3"
                                              style="background-color:#00ccce">
                                             <div class="justify-content-center mx-2">
                                                 <h5 class="text-white text-center">Visa Total Sales</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'₺ ' + reportData[8].get('totalVisaTRYSales')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'$ ' + reportData[8].get('totalVisaUSDSales')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'€ ' + reportData[8].get('totalVisaEURSales')}">L 0,00</h5>
                                             </div>
 
                                         </div>
@@ -271,20 +367,57 @@
                                                     Profit</h5>
                                             </div>
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'₺ ' + reportData[9].get('totalVisaTRYProfit')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'$ ' + reportData[9].get('totalVisaUSDProfit')}">L 0,00</h5>
                                             </div>
 
                                             <div class="row pt-3 pl-3">
-                                                <span class="text-white">L 0,00</span>
+                                                <h5 class="text-white"
+                                                      th:text="${'€ ' + reportData[9].get('totalVisaEURProfit')}">L 0,00</h5>
                                             </div>
 
                                         </div>
                                         <i class="fa-solid fa-chart-column statistic-icon"></i>
 
+                                    </div>
+
+                                    <div id="numberOfVisa" class="col-12 col-md-12 col-lg-3">
+                                        <div class="border shadow rounded overflow-visible pt-4 px-2"
+                                             style="background-color: rgb(255, 255, 255); color: rgb(42, 48, 61); border-color: rgb(247, 247, 247);padding-bottom: 30px">
+                                            <div class="border-bottom justify-content-center">
+                                                <h5 class="font-medium text-center pb-3">Total Number Of Visa</h5>
+                                            </div>
+                                            <div class="row justify-content-between border-bottom py-2 px-3">
+                                                <span class="col-6" style="width: auto">TRY</span>
+                                                <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[2].get('totalTRYPerchesVisa')}"
+                                                          style="background-color: #2696be;">L 0,00</span>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-between border-bottom py-2 px-3">
+                                                <span class="col-6" style="width: auto">USD</span>
+                                                <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[2].get('totalUSDPerchesVisa')}"
+                                                          style="background-color: #55b435;">L 0,00</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row justify-content-between pt-2 pb-1 px-3">
+                                                <span class="col-6" style="width: auto">EUR</span>
+                                                <div class="col-6 text-right" style="width: auto">
+                                                    <span class="py-1 px-2 rounded text-white"
+                                                          th:text="${totalNumberInfo[2].get('totalEURPerchesVisa')}"
+                                                          style="background-color: #bf4d25;">L 0,00</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

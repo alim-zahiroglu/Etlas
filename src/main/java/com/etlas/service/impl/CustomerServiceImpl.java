@@ -3,6 +3,7 @@ package com.etlas.service.impl;
 import com.etlas.dto.CustomerDto;
 import com.etlas.entity.Customer;
 import com.etlas.enums.CountriesTr;
+import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.CustomerType;
 import com.etlas.mapper.MapperUtil;
 import com.etlas.repository.CustomerRepository;
@@ -17,8 +18,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 //@RequiredArgsConstructor
@@ -223,4 +226,21 @@ public class CustomerServiceImpl implements CustomerService {
         repository.save(customer);
     }
 
+    @Override
+    public BigDecimal getTotalTRYUnpaid() {
+        BigDecimal result = repository.getTotalTRYDebit(false);
+        return result == null ? BigDecimal.ZERO : result.negate();
+    }
+
+    @Override
+    public BigDecimal getTotalUSDUnpaid() {
+        BigDecimal result = repository.getTotalUSDDebit(false);
+        return result == null ? BigDecimal.ZERO : result.negate();
+    }
+
+    @Override
+    public BigDecimal getTotalEURUnpaid() {
+        BigDecimal result = repository.getTotalEURDebit(false);
+        return result == null ? BigDecimal.ZERO : result.negate();
+    }
 }

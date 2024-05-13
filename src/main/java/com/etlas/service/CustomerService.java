@@ -4,6 +4,7 @@ import com.etlas.dto.CustomerDto;
 import com.etlas.entity.Customer;
 import org.springframework.validation.BindingResult;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CustomerService {
@@ -34,4 +35,10 @@ public interface CustomerService {
     void saveNewCustomerIfAdded(long customerId);
 
     void saveCustomer(CustomerDto customer);
+
+    BigDecimal getTotalTRYUnpaid();
+
+    BigDecimal getTotalUSDUnpaid();
+
+    BigDecimal getTotalEURUnpaid();
 }

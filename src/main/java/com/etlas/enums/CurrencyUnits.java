@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum CurrencyUnits {
     TRY("₺ TRY","₺"),
-    USD("$ USD", "$"),EUR("€ EUR", "€");
+    USD("$ USD", "$"),
+    EUR("€ EUR", "€");
     private final String description;
     private final String currencySymbol;
 

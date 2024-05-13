@@ -1,7 +1,6 @@
 package com.etlas.entity;
 
 import com.etlas.enums.CurrencyUnits;
-import com.etlas.enums.PaidType;
 import com.etlas.enums.TicketType;
 import com.etlas.enums.TripType;
 import jakarta.persistence.*;
@@ -68,7 +67,7 @@ public class Ticket extends BaseEntity{
     private User boughtUser;
 
     @Column(columnDefinition = "DATE")
-    private LocalDate DateOfPerches;
+    private LocalDate dateOfPerches;
 
     private BigDecimal perchesPrice;
     private BigDecimal salesPrice;
