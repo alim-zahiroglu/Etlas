@@ -179,12 +179,13 @@
                                                         </a>
                                                     </td>
 
-                                                    <td th:if="${ticket.currencyUnit.description=='₺ TRY'}"
-                                                        th:text="${ticket.salesPrice} + ' ₺'"></td>
-                                                    <td th:if="${ticket.currencyUnit.description=='$ USD'}"
-                                                        th:text="${ticket.salesPrice} + ' $'"></td>
-                                                    <td th:if="${ticket.currencyUnit.description=='€ EUR'}"
-                                                        th:text="${ticket.salesPrice} + ' €'"></td>
+                                                    <td>
+                                                        <a id="showUpdatePriceBox" class="showUpdatePriceBox"
+                                                           onclick="showModal()">
+                                                             <span th:text="${ticket.salesPrice} + ' '"></span>
+                                                            <span th:text="${ticket.currencyUnit.getCurrencySymbol()}"></span>
+                                                        </a>
+                                                    </td>
 
                                                     <td>
                                                         <a th:href="@{/ticket/customer/details/{customerId}(customerId=${ticket.payedCustomer.id})}">
@@ -221,7 +222,8 @@
                                                                 <i class="fa-solid fa-trash-can rotate-on-hover"></i>
                                                             </button>
                                                         </a>
-                                                        <a th:href="@{/ticket/download/{ticketId}(ticketId=${ticket.id})}" class="download-ticket">
+                                                        <a th:href="@{/ticket/download/{ticketId}(ticketId=${ticket.id})}"
+                                                           class="download-ticket">
                                                             <button type="button" id="download-ticket"
                                                                     class="btn custom_download_button p-1">
                                                                 <i class="fa-solid fa-download download-rotate-on-hover"></i>
@@ -260,6 +262,104 @@
                                                         <button type="button" class="btn btn-danger" id="confirmDelete">
                                                             Delete
                                                         </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="change-price-modal"
+                                             data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content pr-4 pl-4">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5 text-center w-100"
+                                                            id="change-price-modal-label">Change Prices</h1>
+                                                        <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal- body pt-2">
+
+                                                        <form id="customerForm"
+                                                              name="customerForm"
+                                                              th:action="@{/ticket/create-add-customer}"
+                                                              method="post"
+                                                              class="row g-3">
+
+                                                            <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                                 style="padding: 0 8px;margin-top: 16px">
+                                                                <label for="perchesPrice" class="form-label mb-1 pl-1">Perches
+                                                                    price</label>
+                                                                <div class="input-group currency-input-group"
+                                                                     id="perchesPrice">
+                                                                    <span class="input-group-text currency-symbol">₺</span>
+                                                                    <input type="number"
+                                                                           class="form-control"
+                                                                           aria-label="Perches price input">
+                                                                    <span class="input-group-text">0.00</span>
+                                                                    <button type="button"
+                                                                            class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                                                            data-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                        <span class="visually-hidden">Toggle Dropdown</span>
+                                                                    </button>
+                                                                    <ul id="currencyDropdown"
+                                                                        class="dropdown-menu dropdown-menu-right dropdown-menu-custom-css">
+                                                                        <li th:each="currency, status : ${currencyUnits}">
+                                                                            <a class="dropdown-item dropdown-menu-item-custom-css change-currency"
+                                                                               th:style="${status.first} ? 'border-radius: 8px 8px 0 0' : '' + (${status.last} ? 'border-radius: 0 0 8px 8px' : '')"
+                                                                               th:data-currency-symbol="${currency.currencySymbol}"
+                                                                               th:data-selected-currency="${currency}"
+                                                                               th:text="${currency.description}">
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="custom-invalid-feedback">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-12 col-md-6 col-lg-6 mb-0"
+                                                                 style="padding: 0 8px;margin-top: 16px">
+                                                                <label for="salesPrice" class="form-label mb-1 pl-1">Sales
+                                                                    price</label>
+                                                                <div class="input-group currency-input-group"
+                                                                     id="salesPrice">
+                                                                    <span class="input-group-text currency-symbol">₺</span>
+                                                                    <input type="number"
+                                                                           class="form-control"
+                                                                           aria-label="Sales price input">
+                                                                    <span class="input-group-text">0.00</span>
+                                                                </div>
+
+                                                                <div class="custom-invalid-feedback">
+                                                                    <ul class="p-0 m-0">
+                                                                        <li></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+
+                                                            <input type="hidden"
+                                                                   id="selectedCurrencyUnitInput">
+
+                                                            <div class="modal-footer">
+                                                                <button type="button"
+                                                                        class="btn btn-secondary pr-4 pl-4"
+                                                                        data-bs-dismiss="modal">
+                                                                    <strong>Cancel</strong>
+                                                                </button>
+                                                                <button type="submit" id="saveCustomerButton"
+                                                                        class="btn list-page-drop-downs-export pr-5 pl-5">
+                                                                    <strong>Save</strong>
+                                                                </button>
+
+                                                            </div>
+
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -385,5 +485,6 @@
 <div th:replace="~{fragments/javascript :: js}"></div>
 <script th:src="@{/assets/libs/js/ticket/delete_modal_confirmation.js}"></script>
 <script th:src="@{/assets/libs/js/show_create_delete_update_toast.js}"></script>
+<script th:src="@{/assets/libs/js/ticket/ticket_list_update_price.js}"></script>
 </body>
 </html>
