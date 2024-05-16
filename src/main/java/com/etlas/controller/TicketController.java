@@ -38,6 +38,7 @@ public class TicketController {
     public String getAllTickets(Model model){
         List<TicketDto> ticketList = ticketService.findAllTickets();
         model.addAttribute("ticketList",ticketList);
+        model.addAttribute("currencyUnits",CurrencyUnits.values());
         return "/ticket/ticket-list";
     }
     @GetMapping("/create")

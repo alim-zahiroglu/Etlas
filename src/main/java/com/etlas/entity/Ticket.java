@@ -3,6 +3,7 @@ package com.etlas.entity;
 import com.etlas.enums.CurrencyUnits;
 import com.etlas.enums.TicketType;
 import com.etlas.enums.TripType;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
