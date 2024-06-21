@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,6 @@ public class ReportController {
 
     @GetMapping()
     public String getReports(@RequestParam(value = "time",required = false, defaultValue = "thisMonth") String time, Model model){
-
         List<Map<String,BigDecimal>> reportingData = reportService.getReports(time);
         List<Map<String,Integer>> totalNumberInfo = reportService.getTotalNumbers(time);
         String atTime = reportService.getTime(time);
