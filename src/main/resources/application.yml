@@ -3,11 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST:db-postgresql-1-do-user-16198172-0.c.db.ondigitalocean.com}:${DB_PORT:25060}/etlas-db
+    url: jdbc:postgresql://${DB_HOST:new-etlas-db-do-user-16198172-0.c.db.ondigitalocean.com}:${DB_PORT:25060}/defaultdb
 #    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/etlas_db
     username: doadmin
 #    username: etlas
-    password: ${DB_PASSWORD:AVNS_XdMKYICi5_sAjPH8Fdt}
+    password: ${DB_PASSWORD:AVNS_-27Di_Tf1tdLnQhZvkE}
 #    password: ${DB_PASSWORD:Etlas123}
     driver-class-name: org.postgresql.Driver
 
