@@ -1,4 +1,12 @@
-FROM amd64/maven:3.8.6-openjdk-18-slim
-WORKDIR usr/app
-COPY  .  .
-ENTRYPOINT ["mvn","spring-boot:run"]
+# Build stage
+FROM eclipse-temurin:17-jdk-alpine as builder
+WORKDIR /app
+COPY . .
+RUN ./mvnw clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=builder /app/target/etlas-backend.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
