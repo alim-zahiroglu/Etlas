@@ -1,11 +1,13 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   datasource:
 #    url: jdbc:postgresql://${DB_HOST:new-etlas-db-do-user-16198172-0.c.db.ondigitalocean.com}:${DB_PORT:25060}/defaultdb
-    url: jdbc:postgresql://${DB_HOST:46.202.155.166}:${DB_PORT:5432}/oldetlas_db
-#    username: doadmin
+#    url: jdbc:postgresql://${DB_HOST:46.202.155.166}:${DB_PORT:5432}/oldetlas_db
+    url: jdbc:postgresql://localhost:5432/oldetlas_db
+
+    #    username: doadmin
     username: oldetlas
     password: ${DB_PASSWORD:27Di_Tf1tdLnQhZvkE}
 #    password: ${DB_PASSWORD:Etlas123}
