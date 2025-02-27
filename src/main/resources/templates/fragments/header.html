@@ -16,7 +16,7 @@
                         <a href="#" data-toggle="dropdown" class="nav-icon pe-md-0 mr-3 text-center avatar-a-tag" title="User">
                             <div class="justify-content-center text-center">
                                 <p th:class="${#authentication.principal.getRole == 'Admin'} ? 'avatar-bg-color-admin avatar-text' : (${#authentication.principal.getRole == 'Manager'} ? 'avatar-bg-color-manager avatar-text' : 'avatar-bg-color-employee avatar-text')"
-                                   th:text="${#authentication.principal.nameLetter}">A</p>
+                                   th:text="${#authentication.principal.getNameLetter}">A</p>
 
                             </div>
                         </a>
